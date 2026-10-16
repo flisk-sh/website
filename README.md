@@ -91,13 +91,7 @@ The site uses a custom design system with:
 
 ## Contributing
 
-We welcome contributions! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test locally
-5. Submit a pull request
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for prerequisites, setup steps, the validation workflow, branch and pull request conventions, and commit message guidelines.
 
 ## License
 
