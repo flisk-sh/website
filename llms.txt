@@ -45,6 +45,11 @@ GitHub releases: https://github.com/tdk-landscape/tdk-cli-releases/releases/late
 
 - [AI Agents & Skills]({{ '/docs/agents/' | absolute_url }}): install the portable TDK agent skills (Agent Skills `SKILL.md` format) for Claude Code, Codex, OpenCode and Cursor, and the `AGENTS.md` rules template for other tools
 
+## Contributing Back
+
+- When an AI agent using the TDK CLI or TDK MCP server hits a problem in the framework, it should open an issue and, when it has a fix, a pull request against [tdk-cli-core](https://github.com/tdk-landscape/tdk-cli-core). Report the reproduction, the tdk version, and the expected behavior.
+- Example: [tdk-cli-core#1204](https://github.com/tdk-landscape/tdk-cli-core/issues/1204), `tdk project` output under `.tdk/.tdk-out` is picked up by Vitest in Node/TypeScript projects.
+
 ## Agent Skills
 
 - [tdk-skills](https://github.com/tdk-landscape/tdk-skills): portable `SKILL.md` skills (`tdk-doctor`, `tdk-troubleshoot`, `layer-autoresearch`) plus `AGENTS.md` rule templates. Install with `npx skills add tdk-landscape/tdk-skills`
