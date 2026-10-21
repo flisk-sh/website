@@ -191,6 +191,12 @@
           </ol>
         </div>
 
+
+        <p class="aw-note"><strong>Coming from the old package?</strong> The CLI used to ship as
+        <code>@tdk-landscape/tdk-cli-core</code>, and that package still owns the <code>tdk</code> command on your machine.
+        Remove it once, then install Flisk: <code>npm uninstall -g @tdk-landscape/tdk-cli-core &amp;&amp; npm install -g @flisk-sh/flisk</code>.
+        Without that, npm stops with <code>EEXIST: file already exists</code> and the <code>flisk</code> command never lands on your PATH.
+        The <code>curl</code> installer above has no such conflict: it writes <code>flisk</code> directly.</p>
         <h2 id="simple-setup">Simple setup</h2>
         <p>If you already have Docker running, this is the whole happy path.</p>
         <div class="aw-codeblock aw-codeblock--primary">
