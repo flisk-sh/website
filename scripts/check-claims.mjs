@@ -55,7 +55,7 @@ for (const [pattern, label] of forbidden) {
 if (siteSources.some((source) => /Windows supported(?!\s+through WSL2)/i.test(source))) {
   failures.push('site contains an unqualified Windows support claim');
 }
-if (!index.includes('Stability: 1.x local dev. Generated files are a contract; verify with tdk config verify. Core CLI is MIT and needs no key. Premium is optional.')) {
+if (!index.includes('Stability: 1.x local dev. Generated files are a contract; verify with flisk config verify. Core CLI is MIT and needs no key. Premium is optional.')) {
   failures.push('homepage is missing the shared product stability and license status line');
 }
 

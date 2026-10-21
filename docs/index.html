@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Documentation - TDK CLI
+title: Documentation - Flisk CLI
 ---
 
 <div class="aw">
@@ -10,7 +10,7 @@ title: Documentation - TDK CLI
 
       <div class="aw-docs-body">
         <h1>Documentation</h1>
-        <p class="aw-lead">Learn how to run services locally without Kubernetes and use <code>tdk doctor</code> and <code>tdk up</code> in place of a setup wiki. Onboarding time has not been measured on a hiring cohort.</p>
+        <p class="aw-lead">Learn how to run services locally without Kubernetes and use <code>flisk doctor</code> and <code>flisk up</code> in place of a setup wiki. Onboarding time has not been measured on a hiring cohort.</p>
 
         <div class="aw-doc-cards">
           <a class="aw-card" href="{{ '/docs/quickstart/' | relative_url }}">
@@ -25,7 +25,7 @@ title: Documentation - TDK CLI
           </a>
           <a class="aw-card" href="{{ '/docs/scripts/' | relative_url }}">
             <h3>package.json Scripts</h3>
-            <p>The dev/build/start scripts each appType requires, and how tdk doctor checks them.</p>
+            <p>The dev/build/start scripts each appType requires, and how flisk doctor checks them.</p>
             <span>Read more →</span>
           </a>
           <a class="aw-card" href="{{ '/docs/examples/' | relative_url }}">
@@ -35,19 +35,19 @@ title: Documentation - TDK CLI
           </a>
           <a class="aw-card" href="{{ '/docs/with-helm/' | relative_url }}">
             <h3>Deploy with Helm</h3>
-            <p>Carry TDK generated services into a Kubernetes chart you own.</p>
+            <p>Carry Flisk generated services into a Kubernetes chart you own.</p>
             <span>Read the Helm guide →</span>
           </a>
           <a class="aw-card" href="{{ '/compare/' | relative_url }}">
             <h3>Compare tools</h3>
-            <p>TDK against Garden, Skaffold, Codespaces and the rest with transparent pricing.</p>
+            <p>Flisk against Garden, Skaffold, Codespaces and the rest with transparent pricing.</p>
             <span>Compare →</span>
           </a>
         </div>
 
-        <h2>What is TDK CLI?</h2>
-        <p>TDK CLI starts services on your machine. It is not a deploy and not a Compose file: describe each service in <code>service.json</code>, then run <code>tdk up</code>. Production deployment stays with Helm, Argo CD, or Kustomize. Start with the <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a>, then see how <a href="{{ '/docs/with-helm/' | relative_url }}">TDK works alongside Helm</a>.</p>
-        <p>Describe each service in <code>service.json</code>, then use TDK to generate the local Docker and Tilt setup. See the <a href="{{ '/docs/with-helm/' | relative_url }}">Helm handoff</a> for cluster deployment.</p>
+        <h2>What is Flisk CLI?</h2>
+        <p>Flisk CLI starts services on your machine. It is not a deploy and not a Compose file: describe each service in <code>service.json</code>, then run <code>flisk up</code>. Production deployment stays with Helm, Argo CD, or Kustomize. Start with the <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a>, then see how <a href="{{ '/docs/with-helm/' | relative_url }}">Flisk works alongside Helm</a>.</p>
+        <p>Describe each service in <code>service.json</code>, then use Flisk to generate the local Docker and Tilt setup. See the <a href="{{ '/docs/with-helm/' | relative_url }}">Helm handoff</a> for cluster deployment.</p>
         <ul>
           <li>Dockerfile with optimized L1-L4 golden layering</li>
           <li>Vite and TypeScript configuration per app type, for React (default) or Vue 3 frontends</li>
@@ -58,7 +58,7 @@ title: Documentation - TDK CLI
         </ul>
 
         <h2>Why it matters for the business</h2>
-        <p>TDK is designed so <code>tdk doctor</code> and <code>tdk up</code> replace a setup wiki. Onboarding time has not been measured on a hiring cohort. See the <a href="{{ '/features/' | relative_url }}#story">illustrative scenario</a>.</p>
+        <p>Flisk is designed so <code>flisk doctor</code> and <code>flisk up</code> replace a setup wiki. Onboarding time has not been measured on a hiring cohort. See the <a href="{{ '/features/' | relative_url }}#story">illustrative scenario</a>.</p>
 
         <h2>Key capabilities</h2>
         <div class="aw-feature-grid">

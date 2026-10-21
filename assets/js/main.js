@@ -1,4 +1,4 @@
-// TDK CLI Website - Main JavaScript
+// Flisk CLI Website - Main JavaScript
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -318,7 +318,7 @@ if (document.readyState === 'loading') {
   const render = (tag) => {
     if (typeof tag !== 'string' || !tag) return;
     labels.forEach((el) => {
-      el.textContent = `TDK CLI ${tag} released`;
+      el.textContent = `Flisk CLI ${tag} released`;
     });
   };
 

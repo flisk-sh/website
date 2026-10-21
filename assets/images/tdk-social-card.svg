@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">TDK CLI</title>
+  <title id="title">Flisk CLI</title>
   <desc id="desc">Kubernetes-free microservice development.</desc>
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
@@ -15,7 +15,7 @@
   <circle cx="1030" cy="110" r="180" fill="url(#accent)" opacity="0.2"/>
   <circle cx="930" cy="520" r="230" fill="#7c4dff" opacity="0.12"/>
   <rect x="72" y="72" width="200" height="40" rx="20" fill="#7c4dff" opacity="0.9"/>
-  <text x="96" y="100" font-size="22" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="700">TDK CLI</text>
+  <text x="96" y="100" font-size="22" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="700">Flisk CLI</text>
   <text x="72" y="240" font-size="88" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">Kubernetes-free</text>
   <text x="72" y="332" font-size="88" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">microservice</text>
   <text x="72" y="424" font-size="88" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">development</text>

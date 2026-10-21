@@ -3,11 +3,11 @@ $ErrorActionPreference = 'Stop'
 $processArchitecture = $env:PROCESSOR_ARCHITECTURE
 $isX64Emulated = $env:PROCESSOR_ARCHITEW6432 -eq 'AMD64'
 if ($processArchitecture -eq 'ARM64' -and -not $isX64Emulated) {
-    Write-Error 'TDK Windows v1 supports AMD64 only. Use WSL2 Ubuntu or a 64-bit Intel/AMD PC.'
+    Write-Error 'Flisk Windows v1 supports AMD64 only. Use WSL2 Ubuntu or a 64-bit Intel/AMD PC.'
     exit 1
 }
 if ($processArchitecture -ne 'AMD64' -and -not $isX64Emulated) {
-    Write-Error "Unsupported Windows architecture: $processArchitecture. TDK Windows v1 supports AMD64 only."
+    Write-Error "Unsupported Windows architecture: $processArchitecture. Flisk Windows v1 supports AMD64 only."
     exit 1
 }
 
@@ -15,7 +15,7 @@ $baseUrl = 'https://github.com/flisk-sh/releases/releases/latest/download'
 $installDir = if ($env:TDK_INSTALL_DIR) {
     $env:TDK_INSTALL_DIR
 } else {
-    Join-Path $env:LOCALAPPDATA 'tdk\bin'
+    Join-Path $env:LOCALAPPDATA 'flisk\bin'
 }
 $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ('tdk-install-' + [guid]::NewGuid().ToString('N'))
 $exeName = 'tdk-windows-amd64.exe'
@@ -29,7 +29,7 @@ try {
     try {
         Invoke-WebRequest "$baseUrl/$exeName" -OutFile $exeDownload
     } catch {
-        throw 'The latest TDK release does not include tdk-windows-amd64.exe yet. Wait for a Windows-enabled release, then rerun this installer.'
+        throw 'The latest Flisk release does not include tdk-windows-amd64.exe yet. Wait for a Windows-enabled release, then rerun this installer.'
     }
     Invoke-WebRequest "$baseUrl/tdk-cli-engine.tar.gz" -OutFile $engineArchive
     Invoke-WebRequest "$baseUrl/checksums.txt" -OutFile $checksumsPath
@@ -51,7 +51,7 @@ try {
 
     $tar = Get-Command tar.exe -ErrorAction SilentlyContinue
     if (-not $tar) {
-        throw 'tar.exe is required to unpack the TDK engine. Install a supported Windows version with tar.exe and retry.'
+        throw 'tar.exe is required to unpack the Flisk engine. Install a supported Windows version with tar.exe and retry.'
     }
 
     & $tar.Source -xzf $engineArchive -C $extractDir --strip-components=1
@@ -88,9 +88,9 @@ try {
     }
 
     $versionOutput = & (Join-Path $installDir 'tdk.exe') --version 2>&1 | Select-Object -First 1
-    Write-Host "TDK installed to $(Join-Path $installDir 'tdk.exe') ($versionOutput)."
-    Write-Host 'Close this terminal and open a new one, then run tdk --version.'
-    Write-Host 'For AI agents, configure your MCP client to launch tdk mcp over local stdio:'
+    Write-Host "Flisk installed to $(Join-Path $installDir 'tdk.exe') ($versionOutput)."
+    Write-Host 'Close this terminal and open a new one, then run flisk --version.'
+    Write-Host 'For AI agents, configure your MCP client to launch flisk mcp over local stdio:'
     Write-Host '  https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/README.md'
 } catch {
     Write-Error $_

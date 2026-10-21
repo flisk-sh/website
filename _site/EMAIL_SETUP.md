@@ -1,6 +1,6 @@
 # Email Collection Setup Guide - FREE Options ($0)
 
-Your TDK website needs to collect waitlist emails. Here are **100% free** solutions with no backend required.
+Your Flisk website needs to collect waitlist emails. Here are **100% free** solutions with no backend required.
 
 ---
 
@@ -11,7 +11,7 @@ Your TDK website needs to collect waitlist emails. Here are **100% free** soluti
 ### Steps:
 
 1. Go to [Google Forms](https://forms.new)
-2. Create a new form titled "TDK CLI Waitlist"
+2. Create a new form titled "Flisk CLI Waitlist"
 3. Add one question:
    - Type: Short answer
    - Question: "Email address"
@@ -80,7 +80,7 @@ Your TDK website needs to collect waitlist emails. Here are **100% free** soluti
 ### Steps:
 
 1. Create free Airtable account
-2. Create a base called "TDK Waitlist"
+2. Create a base called "Flisk Waitlist"
 3. Add a table with "Email" field
 4. Click "Form" view
 5. Share the form link or embed
@@ -131,7 +131,7 @@ Your TDK website needs to collect waitlist emails. Here are **100% free** soluti
 Already implemented in your site as a fallback!
 
 ```html
-<a href="mailto:vntu0412179+tdk-waitlist@gmail.com?subject=Waitlist: TDK CLI Early Access">
+<a href="mailto:vntu0412179+tdk-waitlist@gmail.com?subject=Waitlist: Flisk CLI Early Access">
   vntu0412179+tdk-waitlist@gmail.com
 </a>
 ```
@@ -157,7 +157,7 @@ Create a GitHub Issue template for waitlist signups:
 1. Create `.github/ISSUE_TEMPLATE/waitlist.yml`:
    ```yaml
    name: Join Waitlist
-   description: Get early access to TDK CLI
+   description: Get early access to Flisk CLI
    title: "[Waitlist] Your email here"
    labels: ["waitlist"]
    body:
@@ -201,7 +201,7 @@ Create a GitHub Issue template for waitlist signups:
 ## Quick Setup: Google Forms (Do This Now)
 
 1. Go to https://forms.new
-2. Create form "TDK CLI Waitlist"
+2. Create form "Flisk CLI Waitlist"
 3. Add email field (required)
 4. Click Send → Link
 5. Copy the form ID from the URL

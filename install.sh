@@ -3,10 +3,10 @@ set -eu
 
 OWNER="flisk-sh"
 REPO="releases"
-BIN_NAME="tdk"
+BIN_NAME="flisk"
 
 fail() {
-  echo "tdk install: $*" >&2
+  echo "flisk install: $*" >&2
   exit 1
 }
 
@@ -59,7 +59,7 @@ else
   install_dir="${HOME}/.local/bin"
   mkdir -p "$install_dir"
 fi
-tmp="${TMPDIR:-/tmp}/tdk.$$"
+tmp="${TMPDIR:-/tmp}/flisk.$$"
 engine_tmp="${TMPDIR:-/tmp}/tdk-engine.$$.tar.gz"
 sums_tmp="${TMPDIR:-/tmp}/tdk-checksums.$$.txt"
 trap 'rm -f "$tmp" "$engine_tmp" "$sums_tmp"' EXIT
@@ -110,7 +110,7 @@ chmod +x "$tmp"
 # The compiled binary has no source checkout to find engine/ in, so it
 # looks for a tdk-cli/ folder next to itself (see
 # cli/src/generator/template-engine.ts, vendorTdkExtension). Without this,
-# `tdk project`/`tdk up` fail with "TDK extension not found".
+# `flisk project`/`flisk up` fail with "Flisk extension not found".
 echo "Installing bundled engine..."
 download "$engine_url" "$engine_tmp" || fail "download failed: $engine_url"
 
@@ -141,6 +141,6 @@ case ":${PATH}:" in
     echo "  export PATH=\"${install_dir}:\$PATH\""
     ;;
 esac
-echo "Next: tdk doctor"
-echo "For AI agents, configure your MCP client to launch tdk mcp over local stdio:"
+echo "Next: flisk doctor"
+echo "For AI agents, configure your MCP client to launch flisk mcp over local stdio:"
 echo "  https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/README.md"

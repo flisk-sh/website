@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Waiting for MVP? - TDK CLI
+title: Waiting for MVP? - Flisk CLI
 ---
 
 <style>
@@ -204,11 +204,11 @@ title: Waiting for MVP? - TDK CLI
           </div>
           <div class="aw-burn-cell aw-burn-good">
             <strong id="wait-tdk">$95/mo</strong>
-            <span>same team on TDK instead</span>
+            <span>same team on Flisk instead</span>
           </div>
         </div>
 
-        <p class="aw-burn-math">Math: user-set developers × (user-set salary ÷ 52) × user-set blocked weeks. This output is arithmetic, not savings. TDK is designed so <span class="aw-mono">tdk doctor</span> and <span class="aw-mono">tdk up</span> replace a setup wiki; onboarding time has not been measured on a hiring cohort.</p>
+        <p class="aw-burn-math">Math: user-set developers × (user-set salary ÷ 52) × user-set blocked weeks. This output is arithmetic, not savings. Flisk is designed so <span class="aw-mono">flisk doctor</span> and <span class="aw-mono">flisk up</span> replace a setup wiki; onboarding time has not been measured on a hiring cohort.</p>
       </div>
     </div>
   </section>
@@ -223,7 +223,7 @@ title: Waiting for MVP? - TDK CLI
 
       <div class="aw-wait-grid">
         <div class="aw-wait-col aw-wait-col-bad">
-          <h3>Without TDK</h3>
+          <h3>Without Flisk</h3>
           <div class="aw-week">
             <span>Week 1</span>
             <h4>Five machines, zero running systems</h4>
@@ -247,10 +247,10 @@ title: Waiting for MVP? - TDK CLI
         </div>
 
         <div class="aw-wait-col aw-wait-col-good">
-          <h3>With TDK</h3>
+          <h3>With Flisk</h3>
           <div class="aw-week aw-week-win">
             <span>Day 1, morning</span>
-            <h4>Clone, tdk up, code</h4>
+            <h4>Clone, flisk up, code</h4>
             <p>All five developers boot the full system — databases, queues, frontends — in minutes.</p>
           </div>
           <div class="aw-week aw-week-win">
@@ -261,7 +261,7 @@ title: Waiting for MVP? - TDK CLI
           <div class="aw-week aw-week-win">
             <span>Week 1</span>
             <h4>First demo to stakeholders</h4>
-            <p>An illustrative scenario showing what a shorter setup period could mean. TDK onboarding time has not been measured on a hiring cohort.</p>
+            <p>An illustrative scenario showing what a shorter setup period could mean. Flisk onboarding time has not been measured on a hiring cohort.</p>
           </div>
           <div class="aw-week aw-week-win">
             <span>Week 4</span>
@@ -278,7 +278,7 @@ title: Waiting for MVP? - TDK CLI
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>Hire one a week — or unblock all five at once</h2>
-        <p>The textbook advice is onboarding developers one per week so each gets attention. Reality hires the whole team on one Monday. TDK makes the realistic way work.</p>
+        <p>The textbook advice is onboarding developers one per week so each gets attention. Reality hires the whole team on one Monday. Flisk makes the realistic way work.</p>
       </div>
 
       <div class="aw-wait-grid">
@@ -299,7 +299,7 @@ title: Waiting for MVP? - TDK CLI
     <div class="aw-wrap">
       <div class="aw-band">
         <h2>Stop paying salaries for waiting</h2>
-        <p>Core stays free. TDK is designed so <code>tdk doctor</code> and <code>tdk up</code> replace a setup wiki; onboarding time has not been measured on a hiring cohort.</p>
+        <p>Core stays free. Flisk is designed so <code>flisk doctor</code> and <code>flisk up</code> replace a setup wiki; onboarding time has not been measured on a hiring cohort.</p>
         <a href="{{ '/docs/quickstart/' | relative_url }}" class="aw-btn aw-btn-solid">Start free</a>
       </div>
     </div>
@@ -317,7 +317,7 @@ function calcWait() {
   var weeks = parseInt(document.getElementById('wait-weeks').value, 10);
 
   var burned = Math.round(devs * (salary / 52) * weeks);
-  var tdk = devs * {{ site.data.tdk.team_price }};
+  var flisk = devs * {{ site.data.tdk.team_price }};
 
   document.getElementById('wait-devs-value').textContent = devs;
   document.getElementById('wait-salary-value').textContent = '$' + salary.toLocaleString('en-US');

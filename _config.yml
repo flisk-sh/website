@@ -1,10 +1,10 @@
-title: TDK CLI turns service.json into a local Docker + Tilt stack
+title: Flisk CLI turns service.json into a local Docker + Tilt stack
 email: vntu0412179+tdk-waitlist@gmail.com
 lang: en_US
 description: >-
-  TDK CLI turns a service.json per service into a local Docker stack, with Tilt (the local development tool) watching services and live-updating containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.
+  Flisk CLI turns a service.json per service into a local Docker stack, with Tilt (the local development tool) watching services and live-updating containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.
 author:
-  name: TDK Team
+  name: Flisk Team
 
 # Published at the domain root (custom domain flisk.sh -> GitHub Pages, source path "/").
 # Keep baseurl empty: a non-empty baseurl prefixes every internal link and asset with

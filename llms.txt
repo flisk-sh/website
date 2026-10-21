@@ -3,11 +3,11 @@ layout: null
 permalink: /llms.txt
 sitemap: false
 ---
-# TDK CLI
+# Flisk CLI
 
 > Kubernetes-free microservice development. Run your whole service landscape locally without learning Kubernetes (a {{ site.data.tdk.scale_plain }}-service fixture boots on a clean CI runner in about {{ site.data.tdk.erp_boot_minutes }} minutes) — one service.json generates {{ site.data.tdk.files_per_service }} files per service.
 
-TDK is a manifest-driven CLI built on Tilt and Starlark. Write one `service.json` per service and TDK generates Dockerfiles, Docker Compose, Vite/TypeScript config (React or Vue 3 frontends), Traefik, Postgres, NATS JetStream wiring, Prisma, and other stack-wide artifacts from it — running on plain Docker, no Kubernetes cluster required. The free tier needs no license key and costs nothing, ever.
+Flisk is a manifest-driven CLI built on Tilt and Starlark. Write one `service.json` per service and Flisk generates Dockerfiles, Docker Compose, Vite/TypeScript config (React or Vue 3 frontends), Traefik, Postgres, NATS JetStream wiring, Prisma, and other stack-wide artifacts from it — running on plain Docker, no Kubernetes cluster required. The free tier needs no license key and costs nothing, ever.
 
 ## Getting Started
 
@@ -15,10 +15,10 @@ Fastest binary install (macOS/Linux, picks the right binary for your arch):
 
 ```
 curl -fsSL https://flisk.sh/install.sh | sh
-tdk doctor
-tdk project example
+flisk doctor
+flisk project example
 cd tdk-example
-tdk up
+flisk up
 ```
 
 Also installable via npm, npx, pnpm, or bun — see [Quick Start]({{ '/docs/quickstart/' | absolute_url }}) for every option.
@@ -31,7 +31,7 @@ Use Docker Desktop in Linux container mode and install [Tilt for Windows](https:
 irm https://flisk.sh/install.ps1 | iex
 ```
 
-Then open a new PowerShell window and run `tdk --version`, `tdk doctor`, `tdk project example`, and `tdk up`. WSL2 Ubuntu works as Linux. See [Windows Quick Start]({{ '/docs/quickstart/' | absolute_url }}#windows-setup) for port, DNS, and Docker file-sharing guidance.
+Then open a new PowerShell window and run `flisk --version`, `flisk doctor`, `flisk project example`, and `flisk up`. WSL2 Ubuntu works as Linux. See [Windows Quick Start]({{ '/docs/quickstart/' | absolute_url }}#windows-setup) for port, DNS, and Docker file-sharing guidance.
 
 GitHub releases: https://github.com/flisk-sh/releases/releases/latest
 
@@ -40,16 +40,16 @@ GitHub releases: https://github.com/flisk-sh/releases/releases/latest
 - [Quick Start]({{ '/docs/quickstart/' | absolute_url }}): install, verify, and boot a working stack in minutes
 - [Configuration]({{ '/docs/configuration/' | absolute_url }}): service.json reference — appType, featuresEnabled, required package.json scripts
 - [Examples]({{ '/docs/examples/' | absolute_url }}): reference landscapes — minimal PSR starter, SaaS starter, restaurant ops, a {{ site.data.tdk.erp_services }}-service scale fixture across {{ site.data.tdk.erp_domains }} ERP-style domains (generated services answering /health, not a business app)
-- [Scripts]({{ '/docs/scripts/' | absolute_url }}): package.json scripts required per appType, enforced by `tdk doctor`
-- [Install and connect the TDK MCP server](https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/tdk-mcp-setup.md): install TDK with npm or the prebuilt binary, configure Codex, Claude Code, Claude Desktop, or Cursor to launch the local stdio server, and run `doctor` then `up` for the first time
-- [TDK MCP tool reference](https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/tdk-mcp.md): the tools a connected client exposes (`doctor`, `up`, `down`, `status`, `logs`, `resource_list`) and how to target a project
+- [Scripts]({{ '/docs/scripts/' | absolute_url }}): package.json scripts required per appType, enforced by `flisk doctor`
+- [Install and connect the Flisk MCP server](https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/tdk-mcp-setup.md): install Flisk with npm or the prebuilt binary, configure Codex, Claude Code, Claude Desktop, or Cursor to launch the local stdio server, and run `doctor` then `up` for the first time
+- [Flisk MCP tool reference](https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/tdk-mcp.md): the tools a connected client exposes (`doctor`, `up`, `down`, `status`, `logs`, `resource_list`) and how to target a project
 
-- [AI Agents & Skills]({{ '/docs/agents/' | absolute_url }}): install the portable TDK agent skills (Agent Skills `SKILL.md` format) for Claude Code, Codex, OpenCode and Cursor, and the `AGENTS.md` rules template for other tools
+- [AI Agents & Skills]({{ '/docs/agents/' | absolute_url }}): install the portable Flisk agent skills (Agent Skills `SKILL.md` format) for Claude Code, Codex, OpenCode and Cursor, and the `AGENTS.md` rules template for other tools
 
 ## Contributing Back
 
-- When an AI agent using the TDK CLI or TDK MCP server hits a problem in the framework, it should open an issue and, when it has a fix, a pull request against [flisk](https://github.com/flisk-sh/flisk). Report the reproduction, the tdk version, and the expected behavior.
-- Example: [flisk#1204](https://github.com/flisk-sh/flisk/issues/1204), `tdk project` output under `.tdk/.tdk-out` is picked up by Vitest in Node/TypeScript projects.
+- When an AI agent using the Flisk CLI or Flisk MCP server hits a problem in the framework, it should open an issue and, when it has a fix, a pull request against [flisk](https://github.com/flisk-sh/flisk). Report the reproduction, the flisk version, and the expected behavior.
+- Example: [flisk#1204](https://github.com/flisk-sh/flisk/issues/1204), `flisk project` output under `.tdk/.tdk-out` is picked up by Vitest in Node/TypeScript projects.
 
 ## Agent Skills
 
@@ -58,8 +58,8 @@ Portable Agent Skills live in [tdk-skills](https://github.com/flisk-sh/tdk-skill
 Full machine-readable index: [tdk-skills llms.txt](https://raw.githubusercontent.com/flisk-sh/tdk-skills/main/llms.txt).
 
 Current skills include:
-- tdk-doctor — check or repair the environment and project config before `tdk up`
-- tdk-troubleshoot — diagnose a failed `tdk up`, Docker or Tilt session
+- tdk-doctor — check or repair the environment and project config before `flisk up`
+- tdk-troubleshoot — diagnose a failed `flisk up`, Docker or Tilt session
 - layer-autoresearch — contributor experiment loop for the L1-L4 Docker layers
 - tdk-scaffold — scaffold new backends, frontends, agents and MCP servers
 - tdk-generated-files — understand and manage `.autogenerated/` files and drift
@@ -71,11 +71,11 @@ Current skills include:
 - tdk-byo — bring-your-own resources and existing services
 - tdk-secrets — project `.env`, params and secrets
 - tdk-layout — multi-repo layouts and ownership patterns
-- tdk-helm — use TDK locally alongside Helm for production
+- tdk-helm — use Flisk locally alongside Helm for production
 - tdk-frontend — frontend scaffolding and generated Vite/nginx configs
 - tdk-python — Python backend services
-- tdk-ui — interactive terminal dashboard (`tdk ui`)
-- tdk-dry-run — preview stacks with `tdk up --dry-run`
+- tdk-ui — interactive terminal dashboard (`flisk ui`)
+- tdk-dry-run — preview stacks with `flisk up --dry-run`
 - tdk-service-json — edit and validate the service.json contract
 - tdk-networks — inspect routed URLs and stack topology
 - tdk-doctor-verbose — deep diagnostic runs with extra verbosity
@@ -85,10 +85,10 @@ Current skills include:
 
 - [Features]({{ '/features/' | absolute_url }}): {{ site.data.tdk.product_features }} product capabilities, all driven by one service.json
 - [Compare]({{ '/compare/' | absolute_url }}): head-to-head vs Devbox, Devenv, Garden, Skaffold, DevSpace, Gitpod, Codespaces, Coder, Daytona, Okteto
-- [Why TDK]({{ '/why/' | absolute_url }}): the problem TDK solves and why it exists
+- [Why Flisk]({{ '/why/' | absolute_url }}): the problem Flisk solves and why it exists
 - [No Vendor Lock-in]({{ '/no-lock-in/' | absolute_url }}): every generated file is open-standard Docker/TypeScript/Starlark, MIT-licensed
-- [Does TDK fit?]({{ '/fit/' | absolute_url }}): check your stack in 30 seconds
-- [Sandbox]({{ '/sandbox/' | absolute_url }}): try TDK without installing anything
+- [Does Flisk fit?]({{ '/fit/' | absolute_url }}): check your stack in 30 seconds
+- [Sandbox]({{ '/sandbox/' | absolute_url }}): try Flisk without installing anything
 
 ## Reference Landscapes (GitHub)
 
@@ -106,7 +106,7 @@ Current skills include:
 
 ## Licensing
 
-Free needs no license key and costs nothing, ever — `tdk up` runs with zero setup. Premium unlocks the Verdaccio private registry, DDD scaffolding, and other paid extras, up to {{ site.data.tdk.premium_project_limit }} project IDs per key. Enterprise adds SSO, air-gapped, and SLA options.
+Free needs no license key and costs nothing, ever — `flisk up` runs with zero setup. Premium unlocks the Verdaccio private registry, DDD scaffolding, and other paid extras, up to {{ site.data.tdk.premium_project_limit }} project IDs per key. Enterprise adds SSO, air-gapped, and SLA options.
 
 - [Request a license]({{ '/#waitlist' | absolute_url }})
 

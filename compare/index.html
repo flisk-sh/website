@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Compare - TDK CLI
-description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for local development. TDK generates the local stack from one service.json per service. No Kubernetes on your machine.
+title: Compare - Flisk CLI
+description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for local development. Flisk generates the local stack from one service.json per service. No Kubernetes on your machine.
 ---
 
 <div class="aw">
@@ -10,7 +10,7 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
   <section class="aw-subhero">
     <div class="aw-subhero-grid">
       <h1>Choose the local workflow that fits.</h1>
-      <p class="aw-subhero-sub">TDK CLI turns <code>service.json</code> per service into a local Docker stack. Tilt watches services and live-updates containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.</p>
+      <p class="aw-subhero-sub">Flisk CLI turns <code>service.json</code> per service into a local Docker stack. Tilt watches services and live-updates containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.</p>
       <p><a href="https://github.com/flisk-sh/flisk/blob/main/docs/compare-honest.md">Full comparison and known limits</a></p>
     </div>
   </section>
@@ -35,7 +35,7 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
           <thead>
             <tr>
               <th>Feature</th>
-              <th class="aw-tdk-col">TDK CLI</th>
+              <th class="aw-tdk-col">Flisk CLI</th>
               <th>Devbox</th>
               <th>Devenv</th>
               <th>Garden</th>
@@ -167,18 +167,18 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
     </div>
   </section>
 
-  <!-- TDK and Helm have different control planes -->
+  <!-- Flisk and Helm have different control planes -->
   <section class="aw-section" style="padding-top: 0;">
     <div class="aw-wrap">
       <div class="aw-head">
-        <h2>TDK and Helm work at different stages</h2>
+        <h2>Flisk and Helm work at different stages</h2>
       </div>
       <div class="aw-matrix">
         <table>
           <thead>
             <tr>
               <th>Helm / app-template</th>
-              <th class="aw-tdk-col">TDK</th>
+              <th class="aw-tdk-col">Flisk</th>
             </tr>
           </thead>
           <tbody>
@@ -203,7 +203,7 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
 
       <div class="aw-orbit" aria-hidden="true">
         <div class="aw-orbit-center">
-          <strong>TDK Team</strong>
+          <strong>Flisk Team</strong>
           <span>${{ site.data.tdk.team_price }} / dev / mo</span>
         </div>
         <span class="aw-orbit-chip" style="--ox: 0%; --oy: -42%;">Gitpod · {{ site.data.tdk.gitpod_entry }}+</span>
@@ -231,7 +231,7 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
           <thead>
             <tr>
               <th>Cost</th>
-              <th class="aw-tdk-col">TDK Team</th>
+              <th class="aw-tdk-col">Flisk Team</th>
               <th>Gitpod / Ona</th>
               <th>Codespaces</th>
               <th>Coder</th>
@@ -318,7 +318,7 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>Devbox vs Devenv: Nix-based alternatives</h2>
-        <p>Both are excellent Nix-based tools, but TDK takes a different approach focused on Docker services.</p>
+        <p>Both are excellent Nix-based tools, but Flisk takes a different approach focused on Docker services.</p>
       </div>
 
       <div class="aw-matrix">
@@ -326,7 +326,7 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
           <thead>
             <tr>
               <th>Feature</th>
-              <th class="aw-tdk-col">TDK CLI</th>
+              <th class="aw-tdk-col">Flisk CLI</th>
               <th>Devbox</th>
               <th>Devenv</th>
             </tr>
@@ -406,8 +406,8 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
       </div>
       <div class="aw-feature-grid">
         <div class="aw-card" style="border-color: rgba(124, 77, 255, 0.5); background: linear-gradient(160deg, rgba(124, 77, 255, 0.14) 0%, #121218 55%);">
-          <h4>Choose TDK if you…</h4>
-          <p>Want a manifest-driven local Docker workflow with selective startup. TDK is designed so <code>tdk doctor</code> and <code>tdk up</code> replace a setup wiki; onboarding time has not been measured on a hiring cohort.</p>
+          <h4>Choose Flisk if you…</h4>
+          <p>Want a manifest-driven local Docker workflow with selective startup. Flisk is designed so <code>flisk doctor</code> and <code>flisk up</code> replace a setup wiki; onboarding time has not been measured on a hiring cohort.</p>
         </div>
         <div class="aw-card">
           <h4>Choose Devbox if you…</h4>
@@ -422,7 +422,7 @@ description: Compare TDK CLI with Docker Compose, Tilt, Skaffold, and kind for l
       <div class="aw-feature-grid aw-feature-grid-2" style="margin-top: 2rem;">
         <div class="aw-card">
           <h4>Choose Garden if you…</h4>
-          <p>Have Kubernetes expertise in-house. Need production-like environments for integration testing. Employ a dedicated platform team with time to maintain YAML pipelines. TDK complements this setup nicely for the fast local loop, by the way.</p>
+          <p>Have Kubernetes expertise in-house. Need production-like environments for integration testing. Employ a dedicated platform team with time to maintain YAML pipelines. Flisk complements this setup nicely for the fast local loop, by the way.</p>
         </div>
         <div class="aw-card">
           <h4>Choose Cloud CDEs if you…</h4>

@@ -107,7 +107,7 @@ toolchain_chips:           # real generator outputs, bento strip on homepage
   - ".npmrc + .env per service"
   - "C4 architecture diagrams"
   - "AGENTS.md for AI assistants"
-  - "Discovery daemon + tdk doctor"
+  - "Discovery daemon + flisk doctor"
 
 waitlist_features:         # static checkbox options (2 dynamic ones stay in HTML)
   - "No Kubernetes"
@@ -124,7 +124,7 @@ waitlist_features:         # static checkbox options (2 dynamic ones stay in HTM
 
 manifest_features:         # service.json "featuresEnabled": the exact enum in engine/schemas/service-schema.json
   - name: "nats"
-    desc: "NATS JetStream eventing. TDK injects TILT_NATS_URL; you provide the broker (see the auth + queue + email example)"
+    desc: "NATS JetStream eventing. Flisk injects TILT_NATS_URL; you provide the broker (see the auth + queue + email example)"
   - name: "prisma"
     desc: "Database ORM and migrations"
   - name: "redis"
@@ -146,7 +146,7 @@ frontend_frameworks:       # service.json "framework" (frontend resources only) 
   - name: "react"
     desc: "React + Vite. The default when framework is omitted, so older manifests keep working"
   - name: "vue"
-    desc: "Vue 3 + Vite (@vitejs/plugin-vue). Scaffold with tdk resource web --type frontend --framework vue"
+    desc: "Vue 3 + Vite (@vitejs/plugin-vue). Scaffold with flisk resource web --type frontend --framework vue"
 
 app_types:                 # service.json "appType" — used in /docs/configuration/
   - name: "backend"
@@ -162,7 +162,7 @@ app_types:                 # service.json "appType" — used in /docs/configurat
   - name: "migrator"
     desc: "Database migration service"
 
-package_scripts:            # package.json "scripts" required per appType, enforced by `tdk doctor` — used in /docs/configuration/
+package_scripts:            # package.json "scripts" required per appType, enforced by `flisk doctor` — used in /docs/configuration/
   - type: "backend"
     scripts: "dev, build, start"
   - type: "worker"
@@ -190,9 +190,9 @@ work_hours_num: 2080       # working hours/year in the ROI formula (numeric, JS)
 work_hours: "2,080"        # same, display form
 cloud_cde_max: "$150"      # top of the Codespaces-class range, per dev/month
 cloud_sandbox: "$500"      # hosted-sandbox alternative, per dev/month
-team_price: 19             # TDK Team, USD per dev per month
+team_price: 19             # Flisk Team, USD per dev per month
 team_annual_10: "$2,280"   # 10 devs × team_price × 12 — keep in sync
-community_price: "$0"      # Community tier / "TDK itself costs…" claims
+community_price: "$0"      # Community tier / "Flisk itself costs…" claims
 roi_net_default: "$147,720"  # calculator default: 10 devs × 5 h × 48 wk × $62.50/h − 10 × $19 × 12
 roi_hours_default: "2,400"    # static placeholder before JS runs (10×5×48)
 roi_prod_default: "$150,000"  # static placeholder before JS runs
@@ -208,8 +208,8 @@ brownfield_artifacts: "372-527" # brownfield_dirs multiplied by the current 12-1
 brownfield_healthy: "31/31" # resources healthy in that example
 
 # --- Installation commands ---
-install_npm: "npm install -g flisk"
-install_npx_version: "npx flisk --version"
-install_npx_project: "npx flisk project --yes"
-install_pnpm: "pnpm add -g flisk"
-install_bun: "bun add -g flisk"
+install_npm: "npm install -g @flisk-sh/flisk"
+install_npx_version: "npx @flisk-sh/flisk --version"
+install_npx_project: "npx @flisk-sh/flisk project --yes"
+install_pnpm: "pnpm add -g @flisk-sh/flisk"
+install_bun: "bun add -g @flisk-sh/flisk"

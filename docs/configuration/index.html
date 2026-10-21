@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Configuration - TDK CLI
+title: Configuration - Flisk CLI
 ---
 
 <div class="aw">
@@ -10,7 +10,7 @@ title: Configuration - TDK CLI
 
       <div class="aw-docs-body">
         <h1>Configuration</h1>
-        <p class="aw-lead">TDK has two JSON configuration files: a <code>service.json</code> per service and a project-level <code>.tdk/project.json</code>. These schemas help your editor; the CLI remains the runtime source of truth.</p>
+        <p class="aw-lead">Flisk has two JSON configuration files: a <code>service.json</code> per service and a project-level <code>.tdk/project.json</code>. These schemas help your editor; the CLI remains the runtime source of truth.</p>
 
         <h2>service.json</h2>
         <p>This backend manifest is valid JSON. Field notes follow the file instead of appearing as invalid JSON comments.</p>
@@ -46,7 +46,7 @@ title: Configuration - TDK CLI
   ]
 }</pre>
         </div>
-        <p><code>tdk doctor</code> checks local environment readiness and discovered service issues. <code>tdk config verify</code> checks whether generated project files match <code>.tdk/project.json</code>; it does not lint <code>service.json</code> or Helm values. TDK does not validate your production chart.</p>
+        <p><code>flisk doctor</code> checks local environment readiness and discovered service issues. <code>flisk config verify</code> checks whether generated project files match <code>.tdk/project.json</code>; it does not lint <code>service.json</code> or Helm values. Flisk does not validate your production chart.</p>
 
         <h2>Required fields</h2>
 
@@ -67,14 +67,14 @@ title: Configuration - TDK CLI
         <p>Workers must enable <code>nats</code> in <code>featuresEnabled</code>. They have no HTTP server, so they get no Traefik route and no HTTP health check.</p>
 
         <h3>stack</h3>
-        <p>Groups related services for selective startup and Tilt orchestration. <code>tdk up &lt;stack&gt;</code> starts one stack.</p>
+        <p>Groups related services for selective startup and Tilt orchestration. <code>flisk up &lt;stack&gt;</code> starts one stack.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>service.json</span></div>
           <pre><span class="k">"stack"</span>: <span class="s">"reports"</span></pre>
         </div>
 
         <h3>port</h3>
-        <p>The port your service listens on. Backends need one in 4000-5999 and frontends use 3000-3999. TDK runs the service on exactly this port, and other containers reach it as <code>http://&lt;appName&gt;:&lt;port&gt;</code>. Backend ports are not published on <code>localhost</code>; reach them through Traefik at <code>http://api.&lt;project&gt;.localhost/api/&lt;name without -api&gt;</code>.</p>
+        <p>The port your service listens on. Backends need one in 4000-5999 and frontends use 3000-3999. Flisk runs the service on exactly this port, and other containers reach it as <code>http://&lt;appName&gt;:&lt;port&gt;</code>. Backend ports are not published on <code>localhost</code>; reach them through Traefik at <code>http://api.&lt;project&gt;.localhost/api/&lt;name without -api&gt;</code>.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>service.json</span></div>
           <pre><span class="k">"port"</span>: <span class="n">4410</span></pre>
@@ -91,9 +91,9 @@ title: Configuration - TDK CLI
         </ul>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>tdk resource web --type frontend --framework vue --stack shop</pre>
+          <pre>flisk resource web --type frontend --framework vue --stack shop</pre>
         </div>
-        <p>That writes <code>"framework": "vue"</code> into <code>web/service.json</code>. Docker, nginx, Traefik and Tilt are shared with React frontends. Needs TDK CLI 1.3.75 or newer; older releases ignore the field and generate React config. See the <a href="https://github.com/flisk-sh/tdk-ecommerce-example" target="_blank" rel="noopener">Vue example</a>, or <a href="https://github.com/flisk-sh/flisk/blob/main/docs/frontend-framework-providers.md" target="_blank" rel="noopener">add a framework</a>.</p>
+        <p>That writes <code>"framework": "vue"</code> into <code>web/service.json</code>. Docker, nginx, Traefik and Tilt are shared with React frontends. Needs Flisk CLI 1.3.75 or newer; older releases ignore the field and generate React config. See the <a href="https://github.com/flisk-sh/tdk-ecommerce-example" target="_blank" rel="noopener">Vue example</a>, or <a href="https://github.com/flisk-sh/flisk/blob/main/docs/frontend-framework-providers.md" target="_blank" rel="noopener">add a framework</a>.</p>
 
         <h3>featuresEnabled</h3>
         <p>Platform features to enable. Only these values are valid:</p>
@@ -104,7 +104,7 @@ title: Configuration - TDK CLI
         </ul>
 
         <h3>dependsOn</h3>
-        <p>Other services this service depends on. TDK resolves boot order automatically.</p>
+        <p>Other services this service depends on. Flisk resolves boot order automatically.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>service.json</span></div>
           <pre><span class="k">"dependsOn"</span>: [<span class="s">"auth-emulator"</span>, <span class="s">"catalog-api"</span>]</pre>

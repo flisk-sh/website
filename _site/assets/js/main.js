@@ -1,4 +1,4 @@
-// TDK CLI Website - Main JavaScript
+// Flisk CLI Website - Main JavaScript
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {

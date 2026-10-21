@@ -1,6 +1,6 @@
 ---
 layout: default
-title: package.json Scripts - TDK CLI
+title: package.json Scripts - Flisk CLI
 ---
 
 <div class="aw">
@@ -10,7 +10,7 @@ title: package.json Scripts - TDK CLI
 
       <div class="aw-docs-body">
         <h1>package.json Scripts</h1>
-        <p class="aw-lead">Every service needs a <code>package.json</code> next to its <code>service.json</code>, with a fixed set of npm scripts. TDK's Docker build (L3/L4 layers) and the Tilt dev loop invoke these scripts directly by name, so a missing one fails silently until <code>tdk up</code> or a production build.</p>
+        <p class="aw-lead">Every service needs a <code>package.json</code> next to its <code>service.json</code>, with a fixed set of npm scripts. Flisk's Docker build (L3/L4 layers) and the Tilt dev loop invoke these scripts directly by name, so a missing one fails silently until <code>flisk up</code> or a production build.</p>
 
         <h2>Required scripts by appType</h2>
         <ul>
@@ -23,21 +23,21 @@ title: package.json Scripts - TDK CLI
         <h2>What each script is for</h2>
 
         <h3>dev</h3>
-        <p>Runs the service directly from source with hot reload. This is what <code>tdk up</code> uses in local development, via Tilt.</p>
+        <p>Runs the service directly from source with hot reload. This is what <code>flisk up</code> uses in local development, via Tilt.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>package.json</span></div>
           <pre><span class="k">"dev"</span>: <span class="s">"bun run src/index.ts"</span></pre>
         </div>
 
         <h3>build</h3>
-        <p>Compiles the service for production. TDK's L3 Docker layer runs this script to produce the artifact that ships in the image.</p>
+        <p>Compiles the service for production. Flisk's L3 Docker layer runs this script to produce the artifact that ships in the image.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>package.json</span></div>
           <pre><span class="k">"build"</span>: <span class="s">"tsc"</span></pre>
         </div>
 
         <h3>start</h3>
-        <p>Runs the compiled production output. TDK's L4 Docker runtime layer sets this as the container's entrypoint command for backend, worker, and migrator services.</p>
+        <p>Runs the compiled production output. Flisk's L4 Docker runtime layer sets this as the container's entrypoint command for backend, worker, and migrator services.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>package.json</span></div>
           <pre><span class="k">"start"</span>: <span class="s">"bun run dist/index.js"</span></pre>
@@ -75,10 +75,10 @@ title: package.json Scripts - TDK CLI
         </div>
 
         <h2>Catching gaps early</h2>
-        <p><code>tdk doctor</code> discovers every <code>service.json</code> in the project, reads the matching <code>package.json</code>, and reports exactly which required scripts are missing per service — before Tilt tries and fails to run one.</p>
+        <p><code>flisk doctor</code> discovers every <code>service.json</code> in the project, reads the matching <code>package.json</code>, and reports exactly which required scripts are missing per service — before Tilt tries and fails to run one.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>tdk doctor
+          <pre>flisk doctor
 
 <span class="c">✗ Services missing required package.json scripts:</span>
 <span class="c">    user-portal-api: missing "build", "start"</span>
@@ -86,8 +86,8 @@ title: package.json Scripts - TDK CLI
         </div>
 
         <div class="aw-callout">
-          <h4>tdk doctor</h4>
-          <p>Run <code>tdk doctor</code> before <code>tdk up</code> to catch a missing <code>build</code> or <code>start</code> script before it turns into a failed container. See <a href="{{ '/docs/configuration/' | relative_url }}">Configuration</a> for the full <code>service.json</code> schema.</p>
+          <h4>flisk doctor</h4>
+          <p>Run <code>flisk doctor</code> before <code>flisk up</code> to catch a missing <code>build</code> or <code>start</code> script before it turns into a failed container. See <a href="{{ '/docs/configuration/' | relative_url }}">Configuration</a> for the full <code>service.json</code> schema.</p>
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@
 
 - id: warm
   tab: Warm start
-  title: tdk up on a warm machine
+  title: flisk up on a warm machine
   subtitle: seconds until all 8 containers are healthy · lower is better
   scale: 50
   stats:
@@ -27,7 +27,7 @@
 
 - id: cold
   tab: Cold start
-  title: tdk up from nothing built
+  title: flisk up from nothing built
   subtitle: seconds until all 8 containers are healthy · lower is better
   scale: 281
   stats:
@@ -133,15 +133,15 @@
   subtitle: median milliseconds at 500 services · lower is better
   scale: 1000
   stats:
-    - { value: "942 ms", label: "tdk resources, 500 services" }
-    - { value: "494 ms", label: "tdk resources, 10 services" }
+    - { value: "942 ms", label: "flisk resources, 500 services" }
+    - { value: "494 ms", label: "flisk resources, 10 services" }
     - { value: "10", label: "fresh Node processes each" }
   rows:
-    - { label: "version", name: "tdk version", sub: "tdk cmd", value: 499, display: "499 ms" }
-    - { label: "--help", name: "tdk --help", sub: "tdk cmd", value: 546, display: "546 ms" }
-    - { label: "resources", name: "tdk resources", sub: "tdk cmd", value: 942, display: "942 ms", key: true }
-    - { label: "stacks", name: "tdk stacks", sub: "tdk cmd", value: 524, display: "524 ms" }
-  row_suffix: tdk cmd
-  note: Windows x64, i5-12600KF, Node 24 · no containers started · tdk status is left out because it waits on a Tilt probe
+    - { label: "version", name: "flisk version", sub: "flisk cmd", value: 499, display: "499 ms" }
+    - { label: "--help", name: "flisk --help", sub: "flisk cmd", value: 546, display: "546 ms" }
+    - { label: "resources", name: "flisk resources", sub: "flisk cmd", value: 942, display: "942 ms", key: true }
+    - { label: "stacks", name: "flisk stacks", sub: "flisk cmd", value: 524, display: "524 ms" }
+  row_suffix: flisk cmd
+  note: Windows x64, i5-12600KF, Node 24 · no containers started · flisk status is left out because it waits on a Tilt probe
   source: benchmarks/results/cli-startup-2026-10-06T21-18-27.093Z.json
   repro: scripts/benchmark/README.md

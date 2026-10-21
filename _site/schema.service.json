@@ -94,7 +94,7 @@
       }
     }
   ],
-  "description": "Configuration for TDK Landscape resources. Drives Tilt orchestration, Docker Compose generation, and dependency resolution. Supports both explicit service.json files and synthesis from directory structure.",
+  "description": "Configuration for Flisk Landscape resources. Drives Tilt orchestration, Docker Compose generation, and dependency resolution. Supports both explicit service.json files and synthesis from directory structure.",
   "properties": {
     "$schema": {
       "description": "JSON Schema reference for IDE validation",
@@ -138,7 +138,7 @@
       "type": "string"
     },
     "basePath": {
-      "description": "Base path for frontend routing on TDK Landscape.localhost. Default is /{stack}s when omitted.",
+      "description": "Base path for frontend routing on Flisk Landscape.localhost. Default is /{stack}s when omitted.",
       "pattern": "^/[a-z0-9/-]*$",
       "type": "string"
     },
@@ -223,7 +223,7 @@
       "type": "object"
     },
     "featuresEnabled": {
-      "description": "Platform features:\n• nats - NATS JetStream eventing\n• prisma - DB ORM & migrations\n• drizzle - DB ORM (Postgres via DATABASE_URL, no migrator)\n• redis - Caching layer\n• infisical - Secrets management\n• vitest - Test framework\n• traefik - Reverse proxy routing\n• websocket - WS support\n• graphql - GraphQL server\n• grpc - gRPC protocol\n• vite, tsconfig, dockerfile, nginx, ... - generator features that `tdk resource` writes into new files",
+      "description": "Platform features:\n• nats - NATS JetStream eventing\n• prisma - DB ORM & migrations\n• drizzle - DB ORM (Postgres via DATABASE_URL, no migrator)\n• redis - Caching layer\n• infisical - Secrets management\n• vitest - Test framework\n• traefik - Reverse proxy routing\n• websocket - WS support\n• graphql - GraphQL server\n• grpc - gRPC protocol\n• vite, tsconfig, dockerfile, nginx, ... - generator features that `flisk resource` writes into new files",
       "items": {
         "enum": [
           "nats",
@@ -278,7 +278,7 @@
     },
     "healthCheckPath": {
       "default": "/health",
-      "description": "HTTP endpoint for health checks. Must return 200 OK. Optional for bring-your-own: omit it for a service that does not speak HTTP (Postgres, Redis, SMTP, ...), and TDK then skips the HTTP health probes for it.",
+      "description": "HTTP endpoint for health checks. Must return 200 OK. Optional for bring-your-own: omit it for a service that does not speak HTTP (Postgres, Redis, SMTP, ...), and Flisk then skips the HTTP health probes for it.",
       "pattern": "^/[a-z0-9/-]*$",
       "type": "string"
     },
@@ -344,7 +344,7 @@
     },
     "schemaVersion": {
       "const": 1,
-      "description": "Version of the TDK service manifest contract.",
+      "description": "Version of the Flisk service manifest contract.",
       "type": "integer"
     },
     "sablier": {
@@ -357,7 +357,7 @@
         },
         "deferStart": {
           "default": false,
-          "description": "Build the image during tdk up, then create and start the container on its first request",
+          "description": "Build the image during flisk up, then create and start the container on its first request",
           "type": "boolean"
         },
         "group": {
@@ -380,7 +380,7 @@
       "type": "array"
     },
     "smoke": {
-      "description": "Post-start check run by `tdk up` through the public proxy URL (not inside the container): write a record, read it back. `tdk up` fails if a step misses. Absent means no smoke check. Workers and resources with exposeViaProxy false are skipped.",
+      "description": "Post-start check run by `flisk up` through the public proxy URL (not inside the container): write a record, read it back. `flisk up` fails if a step misses. Absent means no smoke check. Workers and resources with exposeViaProxy false are skipped.",
       "type": "object",
       "required": [
         "via",
@@ -390,7 +390,7 @@
       "properties": {
         "via": {
           "const": "proxy",
-          "description": "Only `proxy` is supported: the request goes to the URL `tdk up` prints."
+          "description": "Only `proxy` is supported: the request goes to the URL `flisk up` prints."
         },
         "timeoutSeconds": {
           "type": "number",
@@ -492,7 +492,7 @@
       "type": "string"
     },
     "agent": {
-      "description": "Agent settings, used when appType is 'agent'. The agent runtime checkpoints its sessions; TDK provides the volume or database.",
+      "description": "Agent settings, used when appType is 'agent'. The agent runtime checkpoints its sessions; Flisk provides the volume or database.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -504,7 +504,7 @@
           ]
         },
         "durability": {
-          "description": "files: sessions live in a named volume that tdk down keeps. postgres: sessions live in Postgres via DATABASE_URL.",
+          "description": "files: sessions live in a named volume that flisk down keeps. postgres: sessions live in Postgres via DATABASE_URL.",
           "type": "string",
           "enum": [
             "files",
@@ -520,7 +520,7 @@
     "stack",
     "schemaVersion"
   ],
-  "title": "TDK Landscape Resource Configuration",
+  "title": "Flisk Landscape Resource Configuration",
   "type": "object",
   "anyOf": [
     {

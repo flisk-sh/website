@@ -1,6 +1,6 @@
-# Contributing to the TDK CLI Website
+# Contributing to the Flisk CLI Website
 
-Thank you for taking the time to improve the TDK CLI website! This guide covers everything you need to go from a fresh checkout to an accepted pull request.
+Thank you for taking the time to improve the Flisk CLI website! This guide covers everything you need to go from a fresh checkout to an accepted pull request.
 
 ---
 

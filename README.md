@@ -1,10 +1,10 @@
-# TDK CLI Website
+# Flisk CLI Website
 
-The official website for TDK CLI. Start your services on your machine; no deploy or Compose file required.
+The official website for Flisk CLI. Start your services on your machine; no deploy or Compose file required.
 
 ## About
 
-This is a Jekyll-based static site for TDK CLI. The site features:
+This is a Jekyll-based static site for Flisk CLI. The site features:
 
 - 🎨 Modern Bootstrap 5 design
 - 📱 Fully responsive layout
@@ -17,7 +17,7 @@ This is a Jekyll-based static site for TDK CLI. The site features:
 ### Prerequisites
 
 - Ruby 2.6+ with Bundler
-- Node.js 18+ (optional, for this website's asset build; the TDK CLI npm package requires 22.12+)
+- Node.js 18+ (optional, for this website's asset build; the Flisk CLI npm package requires 22.12+)
 
 ### Installation
 

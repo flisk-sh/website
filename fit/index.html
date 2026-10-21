@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Does TDK Fit Your Stack? - TDK CLI
+title: Does Flisk Fit Your Stack? - Flisk CLI
 ---
 
 <style>
@@ -197,7 +197,7 @@ title: Does TDK Fit Your Stack? - TDK CLI
   <!-- Subhero -->
   <section class="aw-subhero">
     <div class="aw-subhero-grid">
-      <h1>Tell us your stack. <span class="aw-accent">We'll tell you if TDK fits.</span></h1>
+      <h1>Tell us your stack. <span class="aw-accent">We'll tell you if Flisk fits.</span></h1>
       <p class="aw-subhero-sub">Five questions about how your team runs services today. The verdict updates as you answer — <strong>no email, no sales call.</strong></p>
     </div>
   </section>
@@ -207,7 +207,7 @@ title: Does TDK Fit Your Stack? - TDK CLI
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>The stack fit checker</h2>
-        <p>Pick the pills that match your team and drag the sliders. We'll score the fit honestly — including telling you when TDK isn't the answer.</p>
+        <p>Pick the pills that match your team and drag the sliders. We'll score the fit honestly — including telling you when Flisk isn't the answer.</p>
       </div>
 
       <div class="aw-fit">
@@ -243,7 +243,7 @@ title: Does TDK Fit Your Stack? - TDK CLI
           <div class="aw-fit-field">
             <label>What's slowing your team down? <span>(pick any that apply)</span></label>
             <div class="aw-fit-pills" data-group="pain" data-multi="true">
-              <button type="button" data-value="6" class="is-active" data-reason="TDK is designed so tdk doctor and tdk up replace a setup wiki; onboarding time has not been measured on a hiring cohort.">Onboarding takes days</button>
+              <button type="button" data-value="6" class="is-active" data-reason="Flisk is designed so flisk doctor and flisk up replace a setup wiki; onboarding time has not been measured on a hiring cohort.">Onboarding takes days</button>
               <button type="button" data-value="6" class="is-active" data-reason="Golden Docker L1–L4 layers make every developer's machine identical.">Environment drift between machines</button>
               <button type="button" data-value="6" data-reason="Infisical machine identities are generated per service automatically.">Secrets / credentials setup</button>
               <button type="button" data-value="6" data-reason="Selective startup + auto-discovery boots the whole stack on one machine.">Nobody can run the whole system locally</button>
@@ -287,8 +287,8 @@ title: Does TDK Fit Your Stack? - TDK CLI
     <div class="aw-wrap">
       <div class="aw-band">
         <h2>Still deciding?</h2>
-        <p>See the full head-to-head against Garden, Skaffold and DevSpace, or read what TDK actually generates.</p>
-        <a href="{{ '/compare/' | relative_url }}" class="aw-btn aw-btn-solid">Compare TDK</a>
+        <p>See the full head-to-head against Garden, Skaffold and DevSpace, or read what Flisk actually generates.</p>
+        <a href="{{ '/compare/' | relative_url }}" class="aw-btn aw-btn-solid">Compare Flisk</a>
       </div>
     </div>
   </section>
@@ -385,18 +385,18 @@ function calcFit() {
 
   if (total >= 75) {
     verdictEl.textContent = 'Strong fit';
-    subEl.textContent = 'TDK was built for exactly this setup.';
+    subEl.textContent = 'Flisk was built for exactly this setup.';
     cta.textContent = 'Join waitlist';
     cta.href = '{{ "/#waitlist" | relative_url }}';
   } else if (total >= 45) {
     verdictEl.textContent = 'Partial fit';
-    subEl.textContent = 'TDK will help — read the caveats below first.';
+    subEl.textContent = 'Flisk will help — read the caveats below first.';
     cta.textContent = 'Join waitlist';
     cta.href = '{{ "/#waitlist" | relative_url }}';
   } else {
     verdictEl.textContent = 'Not a fit yet';
-    subEl.textContent = 'Your setup doesn\'t have the pain TDK solves — yet.';
-    cta.textContent = 'See what TDK generates';
+    subEl.textContent = 'Your setup doesn\'t have the pain Flisk solves — yet.';
+    cta.textContent = 'See what Flisk generates';
     cta.href = '{{ "/features/" | relative_url }}';
   }
 
@@ -408,34 +408,34 @@ function calcFit() {
   } else if (runtimeVals[0] >= 6) {
     reasons.push(['~', 'Docker-based services work today; generators are tuned for Node/TS/Bun first.']);
   } else {
-    reasons.push(['✗', runtimeLabel + ' stacks aren\'t the primary target for TDK\'s generators yet.']);
+    reasons.push(['✗', runtimeLabel + ' stacks aren\'t the primary target for Flisk\'s generators yet.']);
   }
 
   var todayProfile = selectedProfile('today');
   if (todayProfile === 'kubernetes') {
-    reasons.push(['✓', 'You\'re paying the Kubernetes tax locally — TDK removes it entirely.']);
+    reasons.push(['✓', 'You\'re paying the Kubernetes tax locally — Flisk removes it entirely.']);
   } else if (todayProfile === 'mixed') {
-    reasons.push(['✓', 'A different setup per developer is exactly the drift TDK\'s manifest eliminates.']);
+    reasons.push(['✓', 'A different setup per developer is exactly the drift Flisk\'s manifest eliminates.']);
   } else if (todayProfile === 'compose') {
-    reasons.push(['✓', 'You already think in containers — TDK is a drop-in upgrade from Compose.']);
+    reasons.push(['✓', 'You already think in containers — Flisk is a drop-in upgrade from Compose.']);
   } else if (todayProfile === 'orchestrator') {
-    reasons.push(['✓', 'You already use local orchestration — TDK adds generated service definitions, docs and diagnostics around that workflow.']);
+    reasons.push(['✓', 'You already use local orchestration — Flisk adds generated service definitions, docs and diagnostics around that workflow.']);
   } else if (todayProfile === 'container-ui') {
-    reasons.push(['~', 'Container dashboards make runtimes visible; TDK adds repeatable multi-service generation and orchestration.']);
+    reasons.push(['~', 'Container dashboards make runtimes visible; Flisk adds repeatable multi-service generation and orchestration.']);
   } else if (todayProfile === 'dev-container') {
-    reasons.push(['~', 'Dev Containers solve per-service isolation — TDK adds multi-service orchestration on top.']);
+    reasons.push(['~', 'Dev Containers solve per-service isolation — Flisk adds multi-service orchestration on top.']);
   } else if (todayProfile === 'cloud-ide') {
-    reasons.push(['~', 'Cloud IDEs solve a different problem — TDK runs the same stack on your machine, no per-seat bill.']);
+    reasons.push(['~', 'Cloud IDEs solve a different problem — Flisk runs the same stack on your machine, no per-seat bill.']);
   } else if (todayProfile === 'native') {
-    reasons.push(['~', 'You\'ll containerize as part of adopting TDK — worth it once you pass ~5 services.']);
+    reasons.push(['~', 'You\'ll containerize as part of adopting Flisk — worth it once you pass ~5 services.']);
   } else {
-    reasons.push(['~', 'A custom setup may fit — compare its orchestration, generated files and diagnostics with TDK\'s workflow.']);
+    reasons.push(['~', 'A custom setup may fit — compare its orchestration, generated files and diagnostics with Flisk\'s workflow.']);
   }
 
   var painButtons = document.querySelectorAll('.aw-fit-pills[data-group="pain"] button.is-active');
   var painIsNone = painButtons.length === 1 && painButtons[0].dataset.exclusive === 'true';
   if (painButtons.length === 0 || painIsNone) {
-    reasons.push(['✗', 'Nothing\'s broken today — TDK mostly pays off once local dev has friction.']);
+    reasons.push(['✗', 'Nothing\'s broken today — Flisk mostly pays off once local dev has friction.']);
   } else {
     Array.prototype.forEach.call(painButtons, function (btn) {
       reasons.push(['✓', btn.dataset.reason]);
@@ -443,11 +443,11 @@ function calcFit() {
   }
 
   if (services <= 1) {
-    reasons.push(['✗', 'One service doesn\'t need a multi-service orchestrator — TDK shines at 5+.']);
+    reasons.push(['✗', 'One service doesn\'t need a multi-service orchestrator — Flisk shines at 5+.']);
   } else if (services < 5) {
-    reasons.push(['~', 'A few services already benefit, but TDK\'s sweet spot is 5+ services (tested up to {{ site.data.tdk.scale_plain }} small ones).']);
+    reasons.push(['~', 'A few services already benefit, but Flisk\'s sweet spot is 5+ services (tested up to {{ site.data.tdk.scale_plain }} small ones).']);
   } else {
-    reasons.push(['✓', services + ' services is squarely in TDK\'s range (a {{ site.data.tdk.monorepo_services }}-service monorepo runs on it daily; {{ site.data.tdk.scale_plain }} small services are tested in CI).']);
+    reasons.push(['✓', services + ' services is squarely in Flisk\'s range (a {{ site.data.tdk.monorepo_services }}-service monorepo runs on it daily; {{ site.data.tdk.scale_plain }} small services are tested in CI).']);
   }
 
   if (devs < 5) {

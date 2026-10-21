@@ -1,9 +1,9 @@
-# Design System: TDK CLI Website
+# Design System: Flisk CLI Website
 
-> Single source of truth for every tab of the TDK marketing site
+> Single source of truth for every tab of the Flisk marketing site
 > (home, features, compare, why, waiting, docs). Dark devtool aesthetic:
 > honest terminal proof over stock decoration. Brand accent is violet
-> (explicit brand override: violet is the TDK identity since inception,
+> (explicit brand override: violet is the Flisk identity since inception,
 > used with restraint, never as neon glow).
 
 ## 1. Visual Theme & Atmosphere
@@ -26,7 +26,7 @@ near-black calm, one violet signal light, monospace evidence everywhere.
 - **Hairline** (rgba(255,255,255,0.07)) — Card borders, table row dividers
 - **Brand Violet** (#7C4DFF) — Single brand accent: CTAs focus, active states, key numbers
 - **Signal Lavender** (#B79AFF) — Violet at readable lightness: headlines accents, links, outputs
-- **Success Mint** (#6EE7B7) — Semantic only: healthy states, savings, "with TDK" column
+- **Success Mint** (#6EE7B7) — Semantic only: healthy states, savings, "with Flisk" column
 - **Cost Orchid** (#F0ABFC) — Semantic only: prices being replaced, money burned
 - **Info Ice** (#4DD0FF) — Sparing: terminal highlights, gradient endpoint
 - No neon outer glows. Depth via layered radial washes and 1px inner borders.

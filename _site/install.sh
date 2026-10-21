@@ -3,10 +3,10 @@ set -eu
 
 OWNER="flisk-sh"
 REPO="releases"
-BIN_NAME="tdk"
+BIN_NAME="flisk"
 
 fail() {
-  echo "tdk install: $*" >&2
+  echo "flisk install: $*" >&2
   exit 1
 }
 
@@ -38,7 +38,7 @@ asset="tdk-${platform}-${cpu}"
 url="https://github.com/${OWNER}/${REPO}/releases/latest/download/${asset}"
 
 install_dir="${TDK_INSTALL_DIR:-/usr/local/bin}"
-tmp="${TMPDIR:-/tmp}/tdk.$$"
+tmp="${TMPDIR:-/tmp}/flisk.$$"
 
 download() {
   src="$1"
