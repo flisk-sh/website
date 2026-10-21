@@ -6,8 +6,11 @@ description: >-
 author:
   name: TDK Team
 
-baseurl: "/tdk-website"
-url: "https://flisk-sh.github.io"
+# Published at the domain root (custom domain flisk.sh -> GitHub Pages, source path "/").
+# Keep baseurl empty: a non-empty baseurl prefixes every internal link and asset with
+# "/tdk-website", which 404s on the root-served custom domain.
+baseurl: ""
+url: "https://flisk.sh"
 
 twitter_username: tdkcli
 github_username: tdk-landscape
