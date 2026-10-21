@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tdk-landscape.github.io/tdk-website/sitemap.xml
+Sitemap: https://flisk.sh/sitemap.xml
