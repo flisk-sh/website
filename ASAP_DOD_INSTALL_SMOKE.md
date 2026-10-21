@@ -82,6 +82,6 @@ Result: passed. `tdk status --verbose` discovered `2 resources` in `pre-alpha`, 
 
 ## Fixes made during smoke
 
-- Published `tdk-cli-releases` release `v1.1.0`.
+- Published a release in the `flisk-sh/releases` release channel (`v1.1.0`).
 - Embedded CLI templates into the compiled Bun binary so `tdk project --yes` works without source files.
 - Updated Quick Start from stale `tdk init` / `tdk generate` commands to current `tdk project` / `tdk resource` flow.

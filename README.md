@@ -47,7 +47,7 @@ bundle exec jekyll build
 ## Project Structure
 
 ```
-tdk-website/
+website/
 ├── _layouts/           # Jekyll layouts
 │   └── default.html    # Main layout with navigation and footer
 ├── _includes/          # Reusable components
