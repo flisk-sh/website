@@ -274,7 +274,7 @@ if (document.readyState === 'loading') {
   initializeSite();
 }
 
-// Live GitHub star count for tdk-cli-core on every [data-gh-stars] badge.
+// Live GitHub star count for the CLI repo on every [data-gh-stars] badge.
 (function showGitHubStars() {
   const badges = document.querySelectorAll('[data-gh-stars]');
   if (!badges.length) return;
@@ -309,7 +309,7 @@ if (document.readyState === 'loading') {
     .catch(() => {});
 })();
 
-// Latest tdk-cli-core release tag on every [data-latest-release] pill.
+// Latest CLI repo release tag on every [data-latest-release] pill.
 (function showLatestRelease() {
   const labels = document.querySelectorAll('[data-latest-release]');
   if (!labels.length) return;

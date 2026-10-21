@@ -53,8 +53,8 @@ nvm use 22
 
 ```bash
 # 1. Fork the repository on GitHub, then clone your fork
-git clone https://github.com/<your-username>/tdk-website.git
-cd tdk-website
+git clone https://github.com/<your-username>/website.git
+cd website
 
 # 2. Add the upstream remote so you can pull future changes
 git remote add upstream https://github.com/flisk-sh/website.git

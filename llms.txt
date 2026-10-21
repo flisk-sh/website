@@ -79,7 +79,7 @@ Current skills include:
 - tdk-service-json — edit and validate the service.json contract
 - tdk-networks — inspect routed URLs and stack topology
 - tdk-doctor-verbose — deep diagnostic runs with extra verbosity
-- tdk-contributing — guide for contributors working on tdk-cli-core
+- tdk-contributing — guide for contributors working on the flisk CLI repo
 
 ## Product
 
