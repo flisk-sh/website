@@ -26,21 +26,21 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
         <p>Each one clones straight into <code>./&lt;name&gt;</code> (use <code>--path &lt;dir&gt;</code> to pick a different folder), so you're one <code>cd</code> and <code>tdk up</code> away from a running stack. Prefer plain git? Use the links below instead:</p>
 
         <div class="aw-doc-cards aw-doc-cards-featured">
-          <a class="aw-card" href="https://github.com/tdk-landscape/tdk-example" target="_blank" rel="noopener">
+          <a class="aw-card" href="https://github.com/flisk-sh/tdk-example" target="_blank" rel="noopener">
             <span class="aw-repo-kicker">Base reference stack</span>
             <h3>tdk-example</h3>
             <p>Minimal PSR demonstration: 1 project, 2 stacks (identity &amp; appointment), and 4 resources using Hono, Vite, and Bun.</p>
             <span class="aw-repo-link">Clone on GitHub <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
           </a>
 
-          <a class="aw-card" href="https://github.com/tdk-landscape/tdk-user-management" target="_blank" rel="noopener">
+          <a class="aw-card" href="https://github.com/flisk-sh/tdk-user-management" target="_blank" rel="noopener">
             <span class="aw-repo-kicker">Enterprise governance demo</span>
             <h3>tdk-user-management</h3>
             <p>Enterprise identity governance: 3 stacks (admin, portal, compliance), 6 resources, SCIM 2.0 provisioning, OIDC PKCE, and SIEM workers.</p>
             <span class="aw-repo-link">Clone on GitHub <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
           </a>
 
-          <a class="aw-card aw-card-restaurant" href="https://github.com/tdk-landscape/tdk-restaurant-example" target="_blank" rel="noopener">
+          <a class="aw-card aw-card-restaurant" href="https://github.com/flisk-sh/tdk-restaurant-example" target="_blank" rel="noopener">
             <div class="aw-restaurant-photo" aria-hidden="true"></div>
             <span class="aw-repo-kicker">Restaurant ops demo</span>
             <h3>tdk-restaurant-example</h3>
@@ -48,7 +48,7 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
             <span class="aw-repo-link">Clone on GitHub <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
           </a>
 
-          <a class="aw-card aw-card-erp" href="https://github.com/tdk-landscape/tdk-erp-system" target="_blank" rel="noopener">
+          <a class="aw-card aw-card-erp" href="https://github.com/flisk-sh/tdk-erp-system" target="_blank" rel="noopener">
             <div class="aw-erp-badge" aria-hidden="true">
               <span>{{ site.data.tdk.erp_services }}</span>
               <small>services</small>
@@ -59,7 +59,7 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
             <span class="aw-repo-link">Clone on GitHub <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
           </a>
 
-          <a class="aw-card" href="https://github.com/tdk-landscape/tdk-saas-starter" target="_blank" rel="noopener">
+          <a class="aw-card" href="https://github.com/flisk-sh/tdk-saas-starter" target="_blank" rel="noopener">
             <span class="aw-repo-kicker">SaaS starter</span>
             <h3>tdk-saas-starter</h3>
             <p>2 stacks (app, billing), 4 resources, a live account dashboard, and a checkout button wired to a real endpoint.</p>
@@ -71,14 +71,14 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
         <p>Two smaller repositories. One is the shortest path to a Vue frontend; the other runs an identity provider, a queue and email locally, the services that usually only exist in a cloud account.</p>
 
         <div class="aw-doc-cards">
-          <a class="aw-card" href="https://github.com/tdk-landscape/tdk-ecommerce-example" target="_blank" rel="noopener">
+          <a class="aw-card" href="https://github.com/flisk-sh/tdk-ecommerce-example" target="_blank" rel="noopener">
             <span class="aw-repo-kicker">Vue 3 + Hono</span>
             <h3>tdk-ecommerce-example</h3>
             <p>A Vue 3 storefront with search, a cart and checkout, and a Hono catalog API that prices orders in integer cents and refuses to oversell. One stack, two resources, no database. Needs TDK 1.3.75 or newer.</p>
             <span class="aw-repo-link">Clone on GitHub <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
           </a>
 
-          <a class="aw-card" href="https://github.com/tdk-landscape/tdk-auth-queue-email-example" target="_blank" rel="noopener">
+          <a class="aw-card" href="https://github.com/flisk-sh/tdk-auth-queue-email-example" target="_blank" rel="noopener">
             <span class="aw-repo-kicker">Identity, queue and email</span>
             <h3>tdk-auth-queue-email-example</h3>
             <p>Sign in, request a report, and a worker emails you a CSV. An OIDC issuer stands in for Auth0 or Cognito, NATS JetStream for SQS (with retry on failure) and Mailpit for SES. Two stacks, four resources, plus NATS and Mailpit.</p>
@@ -117,7 +117,7 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
             <figcaption>The email in the local inbox, CSV attached</figcaption>
           </figure>
         </div>
-        <p>The stand-ins are not the real services: the emulator is not a security product (hard-coded users, no MFA or redirect flow), and JetStream differs from SQS in ordering and dead-letter behavior. The <a href="https://github.com/tdk-landscape/tdk-auth-queue-email-example#what-this-does-not-do" target="_blank" rel="noopener">README lists what it does not do</a>.</p>
+        <p>The stand-ins are not the real services: the emulator is not a security product (hard-coded users, no MFA or redirect flow), and JetStream differs from SQS in ordering and dead-letter behavior. The <a href="https://github.com/flisk-sh/tdk-auth-queue-email-example#what-this-does-not-do" target="_blank" rel="noopener">README lists what it does not do</a>.</p>
 
         <h2 id="restaurant-operations-landscape">Restaurant operations landscape</h2>
         <p>The newest reference repo splits the host stand, kitchen pass, menu state, and floor control into independently runnable resources.</p>
@@ -127,7 +127,7 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
             <h3 id="restaurant-example-title">A restaurant stack that feels like a live service.</h3>
             <p>Run reservations, kitchen pacing, menu availability, and the floor view as separate TDK resources.</p>
             <div class="aw-example-actions">
-              <a class="aw-btn aw-btn-solid" href="https://github.com/tdk-landscape/tdk-restaurant-example" target="_blank" rel="noopener">Clone on GitHub</a>
+              <a class="aw-btn aw-btn-solid" href="https://github.com/flisk-sh/tdk-restaurant-example" target="_blank" rel="noopener">Clone on GitHub</a>
               <a class="aw-btn aw-btn-ghost" href="#restaurant-manifest">View manifest</a>
             </div>
           </div>
@@ -151,22 +151,22 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
         </section>
 
         <div class="aw-restaurant-resource-grid">
-          <a href="https://github.com/tdk-landscape/tdk-restaurant-example/tree/main/services/guest/reservation-api" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-restaurant-example/tree/main/services/guest/reservation-api" target="_blank" rel="noopener">
             <i class="bi bi-calendar-check" aria-hidden="true"></i>
             <strong>Reservations</strong>
             <span>Guest bookings, waitlist, and table holds.</span>
           </a>
-          <a href="https://github.com/tdk-landscape/tdk-restaurant-example/tree/main/services/kitchen/kitchen-api" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-restaurant-example/tree/main/services/kitchen/kitchen-api" target="_blank" rel="noopener">
             <i class="bi bi-fire" aria-hidden="true"></i>
             <strong>Kitchen pass</strong>
             <span>Tickets, stations, and course-fire timing.</span>
           </a>
-          <a href="https://github.com/tdk-landscape/tdk-restaurant-example/tree/main/services/operations/menu-api" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-restaurant-example/tree/main/services/operations/menu-api" target="_blank" rel="noopener">
             <i class="bi bi-menu-button-wide" aria-hidden="true"></i>
             <strong>Menu state</strong>
             <span>Item availability, modifiers, and 86s.</span>
           </a>
-          <a href="https://github.com/tdk-landscape/tdk-restaurant-example/tree/main/services/operations/floor-app" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-restaurant-example/tree/main/services/operations/floor-app" target="_blank" rel="noopener">
             <i class="bi bi-grid-3x3-gap" aria-hidden="true"></i>
             <strong>Floor view</strong>
             <span>Manager visibility across tables and service status.</span>
@@ -198,7 +198,7 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
             <h3 id="erp-example-title">{{ site.data.tdk.erp_services }}&nbsp;small services. {{ site.data.tdk.erp_domains }}&nbsp;domains. One&nbsp;command.</h3>
             <p>On a clean CI runner all {{ site.data.tdk.erp_services }} backends were healthy through Traefik in {{ site.data.tdk.erp_boot_seconds }} s, images built from scratch. A weekly CI job repeats the boot (<a href="{{ site.data.tdk.erp_ci_run }}" target="_blank" rel="noopener">latest measured run</a>).</p>
             <div class="aw-example-actions">
-              <a class="aw-btn aw-btn-solid" href="https://github.com/tdk-landscape/tdk-erp-system" target="_blank" rel="noopener">Clone on GitHub</a>
+              <a class="aw-btn aw-btn-solid" href="https://github.com/flisk-sh/tdk-erp-system" target="_blank" rel="noopener">Clone on GitHub</a>
               <a class="aw-btn aw-btn-ghost" href="#erp-manifest">View manifest</a>
             </div>
           </div>
@@ -214,43 +214,43 @@ tdk project saas             <span class="c"># SaaS dashboard + checkout starter
         </section>
 
         <div class="aw-erp-domain-grid">
-          <a href="https://github.com/tdk-landscape/tdk-erp-system/tree/master/services/finance" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-erp-system/tree/master/services/finance" target="_blank" rel="noopener">
             <i class="bi bi-currency-dollar" aria-hidden="true"></i>
             <strong>Finance</strong>
             <span class="aw-domain-count">15 services</span>
             <span>GL, AP/AR, budgeting, tax, assets</span>
           </a>
-          <a href="https://github.com/tdk-landscape/tdk-erp-system/tree/master/services/hr" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-erp-system/tree/master/services/hr" target="_blank" rel="noopener">
             <i class="bi bi-people" aria-hidden="true"></i>
             <strong>Human resources</strong>
             <span class="aw-domain-count">12 services</span>
             <span>Records, recruitment, performance, benefits</span>
           </a>
-          <a href="https://github.com/tdk-landscape/tdk-erp-system/tree/master/services/inventory" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-erp-system/tree/master/services/inventory" target="_blank" rel="noopener">
             <i class="bi bi-box-seam" aria-hidden="true"></i>
             <strong>Inventory</strong>
             <span class="aw-domain-count">18 services</span>
             <span>Management, warehouse, forecasting, tracking</span>
           </a>
-          <a class="is-wide" href="https://github.com/tdk-landscape/tdk-erp-system/tree/master/services/sales" target="_blank" rel="noopener">
+          <a class="is-wide" href="https://github.com/flisk-sh/tdk-erp-system/tree/master/services/sales" target="_blank" rel="noopener">
             <i class="bi bi-graph-up-arrow" aria-hidden="true"></i>
             <strong>Sales</strong>
             <span class="aw-domain-count">20 services, the largest domain</span>
             <span>CRM, orders, pricing, analytics</span>
           </a>
-          <a href="https://github.com/tdk-landscape/tdk-erp-system/tree/master/services/manufacturing" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-erp-system/tree/master/services/manufacturing" target="_blank" rel="noopener">
             <i class="bi bi-gear" aria-hidden="true"></i>
             <strong>Manufacturing</strong>
             <span class="aw-domain-count">15 services</span>
             <span>Planning, quality, maintenance, BOM</span>
           </a>
-          <a href="https://github.com/tdk-landscape/tdk-erp-system/tree/master/services/supply_chain" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-erp-system/tree/master/services/supply_chain" target="_blank" rel="noopener">
             <i class="bi bi-truck" aria-hidden="true"></i>
             <strong>Supply chain</strong>
             <span class="aw-domain-count">12 services</span>
             <span>Procurement, logistics, planning</span>
           </a>
-          <a href="https://github.com/tdk-landscape/tdk-erp-system/tree/master/services/analytics" target="_blank" rel="noopener">
+          <a href="https://github.com/flisk-sh/tdk-erp-system/tree/master/services/analytics" target="_blank" rel="noopener">
             <i class="bi bi-bar-chart" aria-hidden="true"></i>
             <strong>Analytics</strong>
             <span class="aw-domain-count">8 services</span>
@@ -479,7 +479,7 @@ tdk up media             <span class="c"># start the media stack only</span></pr
 
         <div class="aw-callout">
           <h4>All reference repositories</h4>
-          <p>Browse them on GitHub: <a href="https://github.com/tdk-landscape/tdk-example" target="_blank" rel="noopener">tdk-example</a> (base PSR stack), <a href="https://github.com/tdk-landscape/tdk-user-management" target="_blank" rel="noopener">tdk-user-management</a> (enterprise governance demo with SCIM 2.0 and OIDC PKCE), <a href="https://github.com/tdk-landscape/tdk-restaurant-example" target="_blank" rel="noopener">tdk-restaurant-example</a> (restaurant ops demo), <a href="https://github.com/tdk-landscape/tdk-erp-system" target="_blank" rel="noopener">tdk-erp-system</a> ({{ site.data.tdk.erp_services }}-service scale fixture across {{ site.data.tdk.erp_domains }} ERP-style domains), <a href="https://github.com/tdk-landscape/tdk-saas-starter" target="_blank" rel="noopener">tdk-saas-starter</a> (SaaS dashboard and checkout), <a href="https://github.com/tdk-landscape/tdk-ecommerce-example" target="_blank" rel="noopener">tdk-ecommerce-example</a> (Vue storefront) and <a href="https://github.com/tdk-landscape/tdk-auth-queue-email-example" target="_blank" rel="noopener">tdk-auth-queue-email-example</a> (identity, queue and email, all local).</p>
+          <p>Browse them on GitHub: <a href="https://github.com/flisk-sh/tdk-example" target="_blank" rel="noopener">tdk-example</a> (base PSR stack), <a href="https://github.com/flisk-sh/tdk-user-management" target="_blank" rel="noopener">tdk-user-management</a> (enterprise governance demo with SCIM 2.0 and OIDC PKCE), <a href="https://github.com/flisk-sh/tdk-restaurant-example" target="_blank" rel="noopener">tdk-restaurant-example</a> (restaurant ops demo), <a href="https://github.com/flisk-sh/tdk-erp-system" target="_blank" rel="noopener">tdk-erp-system</a> ({{ site.data.tdk.erp_services }}-service scale fixture across {{ site.data.tdk.erp_domains }} ERP-style domains), <a href="https://github.com/flisk-sh/tdk-saas-starter" target="_blank" rel="noopener">tdk-saas-starter</a> (SaaS dashboard and checkout), <a href="https://github.com/flisk-sh/tdk-ecommerce-example" target="_blank" rel="noopener">tdk-ecommerce-example</a> (Vue storefront) and <a href="https://github.com/flisk-sh/tdk-auth-queue-email-example" target="_blank" rel="noopener">tdk-auth-queue-email-example</a> (identity, queue and email, all local).</p>
           <p>Or skip the browser: <code>tdk project example</code>, <code>tdk project user-management</code>, <code>tdk project restaurant</code>, <code>tdk project erp</code>, or <code>tdk project saas</code> clones the first five from the CLI. The last two are a plain <code>git clone</code> away; then run <code>tdk project</code> and <code>tdk up</code>.</p>
         </div>
       </div>

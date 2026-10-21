@@ -27,10 +27,10 @@ title: Configuration - TDK CLI
   <span class="k">"dependsOn"</span>: []
 }</pre>
         </div>
-        <p><code>appName</code>, <code>appType</code>, <code>stack</code>, and <code>schemaVersion</code> are required; a backend also needs a port. Optional fields include <code>dependsOn</code> and <code>healthCheckPath</code>. See the <a href="https://github.com/tdk-landscape/tdk-cli-core/blob/main/engine/schemas/service-schema.json" target="_blank" rel="noopener">service schema source</a>. VS Code and other JSON editors can read the <code>$schema</code> hint.</p>
+        <p><code>appName</code>, <code>appType</code>, <code>stack</code>, and <code>schemaVersion</code> are required; a backend also needs a port. Optional fields include <code>dependsOn</code> and <code>healthCheckPath</code>. See the <a href="https://github.com/flisk-sh/flisk/blob/main/engine/schemas/service-schema.json" target="_blank" rel="noopener">service schema source</a>. VS Code and other JSON editors can read the <code>$schema</code> hint.</p>
 
         <h2>.tdk/project.json</h2>
-        <p>Use the <a href="https://github.com/tdk-landscape/tdk-cli-core/blob/main/engine/schemas/project-schema.json" target="_blank" rel="noopener">project configuration schema</a> through an editor association. In VS Code, add this to workspace <code>.vscode/settings.json</code>:</p>
+        <p>Use the <a href="https://github.com/flisk-sh/flisk/blob/main/engine/schemas/project-schema.json" target="_blank" rel="noopener">project configuration schema</a> through an editor association. In VS Code, add this to workspace <code>.vscode/settings.json</code>:</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>.vscode/settings.json</span></div>
           <pre>{
@@ -41,7 +41,7 @@ title: Configuration - TDK CLI
     },
     {
       <span class="k">"fileMatch"</span>: [<span class="s">"/.tdk/project.json"</span>],
-      <span class="k">"url"</span>: <span class="s">"https://raw.githubusercontent.com/tdk-landscape/tdk-cli-core/main/engine/schemas/project-schema.json"</span>
+      <span class="k">"url"</span>: <span class="s">"https://raw.githubusercontent.com/flisk-sh/flisk/main/engine/schemas/project-schema.json"</span>
     }
   ]
 }</pre>
@@ -93,7 +93,7 @@ title: Configuration - TDK CLI
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>tdk resource web --type frontend --framework vue --stack shop</pre>
         </div>
-        <p>That writes <code>"framework": "vue"</code> into <code>web/service.json</code>. Docker, nginx, Traefik and Tilt are shared with React frontends. Needs TDK CLI 1.3.75 or newer; older releases ignore the field and generate React config. See the <a href="https://github.com/tdk-landscape/tdk-ecommerce-example" target="_blank" rel="noopener">Vue example</a>, or <a href="https://github.com/tdk-landscape/tdk-cli-core/blob/main/docs/frontend-framework-providers.md" target="_blank" rel="noopener">add a framework</a>.</p>
+        <p>That writes <code>"framework": "vue"</code> into <code>web/service.json</code>. Docker, nginx, Traefik and Tilt are shared with React frontends. Needs TDK CLI 1.3.75 or newer; older releases ignore the field and generate React config. See the <a href="https://github.com/flisk-sh/tdk-ecommerce-example" target="_blank" rel="noopener">Vue example</a>, or <a href="https://github.com/flisk-sh/flisk/blob/main/docs/frontend-framework-providers.md" target="_blank" rel="noopener">add a framework</a>.</p>
 
         <h3>featuresEnabled</h3>
         <p>Platform features to enable. Only these values are valid:</p>
@@ -119,7 +119,7 @@ title: Configuration - TDK CLI
   <span class="k">"OIDC_JWKS_URL"</span>: <span class="s">"http://auth-emulator:4400/.well-known/jwks.json"</span>
 }</pre>
         </div>
-        <p>The <a href="https://github.com/tdk-landscape/tdk-auth-queue-email-example" target="_blank" rel="noopener">auth + queue + email example</a> uses this to run an identity provider, a queue and email locally.</p>
+        <p>The <a href="https://github.com/flisk-sh/tdk-auth-queue-email-example" target="_blank" rel="noopener">auth + queue + email example</a> uses this to run an identity provider, a queue and email locally.</p>
 
         <h3>package.json scripts</h3>
         <p>Each service also needs a <code>package.json</code> next to its <code>service.json</code>, with npm scripts required by <code>appType</code>. See <a href="{{ '/docs/scripts/' | relative_url }}">package.json scripts</a> for the list.</p>

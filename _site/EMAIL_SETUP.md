@@ -172,7 +172,7 @@ Create a GitHub Issue template for waitlist signups:
 
 2. Link to it from your site:
    ```html
-   <a href="https://github.com/tdk-landscape/tdk-website/issues/new?template=waitlist.yml">
+   <a href="https://github.com/flisk-sh/website/issues/new?template=waitlist.yml">
      Join via GitHub
    </a>
    ```

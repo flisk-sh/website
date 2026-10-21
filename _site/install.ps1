@@ -11,7 +11,7 @@ if ($processArchitecture -ne 'AMD64' -and -not $isX64Emulated) {
     exit 1
 }
 
-$baseUrl = 'https://github.com/tdk-landscape/tdk-cli-releases/releases/latest/download'
+$baseUrl = 'https://github.com/flisk-sh/releases/releases/latest/download'
 $installDir = if ($env:TDK_INSTALL_DIR) {
     $env:TDK_INSTALL_DIR
 } else {
@@ -91,7 +91,7 @@ try {
     Write-Host "TDK installed to $(Join-Path $installDir 'tdk.exe') ($versionOutput)."
     Write-Host 'Close this terminal and open a new one, then run tdk --version.'
     Write-Host 'For AI agents, configure your MCP client to launch tdk mcp over local stdio:'
-    Write-Host '  https://github.com/tdk-landscape/tdk-cli-core/blob/main/docs/agent-tooling/README.md'
+    Write-Host '  https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/README.md'
 } catch {
     Write-Error $_
     exit 1

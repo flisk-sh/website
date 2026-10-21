@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-OWNER="tdk-landscape"
-REPO="tdk-cli-releases"
+OWNER="flisk-sh"
+REPO="releases"
 BIN_NAME="tdk"
 
 fail() {

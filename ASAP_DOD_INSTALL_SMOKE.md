@@ -41,7 +41,7 @@ Result: passed.
 ## Docker Compose proof
 
 ```sh
-git clone --depth 1 https://github.com/tdk-landscape/tdk-docker-compose-example.git
+git clone --depth 1 https://github.com/flisk-sh/tdk-docker-compose-example.git
 cd tdk-docker-compose-example
 docker compose run --rm tdk tdk --version
 docker compose run --rm tdk tdk project --yes
@@ -57,7 +57,7 @@ Result: passed when run from a Docker-shared workspace path.
 ## Dependency proof
 
 ```sh
-git clone --depth 1 https://github.com/tdk-landscape/tdk-docker-compose-example.git
+git clone --depth 1 https://github.com/flisk-sh/tdk-docker-compose-example.git
 cd tdk-docker-compose-example
 docker compose build --no-cache
 docker compose run --rm tdk tdk project --yes

@@ -1,5 +1,5 @@
 # Homepage benchmark panel. Every number is copied from a committed result file in
-# tdk-landscape/tdk-cli-core/benchmarks/results; update both together, never round up.
+# flisk-sh/flisk/benchmarks/results; update both together, never round up.
 #
 # scale  value that fills a full bar        key    highlighted row
 # speed  (optional) the Replay button re-runs the bars in real time at this speed-up;

@@ -1,5 +1,5 @@
 {
-  "$id": "https://tdk-landscape.github.io/schema.service.json",
+  "$id": "https://flisk.sh/schema.service.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "additionalProperties": true,
   "allOf": [
@@ -118,7 +118,7 @@
       "type": "string"
     },
     "appType": {
-      "description": "Resource type determining build strategy:\n• backend - Hono/Express API server\n• frontend - Vite single-page application (React, Vue, Svelte, Preact, Lit, Solid, Qwik or Vanilla TypeScript, see framework)\n• sdk - Shared library package\n• worker - Background job processor\n• migrator - Database migration runner\n• library - Shared code library\n• mcp - Model Context Protocol server (an HTTP service on Bun, run like a backend)\n• bring-your-own - Wrap an existing service. No app scaffold. Needs Dockerfile or --image.",
+      "description": "Resource type determining build strategy:\n• backend - Hono/Express API server\n• frontend - Vite single-page application (React, Vue, Svelte, Preact, Lit, Solid, Qwik or Vanilla TypeScript, see framework)\n• sdk - Shared library package\n• worker - Background job processor\n• migrator - Database migration runner\n• library - Shared code library\n• mcp - Model Context Protocol server (an HTTP service on Bun, run like a backend)\n• agent - Long-running AI agent (a Bun HTTP service with /health and /ready, run like a backend; see agent)\n• bring-your-own - Wrap an existing service. No app scaffold. Needs Dockerfile or --image.",
       "enum": [
         "backend",
         "frontend",
@@ -127,6 +127,7 @@
         "migrator",
         "library",
         "mcp",
+        "agent",
         "bring-your-own"
       ],
       "type": "string"
@@ -222,11 +223,12 @@
       "type": "object"
     },
     "featuresEnabled": {
-      "description": "Platform features:\n• nats - NATS JetStream eventing\n• prisma - DB ORM & migrations\n• redis - Caching layer\n• infisical - Secrets management\n• vitest - Test framework\n• traefik - Reverse proxy routing\n• websocket - WS support\n• graphql - GraphQL server\n• grpc - gRPC protocol\n• vite, tsconfig, dockerfile, nginx, ... - generator features that `tdk resource` writes into new files",
+      "description": "Platform features:\n• nats - NATS JetStream eventing\n• prisma - DB ORM & migrations\n• drizzle - DB ORM (Postgres via DATABASE_URL, no migrator)\n• redis - Caching layer\n• infisical - Secrets management\n• vitest - Test framework\n• traefik - Reverse proxy routing\n• websocket - WS support\n• graphql - GraphQL server\n• grpc - gRPC protocol\n• vite, tsconfig, dockerfile, nginx, ... - generator features that `tdk resource` writes into new files",
       "items": {
         "enum": [
           "nats",
           "prisma",
+          "drizzle",
           "redis",
           "infisical",
           "vitest",
@@ -476,6 +478,7 @@
         "migrator",
         "library",
         "mcp",
+        "agent",
         "bring-your-own"
       ],
       "type": "string"
@@ -487,6 +490,29 @@
     "apiPath": {
       "description": "API path exposed by this resource, when applicable.",
       "type": "string"
+    },
+    "agent": {
+      "description": "Agent settings, used when appType is 'agent'. The agent runtime checkpoints its sessions; TDK provides the volume or database.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runtime": {
+          "description": "Agent runtime scaffold. 'custom' is the default and has no vendor dependency.",
+          "type": "string",
+          "enum": [
+            "custom"
+          ]
+        },
+        "durability": {
+          "description": "files: sessions live in a named volume that tdk down keeps. postgres: sessions live in Postgres via DATABASE_URL.",
+          "type": "string",
+          "enum": [
+            "files",
+            "postgres"
+          ],
+          "default": "files"
+        }
+      }
     }
   },
   "required": [

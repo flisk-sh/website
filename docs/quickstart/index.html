@@ -61,7 +61,7 @@ tdk doctor</pre>
             <p>On native Windows, <code>tdk doctor</code> reports that landscape startup requires WSL2 Ubuntu. This is the expected support boundary.</p>
           </li>
         </ol>
-        <p>For the full inner loop, follow the <a href="https://github.com/tdk-landscape/tdk-cli-core/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>. Windows ARM64 binaries are not published.</p>
+        <p>For the full inner loop, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>. Windows ARM64 binaries are not published.</p>
 
         <h2 id="install-options">Install options</h2>
         <p>Using an AI coding agent? Paste the line below into its chat — it'll fetch <span class="aw-mono">llms.txt</span>, install TDK, and configure the local MCP server for your agent. Use curl if you just want the fastest CLI install yourself. Use npm, npx, pnpm, or bun if you prefer package-manager workflows.</p>
@@ -229,7 +229,7 @@ tdk resource web --type frontend --framework vue --stack shop   <span class="c">
           <summary>Manual binary download</summary>
           <p>Download the binary, its engine files and the checksums yourself. The binary looks for the <code>tdk-cli/</code> folder next to it.</p>
           <h3>Windows AMD64</h3>
-          <p>The latest release includes the Windows CLI and the PowerShell installer verifies its checksum. Native Windows supports CLI inspection only: use <code>tdk --version</code>, <code>tdk runtime --check-assets</code>, and <code>tdk doctor</code>. For <code>tdk project</code> and <code>tdk up</code>, follow the <a href="https://github.com/tdk-landscape/tdk-cli-core/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>.</p>
+          <p>The latest release includes the Windows CLI and the PowerShell installer verifies its checksum. Native Windows supports CLI inspection only: use <code>tdk --version</code>, <code>tdk runtime --check-assets</code>, and <code>tdk doctor</code>. For <code>tdk project</code> and <code>tdk up</code>, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>.</p>
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
             <pre>irm https://flisk.sh/install.ps1 | iex</pre>
@@ -237,14 +237,14 @@ tdk resource web --type frontend --framework vue --stack shop   <span class="c">
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
             <pre>os=$(uname -s | tr A-Z a-z); arch=$(uname -m | sed "s/x86_64/amd64/;s/aarch64/arm64/")
-base=https://github.com/tdk-landscape/tdk-cli-releases/releases/latest/download
+base=https://github.com/flisk-sh/releases/releases/latest/download
 curl -fsSL -O "$base/tdk-$os-$arch" -O "$base/tdk-cli-engine.tar.gz" -O "$base/checksums.txt"
 shasum -a 256 -c --ignore-missing checksums.txt
 mkdir -p ~/.local/bin/tdk-cli
 install -m 755 "tdk-$os-$arch" ~/.local/bin/tdk
 tar -xzf tdk-cli-engine.tar.gz -C ~/.local/bin/tdk-cli --strip-components=1</pre>
           </div>
-          <p>Binaries ship from <a href="https://github.com/tdk-landscape/tdk-cli-releases/releases/latest" target="_blank" rel="noopener">tdk-landscape/tdk-cli-releases</a>.</p>
+          <p>Binaries ship from <a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">flisk-sh/releases</a>.</p>
         </details>
 
         <details class="aw-docs-details">
@@ -252,7 +252,7 @@ tar -xzf tdk-cli-engine.tar.gz -C ~/.local/bin/tdk-cli --strip-components=1</pre
           <p>Use Docker Compose if you want to try TDK without installing the binary on your host.</p>
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-            <pre>git clone https://github.com/tdk-landscape/tdk-docker-compose-example.git
+            <pre>git clone https://github.com/flisk-sh/tdk-docker-compose-example.git
 cd tdk-docker-compose-example
 docker compose run --rm tdk tdk --version
 docker compose run --rm tdk tdk project --yes</pre>
@@ -261,12 +261,12 @@ docker compose run --rm tdk tdk project --yes</pre>
 
         <h2>Next steps</h2>
         <ul>
-          <li><a href="https://github.com/tdk-landscape/tdk-cli-core" target="_blank" rel="noopener">⭐ Star TDK CLI on GitHub</a> to get release updates and help other developers find it</li>
+          <li><a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener">⭐ Star TDK CLI on GitHub</a> to get release updates and help other developers find it</li>
           <li><a href="{{ '/docs/examples/' | relative_url }}">Browse starter templates you can clone with <code>tdk project &lt;template&gt;</code></a></li>
           <li><a href="{{ '/docs/configuration/' | relative_url }}">Learn about all configuration options</a></li>
           <li><a href="{{ '/docs/examples/' | relative_url }}">See more complex examples</a></li>
-          <li><a href="https://github.com/tdk-landscape/tdk-docker-compose-example" target="_blank" rel="noopener">Run the Docker Compose example</a></li>
-          <li><a href="https://github.com/tdk-landscape/tdk-cli-releases/releases/latest" target="_blank" rel="noopener">Download compiled binaries</a></li>
+          <li><a href="https://github.com/flisk-sh/tdk-docker-compose-example" target="_blank" rel="noopener">Run the Docker Compose example</a></li>
+          <li><a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">Download compiled binaries</a></li>
           <li><a href="https://flisk-sh.github.io/tdk-demo-animation/" target="_blank" rel="noopener">Watch the recording demo animation</a></li>
         </ul>
       </div>

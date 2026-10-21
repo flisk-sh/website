@@ -57,7 +57,7 @@ git clone https://github.com/<your-username>/tdk-website.git
 cd tdk-website
 
 # 2. Add the upstream remote so you can pull future changes
-git remote add upstream https://github.com/tdk-landscape/tdk-website.git
+git remote add upstream https://github.com/flisk-sh/website.git
 
 # 3. Install Ruby dependencies (reads Gemfile.lock for exact versions)
 bundle install
@@ -135,7 +135,7 @@ master  ← protected; all merges go through a PR
 
 4. **Commit** with a conventional commit message (see §5 below).
 
-5. **Push and open a pull request** against `tdk-landscape/tdk-website`'s `master` branch:
+5. **Push and open a pull request** against `flisk-sh/website`'s `master` branch:
    ```bash
    git push origin docs/add-windows-quickstart
    ```

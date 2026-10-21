@@ -20,7 +20,7 @@ erp_services: 100          # exact count in tdk-erp-system
 erp_domains: 7             # finance, hr, inventory, sales, manufacturing, supply_chain, analytics
 erp_boot_seconds: 472      # clean GitHub runner, published CLI 1.3.72, images built from scratch, all 100 backends 2xx via Traefik
 erp_boot_minutes: "about 8" # erp_boot_seconds in prose
-erp_ci_run: "https://github.com/tdk-landscape/tdk-cli-core/actions/runs/36395860088"  # the run behind erp_boot_seconds
+erp_ci_run: "https://github.com/flisk-sh/flisk/actions/runs/36395860088"  # the run behind erp_boot_seconds
 
 # --- Demo facts (the boot-demo stack) ---
 demo_services: 14          # services in the demo stack shown in the terminal

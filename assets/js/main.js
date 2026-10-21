@@ -297,7 +297,7 @@ if (document.readyState === 'loading') {
     }
   } catch (e) { /* storage unavailable */ }
 
-  fetch('https://api.github.com/repos/flisk-sh/tdk-cli-core')
+  fetch('https://api.github.com/repos/flisk-sh/flisk')
     .then((res) => (res.ok ? res.json() : null))
     .then((repo) => {
       if (!repo) return;
@@ -330,7 +330,7 @@ if (document.readyState === 'loading') {
     }
   } catch (e) { /* storage unavailable */ }
 
-  fetch('https://api.github.com/repos/flisk-sh/tdk-cli-core/releases/latest')
+  fetch('https://api.github.com/repos/flisk-sh/flisk/releases/latest')
     .then((res) => (res.ok ? res.json() : null))
     .then((release) => {
       if (!release) return;

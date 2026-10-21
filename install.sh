@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-OWNER="tdk-landscape"
-REPO="tdk-cli-releases"
+OWNER="flisk-sh"
+REPO="releases"
 BIN_NAME="tdk"
 
 fail() {
@@ -143,4 +143,4 @@ case ":${PATH}:" in
 esac
 echo "Next: tdk doctor"
 echo "For AI agents, configure your MCP client to launch tdk mcp over local stdio:"
-echo "  https://github.com/tdk-landscape/tdk-cli-core/blob/main/docs/agent-tooling/README.md"
+echo "  https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/README.md"

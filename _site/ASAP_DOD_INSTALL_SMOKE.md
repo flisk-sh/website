@@ -6,7 +6,7 @@ Last checked: 2026-09-17T11:01:30Z
 ## Definition of done
 
 - Published Quick Start page serves the one-line installer.
-- `https://tdk-landscape.github.io/install.sh` returns HTTP 200.
+- `https://flisk.sh/install.sh` returns HTTP 200.
 - Fresh Ubuntu container can install the CLI using the published command.
 - `tdk --version` prints `1.1.0`.
 - `tdk project --yes` creates `.tdk/project.json` and `.tdk/.tdk-out/Tiltfile`.
@@ -23,7 +23,7 @@ docker run --rm ubuntu:24.04 sh -lc '
   set -eux
   apt-get update >/dev/null
   apt-get install -y curl ca-certificates sudo >/dev/null
-  curl -fsSL https://tdk-landscape.github.io/install.sh | sh
+  curl -fsSL https://flisk.sh/install.sh | sh
   tdk --version
   mkdir /tmp/my-service
   cd /tmp/my-service
@@ -41,7 +41,7 @@ Result: passed.
 ## Docker Compose proof
 
 ```sh
-git clone --depth 1 https://github.com/tdk-landscape/tdk-docker-compose-example.git
+git clone --depth 1 https://github.com/flisk-sh/tdk-docker-compose-example.git
 cd tdk-docker-compose-example
 docker compose run --rm tdk tdk --version
 docker compose run --rm tdk tdk project --yes
@@ -57,7 +57,7 @@ Result: passed when run from a Docker-shared workspace path.
 ## Dependency proof
 
 ```sh
-git clone --depth 1 https://github.com/tdk-landscape/tdk-docker-compose-example.git
+git clone --depth 1 https://github.com/flisk-sh/tdk-docker-compose-example.git
 cd tdk-docker-compose-example
 docker compose build --no-cache
 docker compose run --rm tdk tdk project --yes
