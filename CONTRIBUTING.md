@@ -66,7 +66,7 @@ bundle install
 bundle exec jekyll serve --livereload
 ```
 
-Visit **http://localhost:4000/tdk-website/** to preview the site.  
+Visit **http://localhost:4000/** to preview the site.  
 The server automatically rebuilds whenever you save a file.
 
 ---

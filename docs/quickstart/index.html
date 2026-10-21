@@ -41,12 +41,12 @@ title: Quick Start - TDK CLI
           <li>Install TDK:
             <div class="aw-codeblock">
               <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>irm https://tdk-landscape.github.io/install.ps1 | iex</pre>
+              <pre>irm https://flisk.sh/install.ps1 | iex</pre>
             </div>
             <p>Or download and inspect the script before running it:</p>
             <div class="aw-codeblock">
               <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>Invoke-WebRequest https://tdk-landscape.github.io/install.ps1 -OutFile install-tdk.ps1
+              <pre>Invoke-WebRequest https://flisk.sh/install.ps1 -OutFile install-tdk.ps1
 powershell -ExecutionPolicy Bypass -File .\install-tdk.ps1</pre>
             </div>
           </li>
@@ -80,7 +80,7 @@ tdk doctor</pre>
               <pre>Please install TDK and configure its local MCP server for this agent: {{ '/llms.txt' | absolute_url }}</pre>
             </div>
             <div class="aw-install-panel" data-panel="curl" style="display:none;">
-              <pre>curl -fsSL https://tdk-landscape.github.io/install.sh | sh</pre>
+              <pre>curl -fsSL https://flisk.sh/install.sh | sh</pre>
             </div>
             <div class="aw-install-panel" data-panel="npm" style="display:none;">
               <pre>{{ site.data.tdk.install_npm }}</pre>
@@ -176,7 +176,7 @@ tdk up</pre>
    → Start Docker Desktop, then verify with: <span class="hot">`docker ps`</span>
    → Or start Colima: <span class="hot">`colima start`</span>
    → Or start the Docker service on Linux: <span class="hot">`sudo systemctl start docker`</span>
-   → Setup guide: <span class="hot">https://tdk-landscape.github.io/tdk-website/docs/quickstart/</span>
+   → Setup guide: <span class="hot">https://flisk.sh/docs/quickstart/</span>
 
 <span class="err">❌ Tilt CLI is not installed</span>
 
@@ -232,7 +232,7 @@ tdk resource web --type frontend --framework vue --stack shop   <span class="c">
           <p>The latest release includes the Windows CLI and the PowerShell installer verifies its checksum. Native Windows supports CLI inspection only: use <code>tdk --version</code>, <code>tdk runtime --check-assets</code>, and <code>tdk doctor</code>. For <code>tdk project</code> and <code>tdk up</code>, follow the <a href="https://github.com/tdk-landscape/tdk-cli-core/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>.</p>
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-            <pre>irm https://tdk-landscape.github.io/install.ps1 | iex</pre>
+            <pre>irm https://flisk.sh/install.ps1 | iex</pre>
           </div>
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
@@ -267,7 +267,7 @@ docker compose run --rm tdk tdk project --yes</pre>
           <li><a href="{{ '/docs/examples/' | relative_url }}">See more complex examples</a></li>
           <li><a href="https://github.com/tdk-landscape/tdk-docker-compose-example" target="_blank" rel="noopener">Run the Docker Compose example</a></li>
           <li><a href="https://github.com/tdk-landscape/tdk-cli-releases/releases/latest" target="_blank" rel="noopener">Download compiled binaries</a></li>
-          <li><a href="https://tdk-landscape.github.io/tdk-demo-animation/" target="_blank" rel="noopener">Watch the recording demo animation</a></li>
+          <li><a href="https://flisk-sh.github.io/tdk-demo-animation/" target="_blank" rel="noopener">Watch the recording demo animation</a></li>
         </ul>
       </div>
     </div>

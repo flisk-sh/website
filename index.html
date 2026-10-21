@@ -2427,7 +2427,7 @@ body { background: #0a0a0e; overflow-x: hidden; }
           <button type="button" class="aw-install-method is-active" aria-pressed="true" data-cmd="{{ site.data.tdk.install_npm | escape }}" data-note="Requires Node.js {{ site.data.tdk.prereq_node }}">npm</button>
           <button type="button" class="aw-install-method" aria-pressed="false" data-cmd="{{ site.data.tdk.install_pnpm | escape }}" data-note="Requires Node.js {{ site.data.tdk.prereq_node }}">pnpm</button>
           <button type="button" class="aw-install-method" aria-pressed="false" data-cmd="{{ site.data.tdk.install_bun | escape }}" data-note="Requires Node.js {{ site.data.tdk.prereq_node }}">bun</button>
-          <button type="button" class="aw-install-method" aria-pressed="false" data-cmd="curl -fsSL https://tdk-landscape.github.io/install.sh | sh" data-note="Prebuilt binary, no Node.js needed">curl</button>
+          <button type="button" class="aw-install-method" aria-pressed="false" data-cmd="curl -fsSL https://flisk.sh/install.sh | sh" data-note="Prebuilt binary, no Node.js needed">curl</button>
         </div>
         <div class="aw-install-foot">
           <span data-install-note>Requires Node.js {{ site.data.tdk.prereq_node }}</span>
@@ -3958,7 +3958,7 @@ function sendWaitlistEmail(btn, originalLabel) {
     'Plan: ' + plan + '\n' +
     'My email: ' + email + '\n\n' +
     "I'm interested in these features:\n" + featuresList + '\n\n' +
-    "What I'm building: (tell us about your project)\n\nThanks!\n---\nSent from https://tdk-landscape.github.io/tdk-website/";
+    "What I'm building: (tell us about your project)\n\nThanks!\n---\nSent from https://flisk.sh/";
   var mailtoUrl = 'mailto:vntu0412179+tdk-waitlist@gmail.com?subject=' +
     encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
