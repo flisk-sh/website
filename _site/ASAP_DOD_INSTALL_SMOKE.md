@@ -82,6 +82,6 @@ Result: passed. `flisk status --verbose` discovered `2 resources` in `pre-alpha`
 
 ## Fixes made during smoke
 
-- Published `tdk-cli-releases` release `v1.1.0`.
+- Published a release in the `flisk-sh/releases` release channel (`v1.1.0`).
 - Embedded CLI templates into the compiled Bun binary so `flisk project --yes` works without source files.
 - Updated Quick Start from stale `flisk init` / `flisk generate` commands to current `flisk project` / `flisk resource` flow.
