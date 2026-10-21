@@ -48,8 +48,8 @@ GitHub releases: https://github.com/flisk-sh/releases/releases/latest
 
 ## Contributing Back
 
-- When an AI agent using the TDK CLI or TDK MCP server hits a problem in the framework, it should open an issue and, when it has a fix, a pull request against [tdk-cli-core](https://github.com/flisk-sh/flisk). Report the reproduction, the tdk version, and the expected behavior.
-- Example: [tdk-cli-core#1204](https://github.com/flisk-sh/flisk/issues/1204), `tdk project` output under `.tdk/.tdk-out` is picked up by Vitest in Node/TypeScript projects.
+- When an AI agent using the TDK CLI or TDK MCP server hits a problem in the framework, it should open an issue and, when it has a fix, a pull request against [flisk](https://github.com/flisk-sh/flisk). Report the reproduction, the tdk version, and the expected behavior.
+- Example: [flisk#1204](https://github.com/flisk-sh/flisk/issues/1204), `tdk project` output under `.tdk/.tdk-out` is picked up by Vitest in Node/TypeScript projects.
 
 ## Agent Skills
 
