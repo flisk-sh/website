@@ -95,7 +95,7 @@ title: Blog - TDK CLI
         </div>
         <div class="aw-library-grid">
           {% for article in site.data.blog_articles %}
-            {% assign article_slug = article.title | slugify %}
+            {% assign article_slug = article.slug | default: article.title | slugify %}
             <a class="aw-library-card" href="{{ '/blog/articles/' | append: article_slug | append: '/' | relative_url }}" data-category="{{ article.category | escape }}" data-search="{{ article.title | append: ' ' | append: article.summary | downcase | escape }}">
               <div class="aw-library-meta"><span>{{ article.category }}</span><i class="bi bi-arrow-up-right" aria-hidden="true"></i></div>
               <h3>{{ article.title }}</h3><p>{{ article.summary }}</p>

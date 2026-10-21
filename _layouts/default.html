@@ -4,7 +4,7 @@
   {% assign article = nil %}
   {% if page.url contains '/blog/articles/' %}
     {% for candidate in site.data.blog_articles %}
-      {% assign candidate_slug = candidate.title | slugify %}
+      {% assign candidate_slug = candidate.slug | default: candidate.title | slugify %}
       {% assign candidate_path = '/blog/articles/' | append: candidate_slug | append: '/' %}
       {% if candidate_path == page.url %}
         {% assign article = candidate %}
