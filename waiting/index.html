@@ -308,9 +308,11 @@ description: "A calculator for what slow environment setup costs your team befor
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 /* Waiting-burn calculator: payroll lost to env setup */
 function calcWait() {
   var devs = parseInt(document.getElementById('wait-devs').value, 10);
@@ -325,7 +327,7 @@ function calcWait() {
   document.getElementById('wait-weeks-value').textContent = weeks + (weeks === 1 ? ' week' : ' weeks');
   document.getElementById('wait-burned').textContent = '$' + burned.toLocaleString('en-US');
   document.getElementById('wait-delay').textContent = weeks + (weeks === 1 ? ' week' : ' weeks');
-  document.getElementById('wait-tdk').textContent = '$' + tdk.toLocaleString('en-US') + '/mo';
+  document.getElementById('wait-tdk').textContent = '$' + flisk.toLocaleString('en-US') + '/mo';
 }
 calcWait();
 
@@ -352,4 +354,6 @@ if (window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '.aw-band', start: 'top 85%' }
   });
 }
+window.calcWait = calcWait;
+});
 </script>

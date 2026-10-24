@@ -206,9 +206,11 @@ CMD ["bun", "run", "src/index.ts"]</pre>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 var REDUCED_LOCKIN = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (!REDUCED_LOCKIN && window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
@@ -227,4 +229,5 @@ if (!REDUCED_LOCKIN && window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '#comparison', start: 'top 75%' }
   });
 }
+});
 </script>

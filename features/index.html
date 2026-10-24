@@ -155,9 +155,11 @@ description: "What Flisk CLI generates from one service.json: Dockerfiles, Traef
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -185,4 +187,5 @@ if (window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '.aw-band', start: 'top 85%' }
   });
 }
+});
 </script>

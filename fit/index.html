@@ -296,9 +296,11 @@ description: "Answer five questions about how your team runs services today and 
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 /* Stack-fit calculator: pill groups (single/multi select) + two sliders → 0-100 score */
 document.querySelectorAll('.aw-fit-pills').forEach(function (group) {
   var isMulti = group.dataset.multi === 'true';
@@ -485,4 +487,6 @@ if (window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '.aw-band', start: 'top 85%' }
   });
 }
+window.calcFit = calcFit;
+});
 </script>

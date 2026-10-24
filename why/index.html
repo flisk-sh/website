@@ -71,9 +71,11 @@ description: "Why teams pick Flisk CLI: one command starts the whole local stack
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 var REDUCED_WHY = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (!REDUCED_WHY && window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
@@ -91,4 +93,5 @@ if (!REDUCED_WHY && window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '.aw-band', start: 'top 85%' }
   });
 }
+});
 </script>
