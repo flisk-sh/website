@@ -3961,7 +3961,7 @@ function sendWaitlistEmail(btn, originalLabel) {
     'My email: ' + email + '\n\n' +
     "I'm interested in these features:\n" + featuresList + '\n\n' +
     "What I'm building: (tell us about your project)\n\nThanks!\n---\nSent from https://flisk.sh/";
-  var mailtoUrl = 'mailto:vntu0412179+tdk-waitlist@gmail.com?subject=' +
+  var mailtoUrl = 'mailto:hello@flisk.sh?subject=' +
     encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
   // A real anchor click hands off to the OS mail-client protocol handler more
@@ -3995,7 +3995,7 @@ function sendWaitlistEmail(btn, originalLabel) {
   }
 
   copyBtn.onclick = function () {
-    var fullMessage = 'To: vntu0412179+tdk-waitlist@gmail.com\nSubject: ' + subject + '\n\n' + body;
+    var fullMessage = 'To: hello@flisk.sh\nSubject: ' + subject + '\n\n' + body;
     navigator.clipboard.writeText(fullMessage).then(function () {
       copyBtn.textContent = 'Copied!';
       window.setTimeout(function () { copyBtn.textContent = 'copy the message'; }, 2000);
