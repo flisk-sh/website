@@ -1,4 +1,5 @@
-title: Flisk CLI turns service.json into a local Docker + Tilt stack
+title: Flisk CLI
+tagline: Turns service.json into a local Docker + Tilt stack
 email: vntu0412179+tdk-waitlist@gmail.com
 lang: en_US
 description: >-
@@ -53,9 +54,16 @@ defaults:
       path: "assets/images"
     values:
       sitemap: false
+  - scope:
+      path: "assets/social"
+    values:
+      sitemap: false
 
 sass:
   style: compressed
+
+include:
+  - .well-known
 
 exclude:
   - .sass-cache/
@@ -70,5 +78,8 @@ exclude:
   - vendor/ruby/
   - test/
   - README.md
+  - ASAP_DOD_INSTALL_SMOKE.md
+  - DESIGN.md
+  - EMAIL_SETUP.md
   - docker-compose.yml
   - Dockerfile

@@ -1,5 +1,6 @@
 ---
 title: Public claims registry - Flisk CLI
+description: "The public claims registry for Flisk CLI: each number on this site, the evidence behind it and its limits, kept in the Flisk repository."
 layout: default
 ---
 

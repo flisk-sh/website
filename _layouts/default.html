@@ -94,7 +94,27 @@
     {% assign canonical_url = page.url | absolute_url %}
     {% assign page_title = page.title | default: site.title %}
     {% assign page_description = page.description | default: site.description | strip_newlines | strip %}
-    {% seo %}
+    <title>{{ page_title }}</title>
+    {% seo title=false %}
+    {% if page.url == '/' %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Flisk CLI",
+        "description": {{ page_description | jsonify }},
+        "url": {{ site.url | append: site.baseurl | append: '/' | jsonify }},
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux, Windows (WSL2)",
+        "license": "https://opensource.org/licenses/MIT",
+        "downloadUrl": "https://www.npmjs.com/package/@flisk-sh/flisk",
+        "codeRepository": "https://github.com/flisk-sh/flisk",
+        "sameAs": ["https://github.com/flisk-sh/flisk", "https://www.npmjs.com/package/@flisk-sh/flisk"],
+        "image": {{ social_image_url | jsonify }},
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+    {% endif %}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="{{ site.title | escape }}" />
     <meta property="og:title" content="{{ page_title | escape }}" />
