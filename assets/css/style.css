@@ -5,7 +5,7 @@
   /* Colors */
   --color-purple: #22C55E;
   --color-purple-light: #4ADE80;
-  --color-purple-dark: #5b21b6;
+  --color-purple-dark: #15803D;
   --color-black: #0a0a0f;
   --color-white: #fafafa;
 
@@ -100,7 +100,7 @@ pre {
   top: -40px;
   left: 0;
   background: var(--color-purple);
-  color: white;
+  color: #04120A;
   padding: 8px;
   text-decoration: none;
   z-index: 100;
@@ -442,7 +442,7 @@ pre code {
 
 .footer-text {
   font-size: 0.875rem;
-  color: var(--color-gray-500);
+  color: var(--color-gray-400);
 }
 
 .site-footer hr {
@@ -451,7 +451,7 @@ pre code {
 }
 
 .site-footer a {
-  color: var(--color-gray-500);
+  color: var(--color-gray-400);
   text-decoration: none;
 }
 
