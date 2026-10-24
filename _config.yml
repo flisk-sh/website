@@ -14,8 +14,8 @@ url: "https://flisk.sh"
 
 twitter_username: tdkcli
 github_username: flisk-sh
-social_image: "/assets/images/tdk-social-card.png"
-logo: "/assets/images/tdk-social-card.png"
+social_image: "/assets/images/flisk-social-card.png"
+logo: "/assets/images/flisk-social-card.png"
 
 markdown: kramdown
 highlighter: rouge
@@ -36,7 +36,7 @@ defaults:
   - scope:
       path: ""
     values:
-      image: "/assets/images/tdk-social-card.png"
+      image: "/assets/images/flisk-social-card.png"
       sitemap: true
   - scope:
       path: "blog/articles"
