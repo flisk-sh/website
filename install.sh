@@ -108,7 +108,7 @@ download "$url" "$tmp" || fail "download failed: $url"
 chmod +x "$tmp"
 
 # The compiled binary has no source checkout to find engine/ in, so it
-# looks for a tdk-cli/ folder next to itself (see
+# looks for a flisk-cli/ folder next to itself (see
 # cli/src/generator/template-engine.ts, vendorTdkExtension). Without this,
 # `flisk project`/`flisk up` fail with "Flisk extension not found".
 echo "Installing bundled engine..."
@@ -120,9 +120,9 @@ verify "$tmp" "$asset" required
 verify "$engine_tmp" "$engine_asset" optional
 
 mv "$tmp" "${install_dir}/${BIN_NAME}"
-rm -rf "${install_dir}/tdk-cli"
-mkdir -p "${install_dir}/tdk-cli"
-tar -xzf "$engine_tmp" -C "${install_dir}/tdk-cli" --strip-components=1
+rm -rf "${install_dir}/flisk-cli"
+mkdir -p "${install_dir}/flisk-cli"
+tar -xzf "$engine_tmp" -C "${install_dir}/flisk-cli" --strip-components=1
 rm -f "$engine_tmp"
 
 echo "Installed: ${install_dir}/${BIN_NAME}"

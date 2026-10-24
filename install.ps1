@@ -45,7 +45,7 @@ try {
     }
 
     New-Item -ItemType Directory -Force -Path $installDir | Out-Null
-    $engineDir = Join-Path $installDir 'tdk-cli'
+    $engineDir = Join-Path $installDir 'flisk-cli'
     $extractDir = Join-Path $tempDir 'engine'
     New-Item -ItemType Directory -Force -Path $extractDir | Out-Null
 
