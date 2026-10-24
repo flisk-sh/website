@@ -106,18 +106,31 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Flisk CLI",
-        "description": {{ page_description | jsonify }},
-        "url": {{ site.url | append: site.baseurl | append: '/' | jsonify }},
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS, Linux, Windows (WSL2)",
-        "license": "https://opensource.org/licenses/MIT",
-        "downloadUrl": "https://www.npmjs.com/package/@flisk-sh/flisk",
-        "codeRepository": "https://github.com/flisk-sh/flisk",
-        "sameAs": ["https://github.com/flisk-sh/flisk", "https://www.npmjs.com/package/@flisk-sh/flisk"],
-        "image": {{ social_image_url | jsonify }},
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": {{ site.url | append: site.baseurl | append: '/#organization' | jsonify }},
+            "name": "Flisk",
+            "url": {{ site.url | append: site.baseurl | append: '/' | jsonify }},
+            "logo": {{ social_image_url | jsonify }},
+            "sameAs": ["https://github.com/flisk-sh/flisk", "https://www.npmjs.com/package/@flisk-sh/flisk"]
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": {{ site.url | append: site.baseurl | append: '/#software' | jsonify }},
+            "name": "Flisk CLI",
+            "description": {{ page_description | jsonify }},
+            "url": {{ site.url | append: site.baseurl | append: '/' | jsonify }},
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "macOS, Linux, Windows (WSL2)",
+            "license": "https://opensource.org/licenses/MIT",
+            "downloadUrl": "https://www.npmjs.com/package/@flisk-sh/flisk",
+            "codeRepository": "https://github.com/flisk-sh/flisk",
+            "image": {{ social_image_url | jsonify }},
+            "publisher": { "@id": {{ site.url | append: site.baseurl | append: '/#organization' | jsonify }} },
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          }
+        ]
       }
     </script>
     {% endif %}
