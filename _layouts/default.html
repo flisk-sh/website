@@ -112,6 +112,7 @@
             "@id": {{ site.url | append: site.baseurl | append: '/#organization' | jsonify }},
             "name": "Flisk",
             "url": {{ site.url | append: site.baseurl | append: '/' | jsonify }},
+            "email": {{ site.email | jsonify }},
             "logo": {{ social_image_url | jsonify }},
             "sameAs": ["https://github.com/flisk-sh/flisk", "https://www.npmjs.com/package/@flisk-sh/flisk"]
           },

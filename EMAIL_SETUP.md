@@ -131,8 +131,8 @@ Your Flisk website needs to collect waitlist emails. Here are **100% free** solu
 Already implemented in your site as a fallback!
 
 ```html
-<a href="mailto:vntu0412179+tdk-waitlist@gmail.com?subject=Waitlist: Flisk CLI Early Access">
-  vntu0412179+tdk-waitlist@gmail.com
+<a href="mailto:hello@flisk.sh?subject=Waitlist: Flisk CLI Early Access">
+  hello@flisk.sh
 </a>
 ```
 
