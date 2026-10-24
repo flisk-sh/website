@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">Flisk CLI</title>
-  <desc id="desc">Kubernetes-free microservice development.</desc>
+  <desc id="desc">Your whole stack, running locally. One command.</desc>
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
       <stop offset="0%" stop-color="#120d1d"/>
@@ -16,10 +16,10 @@
   <circle cx="930" cy="520" r="230" fill="#7c4dff" opacity="0.12"/>
   <rect x="72" y="72" width="200" height="40" rx="20" fill="#7c4dff" opacity="0.9"/>
   <text x="96" y="100" font-size="22" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="700">Flisk CLI</text>
-  <text x="72" y="240" font-size="88" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">Kubernetes-free</text>
-  <text x="72" y="332" font-size="88" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">microservice</text>
-  <text x="72" y="424" font-size="88" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">development</text>
-  <text x="72" y="520" font-size="32" font-family="Arial, Helvetica, sans-serif" fill="#d9d7ef">service.json • local orchestration • shipped clarity</text>
+  <text x="72" y="240" font-size="80" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">Your whole stack,</text>
+  <text x="72" y="332" font-size="80" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">running locally.</text>
+  <text x="72" y="424" font-size="80" font-family="Arial, Helvetica, sans-serif" fill="#f5f7ff" font-weight="800">one command.</text>
+  <text x="72" y="520" font-size="32" font-family="Arial, Helvetica, sans-serif" fill="#d9d7ef">service.json • flisk up • local Docker + Tilt</text>
   <rect x="804" y="150" width="260" height="260" rx="32" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)"/>
   <path d="M852 340 L895 198 L949 323 L1003 164 L1060 340" fill="none" stroke="url(#accent)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
   <circle cx="895" cy="198" r="12" fill="#7c4dff"/>
