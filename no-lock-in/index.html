@@ -213,7 +213,7 @@ var REDUCED_LOCKIN = window.matchMedia('(prefers-reduced-motion: reduce)').match
 if (!REDUCED_LOCKIN && window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from('.aw-hero h1', { y: 40, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.1 });
+  /* The h1 is the LCP element: keep it visible from the first paint instead of fading it in. */
   gsap.from('.aw-hero-sub', { y: 25, opacity: 0, duration: 0.9, ease: 'power3.out', delay: 0.3 });
   gsap.from('.aw-hero-ctas', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.45 });
 
