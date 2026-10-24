@@ -74,7 +74,7 @@ website/
 The site uses a custom design system with:
 
 ### Colors
-- Primary: `#7c4dff` (Purple)
+- Primary: `#22C55E` (Purple)
 - Background: `#fafafa` (Light gray)
 - Text: `#18181b` (Near black)
 

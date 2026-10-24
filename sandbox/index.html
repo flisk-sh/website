@@ -12,7 +12,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
     --sb-ink: #eef0f4;
     --sb-dim: rgba(238, 240, 244, 0.55);
     --sb-faint: rgba(238, 240, 244, 0.32);
-    --sb-accent: #7c4dff;
+    --sb-accent: #22C55E;
     --sb-accent-2: #23c8a8;
     --sb-danger: #ff5d5d;
   }
@@ -29,9 +29,9 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
     content: "";
     position: absolute; inset: 0;
     background:
-      radial-gradient(1200px 520px at 18% -4%, rgba(124, 77, 255, 0.16), transparent 62%),
+      radial-gradient(1200px 520px at 18% -4%, rgba(34, 197, 94, 0.16), transparent 62%),
       radial-gradient(900px 480px at 88% 10%, rgba(35, 200, 168, 0.10), transparent 60%),
-      radial-gradient(1400px 700px at 50% 30%, rgba(124, 77, 255, 0.07), transparent 66%);
+      radial-gradient(1400px 700px at 50% 30%, rgba(34, 197, 94, 0.07), transparent 66%);
     pointer-events: none;
   }
   .sb-shell { position: relative; z-index: 2; padding-top: 7rem; }
@@ -41,8 +41,8 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
   .sb-beta-banner {
     display: flex; align-items: center; gap: 0.9rem;
     max-width: 860px; margin: 0 auto 1.75rem;
-    background: rgba(124, 77, 255, 0.08);
-    border: 1px solid rgba(124, 77, 255, 0.35);
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.35);
     border-radius: 999px;
     padding: 0.6rem 1.3rem;
     font-size: 0.86rem;
@@ -103,8 +103,8 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
     margin-bottom: 2rem;
     padding: 0.45rem 1.1rem;
     border-radius: 999px;
-    background: rgba(124, 77, 255, 0.12);
-    border: 1px solid rgba(124, 77, 255, 0.38);
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.38);
     color: var(--sb-accent);
     font-family: "JetBrains Mono", monospace;
     font-size: 0.82rem;
@@ -155,9 +155,9 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
   }
   .sb-file-row i { font-size: 0.85rem; flex: 0 0 auto; transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
   .sb-file-row span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .sb-file-row:hover { background: rgba(124, 77, 255, 0.12); color: #fff; }
+  .sb-file-row:hover { background: rgba(34, 197, 94, 0.12); color: #fff; }
   .sb-file-row:hover i { transform: scale(1.2) rotate(5deg); filter: brightness(1.25); }
-  .sb-file-row .bi-braces-asterisk { color: #a78bfa; }
+  .sb-file-row .bi-braces-asterisk { color: #4ADE80; }
   .sb-file-row .bi-braces { color: #c084fc; }
   .sb-file-row .bi-box-seam { color: #fbbf24; }
   .sb-file-row .bi-nut { color: #f472b6; }
@@ -258,7 +258,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
   .sb-term-stack-files i { margin-right: 0.3rem; transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
   .sb-term-stack-files i:hover { transform: scale(1.2); filter: brightness(1.25); }
   .sb-term-stack-files .bi-kanban { color: #f472b6; }
-  .sb-term-stack-files .bi-braces { color: #a78bfa; }
+  .sb-term-stack-files .bi-braces { color: #4ADE80; }
   .sb-term-stack-files .bi-diagram-3 { color: #c084fc; }
   .sb-term-stack-files .bi-bounding-box { color: #60a5fa; }
   .sb-term-stack-files .bi-robot { color: #34d399; }
@@ -281,7 +281,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
     margin-bottom: 1.4rem;
     transition: transform 0.6s ease-out, border-color 0.4s ease-out;
   }
-  .sb-step:hover { transform: translateY(-3px); border-color: rgba(124, 77, 255, 0.5); }
+  .sb-step:hover { transform: translateY(-3px); border-color: rgba(34, 197, 94, 0.5); }
   .sb-step-num {
     font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--sb-faint);
     min-width: 2.6rem;
@@ -331,7 +331,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
   /* Horizontal accordions */
   .sb-hacc {
     background: var(--sb-panel);
-    border: 1px solid rgba(124, 77, 255, 0.34);
+    border: 1px solid rgba(34, 197, 94, 0.34);
     border-radius: 14px;
     padding: 1.05rem 1.15rem;
     display: flex;
@@ -341,7 +341,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
     transition: width 0.85s cubic-bezier(0.22, 0.8, 0.24, 1) 0.06s,
                 background 0.3s ease, border-color 0.3s ease;
   }
-  .sb-hacc:hover { background: #161826; border-color: rgba(124, 77, 255, 0.62); }
+  .sb-hacc:hover { background: #161826; border-color: rgba(34, 197, 94, 0.62); }
   .sb-hacc--closed {
     width: 96px;
     padding: 1.05rem 0.5rem;
@@ -362,7 +362,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
     border: 1px solid var(--sb-line); border-radius: 10px;
     padding: 0.85rem 0.95rem; margin: 0.9rem 0 0;
     white-space: pre-wrap;
-    background: rgba(124, 77, 255, 0.05);
+    background: rgba(34, 197, 94, 0.05);
   }
   .sb-hacc-row { display: flex; gap: 1rem; align-items: stretch; flex-wrap: wrap; }
 
@@ -379,7 +379,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
   /* CTA footer */
   .sb-cta-band {
     background:
-      radial-gradient(900px 380px at 50% 8%, rgba(124, 77, 255, 0.22), transparent 62%),
+      radial-gradient(900px 380px at 50% 8%, rgba(34, 197, 94, 0.22), transparent 62%),
       radial-gradient(700px 300px at 12% 100%, rgba(23, 32, 27, 0.9), transparent 55%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 30px;
@@ -523,7 +523,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
             <span class="sb-bento-tag">init</span>
             <h3>Scaffold a project</h3>
             <p><code>flisk project --yes</code> builds the full PSR skeleton &mdash; <code>.tdk/project.json</code>, the Tilt build files, stack manifests, and a vendored copy of the Flisk extension so <code>flisk up</code> runs offline without depending on a private repo.</p>
-            <div class="sb-bento-img" style="background-image: linear-gradient(135deg, #7c4dff 0%, #4dd0ff 100%);"></div>
+            <div class="sb-bento-img" style="background-image: linear-gradient(135deg, #22C55E 0%, #4dd0ff 100%);"></div>
           </div>
           <div class="sb-bento-card" id="bento-b" data-reveal>
             <span class="sb-bento-tag">codegen</span>
@@ -658,7 +658,7 @@ Starting 2 services from stack "pre-alpha":
     TERM.innerHTML = h;
     POS.textContent = String(pos);
     if (pos >= STEPS.length) { STATUS.textContent = 'done'; STATUS.style.color = '#23c8a8'; }
-    else { STATUS.textContent = 'playing'; STATUS.style.color = '#7c4dff'; }
+    else { STATUS.textContent = 'playing'; STATUS.style.color = '#22C55E'; }
     TERM.scrollTop = TERM.scrollHeight;
   }
   function stopTour() {
