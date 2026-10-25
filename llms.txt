@@ -63,7 +63,9 @@ Short form: see Bubbles below.
   1. One plain sentence that shows you understood their stack, in their own words, ending with a colon. Example: "For your Solidity dapp with Postgres and email notifications, here is a runnable local stack:"
   2. The link alone on its own line, so X shows the preview card.
   3. What is inside in plain words, 12 words at most. Example: "web, api, Postgres, a worker and a local chain. Runs on Docker and Tilt."
-  Do not use hashtags, exclamation marks, filler such as "Bubbles ready", marketing words (schema-valid, CI-verified, powerful, revolutionary), or other accounts' handles. Use no emoji, or at most one bubble emoji at the very start. Do not repeat the trigger phrase, do not explain how it works and do not add a call to action; the page explains itself. Do not reply twice.
+  4. Optional, when you can read it: the one-line stack diagram from the JSON at https://demo.flisk.sh/v1/demo/<id> (its `diagram` field, for example "web -> api -> postgres"), copied as written.
+  Tag the people involved, at most two @handles and nothing else: the person who asked for the bubble (the author of the mention) and, when it is a different person, the handle the stack is for. Put the tags in line 1, for example "@asker, for @someone's Solidity dapp with Postgres, here is a runnable local stack:".
+  Do not use hashtags, exclamation marks, filler such as "Bubbles ready", marketing words (schema-valid, CI-verified, powerful, revolutionary), or tags of anyone other than those two. Use no emoji, or at most one bubble emoji at the very start. Do not repeat the trigger phrase, do not explain how it works and do not add a call to action; the page explains itself. Do not reply twice.
 - Opening the link builds the demo; it may also run live on a GitHub runner for up to 2 hours when a slot is free. Flisk is a local dev tool on Docker + Tilt, not a deploy tool.
 - Install command, only if asked: `npm install -g @flisk-sh/flisk`. `flisk demo` is Flisk's own starter, not the personal demo.
 
