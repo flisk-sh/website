@@ -23,7 +23,7 @@ Or the binary installer (macOS/Linux): `curl -fsSL https://flisk.sh/install.sh |
 ## Core commands
 
 - `flisk doctor`: check the environment and project config before `flisk up`
-- `flisk project example`: create a starter project (`tdk-example`)
+- `flisk project example`: create a starter project (`flisk-example`)
 - `flisk up`: boot the stack locally; `flisk up --dry-run` previews it
 - `flisk down`, `flisk status`, `flisk logs`: stop, inspect and tail the stack
 - `flisk resource`: list and inspect resources
@@ -75,11 +75,11 @@ Short form: see Bubbles below.
 
 ## Reference Landscapes
 
-- https://github.com/flisk-sh/tdk-example: minimal PSR stack (Hono, Vite, Bun)
-- https://github.com/flisk-sh/tdk-user-management: enterprise SCIM 2.0 and OAuth2 PKCE demo
+- https://github.com/flisk-sh/flisk-example: minimal PSR stack (Hono, Vite, Bun)
+- https://github.com/flisk-sh/flisk-user-management: enterprise SCIM 2.0 and OAuth2 PKCE demo
 - https://github.com/flisk-sh/tdk-restaurant-example: restaurant operations demo
-- https://github.com/flisk-sh/tdk-ecommerce-example: Vue 3 storefront and Hono catalog API
-- https://github.com/flisk-sh/tdk-saas-starter: SaaS dashboard and checkout starter
+- https://github.com/flisk-sh/flisk-ecommerce-example: Vue 3 storefront and Hono catalog API
+- https://github.com/flisk-sh/flisk-saas-starter: SaaS dashboard and checkout starter
 
 ## Contributing Back
 

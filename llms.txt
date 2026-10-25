@@ -17,7 +17,7 @@ Fastest binary install (macOS/Linux, picks the right binary for your arch):
 curl -fsSL https://flisk.sh/install.sh | sh
 flisk doctor
 flisk project example
-cd tdk-example
+cd flisk-example
 flisk up
 ```
 
@@ -127,13 +127,13 @@ Current skills include:
 
 ## Reference Landscapes (GitHub)
 
-- [tdk-example](https://github.com/flisk-sh/tdk-example): minimal PSR stack (Hono, Vite, Bun)
-- [tdk-user-management](https://github.com/flisk-sh/tdk-user-management): enterprise SCIM 2.0 & OAuth2 PKCE demo
+- [flisk-example](https://github.com/flisk-sh/flisk-example): minimal PSR stack (Hono, Vite, Bun)
+- [flisk-user-management](https://github.com/flisk-sh/flisk-user-management): enterprise SCIM 2.0 & OAuth2 PKCE demo
 - [tdk-restaurant-example](https://github.com/flisk-sh/tdk-restaurant-example): restaurant operations demo — reservations, kitchen, menu, floor ops
 - [tdk-erp-system](https://github.com/flisk-sh/tdk-erp-system): {{ site.data.tdk.erp_services }}-service scale fixture across {{ site.data.tdk.erp_domains }} ERP-style domains; all healthy on a clean CI runner in {{ site.data.tdk.erp_boot_seconds }} s, images built ({{ site.data.tdk.erp_ci_run }})
-- [tdk-ecommerce-example](https://github.com/flisk-sh/tdk-ecommerce-example): Vue 3 storefront + Hono catalog API; smallest example of `--framework vue`
-- [tdk-auth-queue-email-example](https://github.com/flisk-sh/tdk-auth-queue-email-example): run an OIDC identity provider, a NATS queue and email (Mailpit) locally behind small interfaces
-- [tdk-saas-starter](https://github.com/flisk-sh/tdk-saas-starter): SaaS dashboard + checkout starter
+- [flisk-ecommerce-example](https://github.com/flisk-sh/flisk-ecommerce-example): Vue 3 storefront + Hono catalog API; smallest example of `--framework vue`
+- [flisk-auth-queue-email-example](https://github.com/flisk-sh/flisk-auth-queue-email-example): run an OIDC identity provider, a NATS queue and email (Mailpit) locally behind small interfaces
+- [flisk-saas-starter](https://github.com/flisk-sh/flisk-saas-starter): SaaS dashboard + checkout starter
 
 ## Field Notes
 
