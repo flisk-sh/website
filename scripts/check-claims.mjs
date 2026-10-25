@@ -59,6 +59,13 @@ if (!index.includes('Stability: 1.x local dev. Generated files are a contract; v
   failures.push('homepage is missing the shared product stability and license status line');
 }
 
+// A fullwidth at-sign (U+FF20) in llms files breaks copy-paste commands and the "@grok" trigger.
+for (const name of ['llms.txt', 'llms-full.txt']) {
+  if (readFileSync(new URL(name, root), 'utf8').includes('\uFF20')) {
+    failures.push(`${name} contains a fullwidth at-sign (U+FF20); use the ASCII at-sign`);
+  }
+}
+
 if (failures.length) {
   console.error(failures.map((failure) => `FAIL: ${failure}`).join('\n'));
   process.exit(1);
