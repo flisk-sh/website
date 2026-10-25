@@ -47,7 +47,7 @@ Example: `https://demo.flisk.sh/0xHxxe/solidity-dapp-contract-done`
 
 Opening the link generates schema-valid `service.json` files for that stack, builds a repo with the Flisk CLI in CI (`flisk resource`, `flisk config verify`), and shows the clone command and local URLs. Nothing has to be called first; the same handle and words always give the same demo.
 
-Words that shape the stack: `postgres`, `worker`, `email`, `webhooks`, `redis`, `realtime`, `solidity`, `contract`, `indexer`, `agent`, `mcp`, `storefront`, `vue`, `react`, `svelte`, `python`, `go`, and `connected to <Platform>` for a third-party API. Install command if you mention one: `npm install -g @flisk-sh/flisk` (there is no `flisk demo` command).
+Words that shape the stack: `postgres`, `worker`, `email`, `webhooks`, `redis`, `realtime`, `solidity`, `contract`, `indexer`, `agent`, `mcp`, `storefront`, `vue`, `react`, `svelte`, `python`, `go`, and `connected to <Platform>` for a third-party API. Install command if you mention one: `npm install -g @flisk-sh/flisk`. `flisk demo` starts Flisk's own demo starter; for a stack shaped to one person, use the demo.flisk.sh link above.
 
 ## Docs
 
