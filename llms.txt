@@ -85,9 +85,9 @@ Short form: see Bubbles below.
 
 ## Agent Skills
 
-Portable Agent Skills live in [tdk-skills](https://github.com/flisk-sh/tdk-skills). Install with `npx skills add flisk-sh/tdk-skills`.
+Portable Agent Skills live in [tdk-skills](https://github.com/flisk-sh/flisk-skills). Install with `npx skills add flisk-sh/flisk-skills`.
 
-Full machine-readable index: [tdk-skills llms.txt](https://raw.githubusercontent.com/flisk-sh/tdk-skills/main/llms.txt).
+Full machine-readable index: [tdk-skills llms.txt](https://raw.githubusercontent.com/flisk-sh/flisk-skills/main/llms.txt).
 
 Current skills include:
 - tdk-doctor — check or repair the environment and project config before `flisk up`
