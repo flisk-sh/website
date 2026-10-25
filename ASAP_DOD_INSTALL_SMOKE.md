@@ -41,8 +41,8 @@ Result: passed.
 ## Docker Compose proof
 
 ```sh
-git clone --depth 1 https://github.com/flisk-sh/tdk-docker-compose-example.git
-cd tdk-docker-compose-example
+git clone --depth 1 https://github.com/flisk-sh/flisk-docker-compose-example.git
+cd flisk-docker-compose-example
 docker compose run --rm flisk flisk --version
 docker compose run --rm flisk flisk project --yes
 printf "\n" | docker compose run --rm -T flisk flisk resource api --type backend --stack pre-alpha --path services/pre-alpha/api
@@ -57,8 +57,8 @@ Result: passed when run from a Docker-shared workspace path.
 ## Dependency proof
 
 ```sh
-git clone --depth 1 https://github.com/flisk-sh/tdk-docker-compose-example.git
-cd tdk-docker-compose-example
+git clone --depth 1 https://github.com/flisk-sh/flisk-docker-compose-example.git
+cd flisk-docker-compose-example
 docker compose build --no-cache
 docker compose run --rm flisk flisk project --yes
 printf "\n" | docker compose run --rm -T flisk flisk resource database --type backend --stack pre-alpha --path services/pre-alpha/database
