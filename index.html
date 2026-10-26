@@ -395,8 +395,12 @@ body { background: #0a0a0e; overflow-x: hidden; }
   display: flex;
   align-items: center;
   gap: 1rem;
+  height: 2.75rem;
   padding: 0 1.5rem;
-  background: #22C55E;
+  background: rgba(10, 10, 14, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   transform: translateY(-100%);
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -408,7 +412,7 @@ body.aw-index-on .aw-nav { top: -6rem; }
   flex: 1;
   display: flex;
   justify-content: center;
-  gap: 0.25rem;
+  height: 100%;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -419,43 +423,46 @@ body.aw-index-on .aw-nav { top: -6rem; }
   flex: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 1.05rem 0.85rem;
-  color: rgba(10, 10, 14, 0.72);
-  font: 500 0.82rem 'JetBrains Mono', monospace;
+  gap: 0.5rem;
+  padding: 0 0.9rem;
+  color: rgba(236, 236, 241, 0.55);
+  font: 400 0.75rem 'JetBrains Mono', monospace;
   text-decoration: none;
-  transition: color 160ms ease, background 160ms ease;
+  box-shadow: inset 0 -1px transparent;
+  transition: color 160ms ease, box-shadow 160ms ease;
 }
 
-.aw-index-links a:hover,
-.aw-index-links a.is-active { color: #0a0a0e; background: rgba(10, 10, 14, 0.12); }
+.aw-index-links a:hover { color: #ececf1; }
+.aw-index-links a.is-active { color: #fff; box-shadow: inset 0 -1px #22C55E; }
 
 .aw-index-links kbd {
-  padding: 0.08rem 0.34rem;
-  border: 1px solid rgba(10, 10, 14, 0.45);
-  border-radius: 0.2rem;
+  padding: 0 0.3rem;
+  border: 1px solid rgba(236, 236, 241, 0.22);
+  border-radius: 0;
   background: none;
   color: inherit;
-  font: 500 0.64rem 'JetBrains Mono', monospace;
+  font: 400 0.62rem/1.5 'JetBrains Mono', monospace;
   box-shadow: none;
 }
 
-.aw-index-links a.is-active kbd { background: #0a0a0e; color: #6EE7A0; border-color: #0a0a0e; }
+.aw-index-links a.is-active kbd { color: #22C55E; border-color: rgba(34, 197, 94, 0.6); }
 
 .aw-index-cta {
   flex: none;
-  padding: 0.55rem 1rem;
-  border-radius: 999px;
-  background: #0a0a0e;
-  color: #fff;
-  font: 600 0.78rem 'Satoshi', 'Outfit', sans-serif;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid rgba(236, 236, 241, 0.3);
+  color: #ececf1;
+  font: 400 0.72rem 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   text-decoration: none;
 }
 
-.aw-index a:focus-visible { outline: 2px solid #0a0a0e; outline-offset: -2px; }
+.aw-index-cta:hover { border-color: #ececf1; color: #fff; }
+.aw-index a:focus-visible { outline: 2px solid #4dd0ff; outline-offset: -2px; }
 
 @media (max-width: 768px) {
-  .aw-index { padding: 0 0.5rem; }
+  .aw-index { padding: 0 0.25rem; }
   .aw-index-links { justify-content: flex-start; }
   .aw-index-links kbd { display: none; }
   .aw-index-cta { display: none; }
@@ -465,30 +472,63 @@ body.aw-index-on .aw-nav { top: -6rem; }
   .aw-index { transition: none; }
 }
 
-/* ---------------- Generated files explorer (annotated, hover to explain) ---------------- */
-.aw-head .aw-gen-kicker {
-  margin: 0 0 1.25rem;
-  font: 500 0.78rem 'JetBrains Mono', monospace;
-  letter-spacing: 0.08em;
+/* ---------------- Generated files explorer ----------------
+   A light "paper" band in the manner of warp.dev's configuration section: ink on
+   off-white, 1px ink hairlines, sharp corners, mono throughout, one accent. */
+.aw-section.aw-gen {
+  --ink: #1a1522;
+  --ink-62: rgba(26, 21, 34, 0.62);
+  --ink-40: rgba(26, 21, 34, 0.4);
+  --ink-16: rgba(26, 21, 34, 0.16);
+  --ink-06: rgba(26, 21, 34, 0.06);
+  --paper: #fbfaf7;
+  --accent: #15803d;
+  --accent-tint: rgba(21, 128, 61, 0.08);
+  padding-top: clamp(6rem, 9vw, 8rem);
+  padding-bottom: clamp(6rem, 9vw, 8rem);
+  color: var(--ink);
+  background:
+    radial-gradient(var(--ink-16) 1px, transparent 1.2px) 0 0 / 24px 24px,
+    var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.aw-gen .aw-wrap { border-left: 1px solid var(--ink-16); border-right: 1px solid var(--ink-16); }
+.aw-gen .aw-head { padding: 0 2rem; margin-bottom: 2.5rem; }
+
+.aw-gen .aw-head .aw-gen-kicker {
+  margin: 0 0 0.75rem;
+  color: var(--ink);
+  font: 500 0.69rem 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #ececf1;
 }
 
-.aw-head .aw-gen-kicker span { color: rgba(236, 236, 241, 0.4); }
+.aw-gen .aw-head .aw-gen-kicker span { color: var(--ink-40); }
 
-.aw-gen-frame {
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 1.2rem;
-  background: #0d0d13;
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.05), 0 28px 90px rgba(0, 0, 0, 0.34);
-  overflow: hidden;
+.aw-gen .aw-head h2 {
+  color: var(--ink);
+  font: 400 clamp(1.75rem, 3vw, 2.25rem)/1.5 'JetBrains Mono', monospace;
+  letter-spacing: -0.06em;
+  margin-bottom: 0.75rem;
+  max-width: 52rem;
+  text-wrap: balance;
 }
+
+.aw-gen .aw-head p:not(.aw-gen-kicker) {
+  color: var(--ink-62);
+  font: 400 0.82rem/1.65 'JetBrains Mono', monospace;
+  max-width: 44rem;
+}
+
+.aw-gen-frame { background: #fff; border-top: 1px solid var(--ink-16); border-bottom: 1px solid var(--ink-16); }
 
 .aw-gen-tabs {
   display: flex;
+  height: 2.6rem;
   overflow-x: auto;
   scrollbar-width: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  border-bottom: 1px solid var(--ink-16);
 }
 
 .aw-gen-tabs::-webkit-scrollbar { display: none; }
@@ -498,94 +538,74 @@ body.aw-index-on .aw-nav { top: -6rem; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.7rem;
-  padding: 1.05rem 1.4rem;
+  gap: 0.6rem;
+  padding: 0 1.15rem;
   border: 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.09);
+  border-right: 1px solid var(--ink-16);
   background: none;
-  color: rgba(236, 236, 241, 0.6);
-  font: 500 0.74rem 'JetBrains Mono', monospace;
-  letter-spacing: 0.08em;
+  color: var(--ink-62);
+  font: 500 0.69rem 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 160ms ease, background 160ms ease;
+  transition: color 140ms ease, background 140ms ease;
 }
 
 .aw-gen-tab:last-child { border-right: 0; }
-.aw-gen-tab:hover { color: #fff; background: rgba(255, 255, 255, 0.04); }
-.aw-gen-tab.is-active { color: #0a0a0e; background: #22C55E; }
+.aw-gen-tab:hover { color: var(--ink); background: var(--ink-06); }
+.aw-gen-tab.is-active { color: #fff; background: var(--accent); }
 
 .aw-gen-tab kbd {
-  padding: 0.1rem 0.36rem;
+  padding: 0 0.28rem;
   border: 1px solid currentColor;
-  border-radius: 0.25rem;
+  border-radius: 0;
   background: none;
   color: inherit;
-  opacity: 0.55;
-  font: 500 0.64rem 'JetBrains Mono', monospace;
+  opacity: 0.6;
+  font: 400 0.6rem/1.5 'JetBrains Mono', monospace;
   box-shadow: none;
 }
 
-.aw-gen-tab.is-active kbd { opacity: 0.9; }
-
 .aw-gen-desc {
   margin: 0;
-  padding: 1.6rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  color: rgba(236, 236, 241, 0.62);
-  font: 400 0.9rem/1.7 'JetBrains Mono', monospace;
-  padding-right: max(2rem, calc(100% - 62rem));
+  padding: 1.15rem 1.5rem;
+  border-bottom: 1px solid var(--ink-16);
+  color: var(--ink);
+  font: 400 0.82rem/1.65 'JetBrains Mono', monospace;
 }
 
-.aw-gen-fig {
-  margin: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background: #0a0a0e;
-}
+.aw-gen-fig { margin: 2rem; border: 1px solid var(--ink-16); background: #fff; }
 
 .aw-gen-fig-bar {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.55rem 0.7rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  color: rgba(236, 236, 241, 0.4);
-  font: 400 0.72rem 'JetBrains Mono', monospace;
+  gap: 0.75rem;
+  height: 2.3rem;
+  padding: 0 0.75rem;
+  border-bottom: 1px solid var(--ink-16);
+  color: var(--ink-40);
+  font: 400 0.66rem 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
 }
 
-.aw-gen-fig-title {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  white-space: nowrap;
-}
-
+.aw-gen-fig-title { flex: 1; display: flex; align-items: center; gap: 0.9rem; white-space: nowrap; }
 .aw-gen-fig-title::before,
-.aw-gen-fig-title::after { content: ""; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.09); }
+.aw-gen-fig-title::after { content: ""; flex: 1; height: 1px; background: var(--ink-16); }
 
 .aw-gen-fig-icon {
   display: inline-grid;
   place-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  font-size: 0.75rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid var(--ink-16);
+  color: var(--ink-62);
+  font-size: 0.62rem;
 }
 
-.aw-gen-grid {
-  display: grid;
-  grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 2fr);
-  min-height: 36rem;
-}
+.aw-gen-grid { display: grid; grid-template-columns: minmax(15rem, 0.85fr) minmax(0, 2fr); min-height: 34rem; }
 
 /* File tree */
-.aw-gen-tree {
-  padding: 1rem 0.75rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.09);
-  font: 400 0.78rem 'JetBrains Mono', monospace;
-}
-
+.aw-gen-tree { padding: 0.75rem; border-right: 1px solid var(--ink-16); font: 400 0.8rem 'JetBrains Mono', monospace; }
 .aw-gen-tree ul { list-style: none; margin: 0; padding: 0; }
 .aw-gen-tree ul ul { padding-left: 1.1rem; }
 .aw-gen-dir:not(.is-open) > ul { display: none; }
@@ -593,29 +613,29 @@ body.aw-index-on .aw-nav { top: -6rem; }
 .aw-gen-node {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.65rem;
   width: 100%;
-  min-height: 2.5rem;
-  padding: 0.45rem 0.75rem;
+  min-height: 2.15rem;
+  padding: 0.3rem 0.65rem;
   border: 1px solid transparent;
   background: none;
-  color: rgba(236, 236, 241, 0.72);
+  color: var(--ink);
   font: inherit;
   text-align: left;
   overflow-wrap: anywhere;
 }
 
-.aw-gen-node i { flex: none; color: rgba(236, 236, 241, 0.45); }
-.aw-gen-node.is-muted { color: rgba(236, 236, 241, 0.3); }
+.aw-gen-node i { flex: none; color: var(--ink-62); font-size: 0.85rem; }
+.aw-gen-node.is-muted { color: var(--ink-40); }
 .aw-gen-node.is-muted i { color: inherit; }
-.aw-gen-dir.is-open > .aw-gen-node { color: rgba(236, 236, 241, 0.5); }
-.aw-gen-dir.is-current > .aw-gen-node { color: #0a0a0e; background: #22C55E; }
-.aw-gen-dir.is-current > .aw-gen-node i { color: #0a0a0e; }
+.aw-gen-dir.is-open > .aw-gen-node { color: var(--ink-62); }
+.aw-gen-dir.is-current > .aw-gen-node,
+.aw-gen-dir.is-current > .aw-gen-node i { color: #fff; background: var(--accent); }
 
-button.aw-gen-node { cursor: pointer; transition: background 160ms ease, color 160ms ease; }
-button.aw-gen-node:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
-button.aw-gen-node.is-active { color: #fff; background: rgba(34, 197, 94, 0.16); border-color: rgba(110, 231, 160, 0.55); }
-button.aw-gen-node.is-active i { color: #6EE7A0; }
+button.aw-gen-node { cursor: pointer; transition: background 140ms ease; }
+button.aw-gen-node:hover { background: var(--ink-06); }
+button.aw-gen-node.is-active { color: var(--accent); background: var(--accent-tint); border-color: rgba(21, 128, 61, 0.35); }
+button.aw-gen-node.is-active i { color: var(--accent); }
 
 /* File panel */
 .aw-gen-panels { display: grid; min-width: 0; }
@@ -625,119 +645,119 @@ button.aw-gen-node.is-active i { color: #6EE7A0; }
 .aw-gen-file {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
-  padding: 0.95rem 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  color: #ececf1;
-  font: 500 0.72rem 'JetBrains Mono', monospace;
+  height: 2.3rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--ink-16);
+  color: var(--ink);
+  font: 500 0.69rem 'JetBrains Mono', monospace;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.aw-gen-file > span { overflow-wrap: anywhere; }
-.aw-gen-file a { flex: none; color: rgba(236, 236, 241, 0.55); text-decoration: none; }
-.aw-gen-file a:hover { color: #6EE7A0; }
+.aw-gen-file > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aw-gen-file a { flex: none; color: var(--ink-62); text-decoration: none; }
+.aw-gen-file a:hover { color: var(--accent); }
 
 .aw-gen-code {
   position: relative;
   flex: 1;
-  max-height: 36rem;
+  max-height: 34rem;
   overflow: auto;
-  padding: 1rem 0 1.5rem;
-  font: 400 0.8rem/1.85 'JetBrains Mono', monospace;
-  color: #ececf1;
+  padding: 1.5rem 0 2.5rem;
+  color: var(--ink);
+  font: 400 0.81rem/1.65 'JetBrains Mono', monospace;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-color: var(--ink-16) transparent;
 }
 
 .aw-gen-line { display: flex; width: max-content; min-width: 100%; }
 .aw-gen-ln {
   position: sticky;
   left: 0;
+  z-index: 1;
   flex: none;
-  width: 3.4rem;
-  padding-right: 1.1rem;
+  width: 3.25rem;
+  padding-right: 1rem;
   text-align: right;
-  color: rgba(236, 236, 241, 0.28);
-  background: #0a0a0e;
+  color: var(--ink-40);
+  background: #fff;
   user-select: none;
 }
 
-.aw-gen-line code {
-  padding: 0 1.5rem 0 0.9rem;
-  color: inherit;
-  background: none;
-  font: inherit;
-  white-space: pre;
+.aw-gen-line code { padding: 0 1.5rem 0 1rem; color: inherit; background: none; font: inherit; white-space: pre; }
+
+/* Annotated line ranges: a 1px accent rule; hover or focus tints the range and shows the note */
+.aw-gen-block { position: relative; width: max-content; min-width: 100%; outline: none; cursor: help; }
+.aw-gen-block::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 3.25rem;
+  width: 1px;
+  background: var(--accent);
+  transition: width 140ms ease;
 }
 
-/* Annotated line ranges: thin rule at rest, tinted with a callout on hover or focus */
-.aw-gen-block {
-  position: relative;
-  width: max-content;
-  min-width: 100%;
-  box-shadow: inset 2px 0 rgba(34, 197, 94, 0.55);
-  outline: none;
-  cursor: help;
-  transition: background 140ms ease, box-shadow 140ms ease;
-}
-
-.aw-gen-block .aw-gen-ln { box-shadow: inset 2px 0 rgba(34, 197, 94, 0.55); transition: inherit; }
 .aw-gen-block:hover,
-.aw-gen-block:focus-visible { background: rgba(34, 197, 94, 0.13); }
+.aw-gen-block:focus-visible { background: var(--accent-tint); }
 .aw-gen-block:hover .aw-gen-ln,
-.aw-gen-block:focus-visible .aw-gen-ln { background: #0f1a14; box-shadow: inset 3px 0 #22C55E; color: #6EE7A0; }
+.aw-gen-block:focus-visible .aw-gen-ln { background: #f3f8f4; color: var(--accent); }
+.aw-gen-block:hover::before,
+.aw-gen-block:focus-visible::before { width: 2px; }
 
 .aw-gen-tip {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: var(--tip-y, 0.25rem);
-  left: calc(var(--tip-x, 0px) + 4.5rem);
-  width: min(24rem, calc(100% - 6rem));
-  padding: 0.9rem 1.05rem;
-  background: #22C55E;
-  color: #0a0a0e;
+  left: calc(var(--tip-x, 0px) + 5rem);
+  width: min(23rem, calc(100% - 6rem));
+  padding: 0.75rem 0.9rem;
+  background: var(--accent);
+  color: #fff;
   font: 400 0.78rem/1.6 'JetBrains Mono', monospace;
   white-space: normal;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
   opacity: 0;
-  transform: translateY(4px);
   pointer-events: none;
-  transition: opacity 140ms ease, transform 140ms ease;
+  transition: opacity 120ms ease;
 }
 
 .aw-gen-block:hover .aw-gen-tip,
-.aw-gen-block:focus-visible .aw-gen-tip { opacity: 1; transform: none; }
+.aw-gen-block:focus-visible .aw-gen-tip { opacity: 1; }
 
-/* Syntax tint, per DESIGN.md: green keys, blue strings, sky numbers, grey comments */
-.aw-gen-code .t-c { color: rgba(236, 236, 241, 0.36); }
-.aw-gen-code .t-k { color: #7ee787; }
-.aw-gen-code .t-s { color: #a5d6ff; }
-.aw-gen-code .t-n { color: #79c0ff; }
-.aw-gen-code .t-i { color: #6EE7A0; }
+/* Near-monochrome tint, as on warp.dev: ink text, one accent for keys, 40% ink for comments */
+.aw-gen-code .t-c { color: var(--ink-40); }
+.aw-gen-code .t-k,
+.aw-gen-code .t-i { color: var(--accent); }
+.aw-gen-code .t-s,
+.aw-gen-code .t-n { color: rgba(26, 21, 34, 0.78); }
 
 .aw-gen-tab:focus-visible,
 button.aw-gen-node:focus-visible,
-.aw-gen-file a:focus-visible { outline: 2px solid #4dd0ff; outline-offset: -2px; }
+.aw-gen-file a:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
 @media (max-width: 960px) {
   .aw-gen-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; }
   .aw-gen-tree { display: none; }
   .aw-gen-fig { margin: 1rem; }
-  .aw-gen-desc { padding: 1.2rem 1.25rem; font-size: 0.82rem; }
 }
 
 @media (max-width: 768px) {
-  .aw-gen-fig { margin: 0; border: 0; }
+  .aw-gen .aw-wrap { border: 0; }
+  .aw-gen .aw-head { padding: 0; }
+  .aw-gen-fig { margin: 0; border-width: 1px 0 0; }
   .aw-gen-fig-bar { display: none; }
-  .aw-gen-tab { padding: 0.9rem 1rem; }
   .aw-gen-tab kbd { display: none; }
+  .aw-gen-desc { padding: 1rem; }
   .aw-gen-code { font-size: 0.74rem; max-height: 28rem; }
-  .aw-gen-tip { width: calc(100% - 5rem); }
+  .aw-gen-tip { width: calc(100% - 5.5rem); left: calc(var(--tip-x, 0px) + 4rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aw-gen-block, .aw-gen-tip, .aw-gen-tab, button.aw-gen-node { transition: none; }
+  .aw-gen-block::before, .aw-gen-tip, .aw-gen-tab, button.aw-gen-node { transition: none; }
 }
 
 .aw-bench-tab:focus-visible,
@@ -3887,7 +3907,7 @@ button.aw-gen-node:focus-visible,
 
   <!-- ================= GENERATED FILES EXPLORER ================= -->
   {%- assign gen = site.data.explorer %}
-  <section class="aw-section aw-gen" id="generated" style="padding-top: 0;">
+  <section class="aw-section aw-gen" id="generated">
     <div class="aw-wrap">
       <div class="aw-head">
         <p class="aw-gen-kicker"># generated <span>[from service.json]</span></p>
@@ -3911,7 +3931,7 @@ button.aw-gen-node:focus-visible,
         <figure class="aw-gen-fig">
           <figcaption class="aw-gen-fig-bar">
             <span class="aw-gen-fig-icon" aria-hidden="true"><i class="bi bi-code"></i></span>
-            <span class="aw-gen-fig-title">[ fig. 1 · generated service files ]</span>
+            <span class="aw-gen-fig-title">[ fig. 1 / generated service files ]</span>
             <span class="aw-gen-fig-icon" aria-hidden="true"><i class="bi bi-grid-3x3"></i></span>
           </figcaption>
 
