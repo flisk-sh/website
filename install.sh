@@ -36,23 +36,23 @@ case "$arch" in
   *) fail "unsupported CPU: $arch" ;;
 esac
 
-asset="tdk-${platform}-${cpu}"
+asset="flisk-${platform}-${cpu}"
 url="https://github.com/${OWNER}/${REPO}/releases/latest/download/${asset}"
 
 # Fixed filename (no version in it), so this always resolves to whatever
 # release is currently "latest" - unlike the per-release zip, which is
 # named with its own tag and can't be found this way.
-engine_asset="tdk-cli-engine.tar.gz"
+engine_asset="flisk-cli-engine.tar.gz"
 engine_url="https://github.com/${OWNER}/${REPO}/releases/latest/download/${engine_asset}"
 
 checksums_url="https://github.com/${OWNER}/${REPO}/releases/latest/download/checksums.txt"
 
-# Never runs sudo. Uses TDK_INSTALL_DIR if set, else /usr/local/bin when it's
-# writable, else ~/.local/bin.
-if [ -n "${TDK_INSTALL_DIR:-}" ]; then
-  install_dir="$TDK_INSTALL_DIR"
+# Never runs sudo. Uses FLISK_INSTALL_DIR if set, else /usr/local/bin when
+# it's writable, else ~/.local/bin.
+install_dir="${FLISK_INSTALL_DIR:-}"
+if [ -n "$install_dir" ]; then
   mkdir -p "$install_dir" 2>/dev/null || true
-  [ -w "$install_dir" ] || fail "$install_dir is not writable. Pick another TDK_INSTALL_DIR, or download the script and run it with sudo yourself."
+  [ -w "$install_dir" ] || fail "$install_dir is not writable. Pick another FLISK_INSTALL_DIR, or download the script and run it with sudo yourself."
 elif [ -w /usr/local/bin ]; then
   install_dir="/usr/local/bin"
 else
@@ -60,8 +60,8 @@ else
   mkdir -p "$install_dir"
 fi
 tmp="${TMPDIR:-/tmp}/flisk.$$"
-engine_tmp="${TMPDIR:-/tmp}/tdk-engine.$$.tar.gz"
-sums_tmp="${TMPDIR:-/tmp}/tdk-checksums.$$.txt"
+engine_tmp="${TMPDIR:-/tmp}/flisk-engine.$$.tar.gz"
+sums_tmp="${TMPDIR:-/tmp}/flisk-checksums.$$.txt"
 trap 'rm -f "$tmp" "$engine_tmp" "$sums_tmp"' EXIT
 
 download() {
@@ -109,7 +109,7 @@ chmod +x "$tmp"
 
 # The compiled binary has no source checkout to find engine/ in, so it
 # looks for a flisk-cli/ folder next to itself (see
-# cli/src/generator/template-engine.ts, vendorTdkExtension). Without this,
+# cli/src/generator/template-engine.ts, vendorFliskExtension). Without this,
 # `flisk project`/`flisk up` fail with "Flisk extension not found".
 echo "Installing bundled engine..."
 download "$engine_url" "$engine_tmp" || fail "download failed: $engine_url"
