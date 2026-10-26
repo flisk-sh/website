@@ -385,6 +385,42 @@ body { background: #0a0a0e; overflow-x: hidden; }
 .aw-bench-tab:last-child { border-right: 0; }
 .aw-bench-tab:hover { color: #ececf1; }
 .aw-bench-tab.is-active { color: #fff; background: rgba(255, 255, 255, 0.06); box-shadow: inset 0 -2px #6EE7A0; }
+/* ---------------- FAQ list ---------------- */
+.aw-faq-list { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.aw-faq-item { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.aw-faq-item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.15rem 0.25rem;
+  color: #ececf1;
+  font: 400 0.95rem 'JetBrains Mono', monospace;
+  list-style: none;
+  cursor: pointer;
+  transition: color 140ms ease;
+}
+.aw-faq-item summary::-webkit-details-marker { display: none; }
+.aw-faq-item summary:hover { color: #fff; }
+.aw-faq-q { display: flex; gap: 0.75rem; }
+.aw-faq-caret { color: #22C55E; }
+.aw-faq-sign { flex: none; color: rgba(236, 236, 241, 0.55); font: 400 0.85rem 'JetBrains Mono', monospace; }
+.aw-faq-sign::before { content: "[+]"; }
+.aw-faq-item[open] .aw-faq-sign::before { content: "[\2212]"; color: #6EE7A0; }
+.aw-faq-a {
+  max-width: 52rem;
+  padding: 0 0.25rem 1.4rem 1.85rem;
+  color: rgba(236, 236, 241, 0.62);
+  font: 400 0.85rem/1.75 'JetBrains Mono', monospace;
+}
+.aw-faq-a a { color: #6EE7A0; }
+.aw-faq-item summary:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 2px; }
+
+@media (max-width: 768px) {
+  .aw-faq-item summary { font-size: 0.85rem; }
+  .aw-faq-a { padding-left: 0.25rem; font-size: 0.8rem; }
+}
+
 /* ---------------- Section index bar ---------------- */
 .aw-index {
   position: fixed;
@@ -4094,39 +4130,31 @@ button.aw-gen-node:focus-visible,
     </div>
   </section>
 
-  <!-- ================= FAQ — Horizontal Accordion ================= -->
-  <section class="aw-section" id="faq" style="padding-top: 0;">
+  <!-- ================= FAQ — plain list with [+] / [−] toggles (after warp.dev) ================= -->
+  <section class="aw-section aw-faq" id="faq" style="padding-top: 0;">
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>Honest answers</h2>
-        <p>Hover to expand. The same answers we give in engineering reviews.</p>
+        <p>The same answers we give in engineering reviews.</p>
       </div>
 
-      <div class="aw-accordion">
-        <div class="aw-acc-item">
-          <div class="aw-acc-head">
-            <div class="aw-acc-title">We need Kubernetes for production</div>
-            <div class="aw-acc-body">Local dev doesn't need to match production. The 14 tiny services were healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot. Production stays on Helm. <a href="{{ '/docs/claims/' | relative_url }}">Claim details</a>.</div>
-          </div>
-        </div>
-        <div class="aw-acc-item">
-          <div class="aw-acc-head">
-            <div class="aw-acc-title">What about CI/CD?</div>
-            <div class="aw-acc-body">Flisk is completely decoupled from your CI. Use it for local development and whatever you want for CI/CD. Nothing to migrate away from later.</div>
-          </div>
-        </div>
-        <div class="aw-acc-item">
-          <div class="aw-acc-head">
-            <div class="aw-acc-title">Is {{ site.data.flisk.scale_plain }} services locally realistic?</div>
-            <div class="aw-acc-body">As a boot test, yes: this generated <code>/health</code> fixture has {{ site.data.flisk.scale_plain }} small generated services (about 20 lines each) that all became healthy through Traefik in {{ site.data.flisk.erp_boot_seconds }} s on a clean CI runner, images built from scratch (<a href="{{ site.data.flisk.erp_ci_run }}" target="_blank" rel="noopener">the run</a>). It is a scale fixture, not a real ERP product. Real services with real dependencies use more memory. Selective startup runs only what you're working on, and golden L1–L4 layers keep rebuilds near-instant. The discovery daemon regenerates only what changed. Our daily driver is a {{ site.data.flisk.demo_services }}-service stack on a {{ site.data.flisk.machine }}, and it performs superbly; the same engine runs a {{ site.data.flisk.monorepo_services }}-service monorepo every day.</div>
-          </div>
-        </div>
-        <div class="aw-acc-item">
-          <div class="aw-acc-head">
-            <div class="aw-acc-title">Where do the savings numbers come from?</div>
-            <div class="aw-acc-body">The calculator uses inputs you set. Its output is arithmetic, not savings. The starting value of five hours per week is only an editable input, not a typical measurement. We make no savings claim for your team.</div>
-          </div>
-        </div>
+      <div class="aw-faq-list">
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>We need Kubernetes for production</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Local dev doesn't need to match production. The 14 tiny services were healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot. Production stays on Helm. <a href="{{ '/docs/claims/' | relative_url }}">Claim details</a>.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>What about CI/CD?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Flisk is completely decoupled from your CI. Use it for local development and whatever you want for CI/CD. Nothing to migrate away from later.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Is {{ site.data.flisk.scale_plain }} services locally realistic?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">As a boot test, yes: this generated <code>/health</code> fixture has {{ site.data.flisk.scale_plain }} small generated services (about 20 lines each) that all became healthy through Traefik in {{ site.data.flisk.erp_boot_seconds }} s on a clean CI runner, images built from scratch (<a href="{{ site.data.flisk.erp_ci_run }}" target="_blank" rel="noopener">the run</a>). It is a scale fixture, not a real ERP product. Real services with real dependencies use more memory. Selective startup runs only what you're working on, and golden L1–L4 layers keep rebuilds near-instant. The discovery daemon regenerates only what changed. Our daily driver is a {{ site.data.flisk.demo_services }}-service stack on a {{ site.data.flisk.machine }}, and it performs superbly; the same engine runs a {{ site.data.flisk.monorepo_services }}-service monorepo every day.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Where do the savings numbers come from?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">The calculator uses inputs you set. Its output is arithmetic, not savings. The starting value of five hours per week is only an editable input, not a typical measurement. We make no savings claim for your team.</div>
+        </details>
       </div>
     </div>
   </section>

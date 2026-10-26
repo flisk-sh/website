@@ -1,0 +1,35 @@
+# /layers/ page. Every statement is checked against the generated Dockerfile for
+# reservation-api in flisk-sh/flisk-restaurant-example (the "dockerfile" tab in
+# _data/explorer.yml); lines_from/lines_to index into that file.
+- title: "OS and runtime base"
+  chips: ["os packages", "runtime env"]
+  short: "OS packages come preinstalled in the shared base image."
+  body: "Starts from the stack's golden L1 image, which already has the operating system packages installed, then sets the runtime environment and the Bun cache directory."
+  from: "<project>-l1:latest"
+  rebuilds: "Only when the golden L1 image changes."
+  lines_from: 1
+  lines_to: 11
+- title: "Dependencies"
+  chips: ["package.json", "bun.lock", "cache mount"]
+  short: "Manifests and lockfile only, installed against a shared cache."
+  body: "Copies the workspace and service manifests, the lockfile, and the generated registry config, then installs dependencies against a shared BuildKit cache mount. No source code is copied in this layer."
+  from: "<project>-l2:latest"
+  rebuilds: "When package.json, bun.lock, or the generated .npmrc or bunfig change."
+  lines_from: 13
+  lines_to: 39
+- title: "Build and prune"
+  chips: ["bun run build", "prod install", "prune"]
+  short: "Compiles with L2's node_modules; a sibling stage prunes to production."
+  body: "The compile stage reuses the node_modules resolved in L2 and runs bun run build. A second stage installs production dependencies only and deletes docs, tests, and source maps from node_modules."
+  from: "<project>-l3-backend:latest"
+  rebuilds: "The compile stage reruns when source in src/ changes; the prune stage only when package.json changes."
+  lines_from: 41
+  lines_to: 75
+- title: "Runtime"
+  chips: ["dist", "prod deps", "non-root"]
+  short: "Built output plus production deps, run as a non-root user."
+  body: "Copies only the pruned production node_modules and the built dist folder from L3, switches to the non-root bun user, and starts the service through the entrypoint script."
+  from: "<project>-l4-backend:latest"
+  rebuilds: "When anything it copies from L3 changes."
+  lines_from: 77
+  lines_to: 105

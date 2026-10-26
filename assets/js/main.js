@@ -45,7 +45,7 @@ function initNavigation() {
   const navigation = document.querySelector('.aw-nav');
   const menuButton = navigation?.querySelector('.aw-nav-burger');
   const menu = navigation?.querySelector('.aw-nav-links');
-  const exploreMenu = navigation?.querySelector('.aw-nav-more');
+  const dropdowns = Array.from(navigation?.querySelectorAll('.aw-nav-more') || []);
 
   if (!navigation || !menuButton || !menu || navigation.dataset.navigationReady) return;
   navigation.dataset.navigationReady = 'true';
@@ -54,8 +54,13 @@ function initNavigation() {
     navigation.classList.remove('is-open');
     menuButton.setAttribute('aria-expanded', 'false');
     menuButton.setAttribute('aria-label', 'Open navigation menu');
-    if (exploreMenu) exploreMenu.open = false;
+    dropdowns.forEach((d) => { d.open = false; });
   };
+
+  // One dropdown open at a time.
+  dropdowns.forEach((d) => d.addEventListener('toggle', () => {
+    if (d.open) dropdowns.forEach((other) => { if (other !== d) other.open = false; });
+  }));
 
   menuButton.addEventListener('click', () => {
     const isOpen = navigation.classList.toggle('is-open');
@@ -69,12 +74,16 @@ function initNavigation() {
 
   document.addEventListener('click', event => {
     if (!navigation.contains(event.target)) closeNavigation();
+    else if (!event.target.closest('.aw-nav-more')) dropdowns.forEach((d) => { d.open = false; });
   });
 
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
+      const openDropdown = dropdowns.find((d) => d.open);
+      const menuWasOpen = navigation.classList.contains('is-open');
       closeNavigation();
-      menuButton.focus();
+      if (openDropdown) openDropdown.querySelector('summary').focus();
+      else if (menuWasOpen) menuButton.focus();
     }
   });
 
@@ -420,6 +429,12 @@ function initializeSite() {
   initBenchTabs();
   initGeneratedExplorer();
   initSectionIndex();
+  // Standalone code excerpts (e.g. /layers/) use the same tint as the explorer.
+  document.querySelectorAll('[data-tint-lang]').forEach((pre) => {
+    pre.querySelectorAll('.aw-gen-line code').forEach((line) => {
+      line.innerHTML = tintGeneratedLine(line.textContent, pre.dataset.tintLang);
+    });
+  });
 }
 
 if (document.readyState === 'loading') {
