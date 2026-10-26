@@ -24,7 +24,7 @@ body { background: #0a0a0e; overflow-x: hidden; }
 .aw-section {
   position: relative;
   padding: clamp(8rem, 12vw, 12rem) 1.5rem;
-  scroll-margin-top: 5.5rem;
+  scroll-margin-top: 7rem;
 }
 
 .aw-wrap { width: min(80rem, 100%); margin: 0 auto; }
@@ -421,28 +421,28 @@ body { background: #0a0a0e; overflow-x: hidden; }
   .aw-faq-a { padding-left: 0.25rem; font-size: 0.8rem; }
 }
 
-/* ---------------- Section index bar ---------------- */
+/* ---------------- Section index: the header's second row ----------------
+   Slides out from under the header once the hero is gone, so the page keeps one header. */
 .aw-index {
   position: fixed;
-  top: 0;
+  top: 4rem;
   left: 0;
   right: 0;
-  z-index: 1001;
+  z-index: 999;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  height: 2.75rem;
+  height: 2.5rem;
   padding: 0 1.5rem;
-  background: rgba(10, 10, 14, 0.92);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: #0a0a0e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  opacity: 0;
+  visibility: hidden;
   transform: translateY(-100%);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, visibility 0s linear 0.3s;
 }
 
-.aw-index.is-on { transform: none; }
-body.aw-index-on .aw-nav { top: -6rem; }
+.aw-index.is-on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+body.aw-index-on .aw-nav { background: #0a0a0e; border-bottom-color: rgba(255, 255, 255, 0.05); }
 
 .aw-index-links {
   flex: 1;
@@ -482,26 +482,12 @@ body.aw-index-on .aw-nav { top: -6rem; }
 }
 
 .aw-index-links a.is-active kbd { color: #22C55E; border-color: rgba(34, 197, 94, 0.6); }
-
-.aw-index-cta {
-  flex: none;
-  padding: 0.35rem 0.8rem;
-  border: 1px solid rgba(236, 236, 241, 0.3);
-  color: #ececf1;
-  font: 400 0.72rem 'JetBrains Mono', monospace;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.aw-index-cta:hover { border-color: #ececf1; color: #fff; }
 .aw-index a:focus-visible { outline: 2px solid #4dd0ff; outline-offset: -2px; }
 
 @media (max-width: 768px) {
   .aw-index { padding: 0 0.25rem; }
   .aw-index-links { justify-content: flex-start; }
   .aw-index-links kbd { display: none; }
-  .aw-index-cta { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1908,7 +1894,7 @@ button.aw-gen-node:focus-visible,
 .aw-plain {
   text-align: center;
   padding: clamp(5rem, 8vw, 7rem) 1.5rem 0;
-  scroll-margin-top: 5.5rem;
+  scroll-margin-top: 7rem;
 }
 
 .aw-plain-kicker {
@@ -2347,7 +2333,7 @@ button.aw-gen-node:focus-visible,
 }
 
 /* ---------------- Section headers ---------------- */
-.aw-head { margin-bottom: clamp(3.5rem, 6vw, 5.5rem); scroll-margin-top: 6rem; }
+.aw-head { margin-bottom: clamp(3.5rem, 6vw, 5.5rem); scroll-margin-top: 7rem; }
 
 .aw-head h2 {
   font-size: clamp(2.25rem, 4vw, 3.75rem);
@@ -2811,7 +2797,7 @@ button.aw-gen-node:focus-visible,
 
 <div class="aw">
 
-  <!-- ================= SECTION INDEX (appears after the hero; letter keys jump) ================= -->
+  <!-- ================= SECTION INDEX (header's second row after the hero; letter keys jump) ================= -->
   <nav class="aw-index" aria-label="Page sections" data-aw-index>
     <div class="aw-index-links">
       {%- assign index_items = "S|source|Generate,D|demo|Demo,H|how-it-works|How it works,G|generated|Files,R|replaces|Replaces,F|faq|FAQ,P|pricing|Pricing" | split: "," %}
@@ -2820,7 +2806,6 @@ button.aw-gen-node:focus-visible,
       <a href="#{{ part[1] }}" data-index-key="{{ part[0] }}" aria-keyshortcuts="{{ part[0] }}"><kbd aria-hidden="true">{{ part[0] }}</kbd>{{ part[2] }}</a>
       {%- endfor %}
     </div>
-    <a class="aw-index-cta" href="{{ '/docs/quickstart/' | relative_url }}">Quickstart</a>
   </nav>
 
   <!-- ================= HERO — Cinematic Center ================= -->
