@@ -11,7 +11,7 @@ description: "Reference for the two Flisk CLI config files: service.json for eac
 
       <div class="aw-docs-body">
         <h1>Configuration</h1>
-        <p class="aw-lead">Flisk has two JSON configuration files: a <code>service.json</code> per service and a project-level <code>.tdk/project.json</code>. These schemas help your editor; the CLI remains the runtime source of truth.</p>
+        <p class="aw-lead">Flisk has two JSON configuration files: a <code>service.json</code> per service and a project-level <code>.flisk/project.json</code>. These schemas help your editor; the CLI remains the runtime source of truth.</p>
 
         <h2>service.json</h2>
         <p>This backend manifest is valid JSON. Field notes follow the file instead of appearing as invalid JSON comments.</p>
@@ -30,7 +30,7 @@ description: "Reference for the two Flisk CLI config files: service.json for eac
         </div>
         <p><code>appName</code>, <code>appType</code>, <code>stack</code>, and <code>schemaVersion</code> are required; a backend also needs a port. Optional fields include <code>dependsOn</code> and <code>healthCheckPath</code>. See the <a href="https://github.com/flisk-sh/flisk/blob/main/engine/schemas/service-schema.json" target="_blank" rel="noopener">service schema source</a>. VS Code and other JSON editors can read the <code>$schema</code> hint.</p>
 
-        <h2>.tdk/project.json</h2>
+        <h2>.flisk/project.json</h2>
         <p>Use the <a href="https://github.com/flisk-sh/flisk/blob/main/engine/schemas/project-schema.json" target="_blank" rel="noopener">project configuration schema</a> through an editor association. In VS Code, add this to workspace <code>.vscode/settings.json</code>:</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>.vscode/settings.json</span></div>
@@ -41,13 +41,13 @@ description: "Reference for the two Flisk CLI config files: service.json for eac
       <span class="k">"url"</span>: <span class="s">"https://flisk.sh/schema.service.json"</span>
     },
     {
-      <span class="k">"fileMatch"</span>: [<span class="s">"/.tdk/project.json"</span>],
+      <span class="k">"fileMatch"</span>: [<span class="s">"/.flisk/project.json"</span>],
       <span class="k">"url"</span>: <span class="s">"https://flisk.sh/project-schema.json"</span>
     }
   ]
 }</pre>
         </div>
-        <p><code>flisk doctor</code> checks local environment readiness and discovered service issues. <code>flisk config verify</code> checks whether generated project files match <code>.tdk/project.json</code>; it does not lint <code>service.json</code> or Helm values. Flisk does not validate your production chart.</p>
+        <p><code>flisk doctor</code> checks local environment readiness and discovered service issues. <code>flisk config verify</code> checks whether generated project files match <code>.flisk/project.json</code>; it does not lint <code>service.json</code> or Helm values. Flisk does not validate your production chart.</p>
 
         <h2>Required fields</h2>
 
@@ -61,7 +61,7 @@ description: "Reference for the two Flisk CLI config files: service.json for eac
         <h3>appType</h3>
         <p>The type of service. Determines which generators run.</p>
         <ul>
-          {% for t in site.data.tdk.app_types %}
+          {% for t in site.data.flisk.app_types %}
           <li><code>{{ t.name }}</code> — {{ t.desc }}</li>
           {% endfor %}
         </ul>
@@ -86,7 +86,7 @@ description: "Reference for the two Flisk CLI config files: service.json for eac
         <h3 id="framework">framework</h3>
         <p>Which single-page-app provider generates a frontend's Vite and TypeScript config. Leave it out and you get React, so existing manifests are unchanged.</p>
         <ul>
-          {% for f in site.data.tdk.frontend_frameworks %}
+          {% for f in site.data.flisk.frontend_frameworks %}
           <li><code>{{ f.name }}</code> — {{ f.desc }}</li>
           {% endfor %}
         </ul>
@@ -99,7 +99,7 @@ description: "Reference for the two Flisk CLI config files: service.json for eac
         <h3>featuresEnabled</h3>
         <p>Platform features to enable. Only these values are valid:</p>
         <ul>
-          {% for f in site.data.tdk.manifest_features %}
+          {% for f in site.data.flisk.manifest_features %}
           <li><code>{{ f.name }}</code> — {{ f.desc }}</li>
           {% endfor %}
         </ul>

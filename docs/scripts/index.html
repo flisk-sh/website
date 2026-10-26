@@ -15,7 +15,7 @@ description: "The npm scripts every Flisk service needs in package.json, by serv
 
         <h2>Required scripts by appType</h2>
         <ul>
-          {% for s in site.data.tdk.package_scripts %}
+          {% for s in site.data.flisk.package_scripts %}
           <li><code>{{ s.type }}</code> — {{ s.scripts }}</li>
           {% endfor %}
         </ul>

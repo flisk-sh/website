@@ -21,7 +21,7 @@
     - { label: "warm 2", value: 38, display: "38 s", key: true }
     - { label: "warm 3", value: 40, display: "40 s" }
   row_suffix: run
-  note: tdk-restaurant-example (6 services, Traefik, Postgres) · macOS 26.5.2, arm64, 8 CPUs, 16 GB, Docker 29.8.2 · run after a cold start, images and build cache kept
+  note: flisk-restaurant-example (6 services, Traefik, Postgres) · macOS 26.5.2, arm64, 8 CPUs, 16 GB, Docker 29.8.2 · run after a cold start, images and build cache kept
   source: benchmarks/results/tdk-up-warm-start-2026-10-11/summary.json
   repro: scripts/benchmark/README.md
 
