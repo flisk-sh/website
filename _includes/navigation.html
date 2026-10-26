@@ -1,6 +1,10 @@
-{%- assign product_paths = '/features/,/layers/,/sandbox/,/why/,/fit/,/waiting/,/no-lock-in/' | split: ',' %}
-{%- assign in_product = false %}
+{%- assign product_paths = '/features/,/layers/,/sandbox/' | split: ',' %}
+{%- assign enterprise_paths = '/why/,/fit/,/waiting/,/no-lock-in/,/compare/,/docs/with-helm/,/docs/claims/' | split: ',' %}
+{%- assign resource_paths = '/docs/,/blog/' | split: ',' %}
+{%- assign in_product = false %}{% assign in_enterprise = false %}{% assign in_resources = false %}
 {%- for p in product_paths %}{% if page.url contains p %}{% assign in_product = true %}{% endif %}{% endfor %}
+{%- for p in enterprise_paths %}{% if page.url contains p %}{% assign in_enterprise = true %}{% endif %}{% endfor %}
+{%- unless in_enterprise %}{% for p in resource_paths %}{% if page.url contains p %}{% assign in_resources = true %}{% endif %}{% endfor %}{% endunless %}
 <nav class="aw-nav" aria-label="Main navigation">
   <div class="aw-nav-bar">
     <a class="aw-brand" href="{{ '/' | relative_url }}" aria-label="Flisk CLI home">
@@ -10,43 +14,76 @@
 
     <div class="aw-nav-links" id="aw-nav-links">
       <details class="aw-nav-more{% if in_product %} is-active{% endif %}">
-        <summary>Product <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
+        <summary>Products <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
         <div class="aw-nav-menu">
-          <p class="aw-nav-menu-head"><span>nav/product</span><span>15 links</span></p>
+          <p class="aw-nav-menu-head"><span>nav/products</span><span>11 links</span></p>
           <div class="aw-nav-menu-cols">
             <div>
-              <p class="aw-nav-menu-label">Product</p>
-              <a href="{{ '/features/' | relative_url }}">features</a>
+              <p class="aw-nav-menu-label">Products</p>
+              <a href="{{ '/features/' | relative_url }}">flisk cli<small>your app running on your laptop</small></a>
+              <a href="{{ '/sandbox/' | relative_url }}">flisk sandbox<small>try it in the browser</small></a>
+              <a href="{{ '/#pricing' | relative_url }}">flisk premium<small>team extras on a license key</small></a>
+            </div>
+            <div>
+              <p class="aw-nav-menu-label">Features</p>
               <a href="{{ '/#how-it-works' | relative_url }}">how it works</a>
               <a href="{{ '/#generated' | relative_url }}">generated files</a>
               <a href="{{ '/layers/' | relative_url }}">golden layers</a>
-              <a href="{{ '/sandbox/' | relative_url }}">sandbox</a>
+              <a href="{{ '/#demo' | relative_url }}">warm start demo</a>
             </div>
             <div>
-              <p class="aw-nav-menu-label">Decide</p>
-              <a href="{{ '/why/' | relative_url }}">why flisk</a>
-              <a href="{{ '/fit/' | relative_url }}">does flisk fit?</a>
-              <a href="{{ '/waiting/' | relative_url }}">cost of waiting</a>
-              <a href="{{ '/no-lock-in/' | relative_url }}">no lock-in</a>
-              <a href="{{ '/compare/' | relative_url }}">compare</a>
-            </div>
-            <div>
-              <p class="aw-nav-menu-label">Learn</p>
-              <a href="{{ '/docs/' | relative_url }}">docs</a>
-              <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a>
-              <a href="{{ '/docs/with-helm/' | relative_url }}">flisk with helm</a>
-              <a href="{{ '/#faq' | relative_url }}">faq</a>
-              <a href="{{ '/blog/' | relative_url }}">field notes</a>
+              <p class="aw-nav-menu-label">What's new</p>
+              <a href="{{ '/#new' | relative_url }}">recently shipped</a>
+              <a href="https://github.com/flisk-sh/flisk/releases" target="_blank" rel="noopener">releases <span aria-hidden="true">↗</span></a>
+              <a href="https://www.npmjs.com/package/@flisk-sh/flisk" target="_blank" rel="noopener">npm package <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener">source on github <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </div>
       </details>
 
-      <details class="aw-nav-more">
-        <summary>Examples <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
+      <details class="aw-nav-more{% if in_enterprise %} is-active{% endif %}">
+        <summary>Enterprise <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
         <div class="aw-nav-menu">
-          <p class="aw-nav-menu-head"><span>nav/examples</span><span>7 repos on github</span></p>
+          <p class="aw-nav-menu-head"><span>nav/enterprise</span><span>12 links</span></p>
           <div class="aw-nav-menu-cols">
+            <div>
+              <p class="aw-nav-menu-label">Enterprise</p>
+              <a href="{{ '/#waitlist' | relative_url }}">enterprise license<small>sso, air-gapped, sla</small></a>
+              <a href="{{ '/#adopters' | relative_url }}">who uses flisk<small>teams listed with consent</small></a>
+              <a href="{{ '/docs/with-helm/' | relative_url }}">flisk with helm<small>local dev and cluster deployment</small></a>
+              <a href="{{ '/no-lock-in/' | relative_url }}">no lock-in<small>mit core, open standard files</small></a>
+            </div>
+            <div>
+              <p class="aw-nav-menu-label">Evaluate</p>
+              <a href="{{ '/compare/' | relative_url }}">compare</a>
+              <a href="{{ '/why/' | relative_url }}">why flisk</a>
+              <a href="{{ '/fit/' | relative_url }}">does flisk fit?</a>
+              <a href="{{ '/waiting/' | relative_url }}">cost of waiting</a>
+              <a href="{{ '/docs/claims/' | relative_url }}">claims and benchmarks</a>
+            </div>
+            <div>
+              <p class="aw-nav-menu-label">Security</p>
+              <a href="https://github.com/flisk-sh/flisk-user-management" target="_blank" rel="noopener">scim and pkce example <span aria-hidden="true">↗</span></a>
+              <a href="{{ '/.well-known/security.txt' | relative_url }}">security contact</a>
+              <a href="https://github.com/flisk-sh/flisk/blob/main/LICENSE" target="_blank" rel="noopener">mit license <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="aw-nav-more{% if in_resources %} is-active{% endif %}">
+        <summary>Resources <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
+        <div class="aw-nav-menu">
+          <p class="aw-nav-menu-head"><span>nav/resources</span><span>11 links</span></p>
+          <div class="aw-nav-menu-cols">
+            <div>
+              <p class="aw-nav-menu-label">Learn</p>
+              <a href="{{ '/docs/' | relative_url }}">docs</a>
+              <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a>
+              <a href="{{ '/#faq' | relative_url }}">faq</a>
+              <a href="{{ '/blog/' | relative_url }}">field notes</a>
+            </div>
             <div>
               <p class="aw-nav-menu-label">Starters</p>
               <a href="https://github.com/flisk-sh/flisk-example" target="_blank" rel="noopener">flisk-example<small>hono, vite and bun</small></a>
@@ -64,15 +101,11 @@
         </div>
       </details>
 
-      <a class="aw-nav-link{% if page.url contains '/docs/' %} is-active{% endif %}" href="{{ '/docs/' | relative_url }}">Docs</a>
-      <a class="aw-nav-link{% if page.url contains '/compare/' %} is-active{% endif %}" href="{{ '/compare/' | relative_url }}">Compare</a>
-      <a class="aw-nav-link{% if page.url contains '/blog/' %} is-active{% endif %}" href="{{ '/blog/' | relative_url }}">Field notes</a>
       <a class="aw-nav-link" href="{{ '/#pricing' | relative_url }}">Pricing</a>
 
       <div class="aw-nav-mobile-actions">
-        <a class="aw-nav-cta aw-nav-cta-ghost" href="{{ '/#waitlist' | relative_url }}">Premium license</a>
-        <a class="aw-nav-cta aw-nav-cta-ghost" href="{{ '/sandbox/' | relative_url }}">Sandbox</a>
-        <a class="aw-nav-cta" href="{{ '/docs/quickstart/' | relative_url }}">Quickstart</a>
+        <a class="aw-nav-cta aw-nav-cta-sales" href="{{ '/#waitlist' | relative_url }}">Contact sales</a>
+        <a class="aw-nav-cta" href="{{ '/docs/quickstart/' | relative_url }}">Get started</a>
       </div>
     </div>
 
@@ -81,9 +114,9 @@
         <i class="bi bi-github" aria-hidden="true"></i>
         <span class="aw-nav-star-count" data-gh-stars hidden></span>
       </a>
-      <a href="{{ '/#waitlist' | relative_url }}" class="aw-nav-text" title="Request a Premium or Enterprise license">License</a>
-      <a href="{{ '/sandbox/' | relative_url }}" class="aw-nav-cta aw-nav-cta-ghost">Sandbox</a>
-      <a href="{{ '/docs/quickstart/' | relative_url }}" class="aw-nav-cta">Quickstart</a>
+      <a href="{{ '/docs/' | relative_url }}" class="aw-nav-text">Docs</a>
+      <a href="{{ '/#waitlist' | relative_url }}" class="aw-nav-cta aw-nav-cta-sales" title="Request an Enterprise or Premium license">Contact sales</a>
+      <a href="{{ '/docs/quickstart/' | relative_url }}" class="aw-nav-cta">Get started</a>
       <button class="aw-nav-burger" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="aw-nav-links">
         <span></span><span></span>
       </button>

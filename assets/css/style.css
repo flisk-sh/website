@@ -698,8 +698,8 @@ html {
 }
 
 .aw-nav-cta:hover { background: #6EE7A0; border-color: #6EE7A0; color: #0a0a0e; }
-.aw-nav-cta-ghost { background: none; border-color: rgba(236, 236, 241, 0.3); color: #ececf1; }
-.aw-nav-cta-ghost:hover { background: rgba(255, 255, 255, 0.06); border-color: #ececf1; color: #fff; }
+.aw-nav-cta-sales { background: #fff; border-color: #fff; color: #0a0a0e; }
+.aw-nav-cta-sales:hover { background: #ececf1; border-color: #ececf1; color: #0a0a0e; }
 
 .aw-nav-mobile-actions { display: none; }
 
