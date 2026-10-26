@@ -18,12 +18,14 @@
             <i class="bi bi-github fs-5"></i>
           </a>
         </div>
-        <a href="https://www.producthunt.com/products/flisk?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-flisk" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 0.25rem;">
-          <img alt="Flisk - One service.json. Your whole local stack starts. App builder | Product Hunt" width="200" height="44" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1289517&theme=light&t=1792697707140">
-        </a>
-        <a href="https://toolradar.com/tools/flisk-cli" target="_blank" rel="noopener" style="display: inline-block; margin-top: 0.25rem; margin-left: 0.75rem;">
-          <img src="https://toolradar.com/api/badge/flisk-cli?type=review&style=dark&v=5" alt="Flisk CLI on Toolradar" width="280" height="80" />
-        </a>
+        <div class="d-flex gap-2 align-items-center">
+          <a href="https://www.producthunt.com/products/flisk?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-flisk" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 0.25rem;">
+            <img alt="Flisk - One service.json. Your whole local stack starts. App builder | Product Hunt" width="200" height="44" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1289517&theme=light&t=1792697707140">
+          </a>
+          <a href="https://toolradar.com/tools/flisk-cli" target="_blank" rel="noopener" style="display: inline-block; margin-top: 0.25rem;">
+            <img src="https://toolradar.com/api/badge/flisk-cli?type=review&style=dark&v=5" alt="Flisk CLI on Toolradar" width="280" height="80" />
+          </a>
+        </div>
       </div>
 
       <div class="col-lg-2 col-md-4 mb-4 mb-lg-0">
@@ -82,7 +84,7 @@
     <div class="row align-items-center">
       <div class="col-md-6 mb-3 mb-md-0">
         <p class="mb-0 footer-text">
-          © 2026 Flisk CLI Contributors. Licensed under MIT.
+          &copy; 2026 Flisk CLI Contributors. Licensed under MIT.
         </p>
       </div>
       <div class="col-md-6 text-md-end">
@@ -93,5 +95,3 @@
     </div>
   </div>
 </footer>
-EOF
-base64 -w0 /tmp/footer_new.html | gh api repos/flisk-sh/website/contents/_includes/footer.html -X PUT -H "Accept: application/vnd.github+json" -F "message=add Toolradar badge to footer" -F "content=@" -F "sha=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391" 2>&1
