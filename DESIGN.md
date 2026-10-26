@@ -2,9 +2,9 @@
 
 > Single source of truth for every tab of the Flisk marketing site
 > (home, features, compare, why, waiting, docs). Dark devtool aesthetic:
-> honest terminal proof over stock decoration. Brand accent is violet
-> (explicit brand override: violet is the Flisk identity since inception,
-> used with restraint, never as neon glow).
+> honest terminal proof over stock decoration. Brand accent is Flisk green
+> (the site moved from violet to green in f78441d; used with restraint,
+> never as neon glow).
 
 ## 1. Visual Theme & Atmosphere
 
@@ -13,7 +13,7 @@ balanced Daily-App (4): generous cinematic section gaps, no cockpit packing.
 Variance is high (7): asymmetric splits, pinned storytelling, sticky stacking.
 Motion is fluid-to-cinematic (6): GSAP scroll reveals, scrubbed text, one live
 terminal typing demo. The atmosphere is a well-lit server room at night:
-near-black calm, one violet signal light, monospace evidence everywhere.
+near-black calm, one green signal light, monospace evidence everywhere.
 
 ## 2. Color Palette & Roles
 
@@ -24,8 +24,8 @@ near-black calm, one violet signal light, monospace evidence everywhere.
 - **Muted Steel** (rgba(236,236,241,0.55)) — Secondary text, descriptions
 - **Faint Steel** (rgba(236,236,241,0.4)) — Captions, footnotes, math printouts
 - **Hairline** (rgba(255,255,255,0.07)) — Card borders, table row dividers
-- **Brand Violet** (#7C4DFF) — Single brand accent: CTAs focus, active states, key numbers
-- **Signal Lavender** (#B79AFF) — Violet at readable lightness: headlines accents, links, outputs
+- **Flisk Green** (#22C55E) — Single brand accent: CTAs focus, active states, key numbers. Fills carry near-black text (white on this green is too faint)
+- **Signal Mint** (#6EE7A0) — Green at readable lightness: headline accents, links, outputs
 - **Success Mint** (#6EE7B7) — Semantic only: healthy states, savings, "with Flisk" column
 - **Cost Orchid** (#F0ABFC) — Semantic only: prices being replaced, money burned
 - **Info Ice** (#4DD0FF) — Sparing: terminal highlights, gradient endpoint
@@ -52,7 +52,7 @@ near-black calm, one violet signal light, monospace evidence everywhere.
   Secondary: transparent with 1px white/25 border, white text. Hover lifts
   2px. Active presses to scale 0.98. No outer glow. One label per intent
   across the whole site ("Join waitlist" everywhere).
-- **Cards:** 24px radius, hairline border, lift 4px + violet-tinted border on
+- **Cards:** 24px radius, hairline border, lift 4px + green-tinted border on
   hover. Used only where elevation carries hierarchy.
 - **Grids:** Asymmetric only. Never 3 equal columns of uniform cards. Varied
   spans with dense flow, mathematically gapless. Two-column pairs for
@@ -61,7 +61,7 @@ near-black calm, one violet signal light, monospace evidence everywhere.
   syntax tint (green keys, blue strings, sky numbers, grey comments).
 - **Terminal demo:** real mini-version of the product CLI, typed live on
   scroll into view, instant static render under prefers-reduced-motion.
-- **Inputs:** Dark fill, label above, violet focus ring with soft halo,
+- **Inputs:** Dark fill, label above, green focus ring with soft halo,
   placeholder at readable contrast. No floating labels.
 - **Carousel:** Arrow buttons (round, hairline) plus dot indicators. Never
   numeric "1 / 5" pagination.
