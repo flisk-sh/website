@@ -1,0 +1,53 @@
+# Homepage "Recently shipped" section. Each entry is written from the merged PR
+# description in flisk-sh/flisk (or docs/run-without-docker.md for 01).
+# status: "released" = on npm in `version`; "next" = merged to main after it.
+# Verified 2026-10-27: npm @flisk-sh/flisk is 1.4.6 (published 2026-10-26 22:23 UTC);
+# #2532, #2533, #2535, #2537, #2538, #2539 merged after that.
+version: "1.4.6"
+date: "26 Oct 2026"
+items:
+  - title: "Simple apps run as plain processes"
+    short: "No containers needed for an API, a website or a worker."
+    status: released
+    body: "Give a service a command in its service.json and flisk up starts it as a local process on your machine. All you need is the flisk CLI and your app's own runtime, such as Node.js, Python, Go or Bun. It suits the first apps an AI agent builds: an API, a website, a worker."
+    try: "flisk up"
+    code: |-
+      {
+        "appName": "api",
+        "appType": "backend",
+        "command": "node server.js",
+        "port": 4000,
+        "healthCheckPath": "/health"
+      }
+    prs: [2518, 2520]
+    doc: "https://github.com/flisk-sh/flisk/blob/main/docs/run-without-docker.md"
+  - title: "Your agent knows Flisk from the first prompt"
+    short: "New projects come with Flisk skills and an AGENTS.md."
+    status: next
+    body: "flisk project now writes 12 Flisk skills for Claude Code (.claude/skills) and for Codex, Cursor and others (.agents/skills), plus a short AGENTS.md that points at them. Files you already have are never overwritten, and --no-agent-skills skips the step."
+    try: "flisk project"
+    prs: [2533]
+  - title: "See each service come up"
+    short: "Live progress while flisk up waits."
+    status: next
+    body: "While flisk up waits, it reports each service as waiting, building, starting, ready or failed, with an N/M ready count. A failed service is named with a pointer to flisk logs -s <name>. In CI or a pipe it prints one plain line per change instead."
+    try: "flisk up"
+    prs: [2532]
+  - title: "Doctor tells you what to fix first"
+    short: "Failing checks ranked by what blocks you most."
+    status: next
+    body: "After its checks, flisk doctor prints a Fix first list: failing checks ordered by how much they block you, with one command per line that works on your platform. Warnings come after hard failures, and --json gains the same list."
+    try: "flisk doctor"
+    prs: [2535]
+  - title: "Find what is broken in a big project"
+    short: "Status by stack, and only the unhealthy parts."
+    status: next
+    body: "flisk status groups services under their stack with a healthy count for each. Add --unhealthy to status or logs to see only failing or pending services; it says so when everything is healthy."
+    try: "flisk status --unhealthy"
+    prs: [2537]
+  - title: "Watch your AI agents work"
+    short: "Agent readiness and sessions in flisk ui."
+    status: next
+    body: "Select an agent in flisk ui to see whether it is ready, how many sessions it has, its last activity and its five newest sessions. Agents that keep their state in Postgres now get their database and become ready."
+    try: "flisk ui"
+    prs: [2538, 2539]

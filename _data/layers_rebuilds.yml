@@ -1,0 +1,7 @@
+# /layers/ rebuild table, derived from the COPY order in the generated Dockerfile.
+- change: "Source code in src/"
+  built: ["l3", "l4"]
+- change: "package.json or bun.lock"
+  built: ["l2", "l3", "l4"]
+- change: "Nothing (a second build with no edits)"
+  built: []

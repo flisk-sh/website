@@ -45,7 +45,7 @@ function initNavigation() {
   const navigation = document.querySelector('.aw-nav');
   const menuButton = navigation?.querySelector('.aw-nav-burger');
   const menu = navigation?.querySelector('.aw-nav-links');
-  const exploreMenu = navigation?.querySelector('.aw-nav-more');
+  const dropdowns = Array.from(navigation?.querySelectorAll('.aw-nav-more') || []);
 
   if (!navigation || !menuButton || !menu || navigation.dataset.navigationReady) return;
   navigation.dataset.navigationReady = 'true';
@@ -54,8 +54,13 @@ function initNavigation() {
     navigation.classList.remove('is-open');
     menuButton.setAttribute('aria-expanded', 'false');
     menuButton.setAttribute('aria-label', 'Open navigation menu');
-    if (exploreMenu) exploreMenu.open = false;
+    dropdowns.forEach((d) => { d.open = false; });
   };
+
+  // One dropdown open at a time.
+  dropdowns.forEach((d) => d.addEventListener('toggle', () => {
+    if (d.open) dropdowns.forEach((other) => { if (other !== d) other.open = false; });
+  }));
 
   menuButton.addEventListener('click', () => {
     const isOpen = navigation.classList.toggle('is-open');
@@ -69,12 +74,16 @@ function initNavigation() {
 
   document.addEventListener('click', event => {
     if (!navigation.contains(event.target)) closeNavigation();
+    else if (!event.target.closest('.aw-nav-more')) dropdowns.forEach((d) => { d.open = false; });
   });
 
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
+      const openDropdown = dropdowns.find((d) => d.open);
+      const menuWasOpen = navigation.classList.contains('is-open');
       closeNavigation();
-      menuButton.focus();
+      if (openDropdown) openDropdown.querySelector('summary').focus();
+      else if (menuWasOpen) menuButton.focus();
     }
   });
 
@@ -89,8 +98,9 @@ function initNavigation() {
 // Copy code blocks
 function addCopyButtons() {
   document.querySelectorAll('pre').forEach(pre => {
-    // Explorer excerpts are partial files; the panel links to the whole file instead.
-    if (pre.querySelector('.copy-code-button') || pre.closest('[data-gen]')) return;
+    // Explorer excerpts are partial files and "Recently shipped" snippets are examples;
+    // both link to the source instead.
+    if (pre.querySelector('.copy-code-button') || pre.closest('[data-gen], [data-new]')) return;
     const button = document.createElement('button');
     button.className = 'btn btn-sm btn-outline-light copy-code-button';
     button.style.cssText = 'position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.25rem 0.75rem; font-size: 0.75rem;';
@@ -378,6 +388,41 @@ function initGeneratedExplorer() {
   select(tabs[0]);
 }
 
+// Homepage "Recently shipped": a vertical tab list that swaps the detail panel.
+function initRecentlyShipped() {
+  const root = document.querySelector('[data-new]');
+  if (!root) return;
+  const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
+
+  const select = (tab) => {
+    tabs.forEach((t) => {
+      const active = t === tab;
+      t.classList.toggle('is-active', active);
+      t.setAttribute('aria-selected', String(active));
+      t.tabIndex = active ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !active;
+    });
+    // On narrow screens the list is a sideways strip; keep the chosen item in view.
+    const strip = tab.parentElement;
+    if (strip.scrollWidth > strip.clientWidth) {
+      const offset = tab.getBoundingClientRect().left - strip.getBoundingClientRect().left;
+      strip.scrollTo({ left: strip.scrollLeft + offset - 16, behavior: 'smooth' });
+    }
+  };
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (event) => {
+      const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const next = tabs[(i + step + tabs.length) % tabs.length];
+      next.focus();
+      select(next);
+    });
+  });
+}
+
 // Homepage section index: slides in once the hero is gone, marks the section in view,
 // and jumps on its letter key when nothing editable has focus.
 function initSectionIndex() {
@@ -419,7 +464,14 @@ function initializeSite() {
   initInstallMethods();
   initBenchTabs();
   initGeneratedExplorer();
+  initRecentlyShipped();
   initSectionIndex();
+  // Standalone code excerpts (e.g. /layers/) use the same tint as the explorer.
+  document.querySelectorAll('[data-tint-lang]').forEach((pre) => {
+    pre.querySelectorAll('.aw-gen-line code').forEach((line) => {
+      line.innerHTML = tintGeneratedLine(line.textContent, pre.dataset.tintLang);
+    });
+  });
 }
 
 if (document.readyState === 'loading') {
