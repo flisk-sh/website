@@ -76,6 +76,11 @@ near-black calm, one violet signal light, monospace evidence everywhere.
 - Strict single-column collapse below 768px. No horizontal scroll, ever
   (`overflow-x: hidden` on themed wrappers).
 - One theme for the whole property: dark, locked. No mid-page inversions.
+  One exception: the homepage generated-files explorer (`#generated`) is a
+  light "paper" band in the manner of warp.dev's configuration section:
+  off-white with a dot grid, 1px ink hairlines, sharp corners, mono only,
+  near-monochrome code, and a single deep-green accent (#15803D) carrying
+  white text. Keep it to that one section; do not add other light bands.
 - One corner-radius doctrine: pills for interactive, 24px for cards,
   16px for code, circles for icon buttons.
 
