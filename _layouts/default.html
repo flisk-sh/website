@@ -153,7 +153,9 @@
   
   <meta name="theme-color" content="#22C55E" />
 </head>
-<body>
+{%- comment -%} Inner pages get the Warp-style layer in aw-dark.css; --kicker feeds the "# page / 01" section labels. {%- endcomment -%}
+{%- assign kicker = page.title | default: site.title | split: ' - ' | first | split: ' | ' | first | downcase | replace: "'", "’" | replace: '"', '' %}
+<body{% if page.url != '/' %} class="aw-inner" style="--kicker: '{{ kicker | escape }}'"{% endif %}>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   {% include navigation.html %}
