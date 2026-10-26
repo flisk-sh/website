@@ -466,9 +466,9 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
             <div class="sb-term-grid">
               <aside class="sb-files" id="sb-files">
                 <div class="sb-files-head">Explorer</div>
-                <div class="sb-files-dir sb-files-dir--root"><i class="bi bi-folder2-open"></i>tdk-sandbox</div>
-                <div class="sb-files-dir" style="margin-left: 0.7rem;"><i class="bi bi-folder-fill"></i>.tdk</div>
-                <button class="sb-file-row" data-file=".tdk/project.json"><i class="bi bi-braces-asterisk"></i><span>project.json</span></button>
+                <div class="sb-files-dir sb-files-dir--root"><i class="bi bi-folder2-open"></i>flisk-sandbox</div>
+                <div class="sb-files-dir" style="margin-left: 0.7rem;"><i class="bi bi-folder-fill"></i>.flisk</div>
+                <button class="sb-file-row" data-file=".flisk/project.json"><i class="bi bi-braces-asterisk"></i><span>project.json</span></button>
                 <div class="sb-files-dir" style="margin-left: 0.7rem;"><i class="bi bi-folder-fill"></i>services</div>
                 <div class="sb-files-dir" style="margin-left: 1.4rem;"><i class="bi bi-folder-fill"></i>pre-alpha</div>
                 <div class="sb-files-dir" style="margin-left: 2.1rem;"><i class="bi bi-folder-fill"></i>api</div>
@@ -522,7 +522,7 @@ description: Play with Flisk CLI in your browser and launch your own isolated sa
           <div class="sb-bento-card" id="bento-a" data-reveal>
             <span class="sb-bento-tag">init</span>
             <h3>Scaffold a project</h3>
-            <p><code>flisk project --yes</code> builds the full PSR skeleton &mdash; <code>.tdk/project.json</code>, the Tilt build files, stack manifests, and a vendored copy of the Flisk extension so <code>flisk up</code> runs offline without depending on a private repo.</p>
+            <p><code>flisk project --yes</code> builds the full PSR skeleton &mdash; <code>.flisk/project.json</code>, the Tilt build files, stack manifests, and a vendored copy of the Flisk extension so <code>flisk up</code> runs offline without depending on a private repo.</p>
             <div class="sb-bento-img" style="background-image: linear-gradient(135deg, #22C55E 0%, #4dd0ff 100%);"></div>
           </div>
           <div class="sb-bento-card" id="bento-b" data-reveal>
@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var STEPS = [
     { cmd: 'flisk --version', out: '1.1.0', kind: 'ok' },
-    { cmd: 'flisk project --yes', out: '[\u2713] Generated: .tdk/.tdk-out/Tiltfile\n[\u2713] Generated: .tdk/.tdk-out/spec.master\n[\u2713] Vendored Flisk extension \u2192 .tdk/.tdk-out/tdk-cli-ext/\n[\u2713] Project configuration complete!', kind: 'ok' },
+    { cmd: 'flisk project --yes', out: '[\u2713] Generated: .flisk/.flisk-out/Tiltfile\n[\u2713] Generated: .flisk/.flisk-out/spec.master\n[\u2713] Vendored Flisk extension \u2192 .flisk/.flisk-out/flisk-cli-ext/\n[\u2713] Project configuration complete!', kind: 'ok' },
     { cmd: 'flisk resource api --type backend --stack pre-alpha --path services/pre-alpha/api', out: 'generating Dockerfile\nwriting backend source\nwriting tests\nresource created  \u2192  services/pre-alpha/api  (6 files)', kind: 'ok' },
     { cmd: 'flisk resource database --type backend --stack pre-alpha --path services/pre-alpha/database', out: 'resource created  \u2192  services/pre-alpha/database  (6 files)', kind: 'ok' },
     { cmd: 'flisk project --check', out: '[\u2713] Project configuration is valid\n       Project: workspace\n       Stacks: pre_alpha, alpha, beta, out_of_scope', kind: 'ok' },
@@ -722,7 +722,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // file explorer - generated project contents
   var FILES = {
-    '.tdk/project.json': [
+    '.flisk/project.json': [
       '{',
       '  "version": "1.0",',
       '  "project": { "name": "workspace", "version": "1.0.0" },',

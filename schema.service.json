@@ -138,13 +138,13 @@
       "type": "string"
     },
     "basePath": {
-      "description": "Base path for frontend routing on tdk.localhost. Default is /{stack}s when omitted.",
+      "description": "Base path for frontend routing on flisk.localhost. Default is /{stack}s when omitted.",
       "pattern": "^/[a-z0-9/-]*$",
       "type": "string"
     },
     "databaseName": {
-      "description": "Override auto-generated DB name.\nDefault: TDK_{stack}",
-      "pattern": "^TDK_[a-z_]+$",
+      "description": "Override auto-generated DB name.\nDefault: FLISK_{stack}",
+      "pattern": "^FLISK_[a-z_]+$",
       "type": "string"
     },
     "dependencies": {
@@ -185,7 +185,7 @@
       "type": "string"
     },
     "stack": {
-      "description": "Technology stack this resource belongs to.\nUsed for:\n• Database naming: TDK_{stack}\n• Traefik routing: /api/{stack}\n• NATS queue: {stack}_backend_svc",
+      "description": "Technology stack this resource belongs to.\nUsed for:\n• Database naming: FLISK_{stack}\n• Traefik routing: /api/{stack}\n• NATS queue: {stack}_backend_svc",
       "type": "string"
     },
     "params": {
@@ -196,7 +196,7 @@
       "type": "object"
     },
     "secrets": {
-      "description": "Names of secrets the resource needs. By default each is read from the project .env (gitignored) and injected into the container; with TDK_SECRET_PROVIDER=infisical they are left to Infisical. NO secret values in params/envVars or anywhere in service.json.",
+      "description": "Names of secrets the resource needs. By default each is read from the project .env (gitignored) and injected into the container; with FLISK_SECRET_PROVIDER=infisical they are left to Infisical. NO secret values in params/envVars or anywhere in service.json.",
       "properties": {
         "required": {
           "description": "Required secret names. The resource does not start if any is missing from the project .env.",
@@ -223,7 +223,7 @@
       "type": "object"
     },
     "featuresEnabled": {
-      "description": "Platform features:\n• nats - NATS JetStream eventing\n• prisma - DB ORM & migrations\n• drizzle - DB ORM (Postgres via DATABASE_URL, no migrator)\n• redis - Caching layer\n• infisical - Secrets management\n• vitest - Test framework\n• traefik - Reverse proxy routing\n• websocket - WS support\n• graphql - GraphQL server\n• grpc - gRPC protocol\n• vite, tsconfig, dockerfile, nginx, ... - generator features that `tdk resource` writes into new files",
+      "description": "Platform features:\n• nats - NATS JetStream eventing\n• prisma - DB ORM & migrations\n• drizzle - DB ORM (Postgres via DATABASE_URL, no migrator)\n• redis - Caching layer\n• infisical - Secrets management\n• vitest - Test framework\n• traefik - Reverse proxy routing\n• websocket - WS support\n• graphql - GraphQL server\n• grpc - gRPC protocol\n• vite, tsconfig, dockerfile, nginx, ... - generator features that `flisk resource` writes into new files",
       "items": {
         "enum": [
           "nats",
@@ -348,7 +348,7 @@
       "type": "integer"
     },
     "sablier": {
-      "description": "On-demand scaling: stop this container when idle, wake it on the next request.\nNot recommended for databases or other stateful resources with in-flight writes.\n(Premium - requires TDK_LICENSE_KEY; see hasSablierLicense() in extension-fetch.ts)",
+      "description": "On-demand scaling: stop this container when idle, wake it on the next request.\nNot recommended for databases or other stateful resources with in-flight writes.\n(Premium - requires FLISK_LICENSE_KEY; see hasSablierLicense() in extension-fetch.ts)",
       "properties": {
         "enable": {
           "default": false,
@@ -357,7 +357,7 @@
         },
         "deferStart": {
           "default": false,
-          "description": "Build the image during tdk up, then create and start the container on its first request",
+          "description": "Build the image during flisk up, then create and start the container on its first request",
           "type": "boolean"
         },
         "group": {
@@ -380,7 +380,7 @@
       "type": "array"
     },
     "smoke": {
-      "description": "Post-start check run by `tdk up` through the public proxy URL (not inside the container): write a record, read it back. `tdk up` fails if a step misses. Absent means no smoke check. Workers and resources with exposeViaProxy false are skipped.",
+      "description": "Post-start check run by `flisk up` through the public proxy URL (not inside the container): write a record, read it back. `flisk up` fails if a step misses. Absent means no smoke check. Workers and resources with exposeViaProxy false are skipped.",
       "type": "object",
       "required": [
         "via",
@@ -390,7 +390,7 @@
       "properties": {
         "via": {
           "const": "proxy",
-          "description": "Only `proxy` is supported: the request goes to the URL `tdk up` prints."
+          "description": "Only `proxy` is supported: the request goes to the URL `flisk up` prints."
         },
         "timeoutSeconds": {
           "type": "number",
@@ -504,7 +504,7 @@
           ]
         },
         "durability": {
-          "description": "files: sessions live in a named volume that tdk down keeps. postgres: sessions live in Postgres via DATABASE_URL.",
+          "description": "files: sessions live in a named volume that flisk down keeps. postgres: sessions live in Postgres via DATABASE_URL.",
           "type": "string",
           "enum": [
             "files",

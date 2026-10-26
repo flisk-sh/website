@@ -279,7 +279,7 @@ if (document.readyState === 'loading') {
   const badges = document.querySelectorAll('[data-gh-stars]');
   if (!badges.length) return;
 
-  const cacheKey = 'tdk-gh-stars';
+  const cacheKey = 'flisk-gh-stars';
   const render = (count) => {
     if (typeof count !== 'number') return;
     const label = count >= 1000 ? (count / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(count);
@@ -314,7 +314,7 @@ if (document.readyState === 'loading') {
   const labels = document.querySelectorAll('[data-latest-release]');
   if (!labels.length) return;
 
-  const cacheKey = 'tdk-latest-release';
+  const cacheKey = 'flisk-latest-release';
   const render = (tag) => {
     if (typeof tag !== 'string' || !tag) return;
     labels.forEach((el) => {

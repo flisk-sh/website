@@ -889,12 +889,12 @@ body:has(.aw) .site-footer {
   background: #0d0d13;
 }
 
-.aw-matrix thead th.aw-tdk-col {
+.aw-matrix thead th.aw-flisk-col {
   color: #6EE7A0;
   background: rgba(34, 197, 94, 0.1);
 }
 
-.aw-matrix td.aw-tdk-col {
+.aw-matrix td.aw-flisk-col {
   background: rgba(34, 197, 94, 0.06);
   color: #fff;
   font-weight: 600;
@@ -921,7 +921,7 @@ body:has(.aw) .site-footer {
   background: rgba(255, 255, 255, 0.02);
 }
 
-.aw-matrix tbody tr:hover td.aw-tdk-col {
+.aw-matrix tbody tr:hover td.aw-flisk-col {
   background: rgba(34, 197, 94, 0.1);
 }
 

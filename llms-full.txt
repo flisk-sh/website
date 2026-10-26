@@ -77,7 +77,7 @@ Short form: see Bubbles below.
 
 - https://github.com/flisk-sh/flisk-example: minimal PSR stack (Hono, Vite, Bun)
 - https://github.com/flisk-sh/flisk-user-management: enterprise SCIM 2.0 and OAuth2 PKCE demo
-- https://github.com/flisk-sh/tdk-restaurant-example: restaurant operations demo
+- https://github.com/flisk-sh/flisk-restaurant-example: restaurant operations demo
 - https://github.com/flisk-sh/flisk-ecommerce-example: Vue 3 storefront and Hono catalog API
 - https://github.com/flisk-sh/flisk-saas-starter: SaaS dashboard and checkout starter
 

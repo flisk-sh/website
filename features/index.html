@@ -10,7 +10,7 @@ description: "What Flisk CLI generates from one service.json: Dockerfiles, Traef
   <section class="aw-subhero">
     <div class="aw-subhero-grid">
       <h1>Every config your stack needs. <span class="aw-accent">Already written.</span></h1>
-      <p class="aw-subhero-sub">{{ site.data.tdk.product_features }} product capabilities, all driven by one <span class="aw-mono">service.json</span> — which also generates {{ site.data.tdk.files_per_service }} files per service and {{ site.data.tdk.stack_artifacts }} stack-wide artifacts. Powered by Tilt and Starlark, running on plain Docker. <strong>Zero Kubernetes knowledge required.</strong></p>
+      <p class="aw-subhero-sub">{{ site.data.flisk.product_features }} product capabilities, all driven by one <span class="aw-mono">service.json</span> — which also generates {{ site.data.flisk.files_per_service }} files per service and {{ site.data.flisk.stack_artifacts }} stack-wide artifacts. Powered by Tilt and Starlark, running on plain Docker. <strong>Zero Kubernetes knowledge required.</strong></p>
     </div>
   </section>
 
@@ -27,23 +27,23 @@ description: "What Flisk CLI generates from one service.json: Dockerfiles, Traef
 
       <div class="aw-story-right">
         <div class="aw-story-step">
-          <h4>Illustrative setup scenario — {{ site.data.tdk.story_devs }} developers start together</h4>
-          <p>Example scenario: {{ site.data.tdk.story_devs }} developers start together. Adjust the assumptions to match your team; this is not a measured hiring cohort.</p>
-          <span class="aw-story-cost">{{ site.data.tdk.story_devs }} salaries · day 1</span>
+          <h4>Illustrative setup scenario — {{ site.data.flisk.story_devs }} developers start together</h4>
+          <p>Example scenario: {{ site.data.flisk.story_devs }} developers start together. Adjust the assumptions to match your team; this is not a measured hiring cohort.</p>
+          <span class="aw-story-cost">{{ site.data.flisk.story_devs }} salaries · day 1</span>
         </div>
         <div class="aw-story-step">
           <h4>Day two — "how do I run this?"</h4>
           <p>Nobody can start. The business analyst hasn't finished the specs. The .env files live in someone's inbox. The setup wiki was last edited eight months ago and describes a stack that no longer exists.</p>
-          <span class="aw-story-cost">{{ site.data.tdk.story_devs }} salaries · waiting</span>
+          <span class="aw-story-cost">{{ site.data.flisk.story_devs }} salaries · waiting</span>
         </div>
         <div class="aw-story-step">
           <h4>Week one — the environment lottery</h4>
           <p>One developer gets the backend running but not the database. Another has the database but not the events queue. Two are still installing tooling. None of them can see the whole system.</p>
-          <span class="aw-story-cost">{{ site.data.tdk.story_devs }} salaries · still waiting</span>
+          <span class="aw-story-cost">{{ site.data.flisk.story_devs }} salaries · still waiting</span>
         </div>
         <div class="aw-story-step">
           <h4>Example delay before the first commit</h4>
-          <p>By the time everyone can run the project, {{ site.data.tdk.story_weeks }} of {{ site.data.tdk.story_devs }} salaries are gone — burned on waiting, not on building. This is the most expensive line item nobody put in the budget.</p>
+          <p>By the time everyone can run the project, {{ site.data.flisk.story_weeks }} of {{ site.data.flisk.story_devs }} salaries are gone — burned on waiting, not on building. This is the most expensive line item nobody put in the budget.</p>
           <span class="aw-story-cost">Example scenario · assumptions are user-set</span>
         </div>
         <div class="aw-story-step aw-story-win">
@@ -62,7 +62,7 @@ description: "What Flisk CLI generates from one service.json: Dockerfiles, Traef
       <div class="aw-cat">
         <div class="aw-cat-head">
           <h3>Configuration generation</h3>
-          <p>One service.json becomes {{ site.data.tdk.files_per_service }} production-grade files per service - written correctly and kept in sync.</p>
+          <p>One service.json becomes {{ site.data.flisk.files_per_service }} production-grade files per service - written correctly and kept in sync.</p>
         </div>
         <div class="aw-feature-grid aw-grid-varied">
           <div class="aw-card"><span class="aw-idx">01</span><h4>TypeScript config</h4><p>tsconfig.json with proper paths, includes and compiler options for backend, frontend and libraries.</p></div>
@@ -78,11 +78,11 @@ description: "What Flisk CLI generates from one service.json: Dockerfiles, Traef
       <div class="aw-cat">
         <div class="aw-cat-head">
           <h3>Development experience</h3>
-          <p>Built on Tilt — {{ site.data.tdk.tilt_stars }} GitHub stars — for a feedback loop measured in seconds.</p>
+          <p>Built on Tilt — {{ site.data.flisk.tilt_stars }} GitHub stars — for a feedback loop measured in seconds.</p>
         </div>
         <div class="aw-feature-grid aw-grid-varied">
           <div class="aw-card"><span class="aw-idx">08</span><h4>Hot reload</h4><p>Instant code sync with Tilt live_update. No container rebuilds while you type.</p></div>
-          <div class="aw-card"><span class="aw-idx">09</span><h4>Selective startup</h4><p>Run 5 services instead of {{ site.data.tdk.scale_plain }}. Start only what your task touches.</p></div>
+          <div class="aw-card"><span class="aw-idx">09</span><h4>Selective startup</h4><p>Run 5 services instead of {{ site.data.flisk.scale_plain }}. Start only what your task touches.</p></div>
           <div class="aw-card"><span class="aw-idx">10</span><h4>Auto-discovery</h4><p>Finds every service.json in your directory tree. Zero manual registration.</p></div>
           <div class="aw-card"><span class="aw-idx">11</span><h4>Manifest synthesis</h4><p>Services without manifests auto-configure from directory structure.</p></div>
           <div class="aw-card"><span class="aw-idx">12</span><h4>Config-gen resources</h4><p>Every manifest gets a visible Tilt resource with its own status, logs and errors.</p></div>

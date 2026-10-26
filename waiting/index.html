@@ -179,18 +179,18 @@ description: "A calculator for what slow environment setup costs your team befor
         <div class="aw-burn-sliders">
           <div class="aw-burn-field">
             <label>Developers hired</label>
-            <output id="wait-devs-value">{{ site.data.tdk.story_devs }}</output>
-            <input type="range" id="wait-devs" min="1" max="30" value="{{ site.data.tdk.story_devs }}" step="1" oninput="calcWait()" />
+            <output id="wait-devs-value">{{ site.data.flisk.story_devs }}</output>
+            <input type="range" id="wait-devs" min="1" max="30" value="{{ site.data.flisk.story_devs }}" step="1" oninput="calcWait()" />
           </div>
           <div class="aw-burn-field">
             <label>Average fully-loaded salary</label>
-            <output id="wait-salary-value">{{ site.data.tdk.calc_salary_display }}</output>
-            <input type="range" id="wait-salary" min="{{ site.data.tdk.calc_salary_min }}" max="{{ site.data.tdk.calc_salary_max }}" value="{{ site.data.tdk.calc_salary_default }}" step="{{ site.data.tdk.calc_salary_step }}" oninput="calcWait()" />
+            <output id="wait-salary-value">{{ site.data.flisk.calc_salary_display }}</output>
+            <input type="range" id="wait-salary" min="{{ site.data.flisk.calc_salary_min }}" max="{{ site.data.flisk.calc_salary_max }}" value="{{ site.data.flisk.calc_salary_default }}" step="{{ site.data.flisk.calc_salary_step }}" oninput="calcWait()" />
           </div>
           <div class="aw-burn-field">
             <label>Weeks blocked on setup</label>
-            <output id="wait-weeks-value">{{ site.data.tdk.wait_weeks_default }}</output>
-            <input type="range" id="wait-weeks" min="1" max="8" value="{{ site.data.tdk.wait_weeks_default }}" step="1" oninput="calcWait()" />
+            <output id="wait-weeks-value">{{ site.data.flisk.wait_weeks_default }}</output>
+            <input type="range" id="wait-weeks" min="1" max="8" value="{{ site.data.flisk.wait_weeks_default }}" step="1" oninput="calcWait()" />
           </div>
         </div>
 
@@ -204,7 +204,7 @@ description: "A calculator for what slow environment setup costs your team befor
             <span>MVP delayed — 0 features shipped</span>
           </div>
           <div class="aw-burn-cell aw-burn-good">
-            <strong id="wait-tdk">$95/mo</strong>
+            <strong id="wait-flisk">$95/mo</strong>
             <span>same team on Flisk instead</span>
           </div>
         </div>
@@ -320,14 +320,14 @@ function calcWait() {
   var weeks = parseInt(document.getElementById('wait-weeks').value, 10);
 
   var burned = Math.round(devs * (salary / 52) * weeks);
-  var flisk = devs * {{ site.data.tdk.team_price }};
+  var flisk = devs * {{ site.data.flisk.team_price }};
 
   document.getElementById('wait-devs-value').textContent = devs;
   document.getElementById('wait-salary-value').textContent = '$' + salary.toLocaleString('en-US');
   document.getElementById('wait-weeks-value').textContent = weeks + (weeks === 1 ? ' week' : ' weeks');
   document.getElementById('wait-burned').textContent = '$' + burned.toLocaleString('en-US');
   document.getElementById('wait-delay').textContent = weeks + (weeks === 1 ? ' week' : ' weeks');
-  document.getElementById('wait-tdk').textContent = '$' + flisk.toLocaleString('en-US') + '/mo';
+  document.getElementById('wait-flisk').textContent = '$' + flisk.toLocaleString('en-US') + '/mo';
 }
 calcWait();
 

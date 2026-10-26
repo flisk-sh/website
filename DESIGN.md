@@ -93,7 +93,7 @@ near-black calm, one violet signal light, monospace evidence everywhere.
 
 - Copy register: plain, confident, zero hype verbs (no elevate/seamless/
   unleash/next-gen/revolutionize). Non-technical readers first, proof below.
-- Every marketing number lives in `_data/tdk.yml` (single source of truth)
+- Every marketing number lives in `_data/flisk.yml` (single source of truth)
   with a comment stating its verification source. No hardcoded claims in HTML.
 - Money and metric numerals always in mono. Formulas printed next to results.
 

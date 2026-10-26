@@ -260,8 +260,8 @@ description: "Answer five questions about how your team runs services today and 
 
           <div class="aw-fit-field">
             <label>Developers on the team</label>
-            <output id="fit-devs-value">{{ site.data.tdk.calc_devs_default }}</output>
-            <input type="range" id="fit-devs" min="{{ site.data.tdk.calc_devs_min }}" max="{{ site.data.tdk.calc_devs_max }}" value="{{ site.data.tdk.calc_devs_default }}" step="1" oninput="calcFit()" />
+            <output id="fit-devs-value">{{ site.data.flisk.calc_devs_default }}</output>
+            <input type="range" id="fit-devs" min="{{ site.data.flisk.calc_devs_min }}" max="{{ site.data.flisk.calc_devs_max }}" value="{{ site.data.flisk.calc_devs_default }}" step="1" oninput="calcFit()" />
           </div>
 
         </div>
@@ -448,9 +448,9 @@ function calcFit() {
   if (services <= 1) {
     reasons.push(['✗', 'One service doesn\'t need a multi-service orchestrator — Flisk shines at 5+.']);
   } else if (services < 5) {
-    reasons.push(['~', 'A few services already benefit, but Flisk\'s sweet spot is 5+ services (tested up to {{ site.data.tdk.scale_plain }} small ones).']);
+    reasons.push(['~', 'A few services already benefit, but Flisk\'s sweet spot is 5+ services (tested up to {{ site.data.flisk.scale_plain }} small ones).']);
   } else {
-    reasons.push(['✓', services + ' services is squarely in Flisk\'s range (a {{ site.data.tdk.monorepo_services }}-service monorepo runs on it daily; {{ site.data.tdk.scale_plain }} small services are tested in CI).']);
+    reasons.push(['✓', services + ' services is squarely in Flisk\'s range (a {{ site.data.flisk.monorepo_services }}-service monorepo runs on it daily; {{ site.data.flisk.scale_plain }} small services are tested in CI).']);
   }
 
   if (devs < 5) {
