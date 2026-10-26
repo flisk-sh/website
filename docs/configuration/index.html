@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Configuration - Flisk CLI
+description: "Reference for the two Flisk CLI config files: service.json for each service and the project-level project.json, with editor JSON schemas and field notes."
 ---
 
 <div class="aw">
@@ -10,7 +11,7 @@ title: Configuration - Flisk CLI
 
       <div class="aw-docs-body">
         <h1>Configuration</h1>
-        <p class="aw-lead">Flisk has two JSON configuration files: a <code>service.json</code> per service and a project-level <code>.tdk/project.json</code>. These schemas help your editor; the CLI remains the runtime source of truth.</p>
+        <p class="aw-lead">Flisk has two JSON configuration files: a <code>service.json</code> per service and a project-level <code>.flisk/project.json</code>. These schemas help your editor; the CLI remains the runtime source of truth.</p>
 
         <h2>service.json</h2>
         <p>This backend manifest is valid JSON. Field notes follow the file instead of appearing as invalid JSON comments.</p>
@@ -29,7 +30,7 @@ title: Configuration - Flisk CLI
         </div>
         <p><code>appName</code>, <code>appType</code>, <code>stack</code>, and <code>schemaVersion</code> are required; a backend also needs a port. Optional fields include <code>dependsOn</code> and <code>healthCheckPath</code>. See the <a href="https://github.com/flisk-sh/flisk/blob/main/engine/schemas/service-schema.json" target="_blank" rel="noopener">service schema source</a>. VS Code and other JSON editors can read the <code>$schema</code> hint.</p>
 
-        <h2>.tdk/project.json</h2>
+        <h2>.flisk/project.json</h2>
         <p>Use the <a href="https://github.com/flisk-sh/flisk/blob/main/engine/schemas/project-schema.json" target="_blank" rel="noopener">project configuration schema</a> through an editor association. In VS Code, add this to workspace <code>.vscode/settings.json</code>:</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>.vscode/settings.json</span></div>
@@ -40,13 +41,13 @@ title: Configuration - Flisk CLI
       <span class="k">"url"</span>: <span class="s">"https://flisk.sh/schema.service.json"</span>
     },
     {
-      <span class="k">"fileMatch"</span>: [<span class="s">"/.tdk/project.json"</span>],
+      <span class="k">"fileMatch"</span>: [<span class="s">"/.flisk/project.json"</span>],
       <span class="k">"url"</span>: <span class="s">"https://flisk.sh/project-schema.json"</span>
     }
   ]
 }</pre>
         </div>
-        <p><code>flisk doctor</code> checks local environment readiness and discovered service issues. <code>flisk config verify</code> checks whether generated project files match <code>.tdk/project.json</code>; it does not lint <code>service.json</code> or Helm values. Flisk does not validate your production chart.</p>
+        <p><code>flisk doctor</code> checks local environment readiness and discovered service issues. <code>flisk config verify</code> checks whether generated project files match <code>.flisk/project.json</code>; it does not lint <code>service.json</code> or Helm values. Flisk does not validate your production chart.</p>
 
         <h2>Required fields</h2>
 
@@ -60,7 +61,7 @@ title: Configuration - Flisk CLI
         <h3>appType</h3>
         <p>The type of service. Determines which generators run.</p>
         <ul>
-          {% for t in site.data.tdk.app_types %}
+          {% for t in site.data.flisk.app_types %}
           <li><code>{{ t.name }}</code> — {{ t.desc }}</li>
           {% endfor %}
         </ul>
@@ -85,7 +86,7 @@ title: Configuration - Flisk CLI
         <h3 id="framework">framework</h3>
         <p>Which single-page-app provider generates a frontend's Vite and TypeScript config. Leave it out and you get React, so existing manifests are unchanged.</p>
         <ul>
-          {% for f in site.data.tdk.frontend_frameworks %}
+          {% for f in site.data.flisk.frontend_frameworks %}
           <li><code>{{ f.name }}</code> — {{ f.desc }}</li>
           {% endfor %}
         </ul>
@@ -93,12 +94,12 @@ title: Configuration - Flisk CLI
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>flisk resource web --type frontend --framework vue --stack shop</pre>
         </div>
-        <p>That writes <code>"framework": "vue"</code> into <code>web/service.json</code>. Docker, nginx, Traefik and Tilt are shared with React frontends. Needs Flisk CLI 1.3.75 or newer; older releases ignore the field and generate React config. See the <a href="https://github.com/flisk-sh/tdk-ecommerce-example" target="_blank" rel="noopener">Vue example</a>, or <a href="https://github.com/flisk-sh/flisk/blob/main/docs/frontend-framework-providers.md" target="_blank" rel="noopener">add a framework</a>.</p>
+        <p>That writes <code>"framework": "vue"</code> into <code>web/service.json</code>. Docker, nginx, Traefik and Tilt are shared with React frontends. Needs Flisk CLI 1.3.75 or newer; older releases ignore the field and generate React config. See the <a href="https://github.com/flisk-sh/flisk-ecommerce-example" target="_blank" rel="noopener">Vue example</a>, or <a href="https://github.com/flisk-sh/flisk/blob/main/docs/frontend-framework-providers.md" target="_blank" rel="noopener">add a framework</a>.</p>
 
         <h3>featuresEnabled</h3>
         <p>Platform features to enable. Only these values are valid:</p>
         <ul>
-          {% for f in site.data.tdk.manifest_features %}
+          {% for f in site.data.flisk.manifest_features %}
           <li><code>{{ f.name }}</code> — {{ f.desc }}</li>
           {% endfor %}
         </ul>
@@ -119,7 +120,7 @@ title: Configuration - Flisk CLI
   <span class="k">"OIDC_JWKS_URL"</span>: <span class="s">"http://auth-emulator:4400/.well-known/jwks.json"</span>
 }</pre>
         </div>
-        <p>The <a href="https://github.com/flisk-sh/tdk-auth-queue-email-example" target="_blank" rel="noopener">auth + queue + email example</a> uses this to run an identity provider, a queue and email locally.</p>
+        <p>The <a href="https://github.com/flisk-sh/flisk-auth-queue-email-example" target="_blank" rel="noopener">auth + queue + email example</a> uses this to run an identity provider, a queue and email locally.</p>
 
         <h3>package.json scripts</h3>
         <p>Each service also needs a <code>package.json</code> next to its <code>service.json</code>, with npm scripts required by <code>appType</code>. See <a href="{{ '/docs/scripts/' | relative_url }}">package.json scripts</a> for the list.</p>
@@ -170,9 +171,11 @@ title: Configuration - Flisk CLI
   </section>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
   gsap.from('.aw-docs-body h1, .aw-docs-body .aw-lead', { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', delay: 0.1 });
@@ -183,4 +186,5 @@ if (window.gsap && window.ScrollTrigger) {
     });
   });
 }
+});
 </script>

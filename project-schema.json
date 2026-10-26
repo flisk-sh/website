@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://flisk.sh/project-schema.json",
   "title": "Flisk Project Configuration",
-  "description": "Editor assistance for .tdk/project.json. The Flisk CLI remains the runtime source of truth.",
+  "description": "Editor assistance for .flisk/project.json. The Flisk CLI remains the runtime source of truth.",
   "type": "object",
   "additionalProperties": true,
   "required": [
@@ -16,10 +16,10 @@
     "version": {
       "type": "string"
     },
-    "minTdkVersion": {
+    "minFliskVersion": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
-      "description": "Oldest tdk CLI this project works with, as MAJOR.MINOR.PATCH. tdk doctor fails on an older CLI."
+      "description": "Oldest flisk CLI this project works with, as MAJOR.MINOR.PATCH. flisk doctor fails on an older CLI."
     },
     "project": {
       "type": "object",

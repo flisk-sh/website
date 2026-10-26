@@ -1,6 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#050816"/>
-  <path d="M14 18h36v8H36v26h-8V26H14z" fill="#f8fafc"/>
-  <path d="M40 16h8v32h-8z" fill="#38bdf8"/>
-  <path d="M47 32l8-8v16z" fill="#a78bfa"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#040A12"/>
+      <stop offset="0.6" stop-color="#07131D"/>
+      <stop offset="1" stop-color="#0B2A22"/>
+    </linearGradient>
+    <linearGradient id="bolt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6EE7A0"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <g transform="translate(32 32) scale(0.6) translate(-276 -91)">
+    <polygon points="283,50 252,98 273,98 261,132 300,82 278,82" fill="url(#bolt)"/>
+  </g>
 </svg>

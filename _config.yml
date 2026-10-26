@@ -1,5 +1,6 @@
-title: Flisk CLI turns service.json into a local Docker + Tilt stack
-email: vntu0412179+tdk-waitlist@gmail.com
+title: Flisk CLI
+tagline: Turns service.json into a local Docker + Tilt stack
+email: hello@flisk.sh
 lang: en_US
 description: >-
   Flisk CLI turns a service.json per service into a local Docker stack, with Tilt (the local development tool) watching services and live-updating containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.
@@ -12,10 +13,10 @@ author:
 baseurl: ""
 url: "https://flisk.sh"
 
-twitter_username: tdkcli
+twitter_username: brookservers
 github_username: flisk-sh
-social_image: "/assets/images/tdk-social-card.png"
-logo: "/assets/images/tdk-social-card.png"
+social_image: "/assets/images/flisk-social-card.png"
+logo: "/assets/images/flisk-social-card.png"
 
 markdown: kramdown
 highlighter: rouge
@@ -36,7 +37,7 @@ defaults:
   - scope:
       path: ""
     values:
-      image: "/assets/images/tdk-social-card.png"
+      image: "/assets/images/flisk-social-card.png"
       sitemap: true
   - scope:
       path: "blog/articles"
@@ -53,9 +54,16 @@ defaults:
       path: "assets/images"
     values:
       sitemap: false
+  - scope:
+      path: "assets/social"
+    values:
+      sitemap: false
 
 sass:
   style: compressed
+
+include:
+  - .well-known
 
 exclude:
   - .sass-cache/
@@ -70,5 +78,8 @@ exclude:
   - vendor/ruby/
   - test/
   - README.md
+  - ASAP_DOD_INSTALL_SMOKE.md
+  - DESIGN.md
+  - EMAIL_SETUP.md
   - docker-compose.yml
   - Dockerfile

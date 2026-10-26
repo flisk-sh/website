@@ -11,7 +11,7 @@ class LicensingCopyTest < Minitest::Test
     "_includes/footer.html",
     "waiting/index.html",
     "docs/quickstart/index.html",
-    "_data/tdk.yml",
+    "_data/flisk.yml",
     "_site/index.html"
   ].freeze
 
@@ -34,7 +34,7 @@ class LicensingCopyTest < Minitest::Test
     assert_includes source, "Start free"
     assert_includes source, "Get your<br />Premium license."
     assert_includes source, "Request my license"
-    assert_includes source, 'value="Premium — ${{ site.data.tdk.team_price }}/dev/month'
+    assert_includes source, 'value="Premium — ${{ site.data.flisk.team_price }}/dev/month'
     refute_includes source, 'value="Free —'
   end
 

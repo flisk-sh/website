@@ -9,7 +9,7 @@ Last checked: 2026-09-17T11:01:30Z
 - `https://flisk.sh/install.sh` returns HTTP 200.
 - Fresh Ubuntu container can install the CLI using the published command.
 - `flisk --version` prints `1.1.0`.
-- `flisk project --yes` creates `.tdk/project.json` and `.tdk/.tdk-out/Tiltfile`.
+- `flisk project --yes` creates `.flisk/project.json` and `.flisk/.flisk-out/Tiltfile`.
 - `flisk resource api --type backend --stack pre-alpha --path services/pre-alpha/api` creates `services/pre-alpha/api/service.json`.
 - `flisk project --check` passes.
 - `flisk up pre-alpha` requires the documented Tilt prerequisite.
@@ -29,8 +29,8 @@ docker run --rm ubuntu:24.04 sh -lc '
   cd /tmp/my-service
   flisk project --yes
   printf "\n" | flisk resource api --type backend --stack pre-alpha --path services/pre-alpha/api
-  test -f .tdk/project.json
-  test -f .tdk/.tdk-out/Tiltfile
+  test -f .flisk/project.json
+  test -f .flisk/.flisk-out/Tiltfile
   test -f services/pre-alpha/api/service.json
   flisk project --check
 '
@@ -41,14 +41,14 @@ Result: passed.
 ## Docker Compose proof
 
 ```sh
-git clone --depth 1 https://github.com/flisk-sh/tdk-docker-compose-example.git
-cd tdk-docker-compose-example
+git clone --depth 1 https://github.com/flisk-sh/flisk-docker-compose-example.git
+cd flisk-docker-compose-example
 docker compose run --rm flisk flisk --version
 docker compose run --rm flisk flisk project --yes
 printf "\n" | docker compose run --rm -T flisk flisk resource api --type backend --stack pre-alpha --path services/pre-alpha/api
 docker compose run --rm flisk flisk project --check
-test -f .tdk/project.json
-test -f .tdk/.tdk-out/Tiltfile
+test -f .flisk/project.json
+test -f .flisk/.flisk-out/Tiltfile
 test -f services/pre-alpha/api/service.json
 ```
 
@@ -57,8 +57,8 @@ Result: passed when run from a Docker-shared workspace path.
 ## Dependency proof
 
 ```sh
-git clone --depth 1 https://github.com/flisk-sh/tdk-docker-compose-example.git
-cd tdk-docker-compose-example
+git clone --depth 1 https://github.com/flisk-sh/flisk-docker-compose-example.git
+cd flisk-docker-compose-example
 docker compose build --no-cache
 docker compose run --rm flisk flisk project --yes
 printf "\n" | docker compose run --rm -T flisk flisk resource database --type backend --stack pre-alpha --path services/pre-alpha/database

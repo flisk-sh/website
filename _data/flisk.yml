@@ -1,5 +1,5 @@
 # Canonical marketing numbers — SINGLE SOURCE OF TRUTH for the whole site.
-# Change a value here and it updates on every page via {{ site.data.tdk.* }}.
+# Change a value here and it updates on every page via {{ site.data.flisk.* }}.
 # Every claim below is verified (Sept 2026). Do NOT invent new numbers in
 # page HTML — add them here with a comment explaining the source.
 #
@@ -14,9 +14,9 @@ frontend_files: 17         # Verified in identity/identity-management-frontend/.
 stack_artifacts: "40+"     # stack-wide: Tiltfile, C4, AGENTS.md, identities, registry, migrators
 product_features: "35+"    # feature catalog on /features/
 monorepo_services: 27      # service.json files parsed in beauty-crm (do not round this one)
-scale_services: "100+"     # 100 microservices in tdk-erp-system, 27 in beauty-crm + platform infra
+scale_services: "100+"     # 100 microservices in flisk-erp-system, 27 in beauty-crm + platform infra
 scale_plain: 100           # same, without "+" — for sentences where "+" reads badly
-erp_services: 100          # exact count in tdk-erp-system
+erp_services: 100          # exact count in flisk-erp-system
 erp_domains: 7             # finance, hr, inventory, sales, manufacturing, supply_chain, analytics
 erp_boot_seconds: 472      # clean GitHub runner, published CLI 1.3.72, images built from scratch, all 100 backends 2xx via Traefik
 erp_boot_minutes: "about 8" # erp_boot_seconds in prose

@@ -35,7 +35,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
           <thead>
             <tr>
               <th>Feature</th>
-              <th class="aw-tdk-col">Flisk CLI</th>
+              <th class="aw-flisk-col">Flisk CLI</th>
               <th>Devbox</th>
               <th>Devenv</th>
               <th>Garden</th>
@@ -46,7 +46,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
           <tbody>
             <tr>
               <td>Kubernetes required</td>
-              <td class="aw-tdk-col"><span class="aw-yes">No</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">No</span></td>
               <td><span class="aw-yes">No</span></td>
               <td><span class="aw-yes">No</span></td>
               <td><span class="aw-warn">Optional (leaks)</span></td>
@@ -55,7 +55,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Learning curve</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Low</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Low</span></td>
               <td><span class="aw-warn">Medium</span></td>
               <td><span class="aw-warn">High</span></td>
               <td><span class="aw-warn">High</span></td>
@@ -64,7 +64,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Setup time</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Minutes</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Minutes</span></td>
               <td><span class="aw-yes">Minutes</span></td>
               <td><span class="aw-warn">Hours</span></td>
               <td><span class="aw-warn">Days</span></td>
@@ -73,7 +73,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Manifest format</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Simple JSON</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Simple JSON</span></td>
               <td>JSON</td>
               <td>Nix</td>
               <td>Complex YAML</td>
@@ -82,7 +82,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Auto-generated files</td>
-              <td class="aw-tdk-col"><span class="aw-yes">{{ site.data.tdk.files_per_service }} per service</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">{{ site.data.flisk.files_per_service }} per service</span></td>
               <td><span class="aw-no">Manual</span></td>
               <td><span class="aw-no">Manual</span></td>
               <td>3–5 files</td>
@@ -91,7 +91,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Golden Docker images</td>
-              <td class="aw-tdk-col"><span class="aw-yes">L1–L4 included</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">L1–L4 included</span></td>
               <td><span class="aw-no">DIY</span></td>
               <td><span class="aw-no">DIY</span></td>
               <td><span class="aw-no">DIY</span></td>
@@ -100,7 +100,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Auto-discovery</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Scans directories</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Scans directories</span></td>
               <td><span class="aw-no">Manual</span></td>
               <td><span class="aw-no">Manual</span></td>
               <td><span class="aw-no">Manual</span></td>
@@ -109,7 +109,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Selective startup</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Yes</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Yes</span></td>
               <td><span class="aw-yes">Yes</span></td>
               <td><span class="aw-yes">Yes</span></td>
               <td><span class="aw-no">Limited</span></td>
@@ -118,7 +118,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Local-only mode</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Docker only</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Docker only</span></td>
               <td><span class="aw-yes">Nix shell</span></td>
               <td><span class="aw-yes">Nix shell</span></td>
               <td><span class="aw-no">Needs cluster</span></td>
@@ -127,7 +127,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Cost at 10 developers</td>
-              <td class="aw-tdk-col"><span class="aw-yes">{{ site.data.tdk.community_price }} (MIT)</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">{{ site.data.flisk.community_price }} (MIT)</span></td>
               <td><span class="aw-yes">Free (MIT)</span></td>
               <td><span class="aw-yes">Free (MIT)</span></td>
               <td>Platform team time</td>
@@ -136,7 +136,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Scale tested</td>
-              <td class="aw-tdk-col"><span class="aw-yes">{{ site.data.tdk.monorepo_services }} in daily use; {{ site.data.tdk.scale_plain }}-service fixture boots in CI</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">{{ site.data.flisk.monorepo_services }} in daily use; {{ site.data.flisk.scale_plain }}-service fixture boots in CI</span></td>
               <td>Thousands of developers</td>
               <td>Active community</td>
               <td>Enterprise</td>
@@ -145,7 +145,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Built on</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Tilt (10k stars)</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Tilt (10k stars)</span></td>
               <td>Nix</td>
               <td>Nix</td>
               <td>Custom</td>
@@ -154,7 +154,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Open source</td>
-              <td class="aw-tdk-col"><span class="aw-yes">MIT</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">MIT</span></td>
               <td><span class="aw-yes">MIT</span></td>
               <td><span class="aw-yes">MIT</span></td>
               <td><span class="aw-yes">Apache</span></td>
@@ -178,13 +178,13 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
           <thead>
             <tr>
               <th>Helm / app-template</th>
-              <th class="aw-tdk-col">Flisk</th>
+              <th class="aw-flisk-col">Flisk</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Render Kubernetes for the cluster.</td>
-              <td class="aw-tdk-col">Generate and run the machine stack.</td>
+              <td class="aw-flisk-col">Generate and run the machine stack.</td>
             </tr>
           </tbody>
         </table>
@@ -197,19 +197,19 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
   <section class="aw-section" style="padding-top: 0;">
     <div class="aw-wrap">
       <div class="aw-head aw-head-center">
-        <h2>One ${{ site.data.tdk.team_price }} seat. A full circle of replaced vendors.</h2>
+        <h2>One ${{ site.data.flisk.team_price }} seat. A full circle of replaced vendors.</h2>
         <p>Every name in orbit bills you separately — per developer, per month, forever.</p>
       </div>
 
       <div class="aw-orbit" aria-hidden="true">
         <div class="aw-orbit-center">
           <strong>Flisk Team</strong>
-          <span>${{ site.data.tdk.team_price }} / dev / mo</span>
+          <span>${{ site.data.flisk.team_price }} / dev / mo</span>
         </div>
-        <span class="aw-orbit-chip" style="--ox: 0%; --oy: -42%;">Gitpod · {{ site.data.tdk.gitpod_entry }}+</span>
-        <span class="aw-orbit-chip" style="--ox: 38%; --oy: -26%;">Codespaces · {{ site.data.tdk.codespaces_monthly }}</span>
+        <span class="aw-orbit-chip" style="--ox: 0%; --oy: -42%;">Gitpod · {{ site.data.flisk.gitpod_entry }}+</span>
+        <span class="aw-orbit-chip" style="--ox: 38%; --oy: -26%;">Codespaces · {{ site.data.flisk.codespaces_monthly }}</span>
         <span class="aw-orbit-chip" style="--ox: 44%; --oy: 18%;">Coder · custom</span>
-        <span class="aw-orbit-chip" style="--ox: 16%; --oy: 42%;">Daytona · {{ site.data.tdk.daytona_monthly }}</span>
+        <span class="aw-orbit-chip" style="--ox: 16%; --oy: 42%;">Daytona · {{ site.data.flisk.daytona_monthly }}</span>
         <span class="aw-orbit-chip" style="--ox: -20%; --oy: 40%;">Okteto · custom</span>
         <span class="aw-orbit-chip" style="--ox: -44%; --oy: 12%;">Garden · ops time</span>
         <span class="aw-orbit-chip" style="--ox: 0%; --oy: 25%;">Devbox · Nix learning</span>
@@ -231,7 +231,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
           <thead>
             <tr>
               <th>Cost</th>
-              <th class="aw-tdk-col">Flisk Team</th>
+              <th class="aw-flisk-col">Flisk Team</th>
               <th>Gitpod / Ona</th>
               <th>Codespaces</th>
               <th>Coder</th>
@@ -242,34 +242,34 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
           <tbody>
             <tr>
               <td>Entry price</td>
-              <td class="aw-tdk-col"><span class="aw-yes">${{ site.data.tdk.team_price }} / dev / mo</span></td>
-              <td>{{ site.data.tdk.gitpod_entry }} / mo + compute credits</td>
-              <td>Pay-as-you-go, {{ site.data.tdk.codespaces_hourly }}</td>
+              <td class="aw-flisk-col"><span class="aw-yes">${{ site.data.flisk.team_price }} / dev / mo</span></td>
+              <td>{{ site.data.flisk.gitpod_entry }} / mo + compute credits</td>
+              <td>Pay-as-you-go, {{ site.data.flisk.codespaces_hourly }}</td>
               <td>Per-user annual</td>
-              <td>Pay-as-you-go, {{ site.data.tdk.daytona_vcpu }}</td>
-              <td>{{ site.data.tdk.okteto_free }}</td>
+              <td>Pay-as-you-go, {{ site.data.flisk.daytona_vcpu }}</td>
+              <td>{{ site.data.flisk.okteto_free }}</td>
             </tr>
             <tr>
               <td>Per dev / month, full-time</td>
-              <td class="aw-tdk-col"><span class="aw-yes">${{ site.data.tdk.team_price }} flat</span></td>
-              <td><span class="aw-warn">{{ site.data.tdk.gitpod_entry }}+ compute</span></td>
-              <td><span class="aw-warn">{{ site.data.tdk.codespaces_monthly }}</span></td>
-              <td><span class="aw-warn">{{ site.data.tdk.coder_monthly }}, enterprise</span></td>
-              <td><span class="aw-no">{{ site.data.tdk.daytona_monthly }}</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">${{ site.data.flisk.team_price }} flat</span></td>
+              <td><span class="aw-warn">{{ site.data.flisk.gitpod_entry }}+ compute</span></td>
+              <td><span class="aw-warn">{{ site.data.flisk.codespaces_monthly }}</span></td>
+              <td><span class="aw-warn">{{ site.data.flisk.coder_monthly }}, enterprise</span></td>
+              <td><span class="aw-no">{{ site.data.flisk.daytona_monthly }}</span></td>
               <td>Contact sales</td>
             </tr>
             <tr>
-              <td>{{ site.data.tdk.example_devs }} developers / year</td>
-              <td class="aw-tdk-col"><span class="aw-yes">{{ site.data.tdk.team_annual_10 }}</span></td>
-              <td><span class="aw-warn">{{ site.data.tdk.gitpod_annual_10 }}</span></td>
-              <td><span class="aw-warn">{{ site.data.tdk.codespaces_annual_10 }}</span></td>
-              <td><span class="aw-warn">{{ site.data.tdk.coder_annual_10 }}</span></td>
-              <td><span class="aw-no">{{ site.data.tdk.daytona_annual_10 }}</span></td>
+              <td>{{ site.data.flisk.example_devs }} developers / year</td>
+              <td class="aw-flisk-col"><span class="aw-yes">{{ site.data.flisk.team_annual_10 }}</span></td>
+              <td><span class="aw-warn">{{ site.data.flisk.gitpod_annual_10 }}</span></td>
+              <td><span class="aw-warn">{{ site.data.flisk.codespaces_annual_10 }}</span></td>
+              <td><span class="aw-warn">{{ site.data.flisk.coder_annual_10 }}</span></td>
+              <td><span class="aw-no">{{ site.data.flisk.daytona_annual_10 }}</span></td>
               <td>Contact sales</td>
             </tr>
             <tr>
               <td>Compute model</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Your machine</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Your machine</span></td>
               <td>Their cloud, metered</td>
               <td>Their cloud, metered</td>
               <td>Your cloud, you pay</td>
@@ -278,7 +278,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Works offline</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Yes</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Yes</span></td>
               <td><span class="aw-no">No</span></td>
               <td><span class="aw-no">No</span></td>
               <td><span class="aw-no">No</span></td>
@@ -287,7 +287,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Self-hostable</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Local by design</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Local by design</span></td>
               <td>Enterprise tier</td>
               <td><span class="aw-no">Never</span></td>
               <td><span class="aw-yes">Yes</span></td>
@@ -296,7 +296,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
             </tr>
             <tr>
               <td>Open source core</td>
-              <td class="aw-tdk-col"><span class="aw-yes">MIT</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">MIT</span></td>
               <td><span class="aw-yes">Yes</span></td>
               <td><span class="aw-no">Closed</span></td>
               <td><span class="aw-yes">Yes</span></td>
@@ -326,7 +326,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
           <thead>
             <tr>
               <th>Feature</th>
-              <th class="aw-tdk-col">Flisk CLI</th>
+              <th class="aw-flisk-col">Flisk CLI</th>
               <th>Devbox</th>
               <th>Devenv</th>
             </tr>
@@ -334,61 +334,61 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
           <tbody>
             <tr>
               <td>Primary focus</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Docker services</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Docker services</span></td>
               <td>Package management</td>
               <td>Full environment</td>
             </tr>
             <tr>
               <td>Service orchestration</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Built-in (Tilt)</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Built-in (Tilt)</span></td>
               <td>process-compose</td>
               <td>Native processes</td>
             </tr>
             <tr>
               <td>Auto-generated Dockerfiles</td>
-              <td class="aw-tdk-col"><span class="aw-yes">{{ site.data.tdk.files_per_service }} per service</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">{{ site.data.flisk.files_per_service }} per service</span></td>
               <td><span class="aw-no">Manual</span></td>
               <td><span class="aw-no">Manual</span></td>
             </tr>
             <tr>
               <td>Docker Compose generation</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Auto-generated</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Auto-generated</span></td>
               <td><span class="aw-no">Manual</span></td>
               <td><span class="aw-no">Manual</span></td>
             </tr>
             <tr>
               <td>Hot reload</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Built-in</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Built-in</span></td>
               <td>Limited</td>
               <td>Manual setup</td>
             </tr>
             <tr>
               <td>Multi-service discovery</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Automatic</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Automatic</span></td>
               <td><span class="aw-no">Manual</span></td>
               <td><span class="aw-no">Manual</span></td>
             </tr>
             <tr>
               <td>Golden images included</td>
-              <td class="aw-tdk-col"><span class="aw-yes">L1–L4 layers</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">L1–L4 layers</span></td>
               <td><span class="aw-no">DIY</span></td>
               <td><span class="aw-no">DIY</span></td>
             </tr>
             <tr>
               <td>Nix knowledge required</td>
-              <td class="aw-tdk-col"><span class="aw-yes">No</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">No</span></td>
               <td><span class="aw-warn">Hidden</span></td>
               <td><span class="aw-no">Yes</span></td>
             </tr>
             <tr>
               <td>Language support</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Any (Docker)</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Any (Docker)</span></td>
               <td>80,000+ packages</td>
               <td>58+ languages</td>
             </tr>
             <tr>
               <td>CI/CD integration</td>
-              <td class="aw-tdk-col"><span class="aw-yes">Native</span></td>
+              <td class="aw-flisk-col"><span class="aw-yes">Native</span></td>
               <td>GitHub Actions</td>
               <td>GitHub Actions</td>
             </tr>
@@ -405,7 +405,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
         <h2>Which tool is right for you?</h2>
       </div>
       <div class="aw-feature-grid">
-        <div class="aw-card" style="border-color: rgba(124, 77, 255, 0.5); background: linear-gradient(160deg, rgba(124, 77, 255, 0.14) 0%, #121218 55%);">
+        <div class="aw-card" style="border-color: rgba(34, 197, 94, 0.5); background: linear-gradient(160deg, rgba(34, 197, 94, 0.14) 0%, #121218 55%);">
           <h4>Choose Flisk if you…</h4>
           <p>Want a manifest-driven local Docker workflow with selective startup. Flisk is designed so <code>flisk doctor</code> and <code>flisk up</code> replace a setup wiki; onboarding time has not been measured on a hiring cohort.</p>
         </div>
@@ -437,7 +437,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
     <div class="aw-wrap">
       <div class="aw-band">
         <h2>The comparison that matters is your invoice</h2>
-        <p>{{ site.data.tdk.community_price }} and {{ site.data.tdk.boot_claim }} of startup — against {{ site.data.tdk.gitpod_entry }}–{{ site.data.tdk.cloud_cde_max }} per developer per month and a YAML learning curve.</p>
+        <p>{{ site.data.flisk.community_price }} and {{ site.data.flisk.boot_claim }} of startup — against {{ site.data.flisk.gitpod_entry }}–{{ site.data.flisk.cloud_cde_max }} per developer per month and a YAML learning curve.</p>
         <a href="{{ '/#waitlist' | relative_url }}" class="aw-btn aw-btn-solid">Join waitlist</a>
       </div>
     </div>
@@ -445,9 +445,11 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -504,4 +506,5 @@ if (window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '.aw-band', start: 'top 85%' }
   });
 }
+});
 </script>

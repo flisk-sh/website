@@ -12,26 +12,26 @@ if ($processArchitecture -ne 'AMD64' -and -not $isX64Emulated) {
 }
 
 $baseUrl = 'https://github.com/flisk-sh/releases/releases/latest/download'
-$installDir = if ($env:TDK_INSTALL_DIR) {
-    $env:TDK_INSTALL_DIR
+$installDir = if ($env:FLISK_INSTALL_DIR) {
+    $env:FLISK_INSTALL_DIR
 } else {
     Join-Path $env:LOCALAPPDATA 'flisk\bin'
 }
-$tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ('tdk-install-' + [guid]::NewGuid().ToString('N'))
-$exeName = 'tdk-windows-amd64.exe'
+$tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ('flisk-install-' + [guid]::NewGuid().ToString('N'))
+$exeName = 'flisk-windows-amd64.exe'
 
 try {
     New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
     $exeDownload = Join-Path $tempDir $exeName
-    $engineArchive = Join-Path $tempDir 'tdk-cli-engine.tar.gz'
+    $engineArchive = Join-Path $tempDir 'flisk-cli-engine.tar.gz'
     $checksumsPath = Join-Path $tempDir 'checksums.txt'
 
     try {
         Invoke-WebRequest "$baseUrl/$exeName" -OutFile $exeDownload
     } catch {
-        throw 'The latest Flisk release does not include tdk-windows-amd64.exe yet. Wait for a Windows-enabled release, then rerun this installer.'
+        throw 'The latest Flisk release does not include flisk-windows-amd64.exe yet. Wait for a Windows-enabled release, then rerun this installer.'
     }
-    Invoke-WebRequest "$baseUrl/tdk-cli-engine.tar.gz" -OutFile $engineArchive
+    Invoke-WebRequest "$baseUrl/flisk-cli-engine.tar.gz" -OutFile $engineArchive
     Invoke-WebRequest "$baseUrl/checksums.txt" -OutFile $checksumsPath
 
     $checksumLine = Get-Content $checksumsPath | Where-Object { $_ -match "\s\*?$([regex]::Escape($exeName))$" } | Select-Object -First 1
@@ -45,7 +45,7 @@ try {
     }
 
     New-Item -ItemType Directory -Force -Path $installDir | Out-Null
-    $engineDir = Join-Path $installDir 'tdk-cli'
+    $engineDir = Join-Path $installDir 'flisk-cli'
     $extractDir = Join-Path $tempDir 'engine'
     New-Item -ItemType Directory -Force -Path $extractDir | Out-Null
 
@@ -61,7 +61,7 @@ try {
         Get-ChildItem -Force $extractDir | Remove-Item -Recurse -Force
         & $tar.Source -xzf $engineArchive -C $extractDir
         if ($LASTEXITCODE -ne 0) {
-            throw 'Could not extract tdk-cli-engine.tar.gz with tar.exe.'
+            throw 'Could not extract flisk-cli-engine.tar.gz with tar.exe.'
         }
         $children = @(Get-ChildItem -Force $extractDir)
         if ($children.Count -eq 1 -and $children[0].PSIsContainer) {
@@ -78,7 +78,7 @@ try {
         Remove-Item -Recurse -Force $engineDir
     }
     Move-Item -Path $extractDir -Destination $engineDir
-    Copy-Item -Path $exeDownload -Destination (Join-Path $installDir 'tdk.exe') -Force
+    Copy-Item -Path $exeDownload -Destination (Join-Path $installDir 'flisk.exe') -Force
 
     $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
     $pathEntries = @($userPath -split ';' | Where-Object { $_ })
@@ -87,8 +87,8 @@ try {
         [Environment]::SetEnvironmentVariable('Path', $newUserPath, 'User')
     }
 
-    $versionOutput = & (Join-Path $installDir 'tdk.exe') --version 2>&1 | Select-Object -First 1
-    Write-Host "Flisk installed to $(Join-Path $installDir 'tdk.exe') ($versionOutput)."
+    $versionOutput = & (Join-Path $installDir 'flisk.exe') --version 2>&1 | Select-Object -First 1
+    Write-Host "Flisk installed to $(Join-Path $installDir 'flisk.exe') ($versionOutput)."
     Write-Host 'Close this terminal and open a new one, then run flisk --version.'
     Write-Host 'For AI agents, configure your MCP client to launch flisk mcp over local stdio:'
     Write-Host '  https://github.com/flisk-sh/flisk/blob/main/docs/agent-tooling/README.md'

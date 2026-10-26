@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Does Flisk Fit Your Stack? - Flisk CLI
+description: "Answer five questions about how your team runs services today and get an honest verdict on whether Flisk CLI fits your stack. No email, no sales call."
 ---
 
 <style>
@@ -47,14 +48,14 @@ title: Does Flisk Fit Your Stack? - Flisk CLI
   display: block;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #b79aff;
+  color: #6EE7A0;
   margin-bottom: 0.5rem;
 }
 
 .aw-fit-field input[type="range"] {
   width: 100%;
   height: 4px;
-  accent-color: #b79aff;
+  accent-color: #6EE7A0;
   cursor: pointer;
 }
 
@@ -175,7 +176,7 @@ title: Does Flisk Fit Your Stack? - Flisk CLI
 }
 
 .aw-fit-reasons li[data-mark="✓"]::before { color: #6ee7b7; }
-.aw-fit-reasons li[data-mark="~"]::before { color: #f0abfc; }
+.aw-fit-reasons li[data-mark="~"]::before { color: #86EFAC; }
 .aw-fit-reasons li[data-mark="✗"]::before { color: rgba(236, 236, 241, 0.4); }
 
 .aw-fit-result .aw-btn {
@@ -259,8 +260,8 @@ title: Does Flisk Fit Your Stack? - Flisk CLI
 
           <div class="aw-fit-field">
             <label>Developers on the team</label>
-            <output id="fit-devs-value">{{ site.data.tdk.calc_devs_default }}</output>
-            <input type="range" id="fit-devs" min="{{ site.data.tdk.calc_devs_min }}" max="{{ site.data.tdk.calc_devs_max }}" value="{{ site.data.tdk.calc_devs_default }}" step="1" oninput="calcFit()" />
+            <output id="fit-devs-value">{{ site.data.flisk.calc_devs_default }}</output>
+            <input type="range" id="fit-devs" min="{{ site.data.flisk.calc_devs_min }}" max="{{ site.data.flisk.calc_devs_max }}" value="{{ site.data.flisk.calc_devs_default }}" step="1" oninput="calcFit()" />
           </div>
 
         </div>
@@ -295,9 +296,11 @@ title: Does Flisk Fit Your Stack? - Flisk CLI
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 /* Stack-fit calculator: pill groups (single/multi select) + two sliders → 0-100 score */
 document.querySelectorAll('.aw-fit-pills').forEach(function (group) {
   var isMulti = group.dataset.multi === 'true';
@@ -445,9 +448,9 @@ function calcFit() {
   if (services <= 1) {
     reasons.push(['✗', 'One service doesn\'t need a multi-service orchestrator — Flisk shines at 5+.']);
   } else if (services < 5) {
-    reasons.push(['~', 'A few services already benefit, but Flisk\'s sweet spot is 5+ services (tested up to {{ site.data.tdk.scale_plain }} small ones).']);
+    reasons.push(['~', 'A few services already benefit, but Flisk\'s sweet spot is 5+ services (tested up to {{ site.data.flisk.scale_plain }} small ones).']);
   } else {
-    reasons.push(['✓', services + ' services is squarely in Flisk\'s range (a {{ site.data.tdk.monorepo_services }}-service monorepo runs on it daily; {{ site.data.tdk.scale_plain }} small services are tested in CI).']);
+    reasons.push(['✓', services + ' services is squarely in Flisk\'s range (a {{ site.data.flisk.monorepo_services }}-service monorepo runs on it daily; {{ site.data.flisk.scale_plain }} small services are tested in CI).']);
   }
 
   if (devs < 5) {
@@ -484,4 +487,6 @@ if (window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '.aw-band', start: 'top 85%' }
   });
 }
+window.calcFit = calcFit;
+});
 </script>

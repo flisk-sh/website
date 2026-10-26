@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Why Flisk - Flisk CLI
+description: "Why teams pick Flisk CLI: one command starts the whole local stack, new developers skip the setup wiki, and each service is described in one service.json."
 ---
 
 <div class="aw">
@@ -27,7 +28,7 @@ title: Why Flisk - Flisk CLI
         </div>
         <div class="aw-card">
           <h4>Runs on ordinary machines</h4>
-          <p>Proven daily on a {{ site.data.tdk.machine }}. No cloud computers to rent, no GPU bills, and it works on planes and bad hotel wifi.</p>
+          <p>Proven daily on a {{ site.data.flisk.machine }}. No cloud computers to rent, no GPU bills, and it works on planes and bad hotel wifi.</p>
         </div>
         <div class="aw-card">
           <h4>Secrets without spreadsheets</h4>
@@ -70,9 +71,11 @@ title: Why Flisk - Flisk CLI
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 var REDUCED_WHY = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (!REDUCED_WHY && window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
@@ -90,4 +93,5 @@ if (!REDUCED_WHY && window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '.aw-band', start: 'top 85%' }
   });
 }
+});
 </script>

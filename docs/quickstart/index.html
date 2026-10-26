@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Quick Start - Flisk CLI
+description: "Install Flisk CLI, check your machine with flisk doctor, clone a working stack and start it with flisk up. The shortest path to a running local stack."
 ---
 
 <div class="aw">
@@ -27,16 +28,16 @@ title: Quick Start - Flisk CLI
         </div>
 
         <h2 id="before-you-run-it">Before you run it</h2>
-        <p>Starting a local stack needs Docker and Tilt. The standalone CLI binary needs no host Node.js or Bun; installing the CLI from npm requires Node.js {{ site.data.tdk.prereq_node }}.</p>
+        <p>Starting a local stack needs Docker and Tilt. The standalone CLI binary needs no host Node.js or Bun; installing the CLI from npm requires Node.js {{ site.data.flisk.prereq_node }}.</p>
         <ul class="aw-check-list">
           <li><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a> installed and running</li>
           <li><a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt</a> installed</li>
-          <li><a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a> {{ site.data.tdk.prereq_node }} only when installing the CLI from npm</li>
+          <li><a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a> {{ site.data.flisk.prereq_node }} only when installing the CLI from npm</li>
         </ul>
         <p><strong>Full local runtime:</strong> macOS, Linux, and Ubuntu in WSL2. The latest release also includes a Windows AMD64 CLI for inspection; native Windows does not support running a landscape.</p>
 
         <h2 id="windows-setup">Windows AMD64: inspect the CLI</h2>
-        <p>The latest release includes <code>tdk-windows-amd64.exe</code>. Install it from PowerShell, then check the binary and its bundled files:</p>
+        <p>The latest release includes <code>flisk-windows-amd64.exe</code>. Install it from PowerShell, then check the binary and its bundled files:</p>
         <ol>
           <li>Install Flisk:
             <div class="aw-codeblock">
@@ -46,8 +47,8 @@ title: Quick Start - Flisk CLI
             <p>Or download and inspect the script before running it:</p>
             <div class="aw-codeblock">
               <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>Invoke-WebRequest https://flisk.sh/install.ps1 -OutFile install-tdk.ps1
-powershell -ExecutionPolicy Bypass -File .\install-tdk.ps1</pre>
+              <pre>Invoke-WebRequest https://flisk.sh/install.ps1 -OutFile install-flisk.ps1
+powershell -ExecutionPolicy Bypass -File .\install-flisk.ps1</pre>
             </div>
           </li>
           <li>Close PowerShell and open a new window so the updated PATH is loaded.</li>
@@ -83,20 +84,20 @@ flisk doctor</pre>
               <pre>curl -fsSL https://flisk.sh/install.sh | sh</pre>
             </div>
             <div class="aw-install-panel" data-panel="npm" style="display:none;">
-              <pre>{{ site.data.tdk.install_npm }}</pre>
+              <pre>{{ site.data.flisk.install_npm }}</pre>
             </div>
             <div class="aw-install-panel" data-panel="npx" style="display:none;">
               <pre><span class="c"># run without installing globally</span>
-{{ site.data.tdk.install_npx_version }}
+{{ site.data.flisk.install_npx_version }}
 
 <span class="c"># or scaffold a project directly</span>
-{{ site.data.tdk.install_npx_project }}</pre>
+{{ site.data.flisk.install_npx_project }}</pre>
             </div>
             <div class="aw-install-panel" data-panel="pnpm" style="display:none;">
-              <pre>{{ site.data.tdk.install_pnpm }}</pre>
+              <pre>{{ site.data.flisk.install_pnpm }}</pre>
             </div>
             <div class="aw-install-panel" data-panel="bun" style="display:none;">
-              <pre>{{ site.data.tdk.install_bun }}</pre>
+              <pre>{{ site.data.flisk.install_bun }}</pre>
             </div>
           </div>
         </div>
@@ -113,7 +114,7 @@ flisk doctor</pre>
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>flisk doctor
 flisk project example
-cd tdk-example
+cd flisk-example
 flisk up</pre>
         </div>
 
@@ -156,10 +157,10 @@ flisk up</pre>
           </div>
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-            <pre>export TDK_LICENSE_KEY=tdk-xxxxxx</pre>
+            <pre>export FLISK_LICENSE_KEY=&lt;your-license-key&gt;</pre>
           </div>
         </div>
-        <p>Add that line to <code>~/.zshrc</code> or <code>~/.bashrc</code> if you want it to persist. Each key covers up to {{ site.data.tdk.premium_project_limit }} distinct projects, unlimited on Enterprise. If the key is missing, expired, or unreachable, Flisk keeps running with the free engine.</p>
+        <p>Add that line to <code>~/.zshrc</code> or <code>~/.bashrc</code> if you want it to persist. Each key covers up to {{ site.data.flisk.premium_project_limit }} distinct projects, unlimited on Enterprise. If the key is missing, expired, or unreachable, Flisk keeps running with the free engine.</p>
 
         <h2 id="what-actually-happens-when-you-run-it">What actually happens when you run it</h2>
         <p>Before Tilt touches Docker, <code>flisk</code> checks your environment and tells you exactly what it's doing — no guessing what's happening behind the spinner.</p>
@@ -201,7 +202,7 @@ Run <span class="hot">`flisk doctor`</span> for a full environment check.</pre>
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>flisk doctor
 flisk project example
-cd tdk-example
+cd flisk-example
 flisk project --yes
 flisk up shop</pre>
         </div>
@@ -229,11 +230,11 @@ flisk up shop</pre>
           <pre>flisk resource web --type frontend --stack shop                   <span class="c"># React + Vite (default)</span>
 flisk resource web --type frontend --framework vue --stack shop   <span class="c"># Vue 3 + Vite</span></pre>
         </div>
-        <p>Flisk validates <code>.tdk/project.json</code>, generates files in <code>.tdk/.tdk-out/</code>, and reads boot order from each resource's <code>dependsOn</code> list.</p>
+        <p>Flisk validates <code>.flisk/project.json</code>, generates files in <code>.flisk/.flisk-out/</code>, and reads boot order from each resource's <code>dependsOn</code> list.</p>
 
         <details class="aw-docs-details">
           <summary>Manual binary download</summary>
-          <p>Download the binary, its engine files and the checksums yourself. The binary looks for the <code>tdk-cli/</code> folder next to it.</p>
+          <p>Download the binary, its engine files and the checksums yourself. The binary looks for the <code>flisk-cli/</code> folder next to it.</p>
           <h3>Windows AMD64</h3>
           <p>The latest release includes the Windows CLI and the PowerShell installer verifies its checksum. Native Windows supports CLI inspection only: use <code>flisk --version</code>, <code>flisk runtime --check-assets</code>, and <code>flisk doctor</code>. For <code>flisk project</code> and <code>flisk up</code>, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>.</p>
           <div class="aw-codeblock">
@@ -244,11 +245,11 @@ flisk resource web --type frontend --framework vue --stack shop   <span class="c
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
             <pre>os=$(uname -s | tr A-Z a-z); arch=$(uname -m | sed "s/x86_64/amd64/;s/aarch64/arm64/")
 base=https://github.com/flisk-sh/releases/releases/latest/download
-curl -fsSL -O "$base/tdk-$os-$arch" -O "$base/tdk-cli-engine.tar.gz" -O "$base/checksums.txt"
+curl -fsSL -O "$base/flisk-$os-$arch" -O "$base/flisk-cli-engine.tar.gz" -O "$base/checksums.txt"
 shasum -a 256 -c --ignore-missing checksums.txt
-mkdir -p ~/.local/bin/tdk-cli
-install -m 755 "tdk-$os-$arch" ~/.local/bin/flisk
-tar -xzf tdk-cli-engine.tar.gz -C ~/.local/bin/tdk-cli --strip-components=1</pre>
+mkdir -p ~/.local/bin/flisk-cli
+install -m 755 "flisk-$os-$arch" ~/.local/bin/flisk
+tar -xzf flisk-cli-engine.tar.gz -C ~/.local/bin/flisk-cli --strip-components=1</pre>
           </div>
           <p>Binaries ship from <a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">flisk-sh/releases</a>.</p>
         </details>
@@ -258,8 +259,8 @@ tar -xzf tdk-cli-engine.tar.gz -C ~/.local/bin/tdk-cli --strip-components=1</pre
           <p>Use Docker Compose if you want to try Flisk without installing the binary on your host.</p>
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-            <pre>git clone https://github.com/flisk-sh/tdk-docker-compose-example.git
-cd tdk-docker-compose-example
+            <pre>git clone https://github.com/flisk-sh/flisk-docker-compose-example.git
+cd flisk-docker-compose-example
 docker compose run --rm flisk flisk --version
 docker compose run --rm flisk flisk project --yes</pre>
           </div>
@@ -271,9 +272,9 @@ docker compose run --rm flisk flisk project --yes</pre>
           <li><a href="{{ '/docs/examples/' | relative_url }}">Browse starter templates you can clone with <code>flisk project &lt;template&gt;</code></a></li>
           <li><a href="{{ '/docs/configuration/' | relative_url }}">Learn about all configuration options</a></li>
           <li><a href="{{ '/docs/examples/' | relative_url }}">See more complex examples</a></li>
-          <li><a href="https://github.com/flisk-sh/tdk-docker-compose-example" target="_blank" rel="noopener">Run the Docker Compose example</a></li>
+          <li><a href="https://github.com/flisk-sh/flisk-docker-compose-example" target="_blank" rel="noopener">Run the Docker Compose example</a></li>
           <li><a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">Download compiled binaries</a></li>
-          <li><a href="https://flisk-sh.github.io/tdk-demo-animation/" target="_blank" rel="noopener">Watch the recording demo animation</a></li>
+          <li><a href="https://flisk-sh.github.io/flisk-demo-animation/" target="_blank" rel="noopener">Watch the recording demo animation</a></li>
         </ul>
       </div>
     </div>
@@ -333,9 +334,11 @@ if (window.initAwTerminal) {
 }
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
   gsap.from('.aw-docs-body h1, .aw-docs-body .aw-lead', { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', delay: 0.1 });
@@ -350,4 +353,5 @@ if (window.gsap && window.ScrollTrigger) {
     });
   });
 }
+});
 </script>

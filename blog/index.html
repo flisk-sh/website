@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Blog - Flisk CLI
+description: "Field notes on running service-heavy products locally: specs, onboarding, local stacks, AI agents and generated infrastructure, from the Flisk CLI team."
 ---
 
 <div class="aw aw-blog aw-blog-index">
@@ -51,7 +52,7 @@ title: Blog - Flisk CLI
           </span>
         </a>
 
-        <a class="aw-featured-story" href="{{ '/blog/articles/why-tdk-matters-after-the-spec/' | relative_url }}">
+        <a class="aw-featured-story" href="{{ '/blog/articles/why-flisk-matters-after-the-spec/' | relative_url }}">
           <span class="aw-featured-image aw-featured-image-runtime" aria-hidden="true"></span>
           <span class="aw-featured-content">
             <span class="aw-featured-category">Execution</span>
@@ -126,9 +127,11 @@ title: Blog - Flisk CLI
   </section>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 (function () {
   var root = document.querySelector('.aw-blog-index');
   if (!root) return;
@@ -186,4 +189,5 @@ title: Blog - Flisk CLI
   gsap.from('.aw-library-card', { y: 70, opacity: 0, stagger: 0.025, duration: 0.65, ease: 'power2.out', scrollTrigger: { trigger: '.aw-library-grid', start: 'top 84%' } });
   gsap.fromTo('.aw-library-statement', { opacity: 0.18 }, { opacity: 1, scrollTrigger: { trigger: '.aw-blog-library-section', start: 'top 72%', end: 'top 32%', scrub: true } });
 })();
+});
 </script>

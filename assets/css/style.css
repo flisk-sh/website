@@ -3,9 +3,9 @@
 /* CSS Variables */
 :root {
   /* Colors */
-  --color-purple: #7c4dff;
-  --color-purple-light: #a78bfa;
-  --color-purple-dark: #5b21b6;
+  --color-purple: #22C55E;
+  --color-purple-light: #4ADE80;
+  --color-purple-dark: #15803D;
   --color-black: #0a0a0f;
   --color-white: #fafafa;
 
@@ -100,7 +100,7 @@ pre {
   top: -40px;
   left: 0;
   background: var(--color-purple);
-  color: white;
+  color: #04120A;
   padding: 8px;
   text-decoration: none;
   z-index: 100;
@@ -159,7 +159,7 @@ pre {
   width: 100%;
   max-width: 1200px;
   height: 100%;
-  background: radial-gradient(ellipse at center top, rgba(124, 77, 255, 0.08) 0%, transparent 50%);
+  background: radial-gradient(ellipse at center top, rgba(34, 197, 94, 0.08) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -170,7 +170,7 @@ pre {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-purple);
-  background: rgba(124, 77, 255, 0.1);
+  background: rgba(34, 197, 94, 0.1);
   padding: 0.5rem 1rem;
   border-radius: 100px;
   margin-bottom: 1.5rem;
@@ -214,13 +214,13 @@ pre {
 .btn-primary {
   background: var(--color-purple);
   color: white;
-  box-shadow: 0 4px 14px rgba(124, 77, 255, 0.4);
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
 }
 
 .btn-primary:hover {
   background: var(--color-purple-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(124, 77, 255, 0.5);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
   color: white;
 }
 
@@ -306,7 +306,7 @@ pre {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-purple);
-  background: rgba(124, 77, 255, 0.1);
+  background: rgba(34, 197, 94, 0.1);
   padding: 0.5rem 1rem;
   border-radius: 100px;
   margin-bottom: 1rem;
@@ -442,7 +442,7 @@ pre code {
 
 .footer-text {
   font-size: 0.875rem;
-  color: var(--color-gray-500);
+  color: var(--color-gray-400);
 }
 
 .site-footer hr {
@@ -451,7 +451,7 @@ pre code {
 }
 
 .site-footer a {
-  color: var(--color-gray-500);
+  color: var(--color-gray-400);
   text-decoration: none;
 }
 
@@ -603,7 +603,7 @@ html {
 }
 
 .aw-brand-mark>span {
-  color: #7c4dff;
+  color: #22C55E;
 }
 
 .aw-brand:hover .aw-brand-mark {
@@ -617,7 +617,7 @@ html {
 }
 
 .aw-brand-wordmark>span {
-  color: #b79aff;
+  color: #6EE7A0;
 }
 
 .aw-brand:hover {
@@ -748,8 +748,8 @@ html {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.75rem;
-  background: rgba(124, 77, 255, 0.12);
-  color: #b79aff;
+  background: rgba(34, 197, 94, 0.12);
+  color: #6EE7A0;
   font-size: 1rem;
 }
 
@@ -847,14 +847,14 @@ html {
 }
 
 .aw-nav-cta-sandbox {
-  background: linear-gradient(135deg, #7c4dff 0%, #9a6bff 100%);
+  background: linear-gradient(135deg, #22C55E 0%, #9a6bff 100%);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .aw-nav-cta-sandbox:hover {
   color: #fff;
-  box-shadow: 0 0 22px rgba(124, 77, 255, 0.55), 0 10px 28px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 22px rgba(34, 197, 94, 0.55), 0 10px 28px rgba(255, 255, 255, 0.1);
 }
 
 .aw-nav-cta:not(.aw-nav-cta-sandbox):not(.aw-nav-cta-license):not(.aw-nav-cta-star):hover {

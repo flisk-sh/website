@@ -1,5 +1,6 @@
 ---
 title: Public claims registry - Flisk CLI
+description: "The public claims registry for Flisk CLI: each number on this site, the evidence behind it and its limits, kept in the Flisk repository."
 layout: default
 ---
 
@@ -24,7 +25,7 @@ layout: default
 
         <h2 id="benchmark-panel">Homepage benchmark panel</h2>
 
-        <p>The chart panel in the homepage hero shows single benchmark runs copied from result files in the Flisk CLI repository. They are not comparable with the 100-service bench above: a different machine and setup, and services from the <code>tdk-erp-system</code> example repository (tiny services) instead of generated stubs on a clean CI runner. Not an ERP.</p>
+        <p>The chart panel in the homepage hero shows single benchmark runs copied from result files in the Flisk CLI repository. They are not comparable with the 100-service bench above: a different machine and setup, and services from the <code>flisk-erp-system</code> example repository (tiny services) instead of generated stubs on a clean CI runner. Not an ERP.</p>
 
         {% for b in site.data.benchmarks %}
         <h3>{{ b.tab }}: {{ b.title }}</h3>

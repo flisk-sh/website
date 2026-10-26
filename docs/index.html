@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Documentation - Flisk CLI
+description: "Flisk CLI documentation: quick start, configuration, package.json scripts, examples, AI agent skills, and running Flisk next to Helm."
 ---
 
 <div class="aw">
@@ -30,7 +31,7 @@ title: Documentation - Flisk CLI
           </a>
           <a class="aw-card" href="{{ '/docs/examples/' | relative_url }}">
             <h3>Examples &amp; Repos</h3>
-            <p>Explore tdk-example, tdk-user-management, tdk-erp-system ({{ site.data.tdk.erp_services }} services), the restaurant operations stack, and the SaaS starter.</p>
+            <p>Explore flisk-example, flisk-user-management, flisk-erp-system ({{ site.data.flisk.erp_services }} services), the restaurant operations stack, and the SaaS starter.</p>
             <span>View examples →</span>
           </a>
           <a class="aw-card" href="{{ '/docs/with-helm/' | relative_url }}">
@@ -67,19 +68,22 @@ title: Documentation - Flisk CLI
           <div class="aw-card"><h4>Auto-generation</h4><p>Docker + Tilt files for the local development loop.</p></div>
           <div class="aw-card"><h4>Golden images</h4><p>Production-ready Docker layering, L1 through L4.</p></div>
           <div class="aw-card"><h4>Auto-discovery</h4><p>Finds services in your directory structure automatically.</p></div>
-          <div class="aw-card"><h4>Built on Tilt</h4><p>{{ site.data.tdk.tilt_stars }} GitHub stars. Battle-tested stability.</p></div>
+          <div class="aw-card"><h4>Built on Tilt</h4><p>{{ site.data.flisk.tilt_stars }} GitHub stars. Battle-tested stability.</p></div>
         </div>
       </div>
     </div>
   </section>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
+// Runs after the deferred GSAP scripts have loaded.
+document.addEventListener('DOMContentLoaded', function () {
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
   gsap.from('.aw-docs-body h1, .aw-docs-body .aw-lead', { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', delay: 0.1 });
   gsap.from('.aw-doc-cards .aw-card', { y: 40, opacity: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out', delay: 0.3 });
 }
+});
 </script>

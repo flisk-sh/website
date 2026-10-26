@@ -16,21 +16,31 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | relative_url }}" />
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon-32x32.png' | relative_url }}" />
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ '/favicon-16x16.png' | relative_url }}" />
+  <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="16x16 32x32 48x48" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ '/apple-touch-icon.png' | relative_url }}" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ '/sitemap.xml' | absolute_url }}" />
   
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <!-- Bootstrap 5.3.2 CSS, trimmed to the classes the site uses and served from this origin. Regenerate with scripts/purge-bootstrap.sh after adding Bootstrap classes. -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap.purged.min.css?v={{ site.time | date: '%s' }}" />
   
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
-  
-  <!-- Google Fonts -->
+  <!-- Bootstrap Icons and web fonts load without blocking the first paint (media=print swap); fonts use display=swap -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet" />
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" media="print" onload="this.media='all'" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet" />
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+  </noscript>
   
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css?v={{ site.time | date: '%s' }}" />
@@ -86,11 +96,45 @@
       }
     </script>
   {% else %}
-    {% assign social_image_url = site.url | append: site.baseurl | append: '/assets/images/tdk-social-card.png' %}
+    {% assign social_image_url = site.url | append: site.baseurl | append: '/assets/images/flisk-social-card.png' %}
     {% assign canonical_url = page.url | absolute_url %}
     {% assign page_title = page.title | default: site.title %}
     {% assign page_description = page.description | default: site.description | strip_newlines | strip %}
-    {% seo %}
+    <title>{{ page_title }}</title>
+    {% seo title=false %}
+    {% if page.url == '/' %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": {{ site.url | append: site.baseurl | append: '/#organization' | jsonify }},
+            "name": "Flisk",
+            "url": {{ site.url | append: site.baseurl | append: '/' | jsonify }},
+            "email": {{ site.email | jsonify }},
+            "logo": {{ social_image_url | jsonify }},
+            "sameAs": ["https://github.com/flisk-sh/flisk", "https://www.npmjs.com/package/@flisk-sh/flisk"]
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": {{ site.url | append: site.baseurl | append: '/#software' | jsonify }},
+            "name": "Flisk CLI",
+            "description": {{ page_description | jsonify }},
+            "url": {{ site.url | append: site.baseurl | append: '/' | jsonify }},
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "macOS, Linux, Windows (WSL2)",
+            "license": "https://opensource.org/licenses/MIT",
+            "downloadUrl": "https://www.npmjs.com/package/@flisk-sh/flisk",
+            "codeRepository": "https://github.com/flisk-sh/flisk",
+            "image": {{ social_image_url | jsonify }},
+            "publisher": { "@id": {{ site.url | append: site.baseurl | append: '/#organization' | jsonify }} },
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          }
+        ]
+      }
+    </script>
+    {% endif %}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="{{ site.title | escape }}" />
     <meta property="og:title" content="{{ page_title | escape }}" />
@@ -107,7 +151,7 @@
     <meta name="twitter:image" content="{{ social_image_url }}" />
   {% endif %}
   
-  <meta name="theme-color" content="#7c4dff" />
+  <meta name="theme-color" content="#22C55E" />
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -120,8 +164,6 @@
 
   {% include footer.html %}
 
-  <!-- Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   
   <!-- Custom scripts -->
   <script src="{{ site.baseurl }}/assets/js/main.js?v={{ site.time | date: '%s' }}"></script>
