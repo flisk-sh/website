@@ -89,7 +89,8 @@ function initNavigation() {
 // Copy code blocks
 function addCopyButtons() {
   document.querySelectorAll('pre').forEach(pre => {
-    if (pre.querySelector('.copy-code-button')) return;
+    // Explorer excerpts are partial files; the panel links to the whole file instead.
+    if (pre.querySelector('.copy-code-button') || pre.closest('[data-gen]')) return;
     const button = document.createElement('button');
     button.className = 'btn btn-sm btn-outline-light copy-code-button';
     button.style.cssText = 'position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.25rem 0.75rem; font-size: 0.75rem;';
@@ -260,12 +261,165 @@ function initBenchTabs() {
   }
 }
 
+// Small per-language tinting for the explorer; text is escaped before any markup is added.
+const GEN_TOKENS = {
+  json: /("(?:[^"\\]|\\.)*")(\s*:)?|(-?\b\d+(?:\.\d+)?\b)/g,
+  yaml: /(^\s*(?:-\s+)?)([\w.$-]+)(\s*:)|("(?:[^"\\]|\\.)*"|'[^']*')|(\b\d+(?:\.\d+)?[A-Za-z]*\b)/g,
+  ts: /\b(import|from|export|default|const|true|false)\b|('(?:[^'\\]|\\.)*')|(\b\d+(?:\.\d+)?\b)|([\w$]+)(?=:)/g,
+  dockerfile: /^(\s*)([A-Z]+)\b|\b(AS)\b|("(?:[^"\\]|\\.)*")/g,
+};
+
+function tintGeneratedLine(text, lang) {
+  const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const span = (cls, s) => `<span class="${cls}">${esc(s)}</span>`;
+  const trimmed = text.trimStart();
+  if (/^(#|\/\/)/.test(trimmed)) return span('t-c', text);
+  const re = GEN_TOKENS[lang];
+  if (!re) return esc(text);
+  let out = '';
+  let last = 0;
+  re.lastIndex = 0;
+  for (let m = re.exec(text); m; m = re.exec(text)) {
+    if (!m[0]) { re.lastIndex += 1; continue; }
+    out += esc(text.slice(last, m.index));
+    if (lang === 'json') out += m[2] ? span('t-k', m[1]) + esc(m[2]) : m[1] ? span('t-s', m[1]) : span('t-n', m[3]);
+    if (lang === 'yaml') out += m[2] ? esc(m[1]) + span('t-k', m[2]) + esc(m[3]) : m[4] ? span('t-s', m[4]) : span('t-n', m[5]);
+    if (lang === 'ts') out += m[1] ? span('t-i', m[1]) : m[2] ? span('t-s', m[2]) : m[3] ? span('t-n', m[3]) : span('t-k', m[4]);
+    if (lang === 'dockerfile') out += m[2] ? esc(m[1]) + span('t-i', m[2]) : m[3] ? span('t-i', m[3]) : span('t-s', m[4]);
+    last = m.index + m[0].length;
+  }
+  return out + esc(text.slice(last));
+}
+
+// Homepage generated-files explorer: tabs, file tree, and number keys share one selection;
+// annotated line ranges show their note beside the cursor.
+function initGeneratedExplorer() {
+  const root = document.querySelector('[data-gen]');
+  if (!root) return;
+  const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
+  const files = Array.from(root.querySelectorAll('[data-gen-target]'));
+
+  root.querySelectorAll('.aw-gen-code').forEach((code) => {
+    code.querySelectorAll('.aw-gen-line code').forEach((line) => {
+      line.innerHTML = tintGeneratedLine(line.textContent, code.dataset.lang);
+    });
+    // Keep callouts inside the visible part of a horizontally scrolled file.
+    code.addEventListener('scroll', () => code.style.setProperty('--tip-x', `${code.scrollLeft}px`), { passive: true });
+  });
+
+  root.querySelectorAll('.aw-gen-block').forEach((block) => {
+    const tip = block.querySelector('.aw-gen-tip');
+    block.addEventListener('mousemove', (event) => {
+      const box = block.getBoundingClientRect();
+      const y = Math.min(Math.max(event.clientY - box.top + 18, 0), Math.max(box.height - 8, 0));
+      tip.style.setProperty('--tip-y', `${y}px`);
+    });
+    block.addEventListener('mouseleave', () => tip.style.removeProperty('--tip-y'));
+  });
+
+  const select = (tab) => {
+    const id = tab.getAttribute('aria-controls').replace('aw-gen-', '');
+    tabs.forEach((t) => {
+      const active = t === tab;
+      t.classList.toggle('is-active', active);
+      t.setAttribute('aria-selected', String(active));
+      t.tabIndex = active ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !active;
+    });
+    root.querySelectorAll('[data-gen-desc]').forEach((d) => { d.hidden = d.dataset.genDesc !== id; });
+
+    // Open the folders on the active file's path; the nearest one is filled.
+    const file = files.find((f) => f.dataset.genTarget === id);
+    files.forEach((f) => f.classList.toggle('is-active', f === file));
+    root.querySelectorAll('[data-gen-dir]').forEach((dir) => {
+      dir.classList.toggle('is-open', dir.contains(file));
+      dir.classList.remove('is-current');
+    });
+    if (file) file.closest('[data-gen-dir]').classList.add('is-current');
+
+    // Keep the active tab visible when the tab strip scrolls on narrow screens.
+    const strip = tab.parentElement;
+    if (strip.scrollWidth > strip.clientWidth) {
+      const offset = tab.getBoundingClientRect().left - strip.getBoundingClientRect().left;
+      strip.scrollTo({ left: strip.scrollLeft + offset - (strip.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' });
+    }
+  };
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const next = tabs[(i + step + tabs.length) % tabs.length];
+      next.focus();
+      select(next);
+    });
+  });
+
+  files.forEach((file) => file.addEventListener('click', () => {
+    select(document.getElementById(`aw-gen-tab-${file.dataset.genTarget}`));
+  }));
+
+  // Number keys switch files while the explorer is on screen and nothing editable has focus.
+  let onScreen = false;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      onScreen = entries.some((e) => e.isIntersecting);
+    }, { threshold: 0.3 }).observe(root);
+  }
+  document.addEventListener('keydown', (event) => {
+    if (!onScreen || event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+    const tab = tabs[Number(event.key) - 1];
+    if (tab) select(tab);
+  });
+
+  select(tabs[0]);
+}
+
+// Homepage section index: slides in once the hero is gone, marks the section in view,
+// and jumps on its letter key when nothing editable has focus.
+function initSectionIndex() {
+  const bar = document.querySelector('[data-aw-index]');
+  const hero = document.querySelector('.aw-hero');
+  if (!bar || !hero || !('IntersectionObserver' in window)) return;
+  const links = Array.from(bar.querySelectorAll('[data-index-key]'));
+  const targets = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+  new IntersectionObserver(([entry]) => {
+    const on = !entry.isIntersecting;
+    bar.classList.toggle('is-on', on);
+    document.body.classList.toggle('aw-index-on', on);
+  }).observe(hero);
+
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      links.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === `#${entry.target.id}`));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  targets.forEach((t) => spy.observe(t));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+    if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+    const link = links.find((a) => a.dataset.indexKey === event.key.toUpperCase());
+    if (!link) return;
+    event.preventDefault();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+  });
+}
+
 function initializeSite() {
   initNavigation();
   addCopyButtons();
   initInstallCopy();
   initInstallMethods();
   initBenchTabs();
+  initGeneratedExplorer();
+  initSectionIndex();
 }
 
 if (document.readyState === 'loading') {

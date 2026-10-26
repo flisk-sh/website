@@ -385,6 +385,361 @@ body { background: #0a0a0e; overflow-x: hidden; }
 .aw-bench-tab:last-child { border-right: 0; }
 .aw-bench-tab:hover { color: #ececf1; }
 .aw-bench-tab.is-active { color: #fff; background: rgba(255, 255, 255, 0.06); box-shadow: inset 0 -2px #b79aff; }
+/* ---------------- Section index bar ---------------- */
+.aw-index {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  background: #7c4dff;
+  transform: translateY(-100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.aw-index.is-on { transform: none; }
+body.aw-index-on .aw-nav { top: -6rem; }
+
+.aw-index-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.aw-index-links::-webkit-scrollbar { display: none; }
+
+.aw-index-links a {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 1.05rem 0.85rem;
+  color: rgba(255, 255, 255, 0.82);
+  font: 500 0.82rem 'JetBrains Mono', monospace;
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.aw-index-links a:hover,
+.aw-index-links a.is-active { color: #fff; background: rgba(10, 10, 14, 0.18); }
+
+.aw-index-links kbd {
+  padding: 0.08rem 0.34rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 0.2rem;
+  background: none;
+  color: inherit;
+  font: 500 0.64rem 'JetBrains Mono', monospace;
+  box-shadow: none;
+}
+
+.aw-index-links a.is-active kbd { background: #fff; color: #7c4dff; border-color: #fff; }
+
+.aw-index-cta {
+  flex: none;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #0a0a0e;
+  font: 600 0.78rem 'Satoshi', 'Outfit', sans-serif;
+  text-decoration: none;
+}
+
+.aw-index a:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+
+@media (max-width: 768px) {
+  .aw-index { padding: 0 0.5rem; }
+  .aw-index-links { justify-content: flex-start; }
+  .aw-index-links kbd { display: none; }
+  .aw-index-cta { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aw-index { transition: none; }
+}
+
+/* ---------------- Generated files explorer (annotated, hover to explain) ---------------- */
+.aw-head .aw-gen-kicker {
+  margin: 0 0 1.25rem;
+  font: 500 0.78rem 'JetBrains Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ececf1;
+}
+
+.aw-head .aw-gen-kicker span { color: rgba(236, 236, 241, 0.4); }
+
+.aw-gen-frame {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1.2rem;
+  background: #0d0d13;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.05), 0 28px 90px rgba(0, 0, 0, 0.34);
+  overflow: hidden;
+}
+
+.aw-gen-tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.aw-gen-tabs::-webkit-scrollbar { display: none; }
+
+.aw-gen-tab {
+  flex: 1 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 1.05rem 1.4rem;
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+  background: none;
+  color: rgba(236, 236, 241, 0.6);
+  font: 500 0.74rem 'JetBrains Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.aw-gen-tab:last-child { border-right: 0; }
+.aw-gen-tab:hover { color: #fff; background: rgba(255, 255, 255, 0.04); }
+.aw-gen-tab.is-active { color: #fff; background: #7c4dff; }
+
+.aw-gen-tab kbd {
+  padding: 0.1rem 0.36rem;
+  border: 1px solid currentColor;
+  border-radius: 0.25rem;
+  background: none;
+  color: inherit;
+  opacity: 0.55;
+  font: 500 0.64rem 'JetBrains Mono', monospace;
+  box-shadow: none;
+}
+
+.aw-gen-tab.is-active kbd { opacity: 0.9; }
+
+.aw-gen-desc {
+  margin: 0;
+  padding: 1.6rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  color: rgba(236, 236, 241, 0.62);
+  font: 400 0.9rem/1.7 'JetBrains Mono', monospace;
+  padding-right: max(2rem, calc(100% - 62rem));
+}
+
+.aw-gen-fig {
+  margin: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #0a0a0e;
+}
+
+.aw-gen-fig-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  color: rgba(236, 236, 241, 0.4);
+  font: 400 0.72rem 'JetBrains Mono', monospace;
+}
+
+.aw-gen-fig-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.aw-gen-fig-title::before,
+.aw-gen-fig-title::after { content: ""; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.09); }
+
+.aw-gen-fig-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.75rem;
+}
+
+.aw-gen-grid {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 2fr);
+  min-height: 36rem;
+}
+
+/* File tree */
+.aw-gen-tree {
+  padding: 1rem 0.75rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+  font: 400 0.78rem 'JetBrains Mono', monospace;
+}
+
+.aw-gen-tree ul { list-style: none; margin: 0; padding: 0; }
+.aw-gen-tree ul ul { padding-left: 1.1rem; }
+.aw-gen-dir:not(.is-open) > ul { display: none; }
+
+.aw-gen-node {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid transparent;
+  background: none;
+  color: rgba(236, 236, 241, 0.72);
+  font: inherit;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.aw-gen-node i { flex: none; color: rgba(236, 236, 241, 0.45); }
+.aw-gen-node.is-muted { color: rgba(236, 236, 241, 0.3); }
+.aw-gen-node.is-muted i { color: inherit; }
+.aw-gen-dir.is-open > .aw-gen-node { color: rgba(236, 236, 241, 0.5); }
+.aw-gen-dir.is-current > .aw-gen-node { color: #fff; background: #7c4dff; }
+.aw-gen-dir.is-current > .aw-gen-node i { color: #fff; }
+
+button.aw-gen-node { cursor: pointer; transition: background 160ms ease, color 160ms ease; }
+button.aw-gen-node:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+button.aw-gen-node.is-active { color: #fff; background: rgba(124, 77, 255, 0.16); border-color: rgba(183, 154, 255, 0.55); }
+button.aw-gen-node.is-active i { color: #b79aff; }
+
+/* File panel */
+.aw-gen-panels { display: grid; min-width: 0; }
+.aw-gen-panel { grid-area: 1 / 1; display: flex; flex-direction: column; min-width: 0; }
+.aw-gen-panel[hidden] { display: none !important; }
+
+.aw-gen-file {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  color: #ececf1;
+  font: 500 0.72rem 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.aw-gen-file > span { overflow-wrap: anywhere; }
+.aw-gen-file a { flex: none; color: rgba(236, 236, 241, 0.55); text-decoration: none; }
+.aw-gen-file a:hover { color: #b79aff; }
+
+.aw-gen-code {
+  position: relative;
+  flex: 1;
+  max-height: 36rem;
+  overflow: auto;
+  padding: 1rem 0 1.5rem;
+  font: 400 0.8rem/1.85 'JetBrains Mono', monospace;
+  color: #ececf1;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.aw-gen-line { display: flex; width: max-content; min-width: 100%; }
+.aw-gen-ln {
+  position: sticky;
+  left: 0;
+  flex: none;
+  width: 3.4rem;
+  padding-right: 1.1rem;
+  text-align: right;
+  color: rgba(236, 236, 241, 0.28);
+  background: #0a0a0e;
+  user-select: none;
+}
+
+.aw-gen-line code {
+  padding: 0 1.5rem 0 0.9rem;
+  color: inherit;
+  background: none;
+  font: inherit;
+  white-space: pre;
+}
+
+/* Annotated line ranges: thin rule at rest, tinted with a callout on hover or focus */
+.aw-gen-block {
+  position: relative;
+  width: max-content;
+  min-width: 100%;
+  box-shadow: inset 2px 0 rgba(124, 77, 255, 0.55);
+  outline: none;
+  cursor: help;
+  transition: background 140ms ease, box-shadow 140ms ease;
+}
+
+.aw-gen-block .aw-gen-ln { box-shadow: inset 2px 0 rgba(124, 77, 255, 0.55); transition: inherit; }
+.aw-gen-block:hover,
+.aw-gen-block:focus-visible { background: rgba(124, 77, 255, 0.13); }
+.aw-gen-block:hover .aw-gen-ln,
+.aw-gen-block:focus-visible .aw-gen-ln { background: #15111f; box-shadow: inset 3px 0 #7c4dff; color: #b79aff; }
+
+.aw-gen-tip {
+  position: absolute;
+  z-index: 2;
+  top: var(--tip-y, 0.25rem);
+  left: calc(var(--tip-x, 0px) + 4.5rem);
+  width: min(24rem, calc(100% - 6rem));
+  padding: 0.9rem 1.05rem;
+  background: #7c4dff;
+  color: #fff;
+  font: 400 0.78rem/1.6 'JetBrains Mono', monospace;
+  white-space: normal;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.aw-gen-block:hover .aw-gen-tip,
+.aw-gen-block:focus-visible .aw-gen-tip { opacity: 1; transform: none; }
+
+/* Syntax tint, per DESIGN.md: green keys, blue strings, sky numbers, grey comments */
+.aw-gen-code .t-c { color: rgba(236, 236, 241, 0.36); }
+.aw-gen-code .t-k { color: #7ee787; }
+.aw-gen-code .t-s { color: #a5d6ff; }
+.aw-gen-code .t-n { color: #79c0ff; }
+.aw-gen-code .t-i { color: #b79aff; }
+
+.aw-gen-tab:focus-visible,
+button.aw-gen-node:focus-visible,
+.aw-gen-file a:focus-visible { outline: 2px solid #4dd0ff; outline-offset: -2px; }
+
+@media (max-width: 960px) {
+  .aw-gen-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .aw-gen-tree { display: none; }
+  .aw-gen-fig { margin: 1rem; }
+  .aw-gen-desc { padding: 1.2rem 1.25rem; font-size: 0.82rem; }
+}
+
+@media (max-width: 768px) {
+  .aw-gen-fig { margin: 0; border: 0; }
+  .aw-gen-fig-bar { display: none; }
+  .aw-gen-tab { padding: 0.9rem 1rem; }
+  .aw-gen-tab kbd { display: none; }
+  .aw-gen-code { font-size: 0.74rem; max-height: 28rem; }
+  .aw-gen-tip { width: calc(100% - 5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aw-gen-block, .aw-gen-tip, .aw-gen-tab, button.aw-gen-node { transition: none; }
+}
+
 .aw-bench-tab:focus-visible,
 .aw-bench-replay:focus-visible,
 .aw-bench-foot a:focus-visible { outline: 2px solid #4dd0ff; outline-offset: -2px; }
@@ -2400,6 +2755,18 @@ body { background: #0a0a0e; overflow-x: hidden; }
 
 <div class="aw">
 
+  <!-- ================= SECTION INDEX (appears after the hero; letter keys jump) ================= -->
+  <nav class="aw-index" aria-label="Page sections" data-aw-index>
+    <div class="aw-index-links">
+      {%- assign index_items = "S|source|Generate,D|demo|Demo,H|how-it-works|How it works,G|generated|Files,R|replaces|Replaces,F|faq|FAQ,P|pricing|Pricing" | split: "," %}
+      {%- for item in index_items %}
+      {%- assign part = item | split: "|" %}
+      <a href="#{{ part[1] }}" data-index-key="{{ part[0] }}" aria-keyshortcuts="{{ part[0] }}"><kbd aria-hidden="true">{{ part[0] }}</kbd>{{ part[2] }}</a>
+      {%- endfor %}
+    </div>
+    <a class="aw-index-cta" href="{{ '/docs/quickstart/' | relative_url }}">Quickstart</a>
+  </nav>
+
   <!-- ================= HERO — Cinematic Center ================= -->
   <section class="aw-hero" id="top">
     <div class="aw-hero-bg"></div>
@@ -3518,6 +3885,88 @@ body { background: #0a0a0e; overflow-x: hidden; }
   </section>
 
 
+  <!-- ================= GENERATED FILES EXPLORER ================= -->
+  {%- assign gen = site.data.explorer %}
+  <section class="aw-section aw-gen" id="generated" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <p class="aw-gen-kicker"># generated <span>[from service.json]</span></p>
+        <h2>Your local stack, generated from one file.</h2>
+        <p>One real service from the restaurant example. Pick a file, then hover the marked lines to see why each part is there.</p>
+      </div>
+
+      <div class="aw-gen-frame" data-gen>
+        <div class="aw-gen-tabs" role="tablist" aria-label="Generated file">
+          {%- for t in gen.tabs %}
+          <button type="button" role="tab" class="aw-gen-tab{% if forloop.first %} is-active{% endif %}" id="aw-gen-tab-{{ t.id }}" aria-controls="aw-gen-{{ t.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-keyshortcuts="{{ forloop.index }}"{% unless forloop.first %} tabindex="-1"{% endunless %}><kbd aria-hidden="true">{{ forloop.index }}</kbd>{{ t.tab }}</button>
+          {%- endfor %}
+        </div>
+
+        <div class="aw-gen-descs">
+          {%- for t in gen.tabs %}
+          <p class="aw-gen-desc" data-gen-desc="{{ t.id }}"{% unless forloop.first %} hidden{% endunless %}>{{ t.desc }}</p>
+          {%- endfor %}
+        </div>
+
+        <figure class="aw-gen-fig">
+          <figcaption class="aw-gen-fig-bar">
+            <span class="aw-gen-fig-icon" aria-hidden="true"><i class="bi bi-code"></i></span>
+            <span class="aw-gen-fig-title">[ fig. 1 · generated service files ]</span>
+            <span class="aw-gen-fig-icon" aria-hidden="true"><i class="bi bi-grid-3x3"></i></span>
+          </figcaption>
+
+          <div class="aw-gen-grid">
+            <nav class="aw-gen-tree" aria-label="Files in the example service">
+              <ul>
+                <li class="aw-gen-dir" data-gen-dir>
+                  <span class="aw-gen-node"><i class="bi bi-folder2" aria-hidden="true"></i>.autogenerated/</span>
+                  <ul>
+                    <li><button type="button" class="aw-gen-node" data-gen-target="compose"><i class="bi bi-file-earmark-code" aria-hidden="true"></i>docker-compose.app.autogenerated.yml</button></li>
+                  </ul>
+                </li>
+                <li class="aw-gen-dir" data-gen-dir>
+                  <span class="aw-gen-node"><i class="bi bi-folder2" aria-hidden="true"></i>reservation-api/</span>
+                  <ul>
+                    <li class="aw-gen-dir" data-gen-dir>
+                      <span class="aw-gen-node"><i class="bi bi-folder2" aria-hidden="true"></i>.autogenerated/</span>
+                      <ul>
+                        {%- for f in gen.api_generated %}
+                        {%- assign hit = gen.tabs | where: "file", f | first %}
+                        <li>{% if hit %}<button type="button" class="aw-gen-node" data-gen-target="{{ hit.id }}"><i class="bi bi-file-earmark-code" aria-hidden="true"></i>{{ f }}</button>{% else %}<span class="aw-gen-node is-muted"><i class="bi bi-file-earmark" aria-hidden="true"></i>{{ f }}</span>{% endif %}</li>
+                        {%- endfor %}
+                      </ul>
+                    </li>
+                    <li><span class="aw-gen-node is-muted"><i class="bi bi-folder2" aria-hidden="true"></i>src/</span></li>
+                    <li><button type="button" class="aw-gen-node" data-gen-target="manifest"><i class="bi bi-file-earmark-text" aria-hidden="true"></i>service.json</button></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+
+            <div class="aw-gen-panels">
+            {%- for t in gen.tabs %}
+            <div class="aw-gen-panel" role="tabpanel" id="aw-gen-{{ t.id }}" aria-labelledby="aw-gen-tab-{{ t.id }}"{% unless forloop.first %} hidden{% endunless %}>
+              <div class="aw-gen-file">
+                <span>{{ t.path | remove_first: "services/guest/" }}</span>
+                <a href="{{ gen.repo }}/blob/main/{{ t.path }}" target="_blank" rel="noopener">{{ t.lang }} <span aria-hidden="true">↗</span><span class="visually-hidden"> (open the whole file on GitHub)</span></a>
+              </div>
+              <div class="aw-gen-code" data-lang="{{ t.lang }}">
+                {%- for l in t.lines %}
+                {%- assign n = forloop.index %}
+                {%- for note in t.notes %}{% if note.from == n %}<div class="aw-gen-block" tabindex="0" aria-describedby="aw-gen-{{ t.id }}-note-{{ forloop.index }}">{% endif %}{% endfor -%}
+                <span class="aw-gen-line"><span class="aw-gen-ln" aria-hidden="true">{{ n }}</span><code>{{ l | escape }}</code></span>
+                {%- for note in t.notes %}{% if note.to == n %}<span class="aw-gen-tip" role="note" id="aw-gen-{{ t.id }}-note-{{ forloop.index }}">{{ note.text }}</span></div>{% endif %}{% endfor %}
+                {%- endfor %}
+              </div>
+            </div>
+            {%- endfor %}
+            </div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= SCRUB STATEMENT ================= -->
   <section class="aw-section aw-statement" id="statement" style="padding-top: 0;">
     <div class="aw-wrap">
@@ -3626,7 +4075,7 @@ body { background: #0a0a0e; overflow-x: hidden; }
   </section>
 
   <!-- ================= FAQ — Horizontal Accordion ================= -->
-  <section class="aw-section" style="padding-top: 0;">
+  <section class="aw-section" id="faq" style="padding-top: 0;">
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>Honest answers</h2>
