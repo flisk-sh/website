@@ -208,8 +208,8 @@ brownfield_artifacts: "372-527" # brownfield_dirs multiplied by the current 12-1
 brownfield_healthy: "31/31" # resources healthy in that example
 
 # --- Agents (/agents/) ---
-mcp_tools: 19              # tools registered by `flisk mcp`: the `name:` entries in flisk-sh/flisk cli/src/mcp/tools.ts
-mcp_tools_more: 12         # mcp_tools minus the 7 tools shown on their own cards on /agents/
+mcp_tools: 21              # tools registered by `flisk mcp`: the `name:` entries in flisk-sh/flisk cli/src/mcp/tools.ts
+mcp_tools_more: 14         # mcp_tools minus the 7 tools shown on their own cards on /agents/
 
 # --- Installation commands ---
 install_npm: "npm install -g @flisk-sh/flisk"
