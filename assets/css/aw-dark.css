@@ -23,6 +23,25 @@ body:has(.aw) .page-content {
 
 :where(.aw) a:where(:not([class])):hover { color: #fff; text-decoration-color: #fff; }
 
+/* Standalone text link (after warp.dev): mono, uppercase, small, with an arrow. */
+.aw-textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(110, 231, 160, 0.4);
+  color: #6EE7A0;
+  font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+
+.aw-textlink:visited { color: #6EE7A0; }
+.aw-textlink:hover { color: #fff; border-color: #fff; }
+.aw-textlink:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 3px; }
+
 
 /* ---------------- No-lock-in page primitives ---------------- */
 .aw-hero {
