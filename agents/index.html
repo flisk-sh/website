@@ -1,0 +1,451 @@
+---
+layout: default
+title: Flisk for AI agents - Flisk CLI
+description: "Give Claude Code, Cursor or Codex the Flisk runtime: the flisk mcp server and the Flisk skills, so your agent can scaffold, start, check and fix a full local stack on your laptop. Free, MIT core, no account."
+---
+
+<style>
+/* Inline code on this dark page (the global code style is a light chip). */
+.ag-page :not(pre) > code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.875em;
+  background: rgba(34, 197, 94, 0.12);
+  color: #86EFAC;
+  padding: 0.1em 0.4em;
+  border-radius: 0.375rem;
+}
+.ag-page .ag-flow code { background: none; padding: 0; color: #6EE7A0; }
+.ag-hero { padding-bottom: clamp(4rem, 7vw, 6rem); }
+.ag-hero-grid {
+  width: min(80rem, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.ag-hero .aw-subhero-sub { margin-top: 1.5rem; max-width: 34rem; }
+.ag-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.25rem; }
+.ag-facts {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
+  margin: 1.75rem 0 0; padding: 0; list-style: none;
+  font: 400 0.8rem 'JetBrains Mono', ui-monospace, monospace;
+  color: rgba(236, 236, 241, 0.72);
+}
+.ag-facts li::before { content: "> "; color: #22C55E; }
+
+/* Host tabs: same look as the quickstart install tabs, with a readable inactive state */
+.ag-tabs .aw-install-tabs-bar { flex-wrap: wrap; }
+.ag-tabs .aw-install-tab { color: rgba(236, 236, 241, 0.72); }
+.ag-tabs .aw-install-tab:focus-visible { outline: 2px solid #4dd0ff; outline-offset: -2px; }
+.ag-tabs .aw-install-tab[aria-selected="true"] {
+  color: #4dd0ff;
+  border-bottom-color: #4dd0ff;
+  background: rgba(77, 208, 255, 0.06);
+}
+.ag-tabs .aw-codeblock { border-top-left-radius: 0; border-top-right-radius: 0; }
+.ag-page .aw-codeblock pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.ag-tabs .aw-codeblock .c { color: #8b949e; }
+.ag-tab-note {
+  margin: 0; padding: 0 1.5rem 1.25rem;
+  font-size: 0.85rem; line-height: 1.55; color: rgba(236, 236, 241, 0.72);
+}
+
+.ag-tool {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
+  color: #6EE7A0;
+}
+.ag-more-list {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin: 1rem 0 0; padding: 0; list-style: none;
+}
+.ag-more-list li {
+  font: 400 0.72rem 'JetBrains Mono', ui-monospace, monospace;
+  color: rgba(236, 236, 241, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 100px;
+  padding: 0.2rem 0.6rem;
+}
+
+.ag-steps {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 1rem;
+  margin: 0; padding: 0; list-style: none;
+  counter-reset: ag-step;
+}
+.ag-step {
+  border-top: 1px solid rgba(110, 231, 160, 0.35);
+  padding-top: 1.5rem;
+}
+.ag-step-n {
+  display: block; margin-bottom: 1rem;
+  font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
+  color: rgba(110, 231, 160, 0.85);
+}
+.ag-step h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.015em; color: #fff; margin: 0 0 0.6rem; }
+.ag-step p { color: rgba(236, 236, 241, 0.72); font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+.ag-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.ag-split .aw-head { margin-bottom: 0; }
+.ag-flow { margin: 0; padding: 0; list-style: none; }
+.ag-flow li {
+  display: grid;
+  grid-template-columns: 10.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(236, 236, 241, 0.75);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.ag-flow li:last-child { border-bottom: 0; }
+.ag-flow code { font-size: 0.8rem; }
+.ag-caption { margin: 1.25rem 0 0; font-size: 0.85rem; color: rgba(236, 236, 241, 0.65); }
+
+.ag-not { margin: 0; padding: 0; list-style: none; }
+.ag-not li {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.ag-not li:first-child { padding-top: 0; }
+.ag-not h3 { font-size: 1.2rem; font-weight: 600; color: #fff; margin: 0 0 0.4rem; }
+.ag-not h3 span { color: #F0ABFC; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.85em; margin-right: 0.5rem; }
+.ag-not p { margin: 0; color: rgba(236, 236, 241, 0.72); font-size: 0.95rem; line-height: 1.6; }
+
+.ag-band-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+
+/* FAQ list: same as the homepage FAQ (index.html keeps these rules inline) */
+.aw-faq-list { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.aw-faq-item { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.aw-faq-item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.15rem 0.25rem;
+  color: #ececf1;
+  font: 400 0.95rem 'JetBrains Mono', monospace;
+  list-style: none;
+  cursor: pointer;
+  transition: color 140ms ease;
+}
+.aw-faq-item summary::-webkit-details-marker { display: none; }
+.aw-faq-item summary:hover { color: #fff; }
+.aw-faq-q { display: flex; gap: 0.75rem; }
+.aw-faq-caret { color: #22C55E; }
+.aw-faq-sign { flex: none; color: rgba(236, 236, 241, 0.55); font: 400 0.85rem 'JetBrains Mono', monospace; }
+.aw-faq-sign::before { content: "[+]"; }
+.aw-faq-item[open] .aw-faq-sign::before { content: "[\2212]"; color: #6EE7A0; }
+.aw-faq-a {
+  max-width: 52rem;
+  padding: 0 0.25rem 1.4rem 1.85rem;
+  color: rgba(236, 236, 241, 0.72);
+  font: 400 0.85rem/1.75 'JetBrains Mono', monospace;
+}
+.aw-faq-item summary:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 2px; }
+@media (max-width: 768px) {
+  .aw-faq-item summary { font-size: 0.85rem; }
+  .aw-faq-a { padding-left: 0.25rem; font-size: 0.8rem; }
+}
+
+@media (max-width: 1000px) {
+  .ag-hero-grid, .ag-split { grid-template-columns: minmax(0, 1fr); }
+  .ag-steps { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .ag-flow li { grid-template-columns: 1fr; gap: 0.25rem; }
+  .ag-ctas .aw-btn, .ag-band-ctas .aw-btn { width: 100%; }
+}
+</style>
+
+<div class="aw ag-page">
+
+  <!-- ================= HERO ================= -->
+  <section class="aw-subhero ag-hero" aria-labelledby="ag-title">
+    <div class="ag-hero-grid">
+      <div>
+        <h1 id="ag-title">Your coding agent runs the <span class="aw-accent">whole stack.</span></h1>
+        <p class="aw-subhero-sub">Connect Claude Code, Cursor or Codex to Flisk, and your agent can scaffold, start, check and fix a full local app on your laptop: <strong>web, API, database and agents, without rewriting Dockerfiles.</strong></p>
+        <div class="ag-ctas">
+          <a href="{{ '/docs/agents/' | relative_url }}" class="aw-btn aw-btn-solid">Read the agent docs</a>
+          <a href="https://github.com/flisk-sh/flisk" class="aw-btn aw-btn-ghost" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+        <ul class="ag-facts" aria-label="At a glance">
+          <li>free, MIT core</li>
+          <li>runs on your machine</li>
+          <li>no account</li>
+          <li>{{ site.data.flisk.mcp_tools }} MCP tools</li>
+        </ul>
+      </div>
+
+      <!--
+        TODO(flisk connect): replace the per-host commands below with the one-command
+        version once feat/flisk-for-agents lands in flisk-sh/flisk (likely
+        `flisk connect <host>`, for example `flisk connect claude-code`). Confirm the exact
+        command and host names against the released CLI before changing this block, and
+        update the "How it works" step 1 and the FAQ answer about setup to match.
+        Until then these are the commands that work today, taken from flisk-sh/flisk
+        docs/agents/claude-code.md, cursor.md, codex.md and docs/agent-hosts.md.
+      -->
+      <div class="ag-tabs" id="connect">
+        <div class="aw-install-tabs-bar" role="tablist" aria-label="Choose your coding agent">
+          <button type="button" class="aw-install-tab" role="tab" id="ag-tab-claude" aria-controls="ag-panel-claude" aria-selected="true">Claude Code</button>
+          <button type="button" class="aw-install-tab" role="tab" id="ag-tab-cursor" aria-controls="ag-panel-cursor" aria-selected="false" tabindex="-1">Cursor</button>
+          <button type="button" class="aw-install-tab" role="tab" id="ag-tab-codex" aria-controls="ag-panel-codex" aria-selected="false" tabindex="-1">Codex</button>
+          <button type="button" class="aw-install-tab" role="tab" id="ag-tab-other" aria-controls="ag-panel-other" aria-selected="false" tabindex="-1">Other MCP clients</button>
+        </div>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal, in your project folder</span></div>
+
+          <div class="ag-panel" role="tabpanel" id="ag-panel-claude" aria-labelledby="ag-tab-claude" tabindex="0">
+            <pre><span class="c"># install the Flisk CLI</span>
+{{ site.data.flisk.install_npm }}
+<span class="c"># connect the flisk mcp server to Claude Code</span>
+claude mcp add --scope project flisk -- flisk mcp</pre>
+            <p class="ag-tab-note">This writes <code>.mcp.json</code>; Claude Code asks you to approve it once. <code>flisk project</code> adds the Flisk skills to <code>.claude/skills/</code>.</p>
+          </div>
+
+          <div class="ag-panel" role="tabpanel" id="ag-panel-cursor" aria-labelledby="ag-tab-cursor" tabindex="0">
+            <pre><span class="c"># install the Flisk CLI</span>
+{{ site.data.flisk.install_npm }}
+<span class="c"># then create .cursor/mcp.json in the project</span>
+{ "mcpServers": { "flisk": { "type": "stdio", "command": "flisk", "args": ["mcp"] } } }</pre>
+            <p class="ag-tab-note">Cursor has no command to add a server, so the file is the setup. It reads the <code>AGENTS.md</code> and skills that <code>flisk project</code> writes.</p>
+          </div>
+
+          <div class="ag-panel" role="tabpanel" id="ag-panel-codex" aria-labelledby="ag-tab-codex" tabindex="0">
+            <pre><span class="c"># install the Flisk CLI</span>
+{{ site.data.flisk.install_npm }}
+<span class="c"># connect the flisk mcp server to Codex</span>
+codex mcp add flisk -- flisk mcp</pre>
+            <p class="ag-tab-note">Codex reads the <code>AGENTS.md</code> and the skills in <code>.agents/skills/</code> that <code>flisk project</code> writes.</p>
+          </div>
+
+          <div class="ag-panel" role="tabpanel" id="ag-panel-other" aria-labelledby="ag-tab-other" tabindex="0">
+            <pre><span class="c"># install the Flisk CLI</span>
+{{ site.data.flisk.install_npm }}
+<span class="c"># add to your client's MCP config (stdio)</span>
+{ "mcpServers": { "flisk": { "command": "flisk", "args": ["mcp"] } } }</pre>
+            <p class="ag-tab-note">Any agent that can run terminal commands also works without MCP: point it at the <code>AGENTS.md</code> that Flisk writes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT YOUR AGENT CAN DO ================= -->
+  <section class="aw-section" id="tools" aria-labelledby="ag-tools-title" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2 id="ag-tools-title">What your agent can do</h2>
+        <p>Each tool runs the matching <span class="aw-mono">flisk</span> command, so it behaves exactly like the CLI you would type yourself.</p>
+      </div>
+
+      <div class="aw-feature-grid aw-grid-varied">
+        <article class="aw-card">
+          <span class="ag-tool">resource_create, project_init</span>
+          <h3>Scaffold the app</h3>
+          <p>Create a Flisk project, or clone a starter, then add services: a frontend, a backend, a worker, an MCP tool server or an agent, each with its own service.json, Dockerfile, source and a test.</p>
+        </article>
+        <article class="aw-card">
+          <span class="ag-tool">up</span>
+          <h3>Start the stack</h3>
+          <p>Start everything, one stack, or only the services a task needs plus what they depend on.</p>
+        </article>
+        <article class="aw-card">
+          <span class="ag-tool">status</span>
+          <h3>See what is running</h3>
+          <p>Stacks, services, their local URLs and ports, and whether every service is ready yet.</p>
+        </article>
+        <article class="aw-card">
+          <span class="ag-tool">logs</span>
+          <h3>Read the logs</h3>
+          <p>A bounded snapshot of recent log lines, filtered by service and time, so the agent reads the error instead of guessing at it.</p>
+        </article>
+        <article class="aw-card">
+          <span class="ag-tool">doctor</span>
+          <h3>Check the machine</h3>
+          <p>Whether Docker, Tilt and ports are ready before anything starts, and what to fix when they are not.</p>
+        </article>
+        <article class="aw-card">
+          <span class="ag-tool">config_verify</span>
+          <h3>Catch config drift</h3>
+          <p>Checks that every service.json is valid and the generated files still match, and lists the diffs when they do not.</p>
+        </article>
+        <article class="aw-card">
+          <span class="ag-tool">and {{ site.data.flisk.mcp_tools_more }} more</span>
+          <h3>The rest of the toolbox</h3>
+          <p>Restart one service, stop the stack, inspect agent sessions, list networks and regenerate config.</p>
+          <ul class="ag-more-list" aria-label="Other MCP tools">
+            <li>down</li><li>restart_resource</li><li>resource_list</li><li>stack_list</li><li>stack_assign</li><li>project_info</li>
+            <li>network_list</li><li>list_agents</li><li>get_agent_sessions</li><li>config_explain</li><li>config_regenerate</li><li>runtime_check</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section class="aw-section" id="how" aria-labelledby="ag-how-title" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2 id="ag-how-title">How it works</h2>
+        <p>Flisk is the runtime. Your agent is still the one writing code; it now has a reliable way to run it.</p>
+      </div>
+      <ol class="ag-steps">
+        <li class="ag-step">
+          <span class="ag-step-n" aria-hidden="true">01</span>
+          <h3>Connect your agent</h3>
+          <p>Install the CLI and add <code>flisk mcp</code> to Claude Code, Cursor or Codex. The server runs over stdio on your machine.</p>
+        </li>
+        <li class="ag-step">
+          <span class="ag-step-n" aria-hidden="true">02</span>
+          <h3>Ask for an app</h3>
+          <p>Describe what you want in plain words. The agent creates the project and its services with Flisk, and Flisk writes the skills and <code>AGENTS.md</code> that teach it the rest.</p>
+        </li>
+        <li class="ag-step">
+          <span class="ag-step-n" aria-hidden="true">03</span>
+          <h3>It runs, checks and fixes</h3>
+          <p>The agent starts the stack, polls status until it is ready, reads logs when something fails, fixes the code and checks again.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= EXAMPLE PROMPT ================= -->
+  <section class="aw-section" id="example" aria-labelledby="ag-example-title" style="padding-top: 0;">
+    <div class="aw-wrap ag-split">
+      <div class="aw-head">
+        <h2 id="ag-example-title">Try it with one prompt</h2>
+        <p>Make an empty folder, open your agent there and paste this.</p>
+      </div>
+      <div>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>prompt</span></div>
+          <pre>Build me a small online shop with a storefront and an orders API,
+and run it on my laptop with Flisk.</pre>
+        </div>
+        <ol class="ag-flow" aria-label="What the agent does next">
+          <li><code>doctor</code><span>Checks that Docker and Tilt are ready on this machine.</span></li>
+          <li><code>project_init</code><span>Creates the Flisk project and writes the skills and <span class="aw-mono">AGENTS.md</span>.</span></li>
+          <li><code>resource_create</code><span>Adds the storefront and the orders API as services.</span></li>
+          <li><code>up</code><span>Starts the stack in the background.</span></li>
+          <li><code>status</code><span>Polls until every service is ready, then gives you the local links.</span></li>
+          <li><code>logs</code><span>If a service fails, reads the error, fixes the code and starts again.</span></li>
+        </ol>
+        <p class="ag-caption">The exact steps depend on your agent and your prompt. The links point to localhost, so only you can see the shop.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT IT IS NOT ================= -->
+  <section class="aw-section" id="not" aria-labelledby="ag-not-title" style="padding-top: 0;">
+    <div class="aw-wrap ag-split">
+      <div class="aw-head">
+        <h2 id="ag-not-title">What it is not</h2>
+        <p>Flisk does one job: run your app locally while you and your agent build it.</p>
+      </div>
+      <ul class="ag-not">
+        <li>
+          <h3><span aria-hidden="true">&times;</span>Not a deploy tool</h3>
+          <p>Nothing ships to a server. Production stays on your own pipeline, for example Helm.</p>
+        </li>
+        <li>
+          <h3><span aria-hidden="true">&times;</span>Not Kubernetes</h3>
+          <p>Services run on Docker and Tilt on your laptop. There is no cluster to set up, and Flisk writes no cluster manifests.</p>
+        </li>
+        <li>
+          <h3><span aria-hidden="true">&times;</span>Not a cloud IDE</h3>
+          <p>No hosted workspace and no account. Your code, containers and data stay on your machine, inside the editor or terminal you already use.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="aw-section aw-faq" id="faq" aria-labelledby="ag-faq-title" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2 id="ag-faq-title">Questions</h2>
+      </div>
+      <div class="aw-faq-list">
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Does it cost anything, or need an account?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">No. The core CLI and the MCP server are MIT licensed and need no license key and no sign-up. Premium is an optional key for team extras.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>What does my machine need?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Docker (or Colima or Podman) and Tilt to run a full stack, and Node.js {{ site.data.flisk.prereq_node }} to install the CLI from npm. macOS, Linux and Ubuntu on WSL2 are supported. Ask your agent to run <code>doctor</code> first; it tells you what is missing.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Do I have to use MCP?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">No. Any agent that can run terminal commands can use the <code>flisk</code> CLI directly, guided by the skills and <code>AGENTS.md</code> that Flisk writes into the project. MCP gives the agent typed tools and JSON results instead of parsing terminal output.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>What can the agent change on my machine?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">The same things the <code>flisk</code> commands can: project files, local containers and the local stack. Tool arguments are checked before anything runs, and nothing is deployed. Your agent host still asks before it uses a project MCP server or runs a command, depending on its settings.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Can it run AI agents as services, too?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Yes. An <code>agent</code> resource gets health and readiness endpoints and stored sessions that survive restarts, and the MCP tools <code>list_agents</code> and <code>get_agent_sessions</code> let your coding agent inspect them.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER CTA ================= -->
+  <section class="aw-section" aria-labelledby="ag-cta-title" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-band">
+        <h2 id="ag-cta-title">Give your agent a stack it can run</h2>
+        <p>Connect Flisk to the agent you already use. Free, MIT core, on your own laptop.</p>
+        <div class="ag-band-ctas">
+          <a href="#connect" class="aw-btn aw-btn-solid">Connect your agent</a>
+          <a href="https://github.com/flisk-sh/flisk" class="aw-btn aw-btn-ghost" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// Accessible host tabs (WAI-ARIA tabs pattern). Without JavaScript every panel stays visible.
+(function () {
+  var bar = document.querySelector('.ag-tabs [role="tablist"]');
+  if (!bar) return;
+  var tabs = Array.prototype.slice.call(bar.querySelectorAll('[role="tab"]'));
+  function select(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+  }
+  bar.addEventListener('click', function (e) {
+    var tab = e.target.closest('[role="tab"]');
+    if (tab) select(tab, false);
+  });
+  bar.addEventListener('keydown', function (e) {
+    var i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    var next = null;
+    if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+    else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+    else if (e.key === 'Home') next = tabs[0];
+    else if (e.key === 'End') next = tabs[tabs.length - 1];
+    if (next) { e.preventDefault(); select(next, true); }
+  });
+  select(tabs[0], false);
+})();
+</script>
