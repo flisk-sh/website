@@ -1,0 +1,58 @@
+{%- comment -%}
+  Product Hunt launch banner. Temporary: remove after launch week (this file and the line in index.html
+  that includes it).
+  Above the fold, so the badge is not lazy-loaded; width/height are set so it reserves its box (no CLS).
+  A dismissed banner is hidden by the inline script before first paint, so it never shifts the hero.
+{%- endcomment -%}
+<style>
+.aw-launch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin: 0 0 1.25rem;
+  padding: 0.6rem 2.5rem 0.6rem 0.75rem;
+  position: relative;
+  max-width: 44rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.aw-launch[hidden] { display: none; }
+.aw-launch a { display: block; line-height: 0; }
+.aw-launch img { display: block; width: 200px; height: auto; aspect-ratio: 250 / 54; }
+.aw-launch p { flex: 1 1 16rem; margin: 0; color: #d4d4dc; font-size: 0.9rem; line-height: 1.45; }
+.aw-launch-close {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #d4d4dc;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.aw-launch-close:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.aw-launch a:focus-visible,
+.aw-launch-close:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 2px; }
+</style>
+<aside class="aw-launch" id="aw-launch" aria-label="Product Hunt launch">
+  <a href="https://www.producthunt.com/products/flisk?utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=flisk-site" target="_blank" rel="noopener noreferrer"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1289517&amp;theme=dark" alt="Flisk on Product Hunt" width="250" height="54" decoding="async"></a>
+  <p>Flisk is live on Product Hunt today. Try it, then tell us there what worked and what did not.</p>
+  <button type="button" class="aw-launch-close" aria-label="Dismiss the Product Hunt banner" data-launch-close>&times;</button>
+</aside>
+<script>
+(function () {
+  var key = 'flisk-ph-launch-dismissed';
+  var banner = document.getElementById('aw-launch');
+  try { if (localStorage.getItem(key)) banner.hidden = true; } catch (e) {}
+  banner.querySelector('[data-launch-close]').addEventListener('click', function () {
+    banner.hidden = true;
+    try { localStorage.setItem(key, '1'); } catch (e) {}
+  });
+})();
+</script>

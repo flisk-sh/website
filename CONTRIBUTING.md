@@ -80,8 +80,11 @@ The CI pipeline (`.github/workflows/site.yml`) runs **two checks** in order. Run
 This script (`scripts/check-claims.mjs`) ensures that any numeric performance claim on the site is backed by a link to the claims registry and that no forbidden wording has crept in.
 
 ```bash
-node scripts/check-claims.mjs
+node --test scripts/check-claims.test.mjs   # unit tests for the check itself
+node scripts/check-claims.mjs               # source pages, includes, layouts, data
 ```
+
+It scans every page for wording the claims registry forbids (the patterns are listed at the top of the script; the registry's own warm-start caveat is allowed). After `bundle exec jekyll build`, run `node scripts/check-claims.mjs --built` to scan every built page in `_site/` as CI does.
 
 Expected output on success:
 ```
