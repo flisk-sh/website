@@ -1,0 +1,576 @@
+---
+layout: default
+title: Migrate to Flisk - Flisk CLI
+description: "Move your local development from Docker Compose, Tilt, Skaffold or a setup wiki to Flisk. Tell us about your stack and we help your team get to one flisk up."
+---
+
+<style>
+/* Migrate page extras (shared system in aw-dark.css) */
+.aw-mig-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  width: min(80rem, 100%);
+  margin: 0 auto;
+}
+
+.aw-mig-hero .aw-subhero-sub { margin-top: 1.75rem; max-width: 34rem; }
+
+.aw-mig-points {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.aw-mig-points li {
+  display: flex;
+  gap: 0.875rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(236, 236, 241, 0.7);
+}
+
+.aw-mig-points li::before {
+  content: ">";
+  flex: none;
+  font-family: 'JetBrains Mono', monospace;
+  color: #22C55E;
+}
+
+.aw-mig-points strong { color: #fff; font-weight: 600; }
+
+.aw-mig-alt {
+  margin: 2rem 0 0;
+  font-size: 0.9375rem;
+  color: rgba(236, 236, 241, 0.6);
+}
+
+.aw-mig-alt a { color: #6EE7A0; }
+
+/* Request form */
+.aw-mig-form {
+  background: #121218;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.aw-mig-form h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin: 0 0 1.5rem;
+}
+
+.aw-mig-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1rem;
+}
+
+.aw-mig-form label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(236, 236, 241, 0.8);
+  margin-bottom: 0.5rem;
+}
+
+.aw-mig-form label .aw-mig-opt { font-weight: 400; color: rgba(236, 236, 241, 0.6); }
+
+.aw-mig-form input,
+.aw-mig-form select,
+.aw-mig-form textarea {
+  width: 100%;
+  padding: 0.8125rem 1rem;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0a0a0e;
+  color: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.25s ease;
+  margin-bottom: 1.25rem;
+}
+
+.aw-mig-form select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, rgba(236, 236, 241, 0.6) 50%), linear-gradient(135deg, rgba(236, 236, 241, 0.6) 50%, transparent 50%); background-position: calc(100% - 1.25rem) 50%, calc(100% - 0.9rem) 50%; background-size: 0.35rem 0.35rem; background-repeat: no-repeat; padding-right: 2.5rem; }
+.aw-mig-form textarea { min-height: 6rem; resize: vertical; }
+
+.aw-mig-form input:focus,
+.aw-mig-form select:focus,
+.aw-mig-form textarea:focus {
+  border-color: #22C55E;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+}
+
+.aw-mig-form ::placeholder { color: rgba(236, 236, 241, 0.55); }
+
+.aw-mig-form .aw-btn { width: 100%; border: none; font-size: 1.0625rem; margin-top: 0.25rem; }
+.aw-mig-form .aw-btn:disabled { opacity: 0.6; cursor: progress; }
+
+.aw-mig-note {
+  font-size: 0.8125rem;
+  color: rgba(236, 236, 241, 0.65);
+  margin: 1rem 0 0;
+  text-align: center;
+}
+
+.aw-mig-status {
+  display: none;
+  margin: 1rem 0 0;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.aw-mig-status.is-ok { display: block; color: #6ee7b7; background: rgba(110, 231, 183, 0.08); border: 1px solid rgba(110, 231, 183, 0.3); }
+.aw-mig-status.is-err { display: block; color: #fda4af; background: rgba(251, 113, 133, 0.08); border: 1px solid rgba(251, 113, 133, 0.3); }
+.aw-mig-status a { color: inherit; text-decoration: underline; }
+
+/* Migration paths: asymmetric, one wide card plus three */
+.aw-mig-paths {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.25rem;
+}
+
+.aw-mig-paths .aw-card { margin: 0; }
+.aw-mig-paths .aw-mig-wide { grid-column: span 4; }
+.aw-mig-paths .aw-mig-side { grid-column: span 2; }
+.aw-mig-paths .aw-mig-third { grid-column: span 3; }
+
+.aw-mig-kicker {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(236, 236, 241, 0.6);
+  margin-bottom: 0.75rem;
+}
+
+.aw-mig-paths .aw-card a { color: #6EE7A0; }
+
+/* Steps next to the terminal */
+.aw-mig-steps {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.aw-mig-steps > ol {
+  list-style: none;
+  counter-reset: mig;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.75rem;
+}
+
+.aw-mig-steps > ol > li { counter-increment: mig; display: grid; grid-template-columns: 2.5rem 1fr; }
+
+.aw-mig-steps > ol > li::before {
+  content: counter(mig, decimal-leading-zero);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: #22C55E;
+  padding-top: 0.2rem;
+}
+
+.aw-mig-steps h3 { font-size: 1.125rem; font-weight: 600; color: #fff; margin: 0 0 0.375rem; }
+.aw-mig-steps > ol p { font-size: 0.9375rem; line-height: 1.6; color: rgba(236, 236, 241, 0.6); margin: 0; }
+.aw-mig-steps > * { min-width: 0; }
+
+/* What the agent does */
+.aw-mig-flow { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.875rem; }
+.aw-mig-flow li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem; font-size: 0.9375rem; line-height: 1.55; color: rgba(236, 236, 241, 0.65); }
+.aw-mig-flow code { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: #6EE7A0; background: none; padding: 0; }
+
+@media (max-width: 560px) {
+  .aw-mig-flow li { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+
+/* Further reading */
+.aw-mig-reads { list-style: none; padding: 0; margin: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.aw-mig-reads a {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ECECF1;
+  font-size: 1.0625rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.aw-mig-reads a:hover { color: #6EE7A0; }
+.aw-mig-reads span:last-child { color: rgba(236, 236, 241, 0.55); }
+
+@media (max-width: 1000px) {
+  .aw-mig-hero,
+  .aw-mig-steps { grid-template-columns: 1fr; }
+  .aw-mig-paths { grid-template-columns: 1fr; }
+  .aw-mig-paths .aw-mig-wide,
+  .aw-mig-paths .aw-mig-side,
+  .aw-mig-paths .aw-mig-third { grid-column: auto; }
+}
+
+@media (max-width: 560px) {
+  .aw-mig-row { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="aw">
+
+  <!-- Hero with the request form -->
+  <section class="aw-subhero">
+    <div class="aw-mig-hero">
+      <div>
+        <h1>Move your local dev to Flisk. <span class="aw-accent">We help you migrate.</span></h1>
+        <p class="aw-subhero-sub">Bring your <span class="aw-mono">docker-compose.yml</span>, your Tiltfile or your setup wiki. We work with your team until one <span class="aw-mono">flisk up</span> runs the whole stack.</p>
+
+        <ul class="aw-mig-points">
+          <li><span><strong>Production stays where it is.</strong> Flisk only changes how your team runs the stack on their machines.</span></li>
+          <li><span><strong>Nothing to unwind later.</strong> Flisk writes standard Dockerfiles, Vite configs and Tiltfiles into your repo. <a href="{{ '/no-lock-in/' | relative_url }}">No lock-in</a>.</span></li>
+          <li><span><strong>Core is MIT licensed.</strong> Migrating needs no license key and no paid plan.</span></li>
+        </ul>
+
+        <p class="aw-mig-alt">Solo project or side project? Start with the <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a> and <span class="aw-mono">flisk import</span>, or <a href="#agent">ask your coding agent to migrate it</a>.</p>
+      </div>
+
+      <form class="aw-mig-form" id="migrate-form" novalidate>
+        <h2>Request migration help</h2>
+
+        <div class="aw-mig-row">
+          <div>
+            <label for="mig-first">First name</label>
+            <input type="text" id="mig-first" autocomplete="given-name" required />
+          </div>
+          <div>
+            <label for="mig-last">Last name</label>
+            <input type="text" id="mig-last" autocomplete="family-name" required />
+          </div>
+        </div>
+
+        <label for="mig-email">Work email</label>
+        <input type="email" id="mig-email" autocomplete="email" placeholder="you@company.com" required />
+
+        <label for="mig-company">Company</label>
+        <input type="text" id="mig-company" autocomplete="organization" required />
+
+        <div class="aw-mig-row">
+          <div>
+            <label for="mig-team">Developers on the stack</label>
+            <select id="mig-team" required>
+              <option value="">Please select</option>
+              <option>1-5</option>
+              <option>6-20</option>
+              <option>21-50</option>
+              <option>51+</option>
+            </select>
+          </div>
+          <div>
+            <label for="mig-from">Migrating from</label>
+            <select id="mig-from" required>
+              <option value="">Please select</option>
+              <option>Docker Compose</option>
+              <option>Tilt</option>
+              <option>Skaffold</option>
+              <option>DevSpace</option>
+              <option>Garden</option>
+              <option>Cloud dev environments</option>
+              <option>Scripts and a setup wiki</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="mig-stack">Your stack <span class="aw-mig-opt">(optional)</span></label>
+        <textarea id="mig-stack" maxlength="110" placeholder="About 12 services, Postgres, NATS, two Vite frontends"></textarea>
+
+        <button type="submit" class="aw-btn aw-btn-solid" id="mig-submit">Request migration help</button>
+        <p class="aw-mig-note">We reply by email. No newsletter, no sales sequence.</p>
+        <p class="aw-mig-status" id="mig-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Where teams come from -->
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>Where teams move from</h2>
+        <p>Each starting point has a different first step. All of them end at one manifest per service.</p>
+      </div>
+
+      <div class="aw-mig-paths">
+        <div class="aw-card aw-mig-wide">
+          <span class="aw-mig-kicker">docker-compose.yml</span>
+          <h3>Docker Compose</h3>
+          <p><span class="aw-mono">flisk import</span> reads the services in your root <span class="aw-mono">docker-compose.yml</span> and writes a <span class="aw-mono">service.json</span> for each one. Run it with <span class="aw-mono">--dry-run</span> first to see the plan without writing anything. Try it on the <a href="https://github.com/flisk-sh/flisk-docker-compose-example" target="_blank" rel="noopener">compose example</a>.</p>
+        </div>
+        <div class="aw-card aw-mig-side">
+          <span class="aw-mig-kicker">Tiltfile</span>
+          <h3>Tilt</h3>
+          <p>Flisk runs on Tilt and generates the Tiltfile from your manifests, so live reload works the way your team already knows. We help move custom rules into <span class="aw-mono">service.json</span>.</p>
+        </div>
+        <div class="aw-card aw-mig-third">
+          <span class="aw-mig-kicker">skaffold.yaml, devspace.yaml, garden.yml</span>
+          <h3>Skaffold, DevSpace, Garden</h3>
+          <p>These run your dev loop against a cluster. Flisk runs it on Docker on the laptop and leaves the cluster to your Helm or GitOps setup. See the <a href="{{ '/compare/' | relative_url }}">comparison</a>.</p>
+        </div>
+        <div class="aw-card aw-mig-third">
+          <span class="aw-mig-kicker">README.md, setup.sh</span>
+          <h3>Scripts and a setup wiki</h3>
+          <p>We start from what a new hire does on day one and turn each step into a manifest or a <span class="aw-mono">flisk doctor</span> check. Then the wiki can go.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What a migration looks like -->
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>What a migration looks like</h2>
+        <p>The same commands whether you do it alone or with us.</p>
+      </div>
+
+      <div class="aw-mig-steps">
+        <ol>
+          <li>
+            <div>
+              <h3>Read the plan</h3>
+              <p>Import with <span class="aw-mono">--dry-run</span>. It prints every service it found and writes nothing.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Write the manifests</h3>
+              <p>Run the import for real, then review each <span class="aw-mono">service.json</span> like any other pull request.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Check every machine</h3>
+              <p><span class="aw-mono">flisk doctor</span> checks Docker, ports and services on each laptop before anyone starts the stack.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Start the stack</h3>
+              <p><span class="aw-mono">flisk up</span> generates the configs and starts the services with live reload. Keep the old setup next to it until the team stops using it.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre><span class="c"># 1. see what would be imported</span>
+<span class="k">flisk</span> import ./legacy --dry-run
+
+<span class="c"># 2. write a service.json per compose service</span>
+<span class="k">flisk</span> import ./legacy --yes
+
+<span class="c"># 3. check the machine</span>
+<span class="k">flisk</span> doctor
+
+<span class="c"># 4. run the whole stack</span>
+<span class="k">flisk</span> up</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ask your coding agent -->
+  <section class="aw-section" id="agent" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>Or ask your coding agent to migrate it</h2>
+        <p>Connect Claude Code, Cursor or Codex to Flisk, open your repo and paste the prompt. The agent runs the same steps through the <span class="aw-mono">flisk mcp</span> server.</p>
+      </div>
+
+      <div class="aw-mig-steps">
+        <div>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal, in your repo</span></div>
+            <pre><span class="c"># install the Flisk CLI</span>
+{{ site.data.flisk.install_npm }}
+
+<span class="c"># connect your agent (pick one)</span>
+<span class="k">flisk</span> connect claude
+<span class="k">flisk</span> connect cursor
+<span class="k">flisk</span> connect codex</pre>
+          </div>
+          <p class="aw-mig-alt">This adds the <span class="aw-mono">flisk mcp</span> server and the Flisk skills to your repo. Other MCP clients and setup details: <a href="{{ '/agents/' | relative_url }}">Flisk for AI agents</a>.</p>
+        </div>
+
+        <div>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>prompt</span></div>
+            <pre id="mig-agent-prompt">Migrate this repo's local development to Flisk.
+Import the services from docker-compose.yml, show me
+the plan before writing anything, then start the
+stack and fix anything that fails to come up.</pre>
+          </div>
+          <ol class="aw-mig-flow" aria-label="What the agent does next">
+            <li><code>doctor</code><span>Checks that Docker and Tilt are ready on this machine.</span></li>
+            <li><code>project_import</code><span>Runs with <span class="aw-mono">dryRun</span> first and shows you the plan, then writes a <span class="aw-mono">service.json</span> per compose service.</span></li>
+            <li><code>config_verify</code><span>Checks every manifest and the generated files.</span></li>
+            <li><code>up, status</code><span>Starts the stack and waits until every service is ready.</span></li>
+            <li><code>logs</code><span>If a service fails, reads the error, fixes the manifest or code and starts again.</span></li>
+          </ol>
+          <p class="aw-mig-alt">The exact steps depend on your agent and your prompt. Review the <span class="aw-mono">service.json</span> files it writes like any other pull request. Stuck halfway? <a href="#migrate-form">Request migration help</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="aw-section aw-faq" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>Migration help FAQs</h2>
+        <p>What we do, what we don't, and what it costs.</p>
+      </div>
+
+      <div class="aw-faq-list">
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Who qualifies for migration help?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Teams whose app runs as several services (APIs, workers, frontends, databases, queues) and who want every developer to start it the same way. If one person works on one service, the <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a> is faster than a call.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>What do I need to do?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Send the form. We reply by email to ask what your stack looks like today and how your team starts it. Have your compose file, Tiltfile or setup notes at hand. Not sure Flisk fits? Read <a href="{{ '/fit/' | relative_url }}">does Flisk fit</a> first.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>What does it cost?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Migration help costs nothing, and Flisk core is free and MIT licensed. Premium is a separate license for extras like Playwright and C4 diagrams at ${{ site.data.flisk.team_price }} per developer per month. You don't need it to migrate. See <a href="{{ '/#pricing' | relative_url }}">pricing</a>.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Can you do the migration for me?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">We work through it with your team. <span class="aw-mono">flisk import</span> does the mechanical part and we help with what it can't infer: build contexts, ports, seed data and migrator resources. We don't ask for access to production or to your cloud accounts.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Do we have to change production or CI?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">No. Flisk is for local development. Production stays on your Kubernetes, Helm or hosting setup, and CI keeps running what it runs today. <a href="{{ '/docs/with-helm/' | relative_url }}">Flisk with Helm</a> shows how the two sit side by side.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>What requests don't qualify?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Moving production hosting, writing cluster manifests, and single-service projects. Flisk doesn't host or deploy anything, so we can't help move a production workload.</div>
+        </details>
+        <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>What if we stop using Flisk?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Your own Dockerfiles, <span class="aw-mono">service.json</span> files and code are never touched. <span class="aw-mono">flisk eject</span> writes down where the generated files are and how to run the stack with plain <span class="aw-mono">tilt up</span>, without the Flisk CLI.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Further reading -->
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>Read before you move</h2>
+        <p>Field notes on moving an existing codebase without stopping work.</p>
+      </div>
+      <ul class="aw-mig-reads">
+        <li><a href="{{ '/blog/articles/gradual-adoption-without-drama/' | relative_url }}"><span>Gradual adoption without drama</span><span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="{{ '/blog/articles/the-brownfield-rescue-path/' | relative_url }}"><span>The brownfield rescue path</span><span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="{{ '/blog/articles/the-first-manifest-to-write/' | relative_url }}"><span>The first manifest to write</span><span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="{{ '/blog/articles/do-not-rewrite-before-you-understand/' | relative_url }}"><span>Do not rewrite before you understand</span><span aria-hidden="true">&rarr;</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-band">
+        <h2>Ready to start?</h2>
+        <p>Try the import on your own repo, or send the form and we'll work through it with you.</p>
+        <a href="{{ '/docs/quickstart/' | relative_url }}" class="aw-btn aw-btn-solid">Start free</a>
+        <a href="#migrate-form" class="aw-btn aw-btn-ghost">Request migration help</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  /* Migration requests go to the same worker as license requests. The worker
+     only files plans that start with "Premium" or "Enterprise", so the request
+     is filed as Enterprise and the details travel as requestedFeatures
+     (at most 20 entries of 120 characters each). */
+  var REQUEST_URL = 'https://tdk-extension-dist.oranguman.workers.dev/v1/request-license';
+  var form = document.getElementById('migrate-form');
+  var btn = document.getElementById('mig-submit');
+  var status = document.getElementById('mig-status');
+
+  function field(id) { return document.getElementById(id).value.trim(); }
+
+  function showStatus(kind, html) {
+    status.className = 'aw-mig-status ' + kind;
+    status.innerHTML = html;
+  }
+
+  function mailtoFor(details) {
+    var body = 'Hi Flisk team,\n\nWe would like help migrating our local development to Flisk.\n\n' +
+      details.join('\n') + '\n\nSent from https://flisk.sh/migrate/';
+    return 'mailto:hello@flisk.sh?subject=' + encodeURIComponent('Migration help request') +
+      '&body=' + encodeURIComponent(body);
+  }
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    var details = [
+      'Name: ' + field('mig-first') + ' ' + field('mig-last'),
+      'Company: ' + field('mig-company'),
+      'Developers: ' + field('mig-team'),
+      'Migrating from: ' + field('mig-from')
+    ];
+    if (field('mig-stack')) details.push('Stack: ' + field('mig-stack'));
+
+    btn.disabled = true;
+    btn.textContent = 'Sending your request...';
+
+    try {
+      var res = await fetch(REQUEST_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plan: 'Enterprise - migration help from ' + field('mig-from'),
+          email: field('mig-email'),
+          requestedFeatures: details
+        })
+      });
+      if (res.status === 429) {
+        var limited = await res.json().catch(function () { return {}; });
+        showStatus('is-err', limited.error || 'Too many requests. Try again shortly.');
+        btn.disabled = false;
+        btn.textContent = 'Request migration help';
+        return;
+      }
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      showStatus('is-ok', 'Request received. We will reply to ' + field('mig-email').replace(/[<>&"]/g, '') + '.');
+      btn.style.display = 'none';
+    } catch (err) {
+      console.warn('Migration request failed, falling back to email:', err);
+      showStatus('is-err', 'We could not reach our server. <a href="' + mailtoFor(details).replace(/"/g, '&quot;') + '">Email the request to hello@flisk.sh</a> instead.');
+      btn.disabled = false;
+      btn.textContent = 'Request migration help';
+    }
+  });
+});
+</script>
