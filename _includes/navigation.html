@@ -1,5 +1,5 @@
 {%- assign product_paths = '/features/,/layers/,/sandbox/,/agents/' | split: ',' %}
-{%- assign enterprise_paths = '/why/,/fit/,/waiting/,/no-lock-in/,/compare/,/docs/with-helm/,/docs/claims/' | split: ',' %}
+{%- assign enterprise_paths = '/why/,/fit/,/migrate/,/waiting/,/no-lock-in/,/compare/,/docs/with-helm/,/docs/claims/' | split: ',' %}
 {%- assign resource_paths = '/docs/,/blog/' | split: ',' %}
 {%- assign in_product = false %}{% assign in_enterprise = false %}{% assign in_resources = false %}
 {%- for p in product_paths %}{% if page.url contains p %}{% assign in_product = true %}{% endif %}{% endfor %}
@@ -54,6 +54,7 @@
               <a href="{{ '/#adopters' | relative_url }}">who uses flisk<small>teams listed with consent</small></a>
               <a href="{{ '/docs/with-helm/' | relative_url }}">flisk with helm<small>local dev and cluster deployment</small></a>
               <a href="{{ '/no-lock-in/' | relative_url }}">no lock-in<small>mit core, open standard files</small></a>
+              <a href="{{ '/migrate/' | relative_url }}">migrate to flisk<small>move from compose, tilt or a wiki</small></a>
             </div>
             <div>
               <p class="aw-nav-menu-label">Evaluate</p>
