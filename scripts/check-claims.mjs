@@ -136,13 +136,15 @@ function main() {
     }
   }
 
-  // Every source page, include, layout and data file, then every built page in _site/ when it exists.
-  // CI runs this before `jekyll build` and again with --built after it.
-  const builtOnly = process.argv.includes('--built');
-  if (!builtOnly) failures.push(...checkPages(rootPath));
-  const site = join(rootPath, '_site');
-  if (existsSync(site)) failures.push(...checkPages(site, { skip: new Set(['assets', 'vendor']) }));
-  else if (builtOnly) failures.push('_site/ does not exist; run bundle exec jekyll build first');
+  // Every source page, include, layout and data file. With --built, every built page in _site/
+  // instead (CI runs this before `jekyll build` and again with --built after it).
+  if (process.argv.includes('--built')) {
+    const site = join(rootPath, '_site');
+    if (existsSync(site)) failures.push(...checkPages(site, { skip: new Set(['assets', 'vendor']) }));
+    else failures.push('_site/ does not exist; run bundle exec jekyll build first');
+  } else {
+    failures.push(...checkPages(rootPath));
+  }
 
   if (failures.length) {
     console.error(failures.map((failure) => `FAIL: ${failure}`).join('\n'));
