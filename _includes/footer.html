@@ -1,97 +1,73 @@
 <footer class="site-footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4 mb-4 mb-lg-0">
-        <h5>
-          <i class="bi bi-layers-fill me-2" aria-hidden="true"></i>
-          Flisk<span style="color: var(--color-purple)">CLI</span>
-        </h5>
-        <p class="footer-text">
-          Kubernetes-free microservice development by Flisk Landscape.
-          Run 5-{{ site.data.flisk.scale_services }} services locally without the complexity.
-        </p>
-        <p class="footer-text" style="margin-top: 0.75rem;">
-          <a href="mailto:hello@flisk.sh">hello@flisk.sh</a>
-        </p>
-        <div class="d-flex gap-3 mb-3">
-          <a href="https://github.com/flisk-sh" target="_blank" rel="noopener" aria-label="Flisk Landscape on GitHub">
-            <i class="bi bi-github fs-5"></i>
-          </a>
+  <div class="sf-wrap">
+    <div class="sf-top">
+      <div class="sf-brand">
+        <a class="aw-brand" href="{{ '/' | relative_url }}" aria-label="Flisk CLI home">
+          <span class="aw-brand-mark" aria-hidden="true">&gt;_</span>
+          <span class="aw-brand-wordmark">flisk</span>
+        </a>
+        <p>your whole app, running on your machine.</p>
+        <a class="sf-mail" href="mailto:hello@flisk.sh">hello@flisk.sh</a>
+      </div>
+
+      <nav class="sf-cols" aria-label="Footer">
+        <div>
+          <p class="sf-label">product</p>
+          <a href="{{ '/features/' | relative_url }}">features</a>
+          <a href="{{ '/sandbox/' | relative_url }}">sandbox</a>
+          <a href="{{ '/layers/' | relative_url }}">golden layers</a>
+          <a href="{{ '/#new' | relative_url }}">recently shipped</a>
+          <a href="{{ '/#pricing' | relative_url }}">pricing</a>
+          <a href="{{ '/docs/' | relative_url }}">docs</a>
         </div>
-        <div class="d-flex flex-column gap-2">
-          <a href="https://www.producthunt.com/products/flisk?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-flisk" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
-            <img alt="Flisk - One service.json. Your whole local stack starts. App builder | Product Hunt" width="200" height="44" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1289517&theme=light&t=1792697707140">
-          </a>
-          <a href="https://toolradar.com/tools/flisk-cli" target="_blank" rel="noopener" style="display: inline-block;">
-            <img src="https://toolradar.com/api/badge/flisk-cli?type=review&style=dark&v=5" alt="Flisk CLI on Toolradar" width="200" height="57" />
-          </a>
+        <div>
+          <p class="sf-label">enterprise</p>
+          <a href="{{ '/#waitlist' | relative_url }}">Premium license</a>
+          <a href="{{ '/#waitlist' | relative_url }}">Enterprise license</a>
+          <a href="{{ '/#adopters' | relative_url }}">who uses flisk</a>
+          <a href="{{ '/compare/' | relative_url }}">compare</a>
+          <a href="{{ '/why/' | relative_url }}">why flisk</a>
+          <a href="{{ '/fit/' | relative_url }}">does flisk fit?</a>
+          <a href="{{ '/waiting/' | relative_url }}">cut the cost of waiting</a>
+          <a href="{{ '/no-lock-in/' | relative_url }}">no lock-in</a>
         </div>
-      </div>
-
-      <div class="col-lg-2 col-md-4 mb-4 mb-lg-0">
-        <h6>Product</h6>
-        <ul class="list-unstyled footer-links">
-          <li><a href="{{ '/features/' | relative_url }}">Features</a></li>
-          <li><a href="{{ '/compare/' | relative_url }}">Compare</a></li>
-          <li><a href="{{ '/why/' | relative_url }}">Why Flisk</a></li>
-          <li><a href="{{ '/no-lock-in/' | relative_url }}">No Vendor Lock-in</a></li>
-          <li><a href="{{ '/fit/' | relative_url }}">Does Flisk fit?</a></li>
-          <li><a href="{{ '/waiting/' | relative_url }}">Waiting for MVP?</a></li>
-          <li><a href="{{ '/#pricing' | relative_url }}">Pricing</a></li>
-          <li><a href="{{ '/docs/' | relative_url }}">Documentation</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-2 col-md-4 mb-4 mb-lg-0">
-        <h6>Resources & Code</h6>
-        <ul class="list-unstyled footer-links">
-          <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
-          <li><a href="{{ '/docs/quickstart/' | relative_url }}">Quick Start</a></li>
-          <li><a href="{{ '/docs/with-helm/' | relative_url }}">Flisk with Helm</a></li>
-          <li><a href="https://flisk-sh.github.io/flisk-demo-animation/" target="_blank" rel="noopener">Demo Animation</a></li>
-          <li><a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">Flisk CLI Binaries</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-docker-compose-example" target="_blank" rel="noopener">Docker Compose Example</a></li>
-          <li><a href="{{ '/docs/examples/' | relative_url }}">All Examples</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-example" target="_blank" rel="noopener">flisk-example Stack (GitHub)</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-user-management" target="_blank" rel="noopener">flisk-user-management Stack (GitHub)</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-restaurant-example" target="_blank" rel="noopener">flisk-restaurant-example Stack (GitHub)</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-erp-system" target="_blank" rel="noopener">flisk-erp-system Stack (GitHub)</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-ecommerce-example" target="_blank" rel="noopener">flisk-ecommerce-example Stack (GitHub)</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-auth-queue-email-example" target="_blank" rel="noopener">flisk-auth-queue-email-example Stack (GitHub)</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-saas-starter" target="_blank" rel="noopener">flisk-saas-starter Stack (GitHub)</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-2 col-md-4 mb-4 mb-lg-0">
-        <h6>Community</h6>
-        <ul class="list-unstyled footer-links">
-          <li><a href="https://github.com/flisk-sh" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://github.com/flisk-sh/.github/blob/main/profile/README.md" target="_blank" rel="noopener">Organization README</a></li>
-          <li><a href="{{ '/#waitlist' | relative_url }}">Premium license</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-2 col-md-4">
-        <h6>Legal</h6>
-        <ul class="list-unstyled footer-links">
-          <li><a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a></li>
-        </ul>
-      </div>
+        <div>
+          <p class="sf-label">resources</p>
+          <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a>
+          <a href="{{ '/docs/with-helm/' | relative_url }}">flisk with helm</a>
+          <a href="{{ '/docs/examples/' | relative_url }}">examples</a>
+          <a href="{{ '/blog/' | relative_url }}">field notes</a>
+          <a href="{{ '/#faq' | relative_url }}">faq</a>
+          <a href="https://flisk-sh.github.io/flisk-demo-animation/" target="_blank" rel="noopener">demo animation</a>
+          <a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">cli binaries</a>
+          <a href="https://github.com/flisk-sh/flisk-docker-compose-example" target="_blank" rel="noopener">docker compose example</a>
+        </div>
+        <div>
+          <p class="sf-label">community</p>
+          <a href="https://github.com/flisk-sh" target="_blank" rel="noopener">github</a>
+          <a href="https://github.com/flisk-sh/.github/blob/main/profile/README.md" target="_blank" rel="noopener">organization readme</a>
+          <a href="https://github.com/flisk-sh/flisk/issues/new?template=usability-feedback.yml" target="_blank" rel="noopener">give feedback</a>
+          <a href="https://github.com/sponsors/flisk-sh" target="_blank" rel="noopener">sponsor</a>
+        </div>
+        <div>
+          <p class="sf-label">legal</p>
+          <a href="https://github.com/flisk-sh/flisk/blob/main/LICENSE" target="_blank" rel="noopener">mit license</a>
+          <a href="{{ '/.well-known/security.txt' | relative_url }}">security contact</a>
+          <a href="{{ '/docs/claims/' | relative_url }}">claims</a>
+        </div>
+      </nav>
     </div>
 
-    <hr />
-
-    <div class="row align-items-center">
-      <div class="col-md-6 mb-3 mb-md-0">
-        <p class="mb-0 footer-text">
-          &copy; 2026 Flisk CLI Contributors. Licensed under MIT.
-        </p>
+    <div class="sf-bottom">
+      <div class="sf-badges">
+        <a href="https://www.producthunt.com/products/flisk?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-flisk" target="_blank" rel="noopener noreferrer">
+          <img alt="Flisk on Product Hunt" width="200" height="44" loading="lazy" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1289517&theme=dark&t=1792697707140">
+        </a>
+        <a href="https://toolradar.com/tools/flisk-cli" target="_blank" rel="noopener">
+          <img src="https://toolradar.com/api/badge/flisk-cli?type=review&style=dark&v=5" alt="Flisk CLI on Toolradar" width="200" height="57" loading="lazy" />
+        </a>
       </div>
-      <div class="col-md-6 text-md-end">
-        <p class="mb-0 footer-text">
-          Built for developers who just want to write code.
-        </p>
-      </div>
+      <p>&copy; 2026 Flisk CLI contributors. MIT licensed.</p>
     </div>
-  </div
+  </div>
 </footer>

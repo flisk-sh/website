@@ -12,10 +12,17 @@ body:has(.aw) .page-content {
   padding-top: 0;
 }
 
-body:has(.aw) .site-footer {
-  background: #0a0a0e;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+/* Plain links inside dark pages: brand green instead of Bootstrap blue.
+   :where() keeps this at element specificity so any styled link still wins. */
+:where(.aw) a:where(:not([class])) {
+  color: #6EE7A0;
+  text-decoration: underline;
+  text-decoration-color: rgba(110, 231, 160, 0.4);
+  text-underline-offset: 3px;
 }
+
+:where(.aw) a:where(:not([class])):hover { color: #fff; text-decoration-color: #fff; }
+
 
 /* ---------------- No-lock-in page primitives ---------------- */
 .aw-hero {
@@ -370,7 +377,7 @@ body:has(.aw) .site-footer {
 
 .aw-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(183, 154, 255, 0.35);
+  border-color: rgba(110, 231, 160, 0.35);
 }
 
 .aw-card h3,
@@ -393,7 +400,7 @@ body:has(.aw) .site-footer {
 .aw-idx {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  color: rgba(183, 154, 255, 0.65);
+  color: rgba(110, 231, 160, 0.65);
   display: block;
   margin-bottom: 0.875rem;
 }
@@ -497,7 +504,7 @@ body:has(.aw) .site-footer {
   height: 12px;
   border-radius: 50%;
   background: #121218;
-  border: 2px solid rgba(183, 154, 255, 0.6);
+  border: 2px solid rgba(110, 231, 160, 0.6);
 }
 
 .aw-story-step.aw-story-win {
@@ -811,10 +818,10 @@ body:has(.aw) .site-footer {
   gap: 1rem;
   align-items: center;
   margin: 1rem 0 1.25rem;
-  border: 1px solid rgba(183, 154, 255, 0.18);
+  border: 1px solid rgba(110, 231, 160, 0.18);
   border-radius: 1rem;
   background:
-    radial-gradient(ellipse 70% 120% at 0% 0%, rgba(183, 154, 255, 0.13), transparent 58%),
+    radial-gradient(ellipse 70% 120% at 0% 0%, rgba(110, 231, 160, 0.13), transparent 58%),
     rgba(255, 255, 255, 0.03);
   padding: 1rem;
 }
@@ -1257,7 +1264,7 @@ body:has(.aw) .site-footer {
 
 .aw-blog-kicker {
   align-self: end;
-  border: 1px solid rgba(183, 154, 255, 0.18);
+  border: 1px solid rgba(110, 231, 160, 0.18);
   border-radius: 1.5rem;
   background:
     linear-gradient(140deg, rgba(34, 197, 94, 0.14), rgba(18, 18, 24, 0.92) 42%),
@@ -1376,7 +1383,7 @@ body:has(.aw) .site-footer {
 .aw-article-note {
   margin: 2.25rem 0;
   border-radius: 1rem;
-  border: 1px solid rgba(183, 154, 255, 0.25);
+  border: 1px solid rgba(110, 231, 160, 0.25);
   background: rgba(34, 197, 94, 0.08);
   padding: 1.25rem 1.5rem;
   font-family: 'JetBrains Mono', monospace;
@@ -1529,7 +1536,7 @@ body:has(.aw) .site-footer {
 
 .aw-library-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(183, 154, 255, 0.32);
+  border-color: rgba(110, 231, 160, 0.32);
   background:
     linear-gradient(180deg, rgba(34, 197, 94, 0.12), transparent 62%),
     #121218;
@@ -2330,7 +2337,7 @@ body:has(.aw) .site-footer {
   content: "";
   position: absolute;
   inset: 4% 8%;
-  border: 1px dashed rgba(183, 154, 255, 0.25);
+  border: 1px dashed rgba(110, 231, 160, 0.25);
   border-radius: 50%;
 }
 
@@ -2348,7 +2355,7 @@ body:has(.aw) .site-footer {
   justify-content: center;
   text-align: center;
   background: radial-gradient(circle at 35% 30%, rgba(34, 197, 94, 0.45) 0%, #1a1230 70%);
-  border: 1px solid rgba(183, 154, 255, 0.5);
+  border: 1px solid rgba(110, 231, 160, 0.5);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
@@ -2575,7 +2582,7 @@ body:has(.aw) .site-footer {
 }
 
 .aw-doc-cards-featured .aw-card:hover {
-  border-color: rgba(183, 154, 255, 0.42);
+  border-color: rgba(110, 231, 160, 0.42);
 }
 
 .aw-doc-cards-featured .aw-card:active {
@@ -2667,7 +2674,7 @@ body:has(.aw) .site-footer {
   height: 3.5rem;
   border-radius: 50%;
   background: rgba(34, 197, 94, 0.14);
-  border: 1px solid rgba(183, 154, 255, 0.35);
+  border: 1px solid rgba(110, 231, 160, 0.35);
   color: #6EE7A0;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
@@ -2691,7 +2698,7 @@ body:has(.aw) .site-footer {
   align-items: center;
   margin: 1.75rem 0 2rem;
   padding: clamp(2rem, 4.5vw, 3.5rem);
-  border: 1px solid rgba(183, 154, 255, 0.16);
+  border: 1px solid rgba(110, 231, 160, 0.16);
   border-radius: 1.5rem;
   overflow: hidden;
   background:
@@ -2793,7 +2800,7 @@ body:has(.aw) .site-footer {
 
 .aw-restaurant-panel-kitchen {
   margin-left: auto;
-  border-color: rgba(183, 154, 255, 0.34);
+  border-color: rgba(110, 231, 160, 0.34);
 }
 
 .aw-restaurant-panel-floor {
@@ -2834,7 +2841,7 @@ body:has(.aw) .site-footer {
 
 .aw-erp-panel:hover {
   transform: translateY(-3px);
-  border-color: rgba(183, 154, 255, 0.4);
+  border-color: rgba(110, 231, 160, 0.4);
 }
 
 .aw-erp-panel-analytics {
@@ -2867,7 +2874,7 @@ body:has(.aw) .site-footer {
 .aw-restaurant-resource-grid a:hover,
 .aw-erp-domain-grid a:hover {
   transform: translateY(-4px);
-  border-color: rgba(183, 154, 255, 0.4);
+  border-color: rgba(110, 231, 160, 0.4);
 }
 
 .aw-restaurant-resource-grid a:focus-visible,
@@ -2999,7 +3006,7 @@ body:has(.aw) .site-footer {
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid rgba(183, 154, 255, 0.18);
+  border: 1px solid rgba(110, 231, 160, 0.18);
   border-radius: 0.875rem;
 }
 
@@ -3054,7 +3061,7 @@ body:has(.aw) .site-footer {
   color: #6EE7A0;
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(183, 154, 255, 0.4);
+  text-decoration-color: rgba(110, 231, 160, 0.4);
 }
 
 .aw-adopters-intro p a:hover {
@@ -3118,7 +3125,7 @@ body:has(.aw) .site-footer {
   font-size: 0.8125rem;
   padding: 0.3rem 0.75rem;
   border-radius: 100px;
-  border: 1px solid rgba(183, 154, 255, 0.25);
+  border: 1px solid rgba(110, 231, 160, 0.25);
   color: #6EE7A0;
   white-space: nowrap;
 }
@@ -3147,4 +3154,116 @@ body:has(.aw) .site-footer {
   .aw-adopter-arrow {
     display: none;
   }
+}
+
+/* ============================================================
+   Inner pages, after warp.dev: sharp corners, mono headings with
+   "# page / 01" kickers, hairline card grids, small square buttons.
+   Scoped to body.aw-inner (every page except the homepage).
+   ============================================================ */
+
+/* Sharp corners: every card, panel, code window and calculator shell. */
+.aw-inner :is(.aw-acc-item, .aw-accordion, .aw-article-card, .aw-article-note, .aw-band, .aw-library-card, .aw-blog-kicker,
+  .aw-blog-side-card, .aw-burn, .aw-burn-cell, .aw-callout, .aw-card, .aw-code, .aw-codeblock, .aw-docs-details,
+  .aw-erp-domain-grid a, .aw-erp-panel, .aw-example-showcase, .aw-featured-story, .aw-fit-questions, .aw-fit-result,
+  .aw-form, .aw-form input[type="email"], .aw-inline-error, .aw-install-tabs-bar, .aw-issued-key, .aw-library-tools,
+  .aw-license-panel, .aw-mailto-fallback, .aw-manifest-wall, .aw-matrix, .aw-matter, .aw-orbit-center, .aw-path-accordion,
+  .aw-price-card, .aw-quickstart-flow a, .aw-quickstart-hero, .aw-reel, .aw-reel-shell, .aw-restaurant-panel,
+  .aw-restaurant-photo, .aw-restaurant-resource-grid a, .aw-roi-cell, .aw-setup-step, .aw-shot-row img, .aw-stack-card,
+  .aw-term-left, .aw-terminal, .aw-week, .aw-why, .sb-bento-card, .sb-bento-img, .sb-copyline, .sb-cta-band,
+  .sb-file-modal, .sb-hacc, .sb-step, .sb-term, pre) {
+  border-radius: 0.25rem;
+}
+
+/* Small square buttons: mono, uppercase, no hover lift. */
+.aw-inner .aw-btn {
+  padding: 0.6rem 1.15rem;
+  border-radius: 0.25rem;
+  font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.aw-inner .aw-btn:hover { transform: none; }
+.aw-inner .aw-btn-solid { background: #22C55E; border-color: #22C55E; color: #0a0a0e; }
+.aw-inner .aw-btn-solid:hover { background: #6EE7A0; border-color: #6EE7A0; color: #0a0a0e; }
+
+/* Mono headings with tight tracking; card titles keep the sans face. */
+.aw-inner :is(.aw-subhero h1, .aw-head h2, .aw-band h2, .aw-cat-head h3, .aw-blog-section-head h2) {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.aw-inner .aw-subhero h1 { font-size: clamp(2.25rem, 4.4vw, 3.75rem); }
+
+/* Docs: mono titles, with "# docs" above the page title. */
+.aw-inner .aw-docs-body > :is(h1, h2) {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+}
+
+.aw-inner .aw-docs-body > h1::before {
+  content: "# docs";
+  display: block;
+  margin-bottom: 1rem;
+  color: rgba(236, 236, 241, 0.85);
+  font: 500 0.69rem/1.4 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.aw-inner .aw-head h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+
+/* Kickers: "# page" above the page title, "# page / 01" above each section title. */
+.aw-inner .aw { counter-reset: aw-kicker; }
+
+.aw-inner .aw-subhero h1::before,
+.aw-inner :is(.aw-head, .aw-cat-head, .aw-blog-section-head)::before {
+  display: block;
+  margin-bottom: 1rem;
+  color: rgba(236, 236, 241, 0.85);
+  font: 500 0.69rem/1.4 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  -webkit-text-fill-color: currentColor;
+}
+
+.aw-inner .aw-subhero h1::before { content: "# " var(--kicker, "flisk"); }
+
+.aw-inner :is(.aw-head, .aw-cat-head, .aw-blog-section-head) { counter-increment: aw-kicker; }
+.aw-inner :is(.aw-head, .aw-cat-head, .aw-blog-section-head)::before {
+  content: "# " var(--kicker, "flisk") " / " counter(aw-kicker, decimal-leading-zero);
+  grid-column: 1 / -1; /* these heads are grids on some pages; keep the kicker on its own row */
+}
+
+/* Hairline grids: cards share 1px rules instead of floating in gaps. The rules are
+   the cards' own right and bottom borders, so nothing shows while cards fade in. */
+.aw-inner :is(.aw-feature-grid, .aw-doc-cards) {
+  gap: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  border-left: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.aw-inner :is(.aw-feature-grid, .aw-doc-cards) > .aw-card {
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 0;
+  background: #0d0d13;
+  box-shadow: none;
+}
+
+.aw-inner :is(.aw-feature-grid, .aw-doc-cards) > .aw-card:hover {
+  transform: none;
+  background: #111118;
+}
+
+/* Card hover: a quiet border change instead of a lift. */
+.aw-inner .aw-card:hover { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aw-inner .aw-btn, .aw-inner .aw-card { transition: none; }
 }
