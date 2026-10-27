@@ -235,7 +235,7 @@ body { background: #0a0a0e; overflow-x: hidden; }
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
   background: #22C55E;
-  color: #fff;
+  color: #04120A;
 }
 
 .aw-hero h1 code {
@@ -387,7 +387,7 @@ body { background: #0a0a0e; overflow-x: hidden; }
 .aw-bench-tab.is-active { color: #fff; background: rgba(255, 255, 255, 0.06); box-shadow: inset 0 -2px #6EE7A0; }
 /* ---------------- Recently shipped ---------------- */
 .aw-head .aw-new-kicker { margin: 0 0 0.75rem; color: #ececf1; font: 500 0.69rem 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
-.aw-head .aw-new-kicker span { color: rgba(236, 236, 241, 0.4); }
+.aw-head .aw-new-kicker span { color: rgba(236, 236, 241, 0.55); }
 .aw-new-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); border: 1px solid rgba(255, 255, 255, 0.09); }
 .aw-new-list { display: flex; flex-direction: column; border-right: 1px solid rgba(255, 255, 255, 0.09); }
 .aw-new-row {
@@ -407,7 +407,7 @@ body { background: #0a0a0e; overflow-x: hidden; }
 .aw-new-row:last-child { border-bottom: 0; }
 .aw-new-row:hover { background: rgba(255, 255, 255, 0.03); }
 .aw-new-row.is-active { background: rgba(255, 255, 255, 0.05); box-shadow: inset 2px 0 #22C55E; }
-.aw-new-n { flex: none; padding-top: 0.15rem; color: rgba(236, 236, 241, 0.35); font: 400 0.72rem 'JetBrains Mono', monospace; }
+.aw-new-n { flex: none; padding-top: 0.15rem; color: rgba(236, 236, 241, 0.55); font: 400 0.72rem 'JetBrains Mono', monospace; }
 .aw-new-row.is-active .aw-new-n { color: #6EE7A0; }
 .aw-new-text strong { display: block; color: #ececf1; font: 600 1.02rem 'Satoshi', 'Outfit', sans-serif; letter-spacing: -0.01em; }
 .aw-new-text small { display: block; margin-top: 0.25rem; color: rgba(236, 236, 241, 0.5); font: 400 0.76rem/1.5 'JetBrains Mono', monospace; }
@@ -561,7 +561,7 @@ body.aw-index-on .aw-nav { background: #0a0a0e; border-bottom-color: rgba(255, 2
 .aw-section.aw-gen {
   --ink: #1a1522;
   --ink-62: rgba(26, 21, 34, 0.62);
-  --ink-40: rgba(26, 21, 34, 0.4);
+  --ink-40: rgba(26, 21, 34, 0.62); /* 4.5:1 on white; was 0.4 */
   --ink-16: rgba(26, 21, 34, 0.16);
   --ink-06: rgba(26, 21, 34, 0.06);
   --paper: #fbfaf7;
@@ -1076,7 +1076,7 @@ button.aw-gen-node:focus-visible,
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: rgba(236, 236, 241, 0.28);
+  color: rgba(236, 236, 241, 0.42);
   white-space: nowrap;
   text-transform: uppercase;
   transition: color 0.3s ease;
@@ -1492,7 +1492,7 @@ button.aw-gen-node:focus-visible,
   margin-left: 0.75rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  color: rgba(236, 236, 241, 0.45);
+  color: rgba(236, 236, 241, 0.55);
 }
 
 .aw-terminal-body {
@@ -1508,7 +1508,7 @@ button.aw-gen-node:focus-visible,
 
 .aw-tline .p { color: #6EE7A0; }        /* prompt */
 .aw-tline .ok { color: #6ee7b7; }       /* success */
-.aw-tline .dim { color: rgba(236, 236, 241, 0.4); }
+.aw-tline .dim { color: rgba(236, 236, 241, 0.55); }
 .aw-tline .hot { color: #4dd0ff; }
 
 .aw-cursor {
@@ -1662,7 +1662,7 @@ button.aw-gen-node:focus-visible,
 
 .aw-reel-pane-title i { color: #6EE7A0; }
 
-.aw-reel-count { color: rgba(236, 236, 241, 0.42); font-size: 0.7rem; }
+.aw-reel-count { color: rgba(236, 236, 241, 0.55); font-size: 0.7rem; }
 
 .aw-reel-manifest {
   margin: 0;
@@ -1755,7 +1755,7 @@ button.aw-gen-node:focus-visible,
 }
 
 .aw-reel-stack-files {
-  color: rgba(236, 236, 241, 0.48);
+  color: rgba(236, 236, 241, 0.55);
   font-size: 0.65rem;
   line-height: 1.6;
 }
@@ -2013,7 +2013,7 @@ button.aw-gen-node:focus-visible,
   transform-origin: center top;
 }
 
-.aw-stack-card h4 {
+.aw-stack-card h3 {
   font-size: clamp(1.5rem, 2.5vw, 2.25rem);
   font-weight: 800;
   letter-spacing: -0.025em;
@@ -4129,7 +4129,7 @@ button.aw-gen-node:focus-visible,
       <div class="aw-stack-zone">
         <div class="aw-stack-card">
           <div>
-            <h4>Cloud dev environments</h4>
+            <h3>Cloud dev environments</h3>
             <p class="aw-stack-tools">Gitpod / Ona, GitHub Codespaces, Coder, Daytona, Codeanywhere, Replit</p>
           </div>
           <div class="aw-stack-meta">
@@ -4140,7 +4140,7 @@ button.aw-gen-node:focus-visible,
 
         <div class="aw-stack-card">
           <div>
-            <h4>Kubernetes dev tooling</h4>
+            <h3>Kubernetes dev tooling</h3>
             <p class="aw-stack-tools">Garden, Skaffold, DevSpace, Telepresence, mirrord, Nocalhost — plus weeks of YAML</p>
           </div>
           <div class="aw-stack-meta">
@@ -4151,7 +4151,7 @@ button.aw-gen-node:focus-visible,
 
         <div class="aw-stack-card">
           <div>
-            <h4>Golden Docker images</h4>
+            <h3>Golden Docker images</h3>
             <p class="aw-stack-tools">DIY base-image maintenance, CVE patching, cache strategy</p>
           </div>
           <div class="aw-stack-meta">
@@ -4162,7 +4162,7 @@ button.aw-gen-node:focus-visible,
 
         <div class="aw-stack-card">
           <div>
-            <h4>Per-service build config</h4>
+            <h3>Per-service build config</h3>
             <p class="aw-stack-tools">Hand-written Vite, TSConfig, Dockerfile, .npmrc and .env for every repo</p>
           </div>
           <div class="aw-stack-meta">
@@ -4173,7 +4173,7 @@ button.aw-gen-node:focus-visible,
 
         <div class="aw-stack-card">
           <div>
-            <h4>Secrets infrastructure</h4>
+            <h3>Secrets infrastructure</h3>
             <p class="aw-stack-tools">Vault / Infisical wiring, machine identities, token lifecycle per service</p>
           </div>
           <div class="aw-stack-meta">
@@ -4184,7 +4184,7 @@ button.aw-gen-node:focus-visible,
 
         <div class="aw-stack-card">
           <div>
-            <h4>Routing, registry and docs</h4>
+            <h3>Routing, registry and docs</h3>
             <p class="aw-stack-tools">nginx / Traefik configs, private npm registry, architecture diagrams, runbooks</p>
           </div>
           <div class="aw-stack-meta">
@@ -4195,7 +4195,7 @@ button.aw-gen-node:focus-visible,
 
         <div class="aw-stack-card">
           <div>
-            <h4>E2E test infrastructure</h4>
+            <h3>E2E test infrastructure</h3>
             <p class="aw-stack-tools">Playwright environment setup against the full running stack</p>
           </div>
           <div class="aw-stack-meta">
@@ -4206,7 +4206,7 @@ button.aw-gen-node:focus-visible,
 
         <div class="aw-stack-card">
           <div>
-            <h4>Onboarding runbooks</h4>
+            <h3>Onboarding runbooks</h3>
             <p class="aw-stack-tools">Wiki pages that rot within a month — replaced by flisk doctor and a live terminal UI</p>
           </div>
           <div class="aw-stack-meta">
