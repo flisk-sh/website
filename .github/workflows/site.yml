@@ -18,7 +18,11 @@ jobs:
         with:
           ruby-version: 3.3
           bundler-cache: true
+      - name: Test the claims check
+        run: node --test scripts/check-claims.test.mjs
       - name: Check registered public claims
         run: node scripts/check-claims.mjs
       - name: Build site
         run: bundle exec jekyll build
+      - name: Check every built page for forbidden claims
+        run: node scripts/check-claims.mjs --built
