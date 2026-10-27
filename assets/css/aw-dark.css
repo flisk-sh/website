@@ -1,5 +1,5 @@
 /* ============================================================
-   Flisk — shared dark design system for subpages (Geist)
+   Flisk — shared dark design system for subpages (Satoshi)
    Scoped under .aw wrapper; body tinted only when .aw present
    ============================================================ */
 
@@ -242,7 +242,7 @@ body:has(.aw) .page-content {
 }
 
 .aw {
-  font-family: 'Satoshi', 'Geist', 'Space Grotesk', sans-serif;
+  font-family: 'Satoshi', 'Space Grotesk', sans-serif;
   color: #ececf1;
   background: #0a0a0e;
   -webkit-font-smoothing: antialiased;
@@ -1302,7 +1302,7 @@ body:has(.aw) .page-content {
 .aw-blog-kicker strong {
   display: block;
   margin-bottom: 0.75rem;
-  font-family: 'Satoshi', 'Geist', 'Space Grotesk', sans-serif;
+  font-family: 'Satoshi', 'Space Grotesk', sans-serif;
   font-size: 1rem;
   color: #fff;
   letter-spacing: -0.015em;
@@ -1600,7 +1600,7 @@ body:has(.aw) .page-content {
 
 /* ---------------- Blog index ---------------- */
 .aw-blog-index {
-  font-family: 'Geist', 'Space Grotesk', sans-serif;
+  font-family: 'Satoshi', 'Space Grotesk', sans-serif;
 }
 
 .aw-blog-hero {
