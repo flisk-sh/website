@@ -746,3 +746,15 @@ html {
     transition: none;
   }
 }
+/* ---------------- One h1 face across the site ----------------
+   Every page's main heading uses the same mono face, weight, tracking and size
+   scale (after warp.dev). Page stylesheets set their own h1 rules with higher
+   specificity, so these four properties are pinned here; colour, accent spans
+   and layout stay per page. */
+h1 {
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  font-weight: 400 !important;
+  font-size: clamp(2.25rem, 4.4vw, 3.5rem) !important;
+  letter-spacing: -0.06em !important;
+  line-height: 1.2;
+}
