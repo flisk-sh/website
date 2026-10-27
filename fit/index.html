@@ -178,6 +178,7 @@ description: "Answer five questions about how your team runs services today and 
 .aw-fit-reasons li[data-mark="✓"]::before { color: #6ee7b7; }
 .aw-fit-reasons li[data-mark="~"]::before { color: #86EFAC; }
 .aw-fit-reasons li[data-mark="✗"]::before { color: rgba(236, 236, 241, 0.4); }
+.aw-fit-reasons li[data-mark="="]::before { color: rgba(236, 236, 241, 0.6); }
 
 .aw-fit-result .aw-btn {
   width: 100%;
@@ -218,11 +219,11 @@ description: "Answer five questions about how your team runs services today and 
             <label>Primary runtime</label>
             <div class="aw-fit-pills" data-group="runtime">
               <button type="button" data-value="10" class="is-active">Node.js / TypeScript / Bun</button>
-              <button type="button" data-value="7">Python</button>
-              <button type="button" data-value="7">Go</button>
+              <button type="button" data-value="9">Python</button>
+              <button type="button" data-value="9">Go</button>
               <button type="button" data-value="6">Java / JVM</button>
               <button type="button" data-value="6">Ruby / PHP</button>
-              <button type="button" data-value="4">Other</button>
+              <button type="button" data-value="5">Other</button>
             </div>
           </div>
 
@@ -236,7 +237,7 @@ description: "Answer five questions about how your team runs services today and 
               <button type="button" data-value="7" data-profile="container-ui">Portainer / Rancher Desktop / OrbStack</button>
               <button type="button" data-value="6" data-profile="dev-container">Dev Containers (VS Code Remote)</button>
               <button type="button" data-value="5" data-profile="cloud-ide">Cloud IDE (Gitpod / Codespaces / Coder)</button>
-              <button type="button" data-value="4" data-profile="native">No containers — native processes</button>
+              <button type="button" data-value="8" data-profile="native">No containers — native processes</button>
               <button type="button" data-value="5" data-profile="other">Other / custom setup</button>
             </div>
           </div>
@@ -376,8 +377,18 @@ function calcFit() {
   var svcScore = serviceScore(services);
   var devScore = devsScore(devs);
 
-  var total = Math.round(runtimeScore + todayScore + painScore + svcScore + devScore);
-  total = Math.max(0, Math.min(100, total));
+  var painButtons = document.querySelectorAll('.aw-fit-pills[data-group="pain"] button.is-active');
+  var painIsNone = painButtons.length === 1 && painButtons[0].dataset.exclusive === 'true';
+
+  // Caps keep the verdict in line with the reasons below. Same rules as scripts/docs/fit.mjs in flisk-sh/flisk.
+  var raw = Math.round(runtimeScore + todayScore + painScore + svcScore + devScore);
+  var cap = null;
+  if (services <= 1) cap = { limit: 40, mark: '✗', why: 'One service: Flisk is a multi-service tool, so the score stops at 40%.' };
+  else if (services < 5) cap = { limit: 74, mark: '~', why: 'Fewer than 5 services: the score stops at 74%, below a strong fit.' };
+  if ((painButtons.length === 0 || painIsNone) && (!cap || cap.limit > 60)) {
+    cap = { limit: 60, mark: '~', why: 'Nothing slows you down today: the score stops at 60%.' };
+  }
+  var total = Math.max(0, Math.min(100, cap ? Math.min(raw, cap.limit) : raw));
 
   document.getElementById('fit-score').textContent = total + '%';
   document.getElementById('fit-bar').style.width = total + '%';
@@ -408,10 +419,12 @@ function calcFit() {
   var runtimeLabel = (selectedLabels('runtime')[0] || '');
   if (runtimeVals[0] >= 10) {
     reasons.push(['✓', 'Native support — Vite, TypeScript, Bun and Prisma golden images ship out of the box.']);
+  } else if (runtimeVals[0] >= 9) {
+    reasons.push(['✓', runtimeLabel + ' has a backend scaffold: flisk resource api --type backend --language ' + runtimeLabel.toLowerCase() + '.']);
   } else if (runtimeVals[0] >= 6) {
-    reasons.push(['~', 'Docker-based services work today; generators are tuned for Node/TS/Bun first.']);
+    reasons.push(['~', 'No ' + runtimeLabel + ' scaffold yet: bring your own Dockerfile, or give each service a command and run it without Docker.']);
   } else {
-    reasons.push(['✗', runtimeLabel + ' stacks aren\'t the primary target for Flisk\'s generators yet.']);
+    reasons.push(['~', 'Scaffolds exist for Node, Python, Go and Rust; anything else runs from your own Dockerfile or a command.']);
   }
 
   var todayProfile = selectedProfile('today');
@@ -430,13 +443,11 @@ function calcFit() {
   } else if (todayProfile === 'cloud-ide') {
     reasons.push(['~', 'Cloud IDEs solve a different problem — Flisk runs the same stack on your machine, no per-seat bill.']);
   } else if (todayProfile === 'native') {
-    reasons.push(['~', 'You\'ll containerize as part of adopting Flisk — worth it once you pass ~5 services.']);
+    reasons.push(['✓', 'Keep your processes: give each service a command and Flisk runs them without Docker. Containers come when you need a database or one gateway URL.']);
   } else {
     reasons.push(['~', 'A custom setup may fit — compare its orchestration, generated files and diagnostics with Flisk\'s workflow.']);
   }
 
-  var painButtons = document.querySelectorAll('.aw-fit-pills[data-group="pain"] button.is-active');
-  var painIsNone = painButtons.length === 1 && painButtons[0].dataset.exclusive === 'true';
   if (painButtons.length === 0 || painIsNone) {
     reasons.push(['✗', 'Nothing\'s broken today — Flisk mostly pays off once local dev has friction.']);
   } else {
@@ -458,6 +469,10 @@ function calcFit() {
   } else {
     reasons.push(['✓', 'Your user-set assumptions model ' + devs + ' developers. The output is arithmetic, not measured savings.']);
   }
+
+  if (cap && raw > cap.limit) reasons.push([cap.mark, cap.why]);
+  reasons.push(['=', 'Runtime ' + runtimeScore + ' + setup ' + todayScore + ' + pains ' + painScore + ' + services ' + svcScore + ' + team ' + devScore +
+    ' = ' + raw + ' of 100' + (cap && raw > cap.limit ? ', capped at ' + cap.limit : '') + '.']);
 
   var list = document.getElementById('fit-reasons');
   list.innerHTML = '';
