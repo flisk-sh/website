@@ -187,13 +187,9 @@ description: "Give Claude Code, Cursor or Codex the Flisk runtime: the flisk mcp
       </div>
 
       <!--
-        TODO(flisk connect): replace the per-host commands below with the one-command
-        version once feat/flisk-for-agents lands in flisk-sh/flisk (likely
-        `flisk connect <host>`, for example `flisk connect claude-code`). Confirm the exact
-        command and host names against the released CLI before changing this block, and
-        update the "How it works" step 1 and the FAQ answer about setup to match.
-        Until then these are the commands that work today, taken from flisk-sh/flisk
-        docs/agents/claude-code.md, cursor.md, codex.md and docs/agent-hosts.md.
+        `flisk connect <claude|cursor|codex>` shipped in flisk 1.4.9 (flisk-sh/flisk
+        docs/agents/flisk-for-agents.md). It writes the host's MCP entry and the Flisk skills,
+        merges with existing settings, and reports a different existing entry as `kept`.
       -->
       <div class="ag-tabs" id="connect">
         <div class="aw-install-tabs-bar" role="tablist" aria-label="Choose your coding agent">
@@ -208,25 +204,25 @@ description: "Give Claude Code, Cursor or Codex the Flisk runtime: the flisk mcp
           <div class="ag-panel" role="tabpanel" id="ag-panel-claude" aria-labelledby="ag-tab-claude" tabindex="0">
             <pre><span class="c"># install the Flisk CLI</span>
 {{ site.data.flisk.install_npm }}
-<span class="c"># connect the flisk mcp server to Claude Code</span>
-claude mcp add --scope project flisk -- flisk mcp</pre>
-            <p class="ag-tab-note">This writes <code>.mcp.json</code>; Claude Code asks you to approve it once. <code>flisk project</code> adds the Flisk skills to <code>.claude/skills/</code>.</p>
+<span class="c"># connect it to Claude Code</span>
+flisk connect claude</pre>
+            <p class="ag-tab-note">This writes <code>.mcp.json</code> and the Flisk skills in <code>.claude/skills/</code>; Claude Code asks you to approve the server once. Add <code>--dry-run</code> to see the files first.</p>
           </div>
 
           <div class="ag-panel" role="tabpanel" id="ag-panel-cursor" aria-labelledby="ag-tab-cursor" tabindex="0">
             <pre><span class="c"># install the Flisk CLI</span>
 {{ site.data.flisk.install_npm }}
-<span class="c"># then create .cursor/mcp.json in the project</span>
-{ "mcpServers": { "flisk": { "type": "stdio", "command": "flisk", "args": ["mcp"] } } }</pre>
-            <p class="ag-tab-note">Cursor has no command to add a server, so the file is the setup. It reads the <code>AGENTS.md</code> and skills that <code>flisk project</code> writes.</p>
+<span class="c"># connect it to Cursor</span>
+flisk connect cursor</pre>
+            <p class="ag-tab-note">This writes <code>.cursor/mcp.json</code> and the Flisk skills in <code>.agents/skills/</code>, keeping any other servers in the file. Add <code>--dry-run</code> to see the files first.</p>
           </div>
 
           <div class="ag-panel" role="tabpanel" id="ag-panel-codex" aria-labelledby="ag-tab-codex" tabindex="0">
             <pre><span class="c"># install the Flisk CLI</span>
 {{ site.data.flisk.install_npm }}
-<span class="c"># connect the flisk mcp server to Codex</span>
-codex mcp add flisk -- flisk mcp</pre>
-            <p class="ag-tab-note">Codex reads the <code>AGENTS.md</code> and the skills in <code>.agents/skills/</code> that <code>flisk project</code> writes.</p>
+<span class="c"># connect it to Codex</span>
+flisk connect codex</pre>
+            <p class="ag-tab-note">This writes <code>.codex/config.toml</code> and the Flisk skills in <code>.agents/skills/</code>. Codex loads a project config only for trusted projects.</p>
           </div>
 
           <div class="ag-panel" role="tabpanel" id="ag-panel-other" aria-labelledby="ag-tab-other" tabindex="0">
@@ -285,8 +281,8 @@ codex mcp add flisk -- flisk mcp</pre>
           <h3>The rest of the toolbox</h3>
           <p>Restart one service, stop the stack, inspect agent sessions, list networks and regenerate config.</p>
           <ul class="ag-more-list" aria-label="Other MCP tools">
-            <li>down</li><li>restart_resource</li><li>resource_list</li><li>stack_list</li><li>stack_assign</li><li>project_info</li>
-            <li>network_list</li><li>list_agents</li><li>get_agent_sessions</li><li>config_explain</li><li>config_regenerate</li><li>runtime_check</li>
+            <li>down</li><li>resource_restart</li><li>resource_list</li><li>stack_list</li><li>stack_assign</li><li>project_info</li><li>project_import</li>
+            <li>network_list</li><li>agent_list</li><li>agent_sessions</li><li>config_explain</li><li>config_regenerate</li><li>runtime_check</li><li>project_eject</li>
           </ul>
         </article>
       </div>
@@ -304,7 +300,7 @@ codex mcp add flisk -- flisk mcp</pre>
         <li class="ag-step">
           <span class="ag-step-n" aria-hidden="true">01</span>
           <h3>Connect your agent</h3>
-          <p>Install the CLI and add <code>flisk mcp</code> to Claude Code, Cursor or Codex. The server runs over stdio on your machine.</p>
+          <p>Install the CLI and run <code>flisk connect claude</code>, <code>cursor</code> or <code>codex</code>. It adds the <code>flisk mcp</code> server and the Flisk skills; the server runs over stdio on your machine.</p>
         </li>
         <li class="ag-step">
           <span class="ag-step-n" aria-hidden="true">02</span>
@@ -395,7 +391,7 @@ and run it on my laptop with Flisk.</pre>
         </details>
         <details class="aw-faq-item">
           <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Can it run AI agents as services, too?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
-          <div class="aw-faq-a">Yes. An <code>agent</code> resource gets health and readiness endpoints and stored sessions that survive restarts, and the MCP tools <code>list_agents</code> and <code>get_agent_sessions</code> let your coding agent inspect them.</div>
+          <div class="aw-faq-a">Yes. An <code>agent</code> resource gets health and readiness endpoints and stored sessions that survive restarts, and the MCP tools <code>agent_list</code> and <code>agent_sessions</code> let your coding agent inspect them.</div>
         </details>
       </div>
     </div>
