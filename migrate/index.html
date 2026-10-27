@@ -163,7 +163,7 @@ description: "Move your local development from Docker Compose, Tilt, Skaffold or
   align-items: start;
 }
 
-.aw-mig-steps ol {
+.aw-mig-steps > ol {
   list-style: none;
   counter-reset: mig;
   padding: 0;
@@ -172,9 +172,9 @@ description: "Move your local development from Docker Compose, Tilt, Skaffold or
   gap: 1.75rem;
 }
 
-.aw-mig-steps li { counter-increment: mig; display: grid; grid-template-columns: 2.5rem 1fr; }
+.aw-mig-steps > ol > li { counter-increment: mig; display: grid; grid-template-columns: 2.5rem 1fr; }
 
-.aw-mig-steps li::before {
+.aw-mig-steps > ol > li::before {
   content: counter(mig, decimal-leading-zero);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
@@ -183,7 +183,17 @@ description: "Move your local development from Docker Compose, Tilt, Skaffold or
 }
 
 .aw-mig-steps h3 { font-size: 1.125rem; font-weight: 600; color: #fff; margin: 0 0 0.375rem; }
-.aw-mig-steps p { font-size: 0.9375rem; line-height: 1.6; color: rgba(236, 236, 241, 0.6); margin: 0; }
+.aw-mig-steps > ol p { font-size: 0.9375rem; line-height: 1.6; color: rgba(236, 236, 241, 0.6); margin: 0; }
+.aw-mig-steps > * { min-width: 0; }
+
+/* What the agent does */
+.aw-mig-flow { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.875rem; }
+.aw-mig-flow li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem; font-size: 0.9375rem; line-height: 1.55; color: rgba(236, 236, 241, 0.65); }
+.aw-mig-flow code { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: #6EE7A0; background: none; padding: 0; }
+
+@media (max-width: 560px) {
+  .aw-mig-flow li { grid-template-columns: 1fr; gap: 0.25rem; }
+}
 
 /* Further reading */
 .aw-mig-reads { list-style: none; padding: 0; margin: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
@@ -230,7 +240,7 @@ description: "Move your local development from Docker Compose, Tilt, Skaffold or
           <li><span><strong>Core is MIT licensed.</strong> Migrating needs no license key and no paid plan.</span></li>
         </ul>
 
-        <p class="aw-mig-alt">Solo project or side project? Start with the <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a> and <span class="aw-mono">flisk import</span> instead.</p>
+        <p class="aw-mig-alt">Solo project or side project? Start with the <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a> and <span class="aw-mono">flisk import</span>, or <a href="#agent">ask your coding agent to migrate it</a>.</p>
       </div>
 
       <form class="aw-mig-form" id="migrate-form" novalidate>
@@ -372,6 +382,50 @@ description: "Move your local development from Docker Compose, Tilt, Skaffold or
 
 <span class="c"># 4. run the whole stack</span>
 <span class="k">flisk</span> up</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ask your coding agent -->
+  <section class="aw-section" id="agent" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>Or ask your coding agent to migrate it</h2>
+        <p>Connect Claude Code, Cursor or Codex to Flisk, open your repo and paste the prompt. The agent runs the same steps through the <span class="aw-mono">flisk mcp</span> server.</p>
+      </div>
+
+      <div class="aw-mig-steps">
+        <div>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal, in your repo</span></div>
+            <pre><span class="c"># install the Flisk CLI</span>
+{{ site.data.flisk.install_npm }}
+
+<span class="c"># connect your agent (pick one)</span>
+<span class="k">flisk</span> connect claude
+<span class="k">flisk</span> connect cursor
+<span class="k">flisk</span> connect codex</pre>
+          </div>
+          <p class="aw-mig-alt">This adds the <span class="aw-mono">flisk mcp</span> server and the Flisk skills to your repo. Other MCP clients and setup details: <a href="{{ '/agents/' | relative_url }}">Flisk for AI agents</a>.</p>
+        </div>
+
+        <div>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>prompt</span></div>
+            <pre id="mig-agent-prompt">Migrate this repo's local development to Flisk.
+Import the services from docker-compose.yml, show me
+the plan before writing anything, then start the
+stack and fix anything that fails to come up.</pre>
+          </div>
+          <ol class="aw-mig-flow" aria-label="What the agent does next">
+            <li><code>doctor</code><span>Checks that Docker and Tilt are ready on this machine.</span></li>
+            <li><code>project_import</code><span>Runs with <span class="aw-mono">dryRun</span> first and shows you the plan, then writes a <span class="aw-mono">service.json</span> per compose service.</span></li>
+            <li><code>config_verify</code><span>Checks every manifest and the generated files.</span></li>
+            <li><code>up, status</code><span>Starts the stack and waits until every service is ready.</span></li>
+            <li><code>logs</code><span>If a service fails, reads the error, fixes the manifest or code and starts again.</span></li>
+          </ol>
+          <p class="aw-mig-alt">The exact steps depend on your agent and your prompt. Review the <span class="aw-mono">service.json</span> files it writes like any other pull request. Stuck halfway? <a href="#migrate-form">Request migration help</a>.</p>
         </div>
       </div>
     </div>
