@@ -519,6 +519,11 @@ document.addEventListener('DOMContentLoaded', function () {
     status.className = 'aw-mig-status ' + kind;
     status.innerHTML = html;
   }
+  // Text that comes back from the server is shown as text, never parsed as HTML.
+  function showStatusText(kind, text) {
+    status.className = 'aw-mig-status ' + kind;
+    status.textContent = text;
+  }
 
   function mailtoFor(details) {
     var body = 'Hi Flisk team,\n\nWe would like help migrating our local development to Flisk.\n\n' +
@@ -557,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       if (res.status === 429) {
         var limited = await res.json().catch(function () { return {}; });
-        showStatus('is-err', limited.error || 'Too many requests. Try again shortly.');
+        showStatusText('is-err', String(limited.error || 'Too many requests. Try again shortly.'));
         btn.disabled = false;
         btn.textContent = 'Request migration help';
         return;
