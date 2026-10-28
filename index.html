@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Flisk CLI — start services on your machine
-description: Your whole stack, running locally. One service.json per service, then flisk up. Not a deploy tool, not a Compose replacement.
+description: Have a docker-compose.yml? flisk import, then flisk up, runs it locally with routes, rebuilds on save and an MCP server for your AI agent. Not a deploy tool.
 image: /assets/images/flisk-social-card.png
 ---
 
@@ -31,9 +31,9 @@ image: /assets/images/flisk-social-card.png
       <a class="aw-hero-pill" href="https://github.com/flisk-sh/flisk/releases/latest" target="_blank" rel="noopener">
         <span class="aw-hero-pill-tag">New</span><span data-latest-release>Latest release</span><span aria-hidden="true">→</span>
       </a>
-      <h1>Run your multi-service stack on your machine with one command.</h1>
+      <h1>Your <code>docker-compose.yml</code>, running locally and updating as you save.</h1>
       <p class="aw-hero-sub">
-        Define each service once in <code>service.json</code>, then run <code>flisk up</code>. Flisk generates the local Docker and Tilt wiring, so services update as you code. No Kubernetes, no Compose file to maintain. Not a deploy tool. Production stays on Helm.
+        Run <code>flisk import .</code>, then <code>flisk up</code>. Every service keeps its ports, names and env values, gets a route and an MCP server your AI agent can drive, and rebuilds when you save its files. No Compose file? Start with <code>flisk project</code>. No Kubernetes. Not a deploy tool.
       </p>
       <div class="aw-install" aria-label="Install the Flisk CLI">
         <p class="aw-install-label">Install the CLI</p>
@@ -61,7 +61,7 @@ image: /assets/images/flisk-social-card.png
         <a href="https://github.com/flisk-sh/flisk" class="aw-btn aw-btn-ghost" target="_blank" rel="noopener"><i class="bi bi-github" aria-hidden="true"></i>&nbsp;Source on GitHub</a>
       </div>
       <p class="aw-hero-status">Stability: 1.x local dev. Generated files are a contract; verify with flisk config verify. Core CLI is MIT and needs no key. Premium is optional.</p>
-      <p class="aw-hero-proof">14 tiny services healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot. <a href="{{ '/docs/claims/' | relative_url }}">Claim details</a>.</p>
+      <p class="aw-hero-proof">A plain Compose app (a Node API and Postgres) answered 49 s after <code>flisk import</code> on a clean Ubuntu CI runner, images pulled and built from scratch, install not counted. <a href="https://github.com/flisk-sh/flisk/actions/runs/40660606705" target="_blank" rel="noopener">Run</a> · <a href="{{ '/docs/claims/' | relative_url }}#compose-import">Claim details</a>.</p>
       </div>
 
       <aside class="aw-bench" aria-label="Flisk benchmark results" data-bench>
