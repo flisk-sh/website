@@ -11,6 +11,10 @@ if ($processArchitecture -ne 'AMD64' -and -not $isX64Emulated) {
     exit 1
 }
 
+# Windows PowerShell 5.1 can default to TLS 1.0/1.1, which GitHub refuses.
+# Add TLS 1.2 without turning off anything newer the system already allows.
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
 $baseUrl = 'https://github.com/flisk-sh/releases/releases/latest/download'
 $installDir = if ($env:FLISK_INSTALL_DIR) {
     $env:FLISK_INSTALL_DIR
@@ -27,22 +31,27 @@ try {
     $checksumsPath = Join-Path $tempDir 'checksums.txt'
 
     try {
-        Invoke-WebRequest "$baseUrl/$exeName" -OutFile $exeDownload
+        Invoke-WebRequest -UseBasicParsing "$baseUrl/$exeName" -OutFile $exeDownload
     } catch {
         throw 'The latest Flisk release does not include flisk-windows-amd64.exe yet. Wait for a Windows-enabled release, then rerun this installer.'
     }
-    Invoke-WebRequest "$baseUrl/flisk-cli-engine.tar.gz" -OutFile $engineArchive
-    Invoke-WebRequest "$baseUrl/checksums.txt" -OutFile $checksumsPath
+    Invoke-WebRequest -UseBasicParsing "$baseUrl/flisk-cli-engine.tar.gz" -OutFile $engineArchive
+    Invoke-WebRequest -UseBasicParsing "$baseUrl/checksums.txt" -OutFile $checksumsPath
 
-    $checksumLine = Get-Content $checksumsPath | Where-Object { $_ -match "\s\*?$([regex]::Escape($exeName))$" } | Select-Object -First 1
-    if (-not $checksumLine -or $checksumLine -notmatch '^([a-fA-F0-9]{64})\s+\*?') {
-        throw "checksums.txt has no valid SHA-256 entry for $exeName"
+    # Every download must match its checksums.txt line; a missing line is refused.
+    function Assert-Checksum([string]$Path, [string]$Name) {
+        $checksumLine = Get-Content $checksumsPath | Where-Object { $_ -match "\s\*?$([regex]::Escape($Name))$" } | Select-Object -First 1
+        if (-not $checksumLine -or $checksumLine -notmatch '^([a-fA-F0-9]{64})\s+\*?') {
+            throw "checksums.txt has no valid SHA-256 entry for $Name; refusing to install it unverified"
+        }
+        $expectedHash = $Matches[1].ToLowerInvariant()
+        $actualHash = (Get-FileHash -Algorithm SHA256 $Path).Hash.ToLowerInvariant()
+        if ($actualHash -ne $expectedHash) {
+            throw "checksum mismatch for $Name (expected $expectedHash, got $actualHash)"
+        }
     }
-    $expectedHash = $Matches[1].ToLowerInvariant()
-    $actualHash = (Get-FileHash -Algorithm SHA256 $exeDownload).Hash.ToLowerInvariant()
-    if ($actualHash -ne $expectedHash) {
-        throw "checksum mismatch for $exeName (expected $expectedHash, got $actualHash)"
-    }
+    Assert-Checksum $exeDownload $exeName
+    Assert-Checksum $engineArchive 'flisk-cli-engine.tar.gz'
 
     New-Item -ItemType Directory -Force -Path $installDir | Out-Null
     $engineDir = Join-Path $installDir 'flisk-cli'
