@@ -41,6 +41,35 @@ export function findForbiddenClaims(html) {
   return found;
 }
 
+// The "@grok bubbles" instructions in llms.txt and llms-full.txt, from "## Personal Demos" to the heading
+// after "## Bubbles". demo.flisk.sh builds only from /<handle>/<words>: a bare /<handle> opens a demo the
+// person already has (a 404 otherwise), and /d/<id> ids are made by the server.
+export function demoSection(text) {
+  const start = text.indexOf('## Personal Demos');
+  const end = text.indexOf('\n## ', text.indexOf('## Bubbles'));
+  return start >= 0 && end > start ? text.slice(start, end) : '';
+}
+
+export function demoLinkProblems(text) {
+  const section = demoSection(text);
+  if (!section) return ['has no Personal Demos and Bubbles sections'];
+  const problems = [];
+  for (const sentence of section.split(/\n|(?<=\.)\s/)) {
+    for (const [link] of sentence.matchAll(/https:\/\/demo\.flisk\.sh\/[^\s`"]*/g)) {
+      if (link.includes('/v1/demo/')) continue; // the JSON API, read and never posted
+      if (link.startsWith('https://demo.flisk.sh/d/')) {
+        problems.push(`offers a /d/ link, whose ids only the server makes: ${link}`);
+      } else if (/^https:\/\/demo\.flisk\.sh\/<x-handle>$/.test(link)) {
+        if (!sentence.includes('404')) problems.push(`offers a bare-handle demo link, which builds nothing: "${sentence.trim()}"`);
+      } else if (!/^https:\/\/demo\.flisk\.sh\/[^/]+\/[^/]+$/.test(link)) {
+        problems.push(`offers a demo link without words: ${link}`);
+      }
+    }
+  }
+  if (!section.includes('Never write a `/d/...` link yourself')) problems.push('does not say to never write a /d/ link');
+  return problems;
+}
+
 const PAGE_EXT = /\.(?:html?|md|markdown|ya?ml|txt)$/i;
 const SKIP_DIRS = new Set(['.git', '.github', '.claude', '.jekyll-cache', '.sass-cache', 'node_modules', 'vendor', 'assets', 'scripts', 'test', '_site']);
 
@@ -134,6 +163,11 @@ function main() {
     if (readFileSync(new URL(name, root), 'utf8').includes('\uFF20')) {
       failures.push(`${name} contains a fullwidth at-sign (U+FF20); use the ASCII at-sign`);
     }
+  }
+  const [llms, llmsFull] = ['llms.txt', 'llms-full.txt'].map((name) => readFileSync(new URL(name, root), 'utf8'));
+  for (const problem of demoLinkProblems(llms)) failures.push(`llms.txt ${problem}`);
+  if (demoSection(llms) !== demoSection(llmsFull)) {
+    failures.push('llms-full.txt has different Personal Demos and Bubbles sections from llms.txt; keep them identical');
   }
 
   // Every source page, include, layout and data file. With --built, every built page in _site/
