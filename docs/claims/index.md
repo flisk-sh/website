@@ -15,6 +15,12 @@ layout: default
 
         <p>Flisk CLI turns a <code>service.json</code> per service into a local Docker stack, with Tilt (the local development tool) watching services and live-updating containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.</p>
 
+        <h2 id="compose-import">Compose import</h2>
+
+        <blockquote><p>A plain Compose app (a Node API and Postgres) answered 49 s after <code>flisk import</code> on a clean Ubuntu CI runner, images pulled and built from scratch, install not counted (<a href="https://github.com/flisk-sh/flisk/actions/runs/40660606705">run</a>).</p></blockquote>
+
+        <p>One cold run of the <code>compose-import</code> journey (case CI3) on 2026-10-28. CI repeats it on every pull request to the Flisk CLI. A larger app takes longer.</p>
+
         <h2>14-service demo</h2>
 
         <blockquote><p>14 tiny services healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot.</p></blockquote>
