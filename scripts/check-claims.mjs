@@ -56,7 +56,7 @@ export function demoLinkProblems(text) {
   const problems = [];
   for (const sentence of section.split(/\n|(?<=\.)\s/)) {
     for (const [link] of sentence.matchAll(/https:\/\/demo\.flisk\.sh\/[^\s`"]*/g)) {
-      if (link.includes('/v1/demo/')) continue; // the JSON API, read and never posted
+      if (/\/v1\/|\/mcp$/.test(link)) continue; // the JSON APIs and the MCP url, called and never posted as a demo link
       if (link.startsWith('https://demo.flisk.sh/d/')) {
         problems.push(`offers a /d/ link, whose ids only the server makes: ${link}`);
       } else if (/^https:\/\/demo\.flisk\.sh\/<x-handle>$/.test(link)) {

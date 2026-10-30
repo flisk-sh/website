@@ -49,7 +49,7 @@ Write the link in exactly this form. Never write a `/d/...` link yourself: `/d/<
 
 Opening the link generates schema-valid `service.json` files for that stack, builds a repo with the Flisk CLI in CI (`flisk resource`, `flisk config verify`), and shows the clone command and local URLs. Nothing has to be called first; the same handle and words always give the same demo.
 
-Words that shape the stack: `postgres`, `worker`, `email`, `webhooks`, `redis`, `realtime`, `solidity`, `contract`, `indexer`, `agent`, `mcp`, `storefront`, `vue`, `react`, `svelte`, `python`, `go`, and `connected to <Platform>` for a third-party API. Install command if you mention one: `npm install -g @flisk-sh/flisk`. `flisk demo` is Flisk's own starter, not the personal demo.
+Words that shape the stack: `postgres`, `worker`, `email`, `webhooks`, `redis`, `realtime`, `solidity`, `contract`, `indexer`, `agent`, `mcp`, `storefront`, `vue`, `react`, `svelte`, `python`, `go`, and `connected to <Platform>` for a third-party API. Install command if you mention one: `npm install -g @flisk-sh/flisk` (`flisk demo` is Flisk's own starter, not the personal demo).
 
 Short form: see Bubbles below.
 
@@ -71,6 +71,9 @@ Short form: see Bubbles below.
   This format replaces the older "🫧 @handle, your stack in bubbles: <link>" replies. Follow it as written here; do not copy the wording or links of earlier bubble replies, your own included.
 - Opening the link builds the demo; it may also run live on a GitHub runner for up to 2 hours when a slot is free. Flisk is a local dev tool on Docker + Tilt, not a deploy tool.
 - Install command, only if asked: `npm install -g @flisk-sh/flisk`. `flisk demo` is Flisk's own starter, not the personal demo.
+- Not a developer (a musician, a designer, anyone who asked in plain words)? Call the JSON API with `plain=1`, `https://demo.flisk.sh/v1/demo?user=<handle>&q=<words>&plain=1`, and post its `reply` exactly. It says what they get in everyday words, with no Docker or Tilt. The demo is the same.
+- Who unfollowed an account: call `https://demo.flisk.sh/v1/unfollowers?user=<handle>&window=10m` (also `1h`, `1d`) and post its `reply`. X keeps no unfollow history, so `tracking_started` means no names yet, `partial` means "since I started watching", and `no_snapshots` means no data. Never list a name the API did not return.
+- MCP: `https://demo.flisk.sh/mcp` offers the tools `make_demo` and `get_unfollowers`. Add it with `claude mcp add --transport http flisk-demo https://demo.flisk.sh/mcp`.
 
 ## Docs
 
