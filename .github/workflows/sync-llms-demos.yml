@@ -25,19 +25,22 @@ jobs:
           node-version: 22
       - run: node scripts/sync-llms-demos.mjs
       - name: Open a pull request when the text changed
+        # Context values go through env, never into the script text (template injection).
         env:
           GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           if git diff --quiet; then echo "up to date"; exit 0; fi
           branch=chore/sync-llms-demos
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # The checkout keeps no credentials (persist-credentials: false), so push with the job token.
-          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
           git checkout -B "$branch"
           git commit -s -am "docs(llms): sync the demo instructions from demo.flisk.sh"
           git push --force origin "$branch"
-          gh pr create --base "${{ github.event.repository.default_branch }}" --head "$branch" \
+          gh pr create --base "$DEFAULT_BRANCH" --head "$branch" \
             --title "docs(llms): sync the demo instructions from demo.flisk.sh" \
             --body "The Personal Demos and Bubbles text changed at its source (flisk-sh/flisk-demo-worker, src/llms.js, served at https://demo.flisk.sh/llms-demos.txt). Do not edit it here: change the source." \
             || gh pr edit "$branch" --body "Refreshed from https://demo.flisk.sh/llms-demos.txt."
