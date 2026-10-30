@@ -23,6 +23,8 @@ jobs:
           bundler-cache: true
       - name: Test the claims check
         run: node --test scripts/check-claims.test.mjs
+      - name: Test the llms demo sync
+        run: node --test scripts/sync-llms-demos.test.mjs
       - name: Check registered public claims
         run: node scripts/check-claims.mjs
       - name: Build site

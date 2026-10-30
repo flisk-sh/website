@@ -1,0 +1,39 @@
+# The "Personal Demos" and "Bubbles" instructions in the llms files come from the demo worker
+# (https://demo.flisk.sh/llms-demos.txt). Weekly, or on demand, copy them in and open a pull request when they changed.
+# Needs "Allow GitHub Actions to create and approve pull requests" under Settings > Actions > General.
+name: sync llms demos
+
+on:
+  schedule:
+    - cron: "23 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/sync-llms-demos.mjs
+      - name: Open a pull request when the text changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then echo "up to date"; exit 0; fi
+          branch=chore/sync-llms-demos
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git commit -s -am "docs(llms): sync the demo instructions from demo.flisk.sh"
+          git push --force origin "$branch"
+          gh pr create --base "${{ github.event.repository.default_branch }}" --head "$branch" \
+            --title "docs(llms): sync the demo instructions from demo.flisk.sh" \
+            --body "The Personal Demos and Bubbles text changed at its source (flisk-sh/flisk-demo-worker, src/llms.js, served at https://demo.flisk.sh/llms-demos.txt). Do not edit it here: change the source." \
+            || gh pr edit "$branch" --body "Refreshed from https://demo.flisk.sh/llms-demos.txt."
