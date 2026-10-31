@@ -190,10 +190,10 @@ work_hours_num: 2080       # working hours/year in the ROI formula (numeric, JS)
 work_hours: "2,080"        # same, display form
 cloud_cde_max: "$150"      # top of the Codespaces-class range, per dev/month
 cloud_sandbox: "$500"      # hosted-sandbox alternative, per dev/month
-team_price: 19             # Flisk Team, USD per dev per month
-team_annual_10: "$2,280"   # 10 devs × team_price × 12 — keep in sync
+team_price: 17             # Flisk Team, USD per dev per month
+team_annual_10: "$2,040"   # 10 devs × team_price × 12 — keep in sync
 community_price: "$0"      # Community tier / "Flisk itself costs…" claims
-roi_net_default: "$147,720"  # calculator default: 10 devs × 5 h × 48 wk × $62.50/h − 10 × $19 × 12
+roi_net_default: "$147,960"  # calculator default: 10 devs × 5 h × 48 wk × $62.50/h − 10 × $17 × 12
 roi_hours_default: "2,400"    # static placeholder before JS runs (10×5×48)
 roi_prod_default: "$150,000"  # static placeholder before JS runs
 
