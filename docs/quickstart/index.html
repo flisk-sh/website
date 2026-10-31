@@ -28,7 +28,7 @@ description: "Install Flisk CLI, check your machine with flisk doctor, clone a w
         </div>
 
         <h2 id="before-you-run-it">Before you run it</h2>
-        <p>Starting a local stack needs Docker and Tilt. The standalone CLI binary needs no host Node.js or Bun; installing the CLI from npm requires Node.js {{ site.data.flisk.prereq_node }}.</p>
+        <p>Docker is optional: <code>npx @flisk-sh/flisk demo</code> and services that declare a <code>command</code> run as local processes with only their own runtime. A container stack needs Docker and Tilt. The standalone CLI binary needs no host Node.js or Bun; installing the CLI from npm requires Node.js {{ site.data.flisk.prereq_node }}.</p>
         <ul class="aw-check-list">
           <li><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a> installed and running</li>
           <li><a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt</a> installed</li>
@@ -236,7 +236,7 @@ flisk resource web --type frontend --framework vue --stack shop   <span class="c
           <summary>Manual binary download</summary>
           <p>Download the binary, its engine files and the checksums yourself. The binary looks for the <code>flisk-cli/</code> folder next to it.</p>
           <h3>Windows AMD64</h3>
-          <p>The latest release includes the Windows CLI and the PowerShell installer verifies its checksum. Native Windows supports CLI inspection only: use <code>flisk --version</code>, <code>flisk runtime --check-assets</code>, and <code>flisk doctor</code>. For <code>flisk project</code> and <code>flisk up</code>, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>.</p>
+          <p>The latest release includes the Windows CLI and the PowerShell installer verifies its checksum. On native Windows, <code>flisk demo</code> and projects whose services each declare a <code>command</code> run as local processes. For a Docker stack, native Windows supports CLI inspection only (<code>flisk --version</code>, <code>flisk runtime --check-assets</code>, <code>flisk doctor</code>); to start one, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>.</p>
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
             <pre>irm https://flisk.sh/install.ps1 | iex</pre>
