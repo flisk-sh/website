@@ -35,6 +35,7 @@ image: /assets/images/flisk-social-card.png
       <p class="aw-hero-sub">
         Start with <code>flisk project</code>, then <code>flisk up</code>. Already have a Compose file? Run <code>flisk import .</code> instead: every service keeps its ports, names and env values, gets a route and an MCP server your AI agent can drive, and rebuilds when you save its files. No Kubernetes. Not a deploy tool.
       </p>
+      <p class="aw-hero-sub">Docker is optional. A small app runs as plain local processes, on macOS, Linux and Windows, and <code>npx @flisk-sh/flisk demo</code> needs only Node.js: without Docker it starts a two-service app in about a second.</p>
       <div class="aw-install" aria-label="Install the Flisk CLI">
         <p class="aw-install-label">Install the CLI</p>
         <div class="aw-install-bar">
@@ -693,7 +694,7 @@ image: /assets/images/flisk-social-card.png
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>How it works</h2>
-        <p>Docker runs the containers. Tilt watches services and live-updates containers as you code. Flisk CLI writes the configuration Tilt uses.</p>
+        <p>Docker is optional. A service that declares a <code>command</code> runs as a local process with only your app's runtime. For a container stack, Docker runs the containers, Tilt watches services and live-updates containers as you code, and Flisk CLI writes the configuration Tilt uses.</p>
       </div>
 
       <div class="aw-bento">
