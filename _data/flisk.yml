@@ -30,6 +30,9 @@ demo_discovery: "212ms"    # discovery scan time shown in the terminal
 demo_build: "1.8s"         # L4 build time shown in the terminal
 boot_claim: "4.6s warm start" # permitted wording includes existing-image caveat
 machine: "16 GB M1 MacBook"   # daily driver the demo was captured on
+demo_command: "npx @flisk-sh/flisk demo" # the homepage's one action; same command as the CLI README
+save_update: "2.9 s"       # homepage terminal: one saved line in an imported one-service Compose app until the new response, one run, see docs/claims
+terminal_capture_version: "1.4.45" # CLI version the homepage terminal transcript was captured with (2026-11-09)
 
 # --- Calculator parameters (UI bounds + defaults) ---
 calc_devs_default: 10
@@ -68,25 +71,6 @@ devenv_languages: "58+"            # Number of supported languages
 devenv_services: "42"               # Number of preconfigured services
 
 # --- Lists (rendered with Liquid loops — edit here, updates everywhere) ---
-marquee_tools:             # competitors replaced, shown in the homepage marquee
-  - "Gitpod"
-  - "Codespaces"
-  - "Coder"
-  - "Daytona"
-  - "Okteto"
-  - "Garden"
-  - "Skaffold"
-  - "DevSpace"
-  - "Devbox"
-  - "Devenv"
-  - "Telepresence"
-  - "mirrord"
-  - "DevPod"
-  - "Nocalhost"
-  - "vCluster"
-  - "Codeanywhere"
-  - "Replit"
-  - "Hocus"
 
 toolchain_chips:           # real generator outputs, bento strip on homepage
   - "Docker L1–L4 golden layers"

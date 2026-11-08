@@ -1,0 +1,19 @@
+{%- comment -%}
+  The one action the homepage asks for: copy the demo command. Used by the hero and the closing section.
+  include.source names where it sits, for the click events.
+{%- endcomment -%}
+<div class="aw-install" aria-label="Run the Flisk demo" data-copy-box>
+  <p class="aw-install-label">Try it first. No signup, no global install.</p>
+  <div class="aw-install-bar">
+    <code>{{ site.data.flisk.demo_command }}</code>
+    <button class="aw-install-copy" type="button" data-copy-text="{{ site.data.flisk.demo_command }}" data-cta="{{ include.source }}_copy_demo" aria-label="Copy the Flisk demo command">
+      <i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span>
+    </button>
+  </div>
+  <div class="aw-install-foot">
+    <span>Needs only Node.js {{ site.data.flisk.prereq_node }}</span>
+    <a href="{{ '/sandbox/' | relative_url }}" data-cta="{{ include.source }}_sandbox">No terminal? Try it in your browser <span aria-hidden="true">→</span></a>
+  </div>
+  <p class="aw-install-next" data-copy-next hidden>Copied. Paste it in a terminal, then <a href="#paths" data-cta="{{ include.source }}_next_paths">run your own app</a>.</p>
+  <span class="visually-hidden" data-copy-status aria-live="polite"></span>
+</div>

@@ -124,59 +124,50 @@ function addCopyButtons() {
   });
 }
 
-function initInstallCopy() {
-  const button = document.querySelector('[data-copy-install]');
-  const command = document.getElementById('aw-install-command');
-  const status = document.querySelector('[data-copy-status]');
-  if (!button || !command) return;
-
-  button.addEventListener('click', async () => {
+function initCopyButtons() {
+  document.querySelectorAll('[data-copy-text]').forEach((button) => {
+    const box = button.closest('[data-copy-box]');
+    const status = box && box.querySelector('[data-copy-status]');
+    const next = box && box.querySelector('[data-copy-next]');
     const label = button.querySelector('span');
-    const text = command.textContent.trim();
-    let copied = false;
-    try {
-      await navigator.clipboard.writeText(text);
-      copied = true;
-    } catch (error) {
-      const field = document.createElement('textarea');
-      field.value = text;
-      field.setAttribute('readonly', '');
-      field.style.cssText = 'position:fixed;opacity:0';
-      document.body.appendChild(field);
-      field.select();
-      try { copied = document.execCommand('copy'); } catch (e) { copied = false; }
-      document.body.removeChild(field);
-    }
-    if (copied) {
-      if (label) label.textContent = 'Copied';
-      if (status) status.textContent = 'Install command copied to clipboard.';
-    } else if (status) {
-      status.textContent = 'Could not copy automatically. Select and copy the command above.';
-    }
-    window.setTimeout(() => {
-      if (label) label.textContent = 'Copy';
-    }, 1800);
+
+    button.addEventListener('click', async () => {
+      const text = button.dataset.copyText;
+      let copied = false;
+      try {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      } catch (error) {
+        const field = document.createElement('textarea');
+        field.value = text;
+        field.setAttribute('readonly', '');
+        field.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(field);
+        field.select();
+        try { copied = document.execCommand('copy'); } catch (e) { copied = false; }
+        document.body.removeChild(field);
+      }
+      if (copied) {
+        if (label) label.textContent = 'Copied';
+        if (status) status.textContent = 'Copied to clipboard.';
+        if (next) next.hidden = false;
+      } else if (status) {
+        status.textContent = 'Could not copy automatically. Select and copy the command above.';
+      }
+      window.setTimeout(() => {
+        if (label) label.textContent = 'Copy';
+      }, 1800);
+    });
   });
 }
 
-function initInstallMethods() {
-  const methods = document.querySelectorAll('.aw-install-method');
-  const command = document.getElementById('aw-install-command');
-  const note = document.querySelector('[data-install-note]');
-  const label = document.querySelector('[data-copy-install] span');
-  if (!methods.length || !command) return;
-
-  methods.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      methods.forEach((m) => {
-        const on = m === btn;
-        m.classList.toggle('is-active', on);
-        m.setAttribute('aria-pressed', String(on));
-      });
-      command.textContent = btn.dataset.cmd;
-      if (note) note.textContent = btn.dataset.note;
-      if (label) label.textContent = 'Copy';
-    });
+// Sends [data-cta] clicks to the analytics tool when one is configured (plausible_domain in _config.yml).
+function initCtaEvents() {
+  document.addEventListener('click', (event) => {
+    const element = event.target.closest('[data-cta]');
+    if (element && typeof window.plausible === 'function') {
+      window.plausible('cta', { props: { name: element.dataset.cta } });
+    }
   });
 }
 
@@ -460,8 +451,8 @@ function initSectionIndex() {
 function initializeSite() {
   initNavigation();
   addCopyButtons();
-  initInstallCopy();
-  initInstallMethods();
+  initCopyButtons();
+  initCtaEvents();
   initBenchTabs();
   initGeneratedExplorer();
   initRecentlyShipped();
@@ -510,39 +501,6 @@ if (document.readyState === 'loading') {
       render(repo.stargazers_count);
       try {
         sessionStorage.setItem(cacheKey, JSON.stringify({ count: repo.stargazers_count, at: Date.now() }));
-      } catch (e) { /* storage unavailable */ }
-    })
-    .catch(() => {});
-})();
-
-// Latest CLI repo release tag on every [data-latest-release] pill.
-(function showLatestRelease() {
-  const labels = document.querySelectorAll('[data-latest-release]');
-  if (!labels.length) return;
-
-  const cacheKey = 'flisk-latest-release';
-  const render = (tag) => {
-    if (typeof tag !== 'string' || !tag) return;
-    labels.forEach((el) => {
-      el.textContent = `Flisk CLI ${tag} released`;
-    });
-  };
-
-  try {
-    const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
-    if (cached && Date.now() - cached.at < 3600000) {
-      render(cached.tag);
-      return;
-    }
-  } catch (e) { /* storage unavailable */ }
-
-  fetch('https://api.github.com/repos/flisk-sh/flisk/releases/latest')
-    .then((res) => (res.ok ? res.json() : null))
-    .then((release) => {
-      if (!release) return;
-      render(release.tag_name);
-      try {
-        sessionStorage.setItem(cacheKey, JSON.stringify({ tag: release.tag_name, at: Date.now() }));
       } catch (e) { /* storage unavailable */ }
     })
     .catch(() => {});
