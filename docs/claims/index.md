@@ -21,6 +21,14 @@ layout: default
 
         <p>One cold run of the <code>compose-import</code> journey (case CI3) on 2026-10-28. CI repeats it on every pull request to the Flisk CLI. A larger app takes longer.</p>
 
+        <h2 id="homepage-terminal">Homepage terminal</h2>
+
+        <p>The terminal in the homepage hero replays real output from Flisk CLI {{ site.data.flisk.terminal_capture_version }}, shortened and replayed faster than it ran. One run of each scene on an Apple Silicon Mac on 2026-11-09, on a working Docker setup and not a clean machine.</p>
+
+        <p>Demo scene: the local-process demo (<code>flisk demo --no-docker</code>) reported both services ready in 0.8 s, with the package already downloaded. Its site is on port 3001 because 3000 was taken; the screenshot is the page it opened. This demo starts plain <code>node</code> processes and does not reload on save.</p>
+
+        <p>Save scene: <code>flisk import</code> and <code>flisk up</code> on a one-service Node app in Docker Compose, then one changed string in its source file. The new response came back {{ site.data.flisk.save_update }} after the save. A larger app, or a change to its dependencies, takes longer.</p>
+
         <h2>14-service demo</h2>
 
         <blockquote><p>14 tiny services healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot.</p></blockquote>

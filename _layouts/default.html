@@ -53,6 +53,11 @@
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/home.css?v={{ site.time | date: '%s' }}" />
   {% endif %}
   
+  {% if site.plausible_domain %}
+  <script defer data-domain="{{ site.plausible_domain }}" src="https://plausible.io/js/script.js"></script>
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };</script>
+  {% endif %}
+
   <!-- SEO -->
   {% if article %}
     {% assign article_title = article.title | append: ' | ' | append: site.title %}

@@ -1,0 +1,11 @@
+{%- comment -%}
+  A few shell commands with one Copy button for all of them. include.text is the commands, include.cta the click event name.
+  A div, not a pre: main.js adds its own copy button to every pre.
+{%- endcomment -%}
+<div class="aw-command-block" data-copy-box>
+  <div class="aw-command-lines">{% assign lines = include.text | newline_to_br | split: "<br />" %}{% for line in lines %}<code><span aria-hidden="true">$ </span>{{ line | strip_newlines | strip | escape }}</code>{% endfor %}</div>
+  <button class="aw-install-copy" type="button" data-copy-text="{{ include.text | escape }}" data-cta="{{ include.cta }}" aria-label="Copy these commands">
+    <i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span>
+  </button>
+  <span class="visually-hidden" data-copy-status aria-live="polite"></span>
+</div>

@@ -11,7 +11,7 @@ image: /assets/images/flisk-social-card.png
   <!-- ================= SECTION INDEX (header's second row after the hero; letter keys jump) ================= -->
   <nav class="aw-index" aria-label="Page sections" data-aw-index>
     <div class="aw-index-links">
-      {%- assign index_items = "S|source|Generate,D|demo|Demo,H|how-it-works|How it works,N|new|New,G|generated|Files,R|replaces|Replaces,F|faq|FAQ,P|pricing|Pricing" | split: "," %}
+      {%- assign index_items = "A|paths|Your app,H|how-it-works|How it works,G|generated|Files,T|proof|Proof,R|replaces|Replaces,N|new|New,F|faq|FAQ,P|pricing|Pricing" | split: "," %}
       {%- for item in index_items %}
       {%- assign part = item | split: "|" %}
       <a href="#{{ part[1] }}" data-index-key="{{ part[0] }}" aria-keyshortcuts="{{ part[0] }}"><kbd aria-hidden="true">{{ part[0] }}</kbd>{{ part[2] }}</a>
@@ -19,7 +19,7 @@ image: /assets/images/flisk-social-card.png
     </div>
   </nav>
 
-  <!-- ================= HERO — Cinematic Center ================= -->
+  <!-- ================= HERO: one ask, then show it working ================= -->
   <section class="aw-hero" id="top">
     <div class="aw-hero-bg"></div>
     <div class="aw-hero-wash"></div>
@@ -27,665 +27,101 @@ image: /assets/images/flisk-social-card.png
 
     <div class="aw-hero-inner aw-hero-grid">
       <div class="aw-hero-main">
-      {% include launch-banner.html %}
-      <a class="aw-hero-pill" href="https://github.com/flisk-sh/flisk/releases/latest" target="_blank" rel="noopener">
-        <span class="aw-hero-pill-tag">New</span><span data-latest-release>Latest release</span><span aria-hidden="true">→</span>
-      </a>
       <h1>Your <code>docker-compose.yml</code>, running locally and updating as you save.</h1>
-      <p class="aw-hero-sub">
-        Start with <code>flisk project</code>, then <code>flisk up</code>. Already have a Compose file? Run <code>flisk import .</code> instead: every service keeps its ports, names and env values, gets a route and an MCP server your AI agent can drive, and rebuilds when you save its files. No Kubernetes. Not a deploy tool.
-      </p>
-      <p class="aw-hero-sub">Docker is optional. A small app runs as plain local processes, on macOS, Linux and Windows, and <code>npx @flisk-sh/flisk demo</code> needs only Node.js: without Docker it starts a two-service app in about a second.</p>
-      <div class="aw-install" aria-label="Install the Flisk CLI">
-        <p class="aw-install-label">Install the CLI</p>
-        <div class="aw-install-bar">
-          <code id="aw-install-command">{{ site.data.flisk.install_npm | escape }}</code>
-          <button class="aw-install-copy" type="button" data-copy-install aria-label="Copy Flisk install command">
-            <i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span>
-          </button>
-        </div>
-        <div class="aw-install-methods" role="group" aria-label="Install method">
-          <button type="button" class="aw-install-method is-active" aria-pressed="true" data-cmd="{{ site.data.flisk.install_npm | escape }}" data-note="Requires Node.js {{ site.data.flisk.prereq_node }}">npm</button>
-          <button type="button" class="aw-install-method" aria-pressed="false" data-cmd="{{ site.data.flisk.install_pnpm | escape }}" data-note="Requires Node.js {{ site.data.flisk.prereq_node }}">pnpm</button>
-          <button type="button" class="aw-install-method" aria-pressed="false" data-cmd="{{ site.data.flisk.install_bun | escape }}" data-note="Requires Node.js {{ site.data.flisk.prereq_node }}">bun</button>
-          <button type="button" class="aw-install-method" aria-pressed="false" data-cmd="curl -fsSL https://flisk.sh/install.sh | sh" data-note="Prebuilt binary, no Node.js needed">curl</button>
-        </div>
-        <div class="aw-install-foot">
-          <span data-install-note>Requires Node.js {{ site.data.flisk.prereq_node }}</span>
-          <a href="{{ '/docs/quickstart/' | relative_url }}">Read the quickstart <span aria-hidden="true">→</span></a>
-        </div>
-        <span class="visually-hidden" data-copy-status aria-live="polite"></span>
-      </div>
-      <div class="aw-hero-ctas">
-        <a href="{{ '/docs/quickstart/' | relative_url }}" class="aw-btn aw-btn-solid">Start free</a>
-        <a href="#demo" class="aw-btn aw-btn-ghost">Watch it boot</a>
-        <a href="https://github.com/flisk-sh/flisk" class="aw-btn aw-btn-ghost" target="_blank" rel="noopener"><i class="bi bi-github" aria-hidden="true"></i>&nbsp;Source on GitHub</a>
-      </div>
-      <p class="aw-hero-status">Stability: 1.x local dev. Generated files are a contract; verify with flisk config verify. Core CLI is MIT and needs no key. Premium is optional.</p>
-      <p class="aw-hero-proof">A plain Compose app (a Node API and Postgres) answered 49 s after <code>flisk import</code> on a clean Ubuntu CI runner, images pulled and built from scratch, install not counted. <a href="https://github.com/flisk-sh/flisk/actions/runs/40660606705" target="_blank" rel="noopener">Run</a> · <a href="{{ '/docs/claims/' | relative_url }}#compose-import">Claim details</a>.</p>
+      <p class="aw-hero-sub">Every service gets a local URL, rebuilds on save, and an MCP server your AI agent can drive.</p>
+      <a class="aw-btn aw-btn-solid aw-hero-phone" href="{{ '/sandbox/' | relative_url }}" data-cta="hero_sandbox_phone">Try it in your browser</a>
+      {% include demo-box.html source="hero" %}
+      <p class="aw-hero-status">Free and MIT licensed. Not a deploy tool. <a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener" data-cta="hero_github">Source on GitHub</a></p>
       </div>
 
-      <aside class="aw-bench" aria-label="Flisk benchmark results" data-bench>
-        <div class="aw-bench-tabs" role="tablist" aria-label="Benchmark">
-          {%- for b in site.data.benchmarks %}
-          <button type="button" role="tab" class="aw-bench-tab{% if forloop.first %} is-active{% endif %}" id="aw-bench-tab-{{ b.id }}" aria-controls="aw-bench-{{ b.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %}>{{ b.tab }}</button>
-          {%- endfor %}
-        </div>
-        <div class="aw-bench-panels">
-        {%- for b in site.data.benchmarks %}
-        <div class="aw-bench-panel" role="tabpanel" id="aw-bench-{{ b.id }}" aria-labelledby="aw-bench-tab-{{ b.id }}"{% if b.speed %} data-speed="{{ b.speed }}"{% endif %}{% unless forloop.first %} hidden{% endunless %}>
-          <div class="aw-bench-head">
-            <div>
-              <h2>{{ b.title }}</h2>
-              <p>{{ b.subtitle }}</p>
+      <!-- Real output, not a mock-up. Scene 1: the published CLI's local-process demo. Scene 2: flisk import on a one-service
+           Compose app, then one saved line. Both captured with CLI {{ site.data.flisk.terminal_capture_version }}; see _data/flisk.yml. -->
+      <aside class="aw-try" id="demo" aria-label="Terminal replay of real Flisk output" data-try>
+        <div class="aw-terminal">
+          <div class="aw-terminal-bar"><i></i><i></i><i></i><span data-try-title>try flisk</span></div>
+          <div class="aw-try-stage">
+            <div class="aw-terminal-body aw-try-body" data-try-body>
+              <span class="aw-tline" data-scene="1" data-cmd><span class="p">$ </span><span data-text>npx @flisk-sh/flisk demo</span></span>
+              <span class="aw-tline" data-scene="1"><span class="dim">Flisk demo, without Docker</span></span>
+              <span class="aw-tline" data-scene="1"><span class="ok">✔</span>  Writing the demo app            <span class="dim">0.0s</span></span>
+              <span class="aw-tline" data-scene="1" data-wait="650"><span class="ok">✔</span>  Starting services (no Docker)   <span class="dim">0.8s</span></span>
+              <span class="aw-tline" data-scene="1">2 of 2 services ready</span>
+              <span class="aw-tline" data-scene="1"><span class="ok">✔</span>  Your stack is running           <span class="dim">0.8s</span></span>
+              <span class="aw-tline" data-scene="1">   <span class="hot">http://localhost:3001</span></span>
+              <span class="aw-tline" data-scene="1">   <span class="hot">http://localhost:4000/api/menu</span></span>
+
+              <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>flisk import . --yes</span></span>
+              <span class="aw-tline" data-scene="2">Found 1 service(s) and 0 job(s)</span>
+              <span class="aw-tline" data-scene="2">  api  <span class="dim">port 4310 (from Compose), routed through Traefik</span></span>
+              <span class="aw-tline" data-scene="2"><span class="ok">Wrote 1 service.json file(s)</span></span>
+              <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>flisk up --wait</span></span>
+              <span class="aw-tline" data-scene="2" data-wait="900"><span class="ok">Stack is healthy.</span></span>
+              <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>curl localhost:4310</span></span>
+              <span class="aw-tline" data-scene="2">hello from compose</span>
+              <span class="aw-tline" data-scene="2" data-wait="500"><span class="dim"># edit api/server.js and save</span></span>
+              <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>curl localhost:4310</span></span>
+              <span class="aw-tline" data-scene="2" data-wait="500"><span class="ok">hello after save</span> <span class="dim"># {{ site.data.flisk.save_update }} after the save</span></span>
             </div>
-            <div class="aw-bench-actions">
-              <span class="aw-bench-clock" data-bench-clock aria-hidden="true" hidden></span>
-              <button type="button" class="aw-bench-replay" data-bench-replay>Replay{% if b.speed %} {{ b.speed }}×{% endif %}</button>
-            </div>
+            <figure class="aw-try-shot" data-try-shot>
+              <img src="{{ '/assets/images/demo-menu-page.jpg' | relative_url }}" alt="The page the demo opens: a restaurant menu served by two services Flisk started as local processes" width="800" height="500" loading="lazy" decoding="async">
+            </figure>
           </div>
-          <ul class="aw-bench-stats">
-            {%- for st in b.stats %}
-            <li><strong>{{ st.value }}</strong><span>{{ st.label }}</span></li>
-            {%- endfor %}
-          </ul>
-          <ol class="aw-bench-rows">
-            {%- for r in b.rows %}
-            <li class="aw-bench-row{% if r.key %} is-key{% endif %}" style="--v: {{ r.value | times: 1.0 | divided_by: b.scale | round: 3 }}; --i: {{ forloop.index0 }}" data-v="{{ r.value | times: 1.0 | divided_by: b.scale | round: 3 }}" data-value="{{ r.value }}">
-              <span class="aw-bench-name">{{ r.label }}<small>{{ r.sub | default: b.row_suffix }}</small></span>
-              <span class="aw-bench-track" aria-hidden="true"><span class="aw-bench-bar"></span></span>
-              <span class="aw-bench-val">{{ r.display }}</span>
-            </li>
-            {%- endfor %}
-          </ol>
-          <div class="aw-bench-foot">
-            <p>{{ b.note }}</p>
-            <span class="aw-bench-links">
-              <a href="{{ '/docs/claims/' | relative_url }}#benchmark-panel">Claim details</a>
-              <a href="https://github.com/flisk-sh/flisk/blob/main/{{ b.repro }}" target="_blank" rel="noopener">Reproduce ↗</a>
-              <a href="https://github.com/flisk-sh/flisk/blob/main/{{ b.source }}" target="_blank" rel="noopener">Raw data ↗</a>
-            </span>
+          <div class="aw-try-controls" data-try-controls hidden>
+            <button type="button" class="aw-btn aw-btn-solid aw-try-run" data-try-run data-cta="try_run_demo"><kbd aria-hidden="true">Enter</kbd><span data-try-run-label>Run it</span></button>
+            <a class="aw-btn aw-btn-solid aw-try-run" href="#paths" data-try-own data-cta="try_own_app" hidden>Run this on your app</a>
+            <button type="button" class="aw-try-replay" data-try-replay hidden>Replay</button>
           </div>
         </div>
-        {%- endfor %}
-        </div>
-        <p class="aw-bench-share">
-          Different hardware? <a href="https://github.com/orgs/flisk-sh/discussions/1016" target="_blank" rel="noopener">Run it and share your numbers ↗</a>
-        </p>
+        <p class="aw-try-note" data-try-note>Real output, shortened and replayed faster than it ran. Without Docker the demo is this two-service app; with Docker and Tilt running you get the full restaurant demo. <a href="{{ '/docs/claims/' | relative_url }}#homepage-terminal">How this was captured</a></p>
       </aside>
     </div>
   </section>
 
-  <!-- ================= GENERATED FILESYSTEM REEL ================= -->
-  <section class="aw-section" id="source" style="padding-top: 0;">
+  <!-- ================= PATHS: from the demo to the visitor's own app ================= -->
+  <section class="aw-section aw-paths" id="paths">
     <div class="aw-wrap">
-      <div class="aw-reel-thesis">
-        <h2>Watch one manifest become a working service.</h2>
-        <p class="aw-reel-thesis-copy"><strong>No more monolith-shaped AI output.</strong> Flisk gives coding agents a legible topology, then keeps dozens of services independently owned, generated, and reachable through one local domain namespace.</p>
+      <div class="aw-head">
+        <h2>Now run your own app.</h2>
+        <p>Pick where you are starting from. Each path is a few commands.</p>
       </div>
 
-      <div class="aw-reel-shell">
-        <figure class="aw-reel" id="aw-artifact-reel" aria-label="Animated walkthrough of files generated by Flisk">
-          <div class="aw-reel-toolbar">
-            <div class="aw-reel-command">
-              <i class="bi bi-terminal" aria-hidden="true"></i>
-              <span>flisk resource order-frontend --type frontend --stack commerce</span>
-            </div>
-            <button class="aw-reel-toggle" type="button" aria-pressed="false">
-              <i class="bi bi-pause-fill" aria-hidden="true"></i>
-              <span>Pause demo</span>
-            </button>
-            <div class="aw-reel-progress" role="progressbar" aria-label="Filesystem generation progress" aria-valuemin="0" aria-valuemax="{{ site.data.flisk.frontend_files }}" aria-valuenow="0">
-              <span></span>
-            </div>
+      <div class="aw-paths-grid" data-paths>
+        <div class="aw-paths-list" role="tablist" aria-label="Where you are starting from" aria-orientation="vertical">
+          <button type="button" role="tab" class="aw-paths-tab is-active" id="aw-path-tab-compose" aria-controls="aw-path-compose" aria-selected="true" data-cta="path_compose">I have a <code>docker-compose.yml</code></button>
+          <button type="button" role="tab" class="aw-paths-tab" id="aw-path-tab-new" aria-controls="aw-path-new" aria-selected="false" tabindex="-1" data-cta="path_new">I am starting something new</button>
+          <button type="button" role="tab" class="aw-paths-tab" id="aw-path-tab-agent" aria-controls="aw-path-agent" aria-selected="false" tabindex="-1" data-cta="path_agent">I build with an AI coding agent</button>
+        </div>
+
+        <div class="aw-paths-panels">
+          <div class="aw-paths-panel" role="tabpanel" id="aw-path-compose" aria-labelledby="aw-path-tab-compose" tabindex="0">
+            <p>Every service keeps its ports, names and env values. Nothing starts until you run <code>flisk up</code>.</p>
+            {% capture path_compose %}{{ site.data.flisk.install_npm }}
+cd your-project
+flisk import .
+flisk up{% endcapture %}
+            {% include command-block.html text=path_compose cta="copy_path_compose" %}
+            <a class="aw-paths-more" href="{{ '/migrate/' | relative_url }}" data-cta="path_compose_more">How the import works <span aria-hidden="true">→</span></a>
           </div>
 
-          <div class="aw-reel-workspace">
-            <div class="aw-reel-pane aw-reel-input">
-              <div class="aw-reel-pane-head">
-                <span class="aw-reel-pane-title"><i class="bi bi-braces" aria-hidden="true"></i> input / service.json</span>
-                <span class="aw-reel-count">1 source</span>
-              </div>
-              <pre class="aw-reel-manifest">{
-  <span class="k">"appName"</span>: <span class="s">"order-frontend"</span>,
-  <span class="k">"appType"</span>: <span class="s">"frontend"</span>,
-  <span class="k">"port"</span>: <span class="n">3001</span>,
-  <span class="k">"framework"</span>: <span class="s">"vue"</span>,
-  <span class="k">"backendName"</span>: <span class="s">"order-backend"</span>
-}</pre>
-              <div class="aw-reel-status" aria-live="polite">Reading the service contract</div>
-            </div>
-
-            <div class="aw-reel-pane aw-reel-output">
-              <div class="aw-reel-pane-head">
-                <span class="aw-reel-pane-title"><i class="bi bi-folder2-open" aria-hidden="true"></i> output / .autogenerated/</span>
-                <span class="aw-reel-count"><span id="aw-reel-count">0</span> / {{ site.data.flisk.frontend_files }} files</span>
-              </div>
-              <ul class="aw-reel-files">
-                <li class="aw-reel-file"><i class="bi bi-sliders2" aria-hidden="true"></i><span>.env.frontend.autogenerated</span></li>
-                <li class="aw-reel-file"><i class="bi bi-nut" aria-hidden="true"></i><span>.npmrc.autogenerated</span></li>
-                <li class="aw-reel-file"><i class="bi bi-cloud-arrow-down" aria-hidden="true"></i><span>.npmrc.docker.autogenerated</span></li>
-                <li class="aw-reel-file"><i class="bi bi-robot" aria-hidden="true"></i><span>AGENTS.md</span></li>
-                <li class="aw-reel-file"><i class="bi bi-box-seam" aria-hidden="true"></i><span>Dockerfile.app.autogenerated</span></li>
-                <li class="aw-reel-file"><i class="bi bi-hdd-network" aria-hidden="true"></i><span>api-client.ts</span></li>
-                <li class="aw-reel-file"><i class="bi bi-diagram-3" aria-hidden="true"></i><span>api-index.ts</span></li>
-                <li class="aw-reel-file"><i class="bi bi-lightning-charge" aria-hidden="true"></i><span>bunfig.autogenerated.toml</span></li>
-                <li class="aw-reel-file"><i class="bi bi-lightning-charge-fill" aria-hidden="true"></i><span>bunfig.docker.autogenerated.toml</span></li>
-                <li class="aw-reel-file"><i class="bi bi-filetype-tsx" aria-hidden="true"></i><span>env.ts</span></li>
-                <li class="aw-reel-file"><i class="bi bi-signpost-split" aria-hidden="true"></i><span>nginx.autogenerated.conf</span></li>
-                <li class="aw-reel-file"><i class="bi bi-browser-chrome" aria-hidden="true"></i><span>playwright.config.autogenerated.ts</span></li>
-                <li class="aw-reel-file"><i class="bi bi-braces-asterisk" aria-hidden="true"></i><span>tsconfig.autogenerated.json</span></li>
-                <li class="aw-reel-file"><i class="bi bi-braces" aria-hidden="true"></i><span>tsconfig.docker.autogenerated.json</span></li>
-                <li class="aw-reel-file"><i class="bi bi-clipboard2-check" aria-hidden="true"></i><span>validation-report.autogenerated.json</span></li>
-                <li class="aw-reel-file"><i class="bi bi-hammer" aria-hidden="true"></i><span>vite.config.build.autogenerated.ts</span></li>
-                <li class="aw-reel-file"><i class="bi bi-window-sidebar" aria-hidden="true"></i><span>vite.config.frontend.autogenerated.ts</span></li>
-              </ul>
-
-              <div class="aw-reel-stack">
-                <strong><i class="bi bi-layers" aria-hidden="true"></i> Stack contracts</strong>
-                <span class="aw-reel-stack-files"><i class="bi bi-kanban" aria-hidden="true"></i> generated runtime config / <i class="bi bi-braces" aria-hidden="true"></i> service topology / <i class="bi bi-diagram-3" aria-hidden="true"></i> dependency-manifest.json / <i class="bi bi-bounding-box" aria-hidden="true"></i> docs/architecture.c4 / <i class="bi bi-robot" aria-hidden="true"></i> AGENTS.md</span>
-              </div>
-            </div>
+          <div class="aw-paths-panel" role="tabpanel" id="aw-path-new" aria-labelledby="aw-path-tab-new" tabindex="0" hidden>
+            <p>Create the project, add services when you need them, and run them with one command.</p>
+            {% capture path_new %}{{ site.data.flisk.install_npm }}
+flisk project
+flisk up{% endcapture %}
+            {% include command-block.html text=path_new cta="copy_path_new" %}
+            <a class="aw-paths-more" href="{{ '/docs/quickstart/' | relative_url }}" data-cta="path_new_more">Read the quickstart <span aria-hidden="true">→</span></a>
           </div>
 
-          <div class="aw-route-stage">
-            <div class="aw-route-head">
-              <div>
-                <h3>Every service is on the network in seconds.</h3>
-                <p>It looks like a lot of wiring. Flisk CLI starts the services together and makes their local health URLs available.</p>
-              </div>
-              <div class="aw-route-proof">
-                <strong><i class="bi bi-stopwatch" aria-hidden="true"></i> {{ site.data.flisk.demo_services }} services healthy in {{ site.data.flisk.demo_boot }}</strong>
-                <span>Tiny services on a 16 GB M1 after images existed. Not a cold boot. Every route goes live as soon as its service passes health checks.</span>
-                <span class="aw-route-domain">*.commerce.localhost</span>
-              </div>
-            </div>
-
-            <div class="aw-route-grid" aria-label="Locally orchestrated service URLs">
-              <div class="aw-route"><span class="aw-route-dot" aria-hidden="true"></span><strong>Storefront</strong><code>http://app.commerce.localhost/store</code></div>
-              <div class="aw-route"><span class="aw-route-dot" aria-hidden="true"></span><strong>Operations</strong><code>http://app.commerce.localhost/ops</code></div>
-              <div class="aw-route"><span class="aw-route-dot" aria-hidden="true"></span><strong>Orders API</strong><code>http://api.commerce.localhost/api/v1/orders</code></div>
-              <div class="aw-route"><span class="aw-route-dot" aria-hidden="true"></span><strong>Inventory API</strong><code>http://api.commerce.localhost/api/v1/inventory</code></div>
-              <div class="aw-route"><span class="aw-route-dot" aria-hidden="true"></span><strong>Identity API</strong><code>http://api.commerce.localhost/api/v1/identity</code></div>
-              <div class="aw-route"><span class="aw-route-dot" aria-hidden="true"></span><strong>Payments API</strong><code>http://api.commerce.localhost/api/v1/payments</code></div>
-            </div>
-          </div>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-<!-- ================= 100 MANIFEST RAIN ================= -->
-<section class="aw-section aw-manifest-rain" aria-label="One hundred tiny ERP service manifests moving in four columns">
-  <div class="aw-wrap">
-    <div class="aw-manifest-copy">
-      <h2>One hundred services, still readable.</h2>
-      <p>A generated ERP-style fixture: finance, procurement, warehouse, payroll, billing, compliance, analytics. Every tiny manifest keeps ownership, port, runtime, and domain visible before an agent writes a single file.</p>
-    </div>
-
-    <div class="aw-manifest-wall" aria-hidden="true">
-        <div class="aw-manifest-lane">
-          <div class="aw-manifest-track">
-            <div class="aw-mini-manifest"><strong>gl-ledger-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4101</span>,
-  "owner": <span class="s">"finance-finops"</span> }</div>
-            <div class="aw-mini-manifest"><strong>ap-invoice-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4102</span>,
-  "owner": <span class="s">"finance-finops"</span> }</div>
-            <div class="aw-mini-manifest"><strong>ar-collections-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4103</span>,
-  "owner": <span class="s">"finance-finops"</span> }</div>
-            <div class="aw-mini-manifest"><strong>cash-position-worker</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4104</span>,
-  "owner": <span class="s">"treasury"</span> }</div>
-            <div class="aw-mini-manifest"><strong>bank-reconciliation-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4105</span>,
-  "owner": <span class="s">"treasury"</span> }</div>
-            <div class="aw-mini-manifest"><strong>fixed-assets-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4106</span>,
-  "owner": <span class="s">"accounting"</span> }</div>
-            <div class="aw-mini-manifest"><strong>tax-calculation-worker</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4107</span>,
-  "owner": <span class="s">"tax"</span> }</div>
-            <div class="aw-mini-manifest"><strong>revenue-recognition-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4108</span>,
-  "owner": <span class="s">"accounting"</span> }</div>
-            <div class="aw-mini-manifest"><strong>budget-planning-app</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4109</span>,
-  "owner": <span class="s">"fpna"</span> }</div>
-            <div class="aw-mini-manifest"><strong>cost-center-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4110</span>,
-  "owner": <span class="s">"fpna"</span> }</div>
-            <div class="aw-mini-manifest"><strong>purchase-requisition-api</strong>{ "stack":<span class="s">"procurement"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4111</span>,
-  "owner": <span class="s">"procurement"</span> }</div>
-            <div class="aw-mini-manifest"><strong>supplier-portal-app</strong>{ "stack":<span class="s">"procurement"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4112</span>,
-  "owner": <span class="s">"procurement"</span> }</div>
-            <div class="aw-mini-manifest"><strong>vendor-master-api</strong>{ "stack":<span class="s">"procurement"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4113</span>,
-  "owner": <span class="s">"procurement"</span> }</div>
-            <div class="aw-mini-manifest"><strong>contract-lifecycle-api</strong>{ "stack":<span class="s">"procurement"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4114</span>,
-  "owner": <span class="s">"legal"</span> }</div>
-            <div class="aw-mini-manifest"><strong>po-approval-worker</strong>{ "stack":<span class="s">"procurement"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4115</span>,
-  "owner": <span class="s">"procurement"</span> }</div>
-            <div class="aw-mini-manifest"><strong>inbound-receiving-api</strong>{ "stack":<span class="s">"warehouse"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4116</span>,
-  "owner": <span class="s">"warehouse"</span> }</div>
-            <div class="aw-mini-manifest"><strong>inventory-valuation-api</strong>{ "stack":<span class="s">"inventory"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4117</span>,
-  "owner": <span class="s">"inventory"</span> }</div>
-            <div class="aw-mini-manifest"><strong>stock-transfer-api</strong>{ "stack":<span class="s">"inventory"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4118</span>,
-  "owner": <span class="s">"inventory"</span> }</div>
-            <div class="aw-mini-manifest"><strong>cycle-count-app</strong>{ "stack":<span class="s">"warehouse"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4119</span>,
-  "owner": <span class="s">"warehouse"</span> }</div>
-            <div class="aw-mini-manifest"><strong>warehouse-slotting-api</strong>{ "stack":<span class="s">"warehouse"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4120</span>,
-  "owner": <span class="s">"warehouse"</span> }</div>
-            <div class="aw-mini-manifest"><strong>order-capture-app</strong>{ "stack":<span class="s">"sales"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4121</span>,
-  "owner": <span class="s">"revenue"</span> }</div>
-            <div class="aw-mini-manifest"><strong>pricing-rules-api</strong>{ "stack":<span class="s">"sales"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4122</span>,
-  "owner": <span class="s">"revenue"</span> }</div>
-            <div class="aw-mini-manifest"><strong>credit-check-worker</strong>{ "stack":<span class="s">"sales"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4123</span>,
-  "owner": <span class="s">"risk"</span> }</div>
-            <div class="aw-mini-manifest"><strong>fulfillment-planner-api</strong>{ "stack":<span class="s">"sales"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4124</span>,
-  "owner": <span class="s">"ops"</span> }</div>
-            <div class="aw-mini-manifest"><strong>shipment-booking-api</strong>{ "stack":<span class="s">"logistics"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4125</span>,
-  "owner": <span class="s">"logistics"</span> }</div>
+          <div class="aw-paths-panel" role="tabpanel" id="aw-path-agent" aria-labelledby="aw-path-tab-agent" tabindex="0" hidden>
+            <p>Give Claude Code, Cursor or Codex the Flisk MCP server and skills, then describe the app you want.</p>
+            {% capture path_agent %}{{ site.data.flisk.install_npm }}
+flisk connect claude{% endcapture %}
+            {% include command-block.html text=path_agent cta="copy_path_agent" %}
+            <a class="aw-paths-more" href="{{ '/agents/' | relative_url }}" data-cta="path_agent_more">Set up Cursor, Codex or another agent <span aria-hidden="true">→</span></a>
           </div>
         </div>
-        <div class="aw-manifest-lane">
-          <div class="aw-manifest-track">
-            <div class="aw-mini-manifest"><strong>returns-authorization-api</strong>{ "stack":<span class="s">"sales"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4126</span>,
-  "owner": <span class="s">"support"</span> }</div>
-            <div class="aw-mini-manifest"><strong>customer-master-api</strong>{ "stack":<span class="s">"crm"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4127</span>,
-  "owner": <span class="s">"crm"</span> }</div>
-            <div class="aw-mini-manifest"><strong>customer-credit-api</strong>{ "stack":<span class="s">"crm"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4128</span>,
-  "owner": <span class="s">"risk"</span> }</div>
-            <div class="aw-mini-manifest"><strong>sales-forecast-worker</strong>{ "stack":<span class="s">"planning"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4129</span>,
-  "owner": <span class="s">"planning"</span> }</div>
-            <div class="aw-mini-manifest"><strong>channel-sync-api</strong>{ "stack":<span class="s">"channels"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4130</span>,
-  "owner": <span class="s">"integrations"</span> }</div>
-            <div class="aw-mini-manifest"><strong>bom-management-api</strong>{ "stack":<span class="s">"manufacturing"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4131</span>,
-  "owner": <span class="s">"manufacturing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>production-order-api</strong>{ "stack":<span class="s">"manufacturing"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4132</span>,
-  "owner": <span class="s">"manufacturing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>shop-floor-app</strong>{ "stack":<span class="s">"manufacturing"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4133</span>,
-  "owner": <span class="s">"manufacturing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>work-center-api</strong>{ "stack":<span class="s">"manufacturing"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4134</span>,
-  "owner": <span class="s">"manufacturing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>capacity-planning-worker</strong>{ "stack":<span class="s">"planning"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4135</span>,
-  "owner": <span class="s">"planning"</span> }</div>
-            <div class="aw-mini-manifest"><strong>quality-inspection-api</strong>{ "stack":<span class="s">"quality"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4136</span>,
-  "owner": <span class="s">"quality"</span> }</div>
-            <div class="aw-mini-manifest"><strong>maintenance-ticket-api</strong>{ "stack":<span class="s">"maintenance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4137</span>,
-  "owner": <span class="s">"maintenance"</span> }</div>
-            <div class="aw-mini-manifest"><strong>asset-telemetry-worker</strong>{ "stack":<span class="s">"iot"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4138</span>,
-  "owner": <span class="s">"platform"</span> }</div>
-            <div class="aw-mini-manifest"><strong>material-requirements-api</strong>{ "stack":<span class="s">"manufacturing"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4139</span>,
-  "owner": <span class="s">"manufacturing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>batch-traceability-api</strong>{ "stack":<span class="s">"manufacturing"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4140</span>,
-  "owner": <span class="s">"quality"</span> }</div>
-            <div class="aw-mini-manifest"><strong>employee-master-api</strong>{ "stack":<span class="s">"hr"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4141</span>,
-  "owner": <span class="s">"people"</span> }</div>
-            <div class="aw-mini-manifest"><strong>payroll-runner-worker</strong>{ "stack":<span class="s">"hr"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4142</span>,
-  "owner": <span class="s">"people"</span> }</div>
-            <div class="aw-mini-manifest"><strong>time-attendance-app</strong>{ "stack":<span class="s">"hr"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4143</span>,
-  "owner": <span class="s">"people"</span> }</div>
-            <div class="aw-mini-manifest"><strong>benefits-enrollment-api</strong>{ "stack":<span class="s">"hr"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4144</span>,
-  "owner": <span class="s">"rewards"</span> }</div>
-            <div class="aw-mini-manifest"><strong>expense-claims-api</strong>{ "stack":<span class="s">"hr"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4145</span>,
-  "owner": <span class="s">"people"</span> }</div>
-            <div class="aw-mini-manifest"><strong>travel-approval-worker</strong>{ "stack":<span class="s">"hr"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4146</span>,
-  "owner": <span class="s">"people"</span> }</div>
-            <div class="aw-mini-manifest"><strong>recruiting-pipeline-app</strong>{ "stack":<span class="s">"hr"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4147</span>,
-  "owner": <span class="s">"talent"</span> }</div>
-            <div class="aw-mini-manifest"><strong>learning-records-api</strong>{ "stack":<span class="s">"hr"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4148</span>,
-  "owner": <span class="s">"learning"</span> }</div>
-            <div class="aw-mini-manifest"><strong>org-chart-api</strong>{ "stack":<span class="s">"org"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4149</span>,
-  "owner": <span class="s">"people"</span> }</div>
-            <div class="aw-mini-manifest"><strong>access-review-worker</strong>{ "stack":<span class="s">"security"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4150</span>,
-  "owner": <span class="s">"security"</span> }</div>
-          </div>
-        </div>
-        <div class="aw-manifest-lane">
-          <div class="aw-manifest-track">
-            <div class="aw-mini-manifest"><strong>project-accounting-api</strong>{ "stack":<span class="s">"projects"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4151</span>,
-  "owner": <span class="s">"services"</span> }</div>
-            <div class="aw-mini-manifest"><strong>timesheet-approval-app</strong>{ "stack":<span class="s">"projects"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4152</span>,
-  "owner": <span class="s">"services"</span> }</div>
-            <div class="aw-mini-manifest"><strong>milestone-billing-api</strong>{ "stack":<span class="s">"projects"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4153</span>,
-  "owner": <span class="s">"services"</span> }</div>
-            <div class="aw-mini-manifest"><strong>resource-planning-api</strong>{ "stack":<span class="s">"projects"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4154</span>,
-  "owner": <span class="s">"services"</span> }</div>
-            <div class="aw-mini-manifest"><strong>utilization-report-worker</strong>{ "stack":<span class="s">"projects"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4155</span>,
-  "owner": <span class="s">"services"</span> }</div>
-            <div class="aw-mini-manifest"><strong>subscription-billing-api</strong>{ "stack":<span class="s">"billing"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4156</span>,
-  "owner": <span class="s">"billing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>entitlement-service-api</strong>{ "stack":<span class="s">"billing"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4157</span>,
-  "owner": <span class="s">"billing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>renewals-workbench-app</strong>{ "stack":<span class="s">"billing"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4158</span>,
-  "owner": <span class="s">"billing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>dunning-notice-worker</strong>{ "stack":<span class="s">"billing"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4159</span>,
-  "owner": <span class="s">"billing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>revenue-schedule-api</strong>{ "stack":<span class="s">"billing"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4160</span>,
-  "owner": <span class="s">"billing"</span> }</div>
-            <div class="aw-mini-manifest"><strong>demand-planning-api</strong>{ "stack":<span class="s">"planning"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4161</span>,
-  "owner": <span class="s">"planning"</span> }</div>
-            <div class="aw-mini-manifest"><strong>supply-planning-worker</strong>{ "stack":<span class="s">"planning"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4162</span>,
-  "owner": <span class="s">"planning"</span> }</div>
-            <div class="aw-mini-manifest"><strong>supplier-scorecard-api</strong>{ "stack":<span class="s">"procurement"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4163</span>,
-  "owner": <span class="s">"procurement"</span> }</div>
-            <div class="aw-mini-manifest"><strong>landed-cost-api</strong>{ "stack":<span class="s">"logistics"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4164</span>,
-  "owner": <span class="s">"logistics"</span> }</div>
-            <div class="aw-mini-manifest"><strong>trade-compliance-worker</strong>{ "stack":<span class="s">"compliance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4165</span>,
-  "owner": <span class="s">"trade"</span> }</div>
-            <div class="aw-mini-manifest"><strong>customs-declaration-api</strong>{ "stack":<span class="s">"compliance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4166</span>,
-  "owner": <span class="s">"trade"</span> }</div>
-            <div class="aw-mini-manifest"><strong>freight-audit-api</strong>{ "stack":<span class="s">"logistics"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4167</span>,
-  "owner": <span class="s">"logistics"</span> }</div>
-            <div class="aw-mini-manifest"><strong>route-optimization-worker</strong>{ "stack":<span class="s">"logistics"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4168</span>,
-  "owner": <span class="s">"logistics"</span> }</div>
-            <div class="aw-mini-manifest"><strong>carrier-rate-api</strong>{ "stack":<span class="s">"logistics"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4169</span>,
-  "owner": <span class="s">"logistics"</span> }</div>
-            <div class="aw-mini-manifest"><strong>dock-scheduler-app</strong>{ "stack":<span class="s">"warehouse"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4170</span>,
-  "owner": <span class="s">"warehouse"</span> }</div>
-            <div class="aw-mini-manifest"><strong>data-catalog-api</strong>{ "stack":<span class="s">"data"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4171</span>,
-  "owner": <span class="s">"data"</span> }</div>
-            <div class="aw-mini-manifest"><strong>audit-evidence-api</strong>{ "stack":<span class="s">"governance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4172</span>,
-  "owner": <span class="s">"governance"</span> }</div>
-            <div class="aw-mini-manifest"><strong>gdpr-request-worker</strong>{ "stack":<span class="s">"privacy"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4173</span>,
-  "owner": <span class="s">"privacy"</span> }</div>
-            <div class="aw-mini-manifest"><strong>sox-control-api</strong>{ "stack":<span class="s">"audit"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4174</span>,
-  "owner": <span class="s">"audit"</span> }</div>
-            <div class="aw-mini-manifest"><strong>policy-attestation-app</strong>{ "stack":<span class="s">"governance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4175</span>,
-  "owner": <span class="s">"governance"</span> }</div>
-          </div>
-        </div>
-        <div class="aw-manifest-lane">
-          <div class="aw-manifest-track">
-            <div class="aw-mini-manifest"><strong>risk-register-api</strong>{ "stack":<span class="s">"risk"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4176</span>,
-  "owner": <span class="s">"risk"</span> }</div>
-            <div class="aw-mini-manifest"><strong>incident-review-api</strong>{ "stack":<span class="s">"incident"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4177</span>,
-  "owner": <span class="s">"security"</span> }</div>
-            <div class="aw-mini-manifest"><strong>segregation-duties-worker</strong>{ "stack":<span class="s">"security"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4178</span>,
-  "owner": <span class="s">"security"</span> }</div>
-            <div class="aw-mini-manifest"><strong>retention-policy-api</strong>{ "stack":<span class="s">"records"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4179</span>,
-  "owner": <span class="s">"records"</span> }</div>
-            <div class="aw-mini-manifest"><strong>compliance-dashboard-app</strong>{ "stack":<span class="s">"compliance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4180</span>,
-  "owner": <span class="s">"compliance"</span> }</div>
-            <div class="aw-mini-manifest"><strong>bi-metrics-api</strong>{ "stack":<span class="s">"analytics"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4181</span>,
-  "owner": <span class="s">"analytics"</span> }</div>
-            <div class="aw-mini-manifest"><strong>executive-dashboard-app</strong>{ "stack":<span class="s">"analytics"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4182</span>,
-  "owner": <span class="s">"analytics"</span> }</div>
-            <div class="aw-mini-manifest"><strong>margin-analysis-worker</strong>{ "stack":<span class="s">"analytics"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4183</span>,
-  "owner": <span class="s">"analytics"</span> }</div>
-            <div class="aw-mini-manifest"><strong>close-calendar-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4184</span>,
-  "owner": <span class="s">"accounting"</span> }</div>
-            <div class="aw-mini-manifest"><strong>consolidation-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4185</span>,
-  "owner": <span class="s">"accounting"</span> }</div>
-            <div class="aw-mini-manifest"><strong>intercompany-elimination-worker</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4186</span>,
-  "owner": <span class="s">"accounting"</span> }</div>
-            <div class="aw-mini-manifest"><strong>fx-rates-api</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4187</span>,
-  "owner": <span class="s">"treasury"</span> }</div>
-            <div class="aw-mini-manifest"><strong>journal-approval-app</strong>{ "stack":<span class="s">"treasury"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4188</span>,
-  "owner": <span class="s">"accounting"</span> }</div>
-            <div class="aw-mini-manifest"><strong>anomaly-detection-worker</strong>{ "stack":<span class="s">"finance"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4189</span>,
-  "owner": <span class="s">"ml"</span> }</div>
-            <div class="aw-mini-manifest"><strong>data-quality-api</strong>{ "stack":<span class="s">"ml"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4190</span>,
-  "owner": <span class="s">"data"</span> }</div>
-            <div class="aw-mini-manifest"><strong>notification-router-worker</strong>{ "stack":<span class="s">"data"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4191</span>,
-  "owner": <span class="s">"platform"</span> }</div>
-            <div class="aw-mini-manifest"><strong>document-renderer-api</strong>{ "stack":<span class="s">"platform"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4192</span>,
-  "owner": <span class="s">"platform"</span> }</div>
-            <div class="aw-mini-manifest"><strong>workflow-inbox-app</strong>{ "stack":<span class="s">"platform"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4193</span>,
-  "owner": <span class="s">"ops"</span> }</div>
-            <div class="aw-mini-manifest"><strong>identity-provisioning-api</strong>{ "stack":<span class="s">"workflow"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4194</span>,
-  "owner": <span class="s">"identity"</span> }</div>
-            <div class="aw-mini-manifest"><strong>tenant-settings-api</strong>{ "stack":<span class="s">"identity"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4195</span>,
-  "owner": <span class="s">"platform"</span> }</div>
-            <div class="aw-mini-manifest"><strong>feature-flags-api</strong>{ "stack":<span class="s">"platform"</span>,
-  "appType": <span class="s">"api"</span>,
-  "port": <span class="n">4196</span>,
-  "owner": <span class="s">"platform"</span> }</div>
-            <div class="aw-mini-manifest"><strong>search-indexer-worker</strong>{ "stack":<span class="s">"platform"</span>,
-  "appType": <span class="s">"worker"</span>,
-  "port": <span class="n">4197</span>,
-  "owner": <span class="s">"search"</span> }</div>
-            <div class="aw-mini-manifest"><strong>integration-hub-api</strong>{ "stack":<span class="s">"search"</span>,
-  "appType": <span class="s">"app"</span>,
-  "port": <span class="n">4198</span>,
-  "owner": <span class="s">"integration"</span> }</div>
-            <div class="aw-mini-manifest"><strong>webhook-delivery-worker</strong>{ "stack":<span class="s">"integration"</span>,
-  "appType": <span class="s">""</span>,
-  "port": <span class="n">4199</span>,
-  "owner": <span class="s">"integration"</span> }</div>
-            <div class="aw-mini-manifest"><strong>erp-admin-console-app</strong>{ "stack":<span class="s">"integration"</span>,
-  "appType": <span class="s">""</span>,
-  "port": <span class="n">4200</span>,
-  "owner": <span class="s">"platform"</span> }</div>
-          </div>
-        </div>
-    </div>
-  </div>
-</section>
-
-
-  <!-- ================= PLAIN-WORDS INTRO ================= -->
-  <section class="aw-plain" id="plain">
-    <div class="aw-wrap">
-      <p class="aw-plain-kicker">In plain words</p>
-      <p class="aw-plain-big">Setup delays can hold up new developers: computers need configuration, access needs granting, and instructions can go stale. Flisk is designed so <code>flisk doctor</code> and <code>flisk up</code> replace a setup wiki; this has not been measured on a hiring cohort.</p>
-      <p class="aw-plain-small">Flisk CLI is a free, MIT-licensed CLI for starting your services locally. Most teams should stay on free. Premium is ${{ site.data.flisk.team_price }} per developer per month for extras only. <a class="aw-plain-link" href="{{ '/waiting/' | relative_url }}">See what waiting costs</a>.</p>
-    </div>
-  </section>
-
-  <!-- ================= MARQUEE ================= -->
-  <div class="aw-marquee-section" aria-hidden="true">
-    <div class="aw-marquee">
-      <div class="aw-marquee-track">
-        {% for tool in site.data.flisk.marquee_tools %}
-        <span class="aw-marquee-item">{{ tool }}</span>
-        {% endfor %}
       </div>
-      <div class="aw-marquee-track" aria-hidden="true">
-        {% for tool in site.data.flisk.marquee_tools %}
-        <span class="aw-marquee-item">{{ tool }}</span>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= TERMINAL — Pinned Split (Desire) ================= -->
-  <section class="aw-section" id="demo">
-    <div class="aw-wrap aw-term-split">
-      <div class="aw-term-left" id="aw-term-pin">
-        <h2>Warm start, images already built</h2>
-        <p>Captured on a {{ site.data.flisk.machine }} after images existed. This is not a cold boot. See the <a href="{{ '/docs/claims/' | relative_url }}">claim details</a>.</p>
-        <div class="aw-term-badge">
-          <strong>{{ site.data.flisk.demo_boot }}</strong>
-          <span>14 tiny services healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot.</span>
-        </div>
-      </div>
-
-      <div class="aw-terminal">
-      <div class="aw-terminal-bar"><i></i><i></i><i></i><span>zsh: flisk up</span></div>
-      <div class="aw-terminal-body" id="aw-term-body" aria-label="Terminal showing flisk up boot sequence"></div>
-      </div>
+      <p class="aw-paths-foot">Prefer pnpm, Bun or a prebuilt binary? See the <a href="{{ '/docs/quickstart/' | relative_url }}#install-options">install options</a>.</p>
     </div>
   </section>
 
@@ -720,7 +156,7 @@ image: /assets/images/flisk-social-card.png
           <img class="aw-scroll-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFhMWEyNCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMGEwZSIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJib3giIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjN2M0ZGZmIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNGRkMGZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmcpIi8+PGc+PHJlY3QgeD0iNjAiIHk9IjgwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjkiLz48cmVjdCB4PSIyMzAiIHk9IjgwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjUiLz48cmVjdCB4PSI0MDAiIHk9IjgwIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjMiLz48cmVjdCB4PSI2MCIgeT0iMTkwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjUiLz48cmVjdCB4PSIyMzAiIHk9IjE5MCIgd2lkdGg9IjE1MCIgaGVpZ2h0PSI5MCIgcng9IjYiIGZpbGw9InVybCgjYm94KSIgb3BhY2l0eT0iMC45Ii8+PHJlY3QgeD0iNDAwIiB5PSIxOTAiIHdpZHRoPSIxNDAiIGhlaWdodD0iOTAiIHJ4PSI2IiBmaWxsPSJ1cmwoI2JveCkiIG9wYWNpdHk9IjAuNSIvPjxyZWN0IHg9IjYwIiB5PSIzMDAiIHdpZHRoPSIxNTAiIGhlaWdodD0iOTAiIHJ4PSI2IiBmaWxsPSJ1cmwoI2JveCkiIG9wYWNpdHk9IjAuMyIvPjxyZWN0IHg9IjIzMCIgeT0iMzAwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjUiLz48cmVjdCB4PSI0MDAiIHk9IjMwMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI5MCIgcng9IjYiIGZpbGw9InVybCgjYm94KSIgb3BhY2l0eT0iMC45Ii8+PHJlY3QgeD0iNjAiIHk9IjQxMCIgd2lkdGg9IjQ4MCIgaGVpZ2h0PSI5MCIgcng9IjYiIGZpbGw9InVybCgjYm94KSIgb3BhY2l0eT0iMC4yNSIvPjwvZz48L3N2Zz4K" alt="Grid of containers representing {{ site.data.flisk.scale_services }} microservices" loading="lazy" />
           <div class="aw-card-d-caption">
             <strong>Generated /health fixture: {{ site.data.flisk.scale_plain }}</strong>
-            <span>small generated services boot from scratch on a clean CI runner in about {{ site.data.flisk.erp_boot_minutes }} minutes (<a href="{{ site.data.flisk.erp_ci_run }}" target="_blank" rel="noopener">the run</a>)</span>
+            <span>small generated services boot from scratch on a clean CI runner in {{ site.data.flisk.erp_boot_minutes }} minutes (<a href="{{ site.data.flisk.erp_ci_run }}" target="_blank" rel="noopener">the run</a>)</span>
           </div>
         </div>
 
@@ -738,47 +174,6 @@ image: /assets/images/flisk-social-card.png
     </div>
   </section>
 
-
-  <!-- ================= RECENTLY SHIPPED (numbered list + panel, after warp.dev's SDLC section) ================= -->
-  {%- assign wn = site.data.whats_new %}
-  <section class="aw-section aw-new" id="new" style="padding-top: 0;">
-    <div class="aw-wrap">
-      <div class="aw-head">
-        <p class="aw-new-kicker"># recently shipped <span>[{{ wn.date | downcase }}]</span></p>
-        <h2>Recently shipped</h2>
-        <p>{{ wn.version }} is on npm. Items marked next are merged and ship in the next release.</p>
-      </div>
-
-      <div class="aw-new-grid" data-new>
-        <div class="aw-new-list" role="tablist" aria-label="Recently shipped" aria-orientation="vertical">
-          {%- for it in wn.items %}
-          <button type="button" role="tab" class="aw-new-row{% if forloop.first %} is-active{% endif %}" id="aw-new-tab-{{ forloop.index }}" aria-controls="aw-new-{{ forloop.index }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %}>
-            <span class="aw-new-n">0{{ forloop.index }}</span>
-            <span class="aw-new-text"><strong>{{ it.title }}</strong><small>{{ it.short }}</small></span>
-          </button>
-          {%- endfor %}
-        </div>
-
-        <div class="aw-new-panels">
-          {%- for it in wn.items %}
-          <div class="aw-new-panel" role="tabpanel" id="aw-new-{{ forloop.index }}" aria-labelledby="aw-new-tab-{{ forloop.index }}"{% unless forloop.first %} hidden{% endunless %}>
-            <p class="aw-new-status{% if it.status == 'released' %} is-released{% endif %}">{% if it.status == 'released' %}in {{ wn.version }} on npm{% else %}merged / next release{% endif %}</p>
-            <h3>{{ it.title }}</h3>
-            <p class="aw-new-body">{{ it.body | escape }}</p>
-            {%- if it.code %}
-            <pre class="aw-new-code" data-tint-lang="json">{% assign code_lines = it.code | newline_to_br | split: "<br />" %}{% for l in code_lines %}<span class="aw-gen-line"><code>{{ l | strip_newlines | escape }}</code></span>{% endfor %}</pre>
-            {%- endif %}
-            <p class="aw-new-try"><span aria-hidden="true">$</span> <code>{{ it.try }}</code></p>
-            <p class="aw-new-links">
-              {%- for pr in it.prs %}<a href="https://github.com/flisk-sh/flisk/pull/{{ pr }}" target="_blank" rel="noopener">#{{ pr }} <span aria-hidden="true">↗</span></a>{% endfor %}
-              {%- if it.doc %}<a href="{{ it.doc }}" target="_blank" rel="noopener">guide <span aria-hidden="true">↗</span></a>{% endif %}
-            </p>
-          </div>
-          {%- endfor %}
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ================= GENERATED FILES EXPLORER ================= -->
   {%- assign gen = site.data.explorer %}
@@ -862,10 +257,117 @@ image: /assets/images/flisk-social-card.png
     </div>
   </section>
 
-  <!-- ================= SCRUB STATEMENT ================= -->
-  <section class="aw-section aw-statement" id="statement" style="padding-top: 0;">
-    <div class="aw-wrap">
-      <h2 id="aw-scrub-text">One manifest, local containers, selective startup, and a setup wiki replaced by <code>flisk doctor</code> and <code>flisk up</code>. Flisk is designed for this flow; onboarding time has not been measured on a hiring cohort.</h2>
+  <!-- ================= ADOPTERS (Social proof) ================= -->
+  <section class="aw-section aw-adopters" id="adopters" style="padding-top: 0;">
+    <div class="aw-wrap aw-adopters-grid">
+      <div class="aw-adopters-intro">
+        <span class="aw-adopters-eyebrow aw-mono">Adopters</span>
+        <h2>Who uses Flisk</h2>
+        <p>Teams that run <span class="aw-mono">flisk up</span> on their own code. Listed with their consent in <a href="https://github.com/flisk-sh/flisk/blob/main/ADOPTERS.md" target="_blank" rel="noopener">ADOPTERS.md</a>.</p>
+        <div class="aw-adopters-count"><span class="aw-mono">5</span> teams listed</div>
+      </div>
+
+      <ul class="aw-adopter-list">
+        <li>
+          <a class="aw-adopter-row" href="https://github.com/biolend83/tubehaus" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/tubehaus.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">TubeHaus</span>
+            <span class="aw-adopter-ver aw-mono">Flisk 1.4.25</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://www.linkedin.com/company/lekast/" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/lekast.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">Lekast</span>
+            <span class="aw-adopter-ver aw-mono">Flisk 1.3.178</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://medium.com/@mfin.services" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/mfin-services.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">mfin.services</span>
+            <span class="aw-adopter-ver aw-mono">Flisk 1.3.140</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://www.linkedin.com/company/makeofferio" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/makeoffer.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">MakeOffer</span>
+            <span class="aw-adopter-ver aw-mono">Flisk 1.3.180</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://redmoon.digital/" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/redmoon-digital.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">Red Moon Digital</span>
+            <span class="aw-adopter-ver aw-mono">Flisk 1.3.81</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= PROOF: numbers you can rerun ================= -->
+  <section class="aw-section aw-proof" id="proof" style="padding-top: 0;">
+    <div class="aw-wrap aw-proof-split">
+      <div class="aw-proof-copy">
+        <h2>Numbers you can rerun.</h2>
+        <p class="aw-hero-proof">A plain Compose app (a Node API and Postgres) answered 49 s after <code>flisk import</code> on a clean Ubuntu CI runner, images pulled and built from scratch, install not counted. <a href="https://github.com/flisk-sh/flisk/actions/runs/40660606705" target="_blank" rel="noopener">Run</a> · <a href="{{ '/docs/claims/' | relative_url }}#compose-import">Claim details</a>.</p>
+        <p class="aw-hero-status">Stability: 1.x local dev. Generated files are a contract; verify with flisk config verify. Core CLI is MIT and needs no key. Premium is optional.</p>
+      </div>
+      <aside class="aw-bench" aria-label="Flisk benchmark results" data-bench>
+        <div class="aw-bench-tabs" role="tablist" aria-label="Benchmark">
+          {%- for b in site.data.benchmarks %}
+          <button type="button" role="tab" class="aw-bench-tab{% if forloop.first %} is-active{% endif %}" id="aw-bench-tab-{{ b.id }}" aria-controls="aw-bench-{{ b.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %}>{{ b.tab }}</button>
+          {%- endfor %}
+        </div>
+        <div class="aw-bench-panels">
+        {%- for b in site.data.benchmarks %}
+        <div class="aw-bench-panel" role="tabpanel" id="aw-bench-{{ b.id }}" aria-labelledby="aw-bench-tab-{{ b.id }}"{% if b.speed %} data-speed="{{ b.speed }}"{% endif %}{% unless forloop.first %} hidden{% endunless %}>
+          <div class="aw-bench-head">
+            <div>
+              <h2>{{ b.title }}</h2>
+              <p>{{ b.subtitle }}</p>
+            </div>
+            <div class="aw-bench-actions">
+              <span class="aw-bench-clock" data-bench-clock aria-hidden="true" hidden></span>
+              <button type="button" class="aw-bench-replay" data-bench-replay>Replay{% if b.speed %} {{ b.speed }}×{% endif %}</button>
+            </div>
+          </div>
+          <ul class="aw-bench-stats">
+            {%- for st in b.stats %}
+            <li><strong>{{ st.value }}</strong><span>{{ st.label }}</span></li>
+            {%- endfor %}
+          </ul>
+          <ol class="aw-bench-rows">
+            {%- for r in b.rows %}
+            <li class="aw-bench-row{% if r.key %} is-key{% endif %}" style="--v: {{ r.value | times: 1.0 | divided_by: b.scale | round: 3 }}; --i: {{ forloop.index0 }}" data-v="{{ r.value | times: 1.0 | divided_by: b.scale | round: 3 }}" data-value="{{ r.value }}">
+              <span class="aw-bench-name">{{ r.label }}<small>{{ r.sub | default: b.row_suffix }}</small></span>
+              <span class="aw-bench-track" aria-hidden="true"><span class="aw-bench-bar"></span></span>
+              <span class="aw-bench-val">{{ r.display }}</span>
+            </li>
+            {%- endfor %}
+          </ol>
+          <div class="aw-bench-foot">
+            <p>{{ b.note }}</p>
+            <span class="aw-bench-links">
+              <a href="{{ '/docs/claims/' | relative_url }}#benchmark-panel">Claim details</a>
+              <a href="https://github.com/flisk-sh/flisk/blob/main/{{ b.repro }}" target="_blank" rel="noopener">Reproduce ↗</a>
+              <a href="https://github.com/flisk-sh/flisk/blob/main/{{ b.source }}" target="_blank" rel="noopener">Raw data ↗</a>
+            </span>
+          </div>
+        </div>
+        {%- endfor %}
+        </div>
+        <p class="aw-bench-share">
+          Different hardware? <a href="https://github.com/orgs/flisk-sh/discussions/1016" target="_blank" rel="noopener">Run it and share your numbers ↗</a>
+        </p>
+      </aside>
     </div>
   </section>
 
@@ -969,6 +471,47 @@ image: /assets/images/flisk-social-card.png
     </div>
   </section>
 
+  <!-- ================= RECENTLY SHIPPED (numbered list + panel, after warp.dev's SDLC section) ================= -->
+  {%- assign wn = site.data.whats_new %}
+  <section class="aw-section aw-new" id="new" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <p class="aw-new-kicker"># recently shipped <span>[{{ wn.date | downcase }}]</span></p>
+        <h2>Recently shipped</h2>
+        <p>{{ wn.version }} is on npm. Items marked next are merged and ship in the next release.</p>
+      </div>
+
+      <div class="aw-new-grid" data-new>
+        <div class="aw-new-list" role="tablist" aria-label="Recently shipped" aria-orientation="vertical">
+          {%- for it in wn.items %}
+          <button type="button" role="tab" class="aw-new-row{% if forloop.first %} is-active{% endif %}" id="aw-new-tab-{{ forloop.index }}" aria-controls="aw-new-{{ forloop.index }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %}>
+            <span class="aw-new-n">0{{ forloop.index }}</span>
+            <span class="aw-new-text"><strong>{{ it.title }}</strong><small>{{ it.short }}</small></span>
+          </button>
+          {%- endfor %}
+        </div>
+
+        <div class="aw-new-panels">
+          {%- for it in wn.items %}
+          <div class="aw-new-panel" role="tabpanel" id="aw-new-{{ forloop.index }}" aria-labelledby="aw-new-tab-{{ forloop.index }}"{% unless forloop.first %} hidden{% endunless %}>
+            <p class="aw-new-status{% if it.status == 'released' %} is-released{% endif %}">{% if it.status == 'released' %}in {{ wn.version }} on npm{% else %}merged / next release{% endif %}</p>
+            <h3>{{ it.title }}</h3>
+            <p class="aw-new-body">{{ it.body | escape }}</p>
+            {%- if it.code %}
+            <pre class="aw-new-code" data-tint-lang="json">{% assign code_lines = it.code | newline_to_br | split: "<br />" %}{% for l in code_lines %}<span class="aw-gen-line"><code>{{ l | strip_newlines | escape }}</code></span>{% endfor %}</pre>
+            {%- endif %}
+            <p class="aw-new-try"><span aria-hidden="true">$</span> <code>{{ it.try }}</code></p>
+            <p class="aw-new-links">
+              {%- for pr in it.prs %}<a href="https://github.com/flisk-sh/flisk/pull/{{ pr }}" target="_blank" rel="noopener">#{{ pr }} <span aria-hidden="true">↗</span></a>{% endfor %}
+              {%- if it.doc %}<a href="{{ it.doc }}" target="_blank" rel="noopener">guide <span aria-hidden="true">↗</span></a>{% endif %}
+            </p>
+          </div>
+          {%- endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= FAQ — plain list with [+] / [−] toggles (after warp.dev) ================= -->
   <section class="aw-section aw-faq" id="faq" style="padding-top: 0;">
     <div class="aw-wrap">
@@ -1003,7 +546,7 @@ image: /assets/images/flisk-social-card.png
     <div class="aw-wrap">
       <div class="aw-head aw-head-center">
         <h2>Priced against what it replaces</h2>
-        <p>Core stays free. Premium is a separate key for the extras above; no key required to run <span class="aw-mono">flisk up</span>.</p>
+        <p>Core stays free, and most teams should stay on free. Premium is a separate key for the extras above; no key required to run <span class="aw-mono">flisk up</span>. <a href="{{ '/waiting/' | relative_url }}">See what waiting costs</a>.</p>
       </div>
 
       <div class="aw-pricing-grid">
@@ -1017,7 +560,7 @@ image: /assets/images/flisk-social-card.png
             <li>No key required to run the core CLI</li>
             <li>Community support</li>
           </ul>
-          <a class="aw-price-cta" href="{{ '/docs/quickstart/' | relative_url }}">Start free →</a>
+          <a class="aw-price-cta" href="{{ '/docs/quickstart/' | relative_url }}" data-cta="pricing_free">Start free →</a>
         </div>
 
         <div class="aw-price-card aw-price-featured">
@@ -1033,7 +576,7 @@ image: /assets/images/flisk-social-card.png
             <li>Priority support, next business day</li>
             <li>Onboarding session for your stack</li>
           </ul>
-          <a class="aw-price-cta" href="{{ '/#waitlist' | relative_url }}">Request a license →</a>
+          <a class="aw-price-cta" href="{{ '/#waitlist' | relative_url }}" data-cta="pricing_premium">Request a license →</a>
           <p class="aw-price-footnote">Need SSO, air-gapped, or an SLA? Pick Enterprise in the license request below — custom pricing.</p>
         </div>
       </div>
@@ -1054,68 +597,14 @@ image: /assets/images/flisk-social-card.png
     </div>
   </section>
 
-  <!-- ================= ADOPTERS (Social proof) ================= -->
-  <section class="aw-section aw-adopters" id="adopters" style="padding-top: 0;">
-    <div class="aw-wrap aw-adopters-grid">
-      <div class="aw-adopters-intro">
-        <span class="aw-adopters-eyebrow aw-mono">Adopters</span>
-        <h2>Who uses Flisk</h2>
-        <p>Teams that run <span class="aw-mono">flisk up</span> on their own code. Listed with their consent in <a href="https://github.com/flisk-sh/flisk/blob/main/ADOPTERS.md" target="_blank" rel="noopener">ADOPTERS.md</a>.</p>
-        <div class="aw-adopters-count"><span class="aw-mono">5</span> teams listed</div>
-      </div>
-
-      <ul class="aw-adopter-list">
-        <li>
-          <a class="aw-adopter-row" href="https://github.com/biolend83/tubehaus" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/tubehaus.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">TubeHaus</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.4.25</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://www.linkedin.com/company/lekast/" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/lekast.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">Lekast</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.3.178</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://medium.com/@mfin.services" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/mfin-services.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">mfin.services</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.3.140</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://www.linkedin.com/company/makeofferio" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/makeoffer.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">MakeOffer</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.3.180</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://redmoon.digital/" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/redmoon-digital.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">Red Moon Digital</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.3.81</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
-
   <!-- ================= CTA / LICENSE REQUEST (Action) ================= -->
-  <section class="aw-section aw-cta" id="waitlist" style="padding-top: 0;">
-    <div class="aw-cta-glow"></div>
+  <section class="aw-section aw-cta aw-cta-quiet" id="waitlist" style="padding-top: 0;">
     <div class="aw-wrap">
       <h2>Get your<br />Premium license.</h2>
       <p class="aw-cta-sub">Core stays free. Premium is a separate key for the extras above; no key required to run <span class="aw-mono">flisk up</span>. Need SSO, air-gapped, or an SLA? Pick Enterprise.</p>
 
+      <details class="aw-license" data-license>
+        <summary class="aw-btn aw-btn-ghost" data-cta="license_open">Request a license</summary>
       <form class="aw-form" onsubmit="handleLicenseSubmit(event); return false;">
         <label for="waitlist-email">Your email <span style="font-weight: 400; color: rgba(236,236,241,0.65);">(required — it's the only way we can send your key or reply)</span></label>
         <input type="email" id="waitlist-email" placeholder="you@company.com" required />
@@ -1146,20 +635,25 @@ image: /assets/images/flisk-social-card.png
           <button type="button" id="waitlist-copy-btn" class="aw-btn-link">copy the message</button>.
         </p>
       </form>
+      </details>
     </div>
   </section>
 
+
+  <!-- ================= CLOSE: back to the one action ================= -->
+  <section class="aw-section aw-final" id="try" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <h2>See it run on your machine.</h2>
+      {% include demo-box.html source="final" %}
+    </div>
+  </section>
+
+  <a class="aw-phone-bar" href="{{ '/sandbox/' | relative_url }}" data-phone-bar data-cta="phone_bar_sandbox" hidden>Try it in your browser</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 <script>
-// Manifest rain: the page ships one copy of each lane; a second copy makes the -50% scroll loop seamless.
-document.querySelectorAll('.aw-manifest-track').forEach(function (track) {
-  Array.prototype.slice.call(track.children).forEach(function (card) { track.appendChild(card.cloneNode(true)); });
-  track.classList.add('is-looped');
-});
-
 // Runs after the deferred GSAP scripts have loaded.
 document.addEventListener('DOMContentLoaded', function () {
 function startWhenNearViewport(target, start, options) {
@@ -1360,132 +854,6 @@ function sendWaitlistEmail(btn, originalLabel) {
   };
 }
 
-/* Generated filesystem reel */
-(function () {
-  var reel = document.getElementById('aw-artifact-reel');
-  if (!reel) return;
-
-  var files = Array.from(reel.querySelectorAll('.aw-reel-file'));
-  var count = document.getElementById('aw-reel-count');
-  var status = reel.querySelector('.aw-reel-status');
-  var stack = reel.querySelector('.aw-reel-stack');
-  var routeStage = reel.querySelector('.aw-route-stage');
-  var routes = Array.from(reel.querySelectorAll('.aw-route'));
-  var progress = reel.querySelector('.aw-reel-progress');
-  var progressFill = progress.querySelector('span');
-  var toggle = reel.querySelector('.aw-reel-toggle');
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var timer = null;
-  var current = 0;
-  var currentRoute = 0;
-  var playing = false;
-  var complete = false;
-  var hasPlayedOnce = false;
-
-  function setButton(icon, label) {
-    toggle.innerHTML = '<i class="bi ' + icon + '" aria-hidden="true"></i><span>' + label + '</span>';
-  }
-
-  function renderProgress() {
-    var ratio = current / files.length;
-    count.textContent = current;
-    progress.setAttribute('aria-valuenow', String(current));
-    progressFill.style.transform = 'scaleX(' + ratio + ')';
-  }
-
-  function completeReel() {
-    status.textContent = files.length + ' files generated. ' + routes.length + ' local health routes ready.';
-    playing = false;
-    complete = true;
-    toggle.setAttribute('aria-pressed', 'false');
-    setButton('bi-arrow-clockwise', 'Replay demo');
-  }
-
-  function reset() {
-    window.clearTimeout(timer);
-    files.forEach(function (file) { file.classList.remove('is-visible'); });
-    routes.forEach(function (route) { route.classList.remove('is-visible'); });
-    stack.classList.remove('is-visible');
-    routeStage.classList.remove('is-visible');
-    current = 0;
-    currentRoute = 0;
-    complete = false;
-    status.textContent = 'Reading the service contract';
-    renderProgress();
-  }
-
-  function advance() {
-    if (!playing) return;
-    if (current < files.length) {
-      var file = files[current];
-      file.classList.add('is-visible');
-      current += 1;
-      status.textContent = 'Writing ' + file.textContent.trim();
-      renderProgress();
-      timer = window.setTimeout(advance, 260);
-      return;
-    }
-
-    stack.classList.add('is-visible');
-    routeStage.classList.add('is-visible');
-    if (currentRoute < routes.length) {
-      var route = routes[currentRoute];
-      route.classList.add('is-visible');
-      currentRoute += 1;
-      status.textContent = 'Opening local route for ' + route.querySelector('strong').textContent;
-      timer = window.setTimeout(advance, 340);
-      return;
-    }
-
-    completeReel();
-  }
-
-  function play() {
-    if (playing) return;
-    if (complete) reset();
-    hasPlayedOnce = true;
-    playing = true;
-    toggle.setAttribute('aria-pressed', 'true');
-    setButton('bi-pause-fill', 'Pause demo');
-    timer = window.setTimeout(advance, current === 0 ? 600 : 0);
-  }
-
-  function pause() {
-    playing = false;
-    window.clearTimeout(timer);
-    toggle.setAttribute('aria-pressed', 'false');
-    setButton('bi-play-fill', 'Resume demo');
-  }
-
-  toggle.addEventListener('click', function () {
-    if (playing) pause(); else play();
-  });
-
-  if (reduced) {
-    files.forEach(function (file) { file.classList.add('is-visible'); });
-    routes.forEach(function (route) { route.classList.add('is-visible'); });
-    stack.classList.add('is-visible');
-    routeStage.classList.add('is-visible');
-    current = files.length;
-    currentRoute = routes.length;
-    renderProgress();
-    completeReel();
-    toggle.hidden = true;
-    return;
-  }
-
-  startWhenNearViewport(reel, function () {
-    if (!hasPlayedOnce && !complete) play();
-  }, { rootMargin: '260px 0px', timeout: 1800 });
-
-  window.setInterval(function () {
-    if (playing && !complete && current >= files.length && currentRoute >= routes.length) {
-      window.clearTimeout(timer);
-      completeReel();
-    }
-  }, 250);
-})();
-
 /* FAQ accordion — tap support for touch devices */
 document.querySelectorAll('.aw-acc-item').forEach(function (item) {
   item.addEventListener('click', function () {
@@ -1494,145 +862,8 @@ document.querySelectorAll('.aw-acc-item').forEach(function (item) {
   });
 });
 
-function prepareScrubWords() {
-  var el = document.getElementById('aw-scrub-text');
-  if (!el || el.dataset.wordsPrepared === 'true') return [];
-  var nodes = Array.from(el.childNodes);
-  el.innerHTML = '';
-  nodes.forEach(function (node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.textContent.split(/\s+/).filter(Boolean).forEach(function (w) {
-        var s = document.createElement('span');
-        s.className = 'aw-word';
-        s.textContent = w;
-        el.appendChild(s);
-        el.appendChild(document.createTextNode(' '));
-      });
-    } else {
-      node.classList.add('aw-word');
-      el.appendChild(node);
-      el.appendChild(document.createTextNode(' '));
-    }
-  });
-  el.dataset.wordsPrepared = 'true';
-  return Array.from(el.querySelectorAll('.aw-word'));
-}
-
-/* Terminal typing — real boot sequence, fires once when scrolled into view.
-   Respects prefers-reduced-motion: renders the full log instantly. */
-(function () {
-  var body = document.getElementById('aw-term-body');
-  if (!body) return;
-  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var script = [
-    { t: 'cmd', text: 'flisk up' },
-    { t: 'out', html: '<span class="dim">[discovery]</span> scanned {{ site.data.flisk.demo_services }} repos · {{ site.data.flisk.demo_services }} manifests · <span class="hot">{{ site.data.flisk.demo_discovery }}</span>' },
-    { t: 'out', html: '<span class="dim">[local]</span> services ready → <span class="hot">hot reload and local routes</span>' },
-    { t: 'out', html: '<span class="dim">[generate]</span> C4 diagram · AGENTS.md · dependency-manifest.json' },
-    { t: 'out', html: '<span class="dim">[secrets]</span> Infisical machine identities verified · {{ site.data.flisk.demo_services }}/{{ site.data.flisk.demo_services }}' },
-    { t: 'out', html: '<span class="dim">[docker]</span> golden L1 <span class="ok">cached</span> · L2 <span class="ok">cached</span> · L3 <span class="ok">cached</span> · building L4… <span class="hot">{{ site.data.flisk.demo_build }}</span>' },
-    { t: 'out', html: '<span class="dim">[dev loop]</span> selective startup · selective startup · hot reload armed' },
-    { t: 'out', html: '<span class="dim">[health]</span> {{ site.data.flisk.demo_services }}/{{ site.data.flisk.demo_services }} resources <span class="ok">healthy</span>' },
-    { t: 'out', html: '<span class="ok">ready</span> — stack booted in <span class="ok">{{ site.data.flisk.demo_boot }}</span> <span class="dim">on a {{ site.data.flisk.machine }}</span>' },
-    { t: 'gap' },
-    { t: 'cmd', text: 'cat services/api-gateway/service.json' },
-    { t: 'out', html: '{' },
-    { t: 'out', html: '  <span class="k">"appName"</span>: <span class="s">"api-gateway"</span>,' },
-    { t: 'out', html: '  <span class="k">"appType"</span>: <span class="s">"backend"</span>,' },
-    { t: 'out', html: '  <span class="k">"port"</span>: <span class="n">3000</span>,' },
-    { t: 'out', html: '  <span class="k">"featuresEnabled"</span>: [<span class="s">"typescript"</span>, <span class="s">"bun"</span>],' },
-    { t: 'out', html: '  <span class="k">"stack"</span>: <span class="s">"ecommerce"</span>,' },
-    { t: 'out', html: '  <span class="k">"dependsOn"</span>: [<span class="s">"order-service"</span>, <span class="s">"inventory-service"</span>, <span class="s">"user-service"</span>]' },
-    { t: 'out', html: '}' },
-    { t: 'gap' },
-    { t: 'cmd', text: 'flisk up ecommerce' },
-    { t: 'out', html: '<span class="dim">[ecommerce]</span> api-gateway → :3000 <span class="ok">healthy</span>' },
-    { t: 'out', html: '<span class="dim">[ecommerce]</span> order-service → :3001 <span class="ok">healthy</span> · prisma migrated' },
-    { t: 'out', html: '<span class="dim">[ecommerce]</span> frontend-store → :5173 <span class="ok">healthy</span> · hot reload armed' },
-    { t: 'out', html: '<span class="ok">ready</span> — ecommerce stack live · <span class="ok">3/3 services</span> · rest of the monorepo untouched' },
-    { t: 'gap' },
-    { t: 'cmd', text: 'flisk doctor' },
-    { t: 'out', html: '<span class="dim">[doctor]</span> ports conflict-free · secrets verified · images cached' },
-    { t: 'out', html: '<span class="dim">[doctor]</span> manifests valid · <span class="ok">all checks passed</span>' }
-  ];
-
-  var started = false;
-
-  function addCursor() {
-    var c = document.createElement('span');
-    c.className = 'aw-cursor';
-    body.appendChild(c);
-    return c;
-  }
-
-  function typeCmd(text, done) {
-    var line = document.createElement('span');
-    line.className = 'aw-tline';
-    line.innerHTML = '<span class="p">$ </span>';
-    body.appendChild(line);
-    var cursor = addCursor();
-    var i = 0;
-    var timer = setInterval(function () {
-      line.innerHTML = '<span class="p">$ </span>' + text.slice(0, ++i);
-      body.appendChild(cursor);
-      if (i >= text.length) {
-        clearInterval(timer);
-        cursor.remove();
-        setTimeout(done, 250);
-      }
-    }, 90);
-  }
-
-  function play(i) {
-    if (i >= script.length) { addCursor(); return; }
-    var step = script[i];
-    if (step.t === 'cmd') {
-      typeCmd(step.text, function () { play(i + 1); });
-    } else if (step.t === 'gap') {
-      var blank = document.createElement('span');
-      blank.className = 'aw-tline';
-      blank.innerHTML = '&nbsp;';
-      body.appendChild(blank);
-      setTimeout(function () { play(i + 1); }, 500);
-    } else {
-      var line = document.createElement('span');
-      line.className = 'aw-tline';
-      line.style.opacity = '0';
-      line.innerHTML = step.html;
-      body.appendChild(line);
-      requestAnimationFrame(function () {
-        line.style.transition = 'opacity 0.35s ease';
-        line.style.opacity = '1';
-      });
-      setTimeout(function () { play(i + 1); }, 420);
-    }
-  }
-
-  if (REDUCED) {
-    /* Instant static render, no typing, no observer */
-    script.forEach(function (step) {
-      if (step.t === 'gap') return;
-      var line = document.createElement('span');
-      line.className = 'aw-tline';
-      line.innerHTML = step.t === 'cmd'
-        ? '<span class="p">$ </span>' + step.text
-        : step.html;
-      body.appendChild(line);
-    });
-  } else {
-    startWhenNearViewport(body, function () {
-      if (!started) {
-        started = true;
-        play(0);
-      }
-    }, { rootMargin: '280px 0px', timeout: 1900 });
-  }
-})();
-
 /* GSAP motion (skipped under prefers-reduced-motion) */
 var REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var SCRUB_WORDS = prepareScrubWords();
 if (!REDUCED_MOTION && window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -1642,29 +873,11 @@ if (!REDUCED_MOTION && window.gsap && window.ScrollTrigger) {
   gsap.from('.aw-hero-sub', { y: 40, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.35 });
   gsap.from('.aw-hero .aw-install', { y: 30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.45 });
   gsap.from('.aw-hero-ctas', { y: 30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.55 });
-  gsap.from('.aw-bench', { x: 40, opacity: 0, duration: 1.1, ease: 'power3.out', delay: 0.4 });
+  gsap.from('.aw-try', { x: 40, opacity: 0, duration: 1.1, ease: 'power3.out', delay: 0.4 });
   gsap.to('.aw-hero-bg', {
     scale: 1, ease: 'none',
     scrollTrigger: { trigger: '.aw-hero', start: 'top top', end: 'bottom top', scrub: true }
   });
-
-  gsap.from('.aw-plain-big', {
-    y: 40, opacity: 0, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: '.aw-plain', start: 'top 85%' }
-  });
-  gsap.from('.aw-plain-small', {
-    y: 30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.15,
-    scrollTrigger: { trigger: '.aw-plain', start: 'top 85%' }
-  });
-
-  /* Paradigm 2: Scrubbing Text Reveal — words 0.1 → 1 sequentially */
-  (function () {
-    if (!SCRUB_WORDS.length) return;
-    gsap.to('.aw-word', {
-      opacity: 1, stagger: 0.06, ease: 'none',
-      scrollTrigger: { trigger: '#statement', start: 'top 75%', end: 'center 40%', scrub: 0.6 }
-    });
-  })();
 
   /* Card Stacking — cards pile from the bottom with scale physics */
   document.querySelectorAll('.aw-stack-card').forEach(function (card, i, all) {
@@ -1703,33 +916,20 @@ if (!REDUCED_MOTION && window.gsap && window.ScrollTrigger) {
   });
 } else {
   document.documentElement.classList.add('aw-motion-fallback');
-  document.querySelectorAll('.aw-card, .aw-price-card, .aw-stack-card, .aw-scroll-img, .aw-reel-thesis h2, .aw-reel-thesis-copy').forEach(function (el, i) {
+  document.querySelectorAll('.aw-card, .aw-price-card, .aw-stack-card, .aw-scroll-img').forEach(function (el, i) {
     el.style.setProperty('--aw-delay', Math.min(i * 70, 420) + 'ms');
     startWhenNearViewport(el, function () {
       el.classList.add('is-motion-visible');
     }, { rootMargin: '180px 0px', timeout: 900 + i * 20 });
   });
-  SCRUB_WORDS.forEach(function (word, i) {
-    word.style.setProperty('--aw-delay', Math.min(i * 28, 900) + 'ms');
-  });
-  startWhenNearViewport(document.getElementById('statement'), function () {
-    SCRUB_WORDS.forEach(function (word) {
-      word.classList.add('is-motion-visible');
-    });
-  }, { rootMargin: '220px 0px', timeout: 1600 });
   if (REDUCED_MOTION) {
-    document.querySelectorAll('.aw-word, .aw-card, .aw-price-card, .aw-stack-card, .aw-scroll-img, .aw-reel-thesis h2, .aw-reel-thesis-copy').forEach(function (el) {
+    document.querySelectorAll('.aw-card, .aw-price-card, .aw-stack-card, .aw-scroll-img').forEach(function (el) {
       el.classList.add('is-motion-visible');
     });
   }
 }
 
-if (!REDUCED_MOTION) {
-  document.querySelectorAll('.aw-reel-file, .aw-route').forEach(function (el) {
-    el.addEventListener('mouseenter', function () { el.style.transform = 'translateY(-2px) scale(1.01)'; });
-    el.addEventListener('mouseleave', function () { el.style.transform = ''; });
-  });
-}
 window.handleLicenseSubmit = handleLicenseSubmit;
 });
 </script>
+<script src="{{ site.baseurl }}/assets/js/home-journey.js?v={{ site.time | date: '%s' }}" defer></script>

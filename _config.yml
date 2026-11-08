@@ -84,3 +84,6 @@ exclude:
   - EMAIL_SETUP.md
   - docker-compose.yml
   - Dockerfile
+
+# Cookieless page and click analytics. Uncomment to turn on; [data-cta] clicks are then sent as a "cta" event.
+# plausible_domain: flisk.sh
