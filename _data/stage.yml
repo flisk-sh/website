@@ -1,0 +1,16 @@
+# The hero window on the homepage: the products a visitor can try without leaving the page.
+# The first two (FliskOS and the terminal) are built into index.html. Each entry here is one more tab that shows a
+# live Flisk site in the window. Add a site only if it allows being shown inside flisk.sh (no "frame-ancestors 'none'").
+embeds:
+  - id: commands
+    tab: Command Comparer
+    icon: command-comparer
+    host: cmd.flisk.si
+    url: https://cmd.flisk.si/
+    note: This is the live Command Comparer. Search a command to see it next to Compose, Tilt, Terraform and more.
+  - id: roadmap
+    tab: DevEx Roadmap
+    icon: devex-roadmap
+    host: roadmap.flisk.si
+    url: https://roadmap.flisk.si/
+    note: This is the live DevEx Roadmap, a community-edited map of local developer tools.

@@ -86,6 +86,9 @@ near-black calm, one green signal light, monospace evidence everywhere.
 - Homepage frame: two hairline rails down the page sides from 1024px up, one
   hairline rule between sections, a small cross where they meet. Sections use
   `clamp(6rem, 8vw, 8rem)` padding above and below the rule.
+- Homepage hero window: a window frame with lights, an address line and product tabs. Each tab is a real
+  Flisk product the visitor can use in place: FliskOS on sample data, the terminal replay, and live Flisk
+  sites listed in `_data/stage.yml`. A soft green glow under this one window is allowed.
 - One corner-radius doctrine: pills for interactive, 24px for cards,
   16px for code, circles for icon buttons.
 
