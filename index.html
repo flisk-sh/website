@@ -29,7 +29,7 @@ image: /assets/images/flisk-social-card.png
       <div class="aw-hero-main">
       <h1>Your <code>docker-compose.yml</code>, running locally and updating as you save.</h1>
       <p class="aw-hero-sub">Every service gets a local URL, rebuilds on save, and an MCP server your AI agent can drive.</p>
-      <a class="aw-btn aw-btn-solid aw-hero-phone" href="{{ '/sandbox/' | relative_url }}" data-cta="hero_sandbox_phone">Try it in your browser</a>
+      <a class="aw-btn aw-btn-solid aw-hero-phone" href="{{ '/sandbox/' | relative_url }}" data-cta="hero_sandbox_phone">Watch the tour in your browser</a>
       {% include demo-box.html source="hero" %}
       <p class="aw-hero-status">Free and MIT licensed. Not a deploy tool. <a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener" data-cta="hero_github">Source on GitHub</a></p>
       </div>
@@ -122,6 +122,56 @@ flisk connect claude{% endcapture %}
         </div>
       </div>
       <p class="aw-paths-foot">Prefer pnpm, Bun or a prebuilt binary? See the <a href="{{ '/docs/quickstart/' | relative_url }}#install-options">install options</a>.</p>
+    </div>
+  </section>
+
+  <!-- ================= ADOPTERS (Social proof) ================= -->
+  <section class="aw-section aw-adopters" id="adopters" style="padding-top: 0;">
+    <div class="aw-wrap aw-adopters-grid">
+      <div class="aw-adopters-intro">
+        <span class="aw-adopters-eyebrow aw-mono">Adopters</span>
+        <h2>Who uses Flisk</h2>
+        <p>Teams that run <span class="aw-mono">flisk up</span> on their own code. Listed with their consent in <a href="https://github.com/flisk-sh/flisk/blob/main/ADOPTERS.md" target="_blank" rel="noopener">ADOPTERS.md</a>.</p>
+        <div class="aw-adopters-count"><span class="aw-mono">5</span> teams listed</div>
+      </div>
+
+      <ul class="aw-adopter-list">
+        <li>
+          <a class="aw-adopter-row" href="https://github.com/biolend83/tubehaus" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/tubehaus.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">TubeHaus</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://www.linkedin.com/company/lekast/" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/lekast.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">Lekast</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://medium.com/@mfin.services" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/mfin-services.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">mfin.services</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://www.linkedin.com/company/makeofferio" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/makeoffer.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">MakeOffer</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://redmoon.digital/" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/redmoon-digital.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">Red Moon Digital</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -257,61 +307,6 @@ flisk connect claude{% endcapture %}
     </div>
   </section>
 
-  <!-- ================= ADOPTERS (Social proof) ================= -->
-  <section class="aw-section aw-adopters" id="adopters" style="padding-top: 0;">
-    <div class="aw-wrap aw-adopters-grid">
-      <div class="aw-adopters-intro">
-        <span class="aw-adopters-eyebrow aw-mono">Adopters</span>
-        <h2>Who uses Flisk</h2>
-        <p>Teams that run <span class="aw-mono">flisk up</span> on their own code. Listed with their consent in <a href="https://github.com/flisk-sh/flisk/blob/main/ADOPTERS.md" target="_blank" rel="noopener">ADOPTERS.md</a>.</p>
-        <div class="aw-adopters-count"><span class="aw-mono">5</span> teams listed</div>
-      </div>
-
-      <ul class="aw-adopter-list">
-        <li>
-          <a class="aw-adopter-row" href="https://github.com/biolend83/tubehaus" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/tubehaus.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">TubeHaus</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.4.25</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://www.linkedin.com/company/lekast/" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/lekast.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">Lekast</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.3.178</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://medium.com/@mfin.services" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/mfin-services.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">mfin.services</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.3.140</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://www.linkedin.com/company/makeofferio" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/makeoffer.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">MakeOffer</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.3.180</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://redmoon.digital/" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/redmoon-digital.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">Red Moon Digital</span>
-            <span class="aw-adopter-ver aw-mono">Flisk 1.3.81</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
-
   <!-- ================= PROOF: numbers you can rerun ================= -->
   <section class="aw-section aw-proof" id="proof" style="padding-top: 0;">
     <div class="aw-wrap aw-proof-split">
@@ -376,7 +371,8 @@ flisk connect claude{% endcapture %}
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>Everything you stop paying for</h2>
-        <p>Teams assemble this stack from a dozen tools and months of DevOps work. Flisk ships it in one CLI — on hardware you already own.</p>
+        <p>Teams assemble this stack from a dozen tools and months of DevOps work. Flisk ships it in one CLI, on hardware you already own.</p>
+        <p class="aw-stack-note">Setup and onboarding times below are illustrative examples, not measurements. Onboarding time has not been measured on a hiring cohort.</p>
       </div>
 
       <div class="aw-stack-zone">
@@ -476,9 +472,10 @@ flisk connect claude{% endcapture %}
   <section class="aw-section aw-new" id="new" style="padding-top: 0;">
     <div class="aw-wrap">
       <div class="aw-head">
-        <p class="aw-new-kicker"># recently shipped <span>[{{ wn.date | downcase }}]</span></p>
+        <p class="aw-new-kicker"># recently shipped</p>
         <h2>Recently shipped</h2>
-        <p>{{ wn.version }} is on npm. Items marked next are merged and ship in the next release.</p>
+        {%- assign wn_next = wn.items | where: "status", "next" %}
+        <p>Recent additions, available on npm.{% if wn_next.size > 0 %} Items marked next are merged and ship in the next release.{% endif %} <a href="https://github.com/flisk-sh/flisk/releases" target="_blank" rel="noopener">See every release</a>.</p>
       </div>
 
       <div class="aw-new-grid" data-new>
@@ -494,7 +491,7 @@ flisk connect claude{% endcapture %}
         <div class="aw-new-panels">
           {%- for it in wn.items %}
           <div class="aw-new-panel" role="tabpanel" id="aw-new-{{ forloop.index }}" aria-labelledby="aw-new-tab-{{ forloop.index }}"{% unless forloop.first %} hidden{% endunless %}>
-            <p class="aw-new-status{% if it.status == 'released' %} is-released{% endif %}">{% if it.status == 'released' %}in {{ wn.version }} on npm{% else %}merged / next release{% endif %}</p>
+            <p class="aw-new-status{% if it.status == 'released' %} is-released{% endif %}">{% if it.status == 'released' %}on npm{% else %}merged / next release{% endif %}</p>
             <h3>{{ it.title }}</h3>
             <p class="aw-new-body">{{ it.body | escape }}</p>
             {%- if it.code %}
@@ -556,7 +553,7 @@ flisk connect claude{% endcapture %}
           <p class="aw-price-desc">The full CLI, MIT-licensed, with no license key required.</p>
           <ul class="aw-price-list">
             <li><code>flisk up</code>, scaffold, Traefik, Postgres, Tilt live update, golden layers</li>
-            <li>Playwright, C4, and AGENTS.md when generated in-repo</li>
+            <li>Playwright, C4 and AGENTS.md, if you generate them in your repo</li>
             <li>No key required to run the core CLI</li>
             <li>Community support</li>
           </ul>
@@ -569,9 +566,8 @@ flisk connect claude{% endcapture %}
           <p class="aw-price-desc">Unlocks the paid extras and gives your team a human on the other end.</p>
           <ul class="aw-price-list">
             <li>Everything in Free</li>
-            <li>Verdaccio private npm registry for local package publishing and sharing</li>
-            <li>Verdaccio, DDD scaffold, and Sablier idle stop</li>
-            <li>Playwright, C4, and AGENTS.md implementations downloaded with a key</li>
+            <li>Verdaccio private npm registry, DDD scaffold and Sablier idle stop</li>
+            <li>Ready-made Playwright, C4 and AGENTS.md implementations, downloaded with your key</li>
             <li>Up to {{ site.data.flisk.premium_project_limit }} project IDs per license key</li>
             <li>Priority support, next business day</li>
             <li>Onboarding session for your stack</li>
@@ -590,7 +586,7 @@ flisk connect claude{% endcapture %}
           </div>
           <div class="aw-why-item">
             <strong>vs enterprise CDEs</strong>
-            <p>Coder and Okteto gate RBAC and SSO behind "contact sales". Flisk Premium includes team policies at a self-serve price.</p>
+            <p>Coder and Okteto gate RBAC and SSO behind "contact sales". So does Flisk: SSO is on Enterprise, at custom pricing. Premium is the self-serve plan for the extras listed above.</p>
           </div>
         </div>
       </div>
@@ -648,7 +644,7 @@ flisk connect claude{% endcapture %}
     </div>
   </section>
 
-  <a class="aw-phone-bar" href="{{ '/sandbox/' | relative_url }}" data-phone-bar data-cta="phone_bar_sandbox" hidden>Try it in your browser</a>
+  <a class="aw-phone-bar" href="{{ '/sandbox/' | relative_url }}" data-phone-bar data-cta="phone_bar_sandbox" hidden>Watch the tour in your browser</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>

@@ -1,9 +1,7 @@
 # Homepage "Recently shipped" section. Each entry is written from the merged PR
 # description in flisk-sh/flisk (or docs/run-without-docker.md for 01).
-# status: "released" = on npm in `version`; "next" = merged to main after it.
+# status: "released" = on npm; "next" = merged to main, not yet released.
 # Verified 2026-11-09: npm @flisk-sh/flisk is 1.4.45 (published 2026-11-08) and every item below merged before it.
-version: "1.4.45"
-date: "8 Nov 2026"
 items:
   - title: "Simple apps run as plain processes"
     short: "No containers needed for an API, a website or a worker."
