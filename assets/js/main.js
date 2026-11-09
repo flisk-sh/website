@@ -505,3 +505,16 @@ if (document.readyState === 'loading') {
     })
     .catch(() => {});
 })();
+
+// The shared Flisk bar (flisk.si/assets/bar.js) sits at the top of the page and scrolls away; keep the fixed nav under it.
+(function () {
+  const root = document.documentElement;
+  const place = () => {
+    const bar = document.querySelector('flisk-bar');
+    root.style.setProperty('--flisk-bar', (bar ? Math.max(0, bar.getBoundingClientRect().bottom) : 0) + 'px');
+  };
+  window.addEventListener('scroll', place, { passive: true });
+  window.addEventListener('resize', place);
+  window.addEventListener('load', place);
+  document.addEventListener('DOMContentLoaded', place);
+})();

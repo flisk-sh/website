@@ -164,6 +164,7 @@
   {% endif %}
   
   <meta name="theme-color" content="#22C55E" />
+  <script src="https://flisk.si/assets/bar.js" defer></script>
 </head>
 {%- comment -%} Inner pages get the Warp-style layer in aw-dark.css; --kicker feeds the "# page / 01" section labels. {%- endcomment -%}
 {%- assign kicker = page.title | default: site.title | split: ' - ' | first | split: ' | ' | first | downcase | replace: "'", "’" | replace: '"', '' %}

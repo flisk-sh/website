@@ -417,7 +417,7 @@ body { background: #0a0a0e; overflow-x: hidden; }
    Slides out from under the header once the hero is gone, so the page keeps one header. */
 .aw-index {
   position: fixed;
-  top: 4rem;
+  top: calc(4rem + var(--flisk-bar, 0px));
   left: 0;
   right: 0;
   z-index: 999;
