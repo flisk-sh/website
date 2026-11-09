@@ -8,17 +8,6 @@ image: /assets/images/flisk-social-card.png
 
 <div class="aw">
 
-  <!-- ================= SECTION INDEX (header's second row after the hero; letter keys jump) ================= -->
-  <nav class="aw-index" aria-label="Page sections" data-aw-index>
-    <div class="aw-index-links">
-      {%- assign index_items = "A|paths|Your app,L|agent-loop|Agent loop,H|how-it-works|How it works,G|generated|Files,T|proof|Proof,R|replaces|Replaces,N|new|New,F|faq|FAQ,P|pricing|Pricing" | split: "," %}
-      {%- for item in index_items %}
-      {%- assign part = item | split: "|" %}
-      <a href="#{{ part[1] }}" data-index-key="{{ part[0] }}" aria-keyshortcuts="{{ part[0] }}"><kbd aria-hidden="true">{{ part[0] }}</kbd>{{ part[2] }}</a>
-      {%- endfor %}
-    </div>
-  </nav>
-
   <!-- ================= HERO: one ask, then show it working ================= -->
   <section class="aw-hero" id="top">
     <div class="aw-hero-bg"></div>
@@ -198,56 +187,6 @@ flisk connect claude{% endcapture %}
     </div>
   </section>
 
-  <!-- ================= ADOPTERS (Social proof) ================= -->
-  <section class="aw-section aw-adopters" id="adopters">
-    <div class="aw-wrap aw-adopters-grid">
-      <div class="aw-adopters-intro">
-        <span class="aw-adopters-eyebrow aw-mono">Adopters</span>
-        <h2>Who uses Flisk</h2>
-        <p>Teams that run <span class="aw-mono">flisk up</span> on their own code. Listed with their consent in <a href="https://github.com/flisk-sh/flisk/blob/main/docs/project/ADOPTERS.md" target="_blank" rel="noopener">ADOPTERS.md</a>.</p>
-        <div class="aw-adopters-count"><span class="aw-mono">5</span> teams listed</div>
-      </div>
-
-      <ul class="aw-adopter-list">
-        <li>
-          <a class="aw-adopter-row" href="https://github.com/biolend83/tubehaus" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/tubehaus.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">TubeHaus</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://www.linkedin.com/company/lekast/" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/lekast.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">Lekast</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://medium.com/@mfin.services" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/mfin-services.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">mfin.services</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://www.linkedin.com/company/makeofferio" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/makeoffer.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">MakeOffer</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://redmoon.digital/" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/redmoon-digital.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">Red Moon Digital</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
-
   <!-- ================= START, CHECK, FIX: the headline's three verbs, each with its proof and its commands ================= -->
   <section class="aw-section aw-loop" id="agent-loop">
     <div class="aw-wrap">
@@ -279,56 +218,6 @@ flisk connect claude{% endcapture %}
       {%- endfor %}
     </div>
   </section>
-
-  <!-- ================= BENTO (Interest) ================= -->
-  <section class="aw-section" id="how-it-works">
-    <div class="aw-wrap">
-      <div class="aw-head">
-        <h2>How it works</h2>
-        <p>Docker is optional. A service that declares a <code>command</code> runs as a local process with only your app's runtime. For a container stack, Docker runs the containers, Tilt watches services and live-updates containers as you code, and Flisk CLI writes the configuration Tilt uses.</p>
-      </div>
-
-      <div class="aw-bento">
-        <!-- B: scale numbers (2x1) -->
-        <div class="aw-card aw-card-b">
-          <h3>One manifest in. A running local service out.</h3>
-          <p>Describe a service once, then run it locally with hot reload and health checks.</p>
-        </div>
-
-        <!-- C: manifest (1x1) -->
-        <div class="aw-card aw-card-c">
-          <h3>One manifest</h3>
-          <pre class="aw-code aw-mono">{
-  <span class="k">"appName"</span>: <span class="s">"orders"</span>,
-  <span class="k">"appType"</span>: <span class="s">"frontend"</span>,
-  <span class="k">"port"</span>: <span class="n">3001</span>,
-  <span class="k">"framework"</span>: <span class="s">"vue"</span>
-}</pre>
-        </div>
-
-        <!-- D: scale image (1x1) -->
-        <div class="aw-card aw-card-d">
-          <img class="aw-scroll-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFhMWEyNCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMGEwZSIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJib3giIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjN2M0ZGZmIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNGRkMGZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmcpIi8+PGc+PHJlY3QgeD0iNjAiIHk9IjgwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjkiLz48cmVjdCB4PSIyMzAiIHk9IjgwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjUiLz48cmVjdCB4PSI0MDAiIHk9IjgwIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjMiLz48cmVjdCB4PSI2MCIgeT0iMTkwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjUiLz48cmVjdCB4PSIyMzAiIHk9IjE5MCIgd2lkdGg9IjE1MCIgaGVpZ2h0PSI5MCIgcng9IjYiIGZpbGw9InVybCgjYm94KSIgb3BhY2l0eT0iMC45Ii8+PHJlY3QgeD0iNDAwIiB5PSIxOTAiIHdpZHRoPSIxNDAiIGhlaWdodD0iOTAiIHJ4PSI2IiBmaWxsPSJ1cmwoI2JveCkiIG9wYWNpdHk9IjAuNSIvPjxyZWN0IHg9IjYwIiB5PSIzMDAiIHdpZHRoPSIxNTAiIGhlaWdodD0iOTAiIHJ4PSI2IiBmaWxsPSJ1cmwoI2JveCkiIG9wYWNpdHk9IjAuMyIvPjxyZWN0IHg9IjIzMCIgeT0iMzAwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjkwIiByeD0iNiIgZmlsbD0idXJsKCNib3gpIiBvcGFjaXR5PSIwLjUiLz48cmVjdCB4PSI0MDAiIHk9IjMwMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI5MCIgcng9IjYiIGZpbGw9InVybCgjYm94KSIgb3BhY2l0eT0iMC45Ii8+PHJlY3QgeD0iNjAiIHk9IjQxMCIgd2lkdGg9IjQ4MCIgaGVpZ2h0PSI5MCIgcng9IjYiIGZpbGw9InVybCgjYm94KSIgb3BhY2l0eT0iMC4yNSIvPjwvZz48L3N2Zz4K" alt="Grid of containers representing {{ site.data.flisk.scale_services }} microservices" loading="lazy" />
-          <div class="aw-card-d-caption">
-            <strong>Generated /health fixture: {{ site.data.flisk.scale_plain }}</strong>
-            <span>small generated services boot from scratch on a clean CI runner in {{ site.data.flisk.erp_boot_minutes }} minutes (<a href="{{ site.data.flisk.erp_ci_run }}" target="_blank" rel="noopener">the run</a>)</span>
-          </div>
-        </div>
-
-        <!-- E: real toolchain strip (4x1) -->
-        <div class="aw-card aw-card-e">
-          <h3>A real toolchain, wired together — not a template dump</h3>
-          <p>Every artifact below is produced by an actual generator module in the Flisk source tree. See our <a href="{{ '/docs/examples/' | relative_url }}" style="color: #6EE7A0;">generated /health fixture with {{ site.data.flisk.erp_services }} services</a>; it is not an ERP product.</p>
-          <div class="aw-chips">
-            {% for chip in site.data.flisk.toolchain_chips %}
-            <span class="aw-chip">{{ chip }}</span>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
 
   <!-- ================= GENERATED FILES EXPLORER ================= -->
   {%- assign gen = site.data.explorer %}
@@ -471,104 +360,53 @@ flisk connect claude{% endcapture %}
     </div>
   </section>
 
-  <!-- ================= CARD STACKING (Desire) ================= -->
-  <section class="aw-section" id="replaces">
-    <div class="aw-wrap">
-      <div class="aw-head">
-        <h2>Everything you stop paying for</h2>
-        <p>Teams assemble this stack from a dozen tools and months of DevOps work. Flisk ships it in one CLI, on hardware you already own.</p>
-        <p class="aw-stack-note">Setup and onboarding times below are illustrative examples, not measurements. Onboarding time has not been measured on a hiring cohort.</p>
+  <!-- ================= ADOPTERS (Social proof) ================= -->
+  <section class="aw-section aw-adopters" id="adopters">
+    <div class="aw-wrap aw-adopters-grid">
+      <div class="aw-adopters-intro">
+        <span class="aw-adopters-eyebrow aw-mono">Adopters</span>
+        <h2>Who uses Flisk</h2>
+        <p>Teams that run <span class="aw-mono">flisk up</span> on their own code. Listed with their consent in <a href="https://github.com/flisk-sh/flisk/blob/main/docs/project/ADOPTERS.md" target="_blank" rel="noopener">ADOPTERS.md</a>.</p>
+        <div class="aw-adopters-count"><span class="aw-mono">5</span> teams listed</div>
       </div>
 
-      <div class="aw-stack-zone">
-        <div class="aw-stack-card">
-          <div>
-            <h4>Cloud dev environments</h4>
-            <p class="aw-stack-tools">Gitpod / Ona, GitHub Codespaces, Coder, Daytona, Codeanywhere, Replit</p>
-          </div>
-          <div class="aw-stack-meta">
-            <span class="aw-stack-cost">{{ site.data.flisk.gitpod_entry }}–{{ site.data.flisk.cloud_cde_max }} /dev/mo</span>
-            <span class="aw-stack-instead">{{ site.data.flisk.community_price }} — your machine's Docker</span>
-          </div>
-        </div>
-
-        <div class="aw-stack-card">
-          <div>
-            <h4>Kubernetes dev tooling</h4>
-            <p class="aw-stack-tools">Garden, Skaffold, DevSpace, Telepresence, mirrord, Nocalhost — plus weeks of YAML</p>
-          </div>
-          <div class="aw-stack-meta">
-            <span class="aw-stack-cost">{{ site.data.flisk.setup_weeks }} DevOps</span>
-            <span class="aw-stack-instead">one service.json</span>
-          </div>
-        </div>
-
-        <div class="aw-stack-card">
-          <div>
-            <h4>Golden Docker images</h4>
-            <p class="aw-stack-tools">DIY base-image maintenance, CVE patching, cache strategy</p>
-          </div>
-          <div class="aw-stack-meta">
-            <span class="aw-stack-cost">ongoing burden</span>
-            <span class="aw-stack-instead">L1–L4 layers included</span>
-          </div>
-        </div>
-
-        <div class="aw-stack-card">
-          <div>
-            <h4>Per-service build config</h4>
-            <p class="aw-stack-tools">Hand-written Vite, TSConfig, Dockerfile, .npmrc and .env for every repo</p>
-          </div>
-          <div class="aw-stack-meta">
-            <span class="aw-stack-cost">repeated per service</span>
-            <span class="aw-stack-instead">Local runtime configuration</span>
-          </div>
-        </div>
-
-        <div class="aw-stack-card">
-          <div>
-            <h4>Secrets infrastructure</h4>
-            <p class="aw-stack-tools">Vault / Infisical wiring, machine identities, token lifecycle per service</p>
-          </div>
-          <div class="aw-stack-meta">
-            <span class="aw-stack-cost">setup + audit time</span>
-            <span class="aw-stack-instead">identities pre-wired</span>
-          </div>
-        </div>
-
-        <div class="aw-stack-card">
-          <div>
-            <h4>Routing, registry and docs</h4>
-            <p class="aw-stack-tools">nginx / Traefik configs, private npm registry, architecture diagrams, runbooks</p>
-          </div>
-          <div class="aw-stack-meta">
-            <span class="aw-stack-cost">constant maintenance</span>
-            <span class="aw-stack-instead">generated, cannot rot</span>
-          </div>
-        </div>
-
-        <div class="aw-stack-card">
-          <div>
-            <h4>E2E test infrastructure</h4>
-            <p class="aw-stack-tools">Playwright environment setup against the full running stack</p>
-          </div>
-          <div class="aw-stack-meta">
-            <span class="aw-stack-cost">days per project</span>
-            <span class="aw-stack-instead">built-in Playwright</span>
-          </div>
-        </div>
-
-        <div class="aw-stack-card">
-          <div>
-            <h4>Onboarding runbooks</h4>
-            <p class="aw-stack-tools">Wiki pages that rot within a month — replaced by flisk doctor and a live terminal UI</p>
-          </div>
-          <div class="aw-stack-meta">
-            <span class="aw-stack-cost">{{ site.data.flisk.onboard_days }} per hire</span>
-            <span class="aw-stack-instead">flisk up — minutes</span>
-          </div>
-        </div>
-      </div>
+      <ul class="aw-adopter-list">
+        <li>
+          <a class="aw-adopter-row" href="https://github.com/biolend83/tubehaus" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/tubehaus.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">TubeHaus</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://www.linkedin.com/company/lekast/" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/lekast.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">Lekast</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://medium.com/@mfin.services" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/mfin-services.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">mfin.services</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://www.linkedin.com/company/makeofferio" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/makeoffer.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">MakeOffer</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="aw-adopter-row" href="https://redmoon.digital/" target="_blank" rel="noopener">
+            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/redmoon-digital.png' | relative_url }}" alt="" loading="lazy"></span>
+            <span class="aw-adopter-name">Red Moon Digital</span>
+            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -657,10 +495,6 @@ flisk connect claude{% endcapture %}
         <details class="aw-faq-item">
           <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Is {{ site.data.flisk.scale_plain }} services locally realistic?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
           <div class="aw-faq-a">As a boot test, yes: this generated <code>/health</code> fixture has {{ site.data.flisk.scale_plain }} small generated services (about 20 lines each) that all became healthy through Traefik in {{ site.data.flisk.erp_boot_seconds }} s on a clean CI runner, images built from scratch (<a href="{{ site.data.flisk.erp_ci_run }}" target="_blank" rel="noopener">the run</a>). It is a scale fixture, not a real ERP product. Real services with real dependencies use more memory. Selective startup runs only what you're working on, and golden L1–L4 layers keep rebuilds near-instant. The discovery daemon regenerates only what changed. Our daily driver is a {{ site.data.flisk.demo_services }}-service stack on a {{ site.data.flisk.machine }}, and it performs superbly; the same engine runs a {{ site.data.flisk.monorepo_services }}-service monorepo every day.</div>
-        </details>
-        <details class="aw-faq-item">
-          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Where do the savings numbers come from?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
-          <div class="aw-faq-a">The calculator uses inputs you set. Its output is arithmetic, not savings. The starting value of five hours per week is only an editable input, not a typical measurement. We make no savings claim for your team.</div>
         </details>
       </div>
     </div>
@@ -1003,51 +837,21 @@ if (!REDUCED_MOTION && window.gsap && window.ScrollTrigger) {
     scrollTrigger: { trigger: '.aw-hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
-  /* Card Stacking — cards pile from the bottom with scale physics */
-  document.querySelectorAll('.aw-stack-card').forEach(function (card, i, all) {
-    gsap.to(card, {
-      scale: 1 - (all.length - 1 - i) * 0.035,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: card,
-        start: 'top ' + (120 + i * 24) + 'px',
-        end: 'bottom top',
-        scrub: true
-      }
-    });
-  });
-
-  /* Image scale-and-fade */
-  document.querySelectorAll('.aw-scroll-img').forEach(function (img) {
-    gsap.fromTo(img,
-      { scale: 0.8, opacity: 0.2 },
-      { scale: 1, opacity: 0.9, ease: 'none',
-        scrollTrigger: { trigger: img, start: 'top 95%', end: 'top 35%', scrub: true } });
-    gsap.to(img, {
-      opacity: 0.2, ease: 'none',
-      scrollTrigger: { trigger: img, start: 'bottom 40%', end: 'bottom 5%', scrub: true }
-    });
-  });
-
-  /* Bento + pricing rise-in */
-  gsap.from('.aw-card', {
-    y: 60, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'power3.out',
-    scrollTrigger: { trigger: '.aw-bento', start: 'top 80%' }
-  });
+  /* Pricing rise-in */
   gsap.from('.aw-price-card', {
     y: 60, opacity: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out',
     scrollTrigger: { trigger: '.aw-pricing-grid', start: 'top 80%' }
   });
 } else {
   document.documentElement.classList.add('aw-motion-fallback');
-  document.querySelectorAll('.aw-card, .aw-price-card, .aw-stack-card, .aw-scroll-img').forEach(function (el, i) {
+  document.querySelectorAll('.aw-price-card').forEach(function (el, i) {
     el.style.setProperty('--aw-delay', Math.min(i * 70, 420) + 'ms');
     startWhenNearViewport(el, function () {
       el.classList.add('is-motion-visible');
     }, { rootMargin: '180px 0px', timeout: 900 + i * 20 });
   });
   if (REDUCED_MOTION) {
-    document.querySelectorAll('.aw-card, .aw-price-card, .aw-stack-card, .aw-scroll-img').forEach(function (el) {
+    document.querySelectorAll('.aw-price-card').forEach(function (el) {
       el.classList.add('is-motion-visible');
     });
   }

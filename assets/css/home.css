@@ -2357,6 +2357,28 @@ button.aw-gen-node:focus-visible,
   overflow: hidden;
 }
 
+/* On a phone the window comes right after the headline, inside the first screen. The hero's blocks become direct
+   children of the hero so the browser-tour button and the command box can sit below the window. */
+@media (max-width: 768px) {
+  .aw-hero { padding-top: 5.5rem; }
+  .aw-hero-top,
+  .aw-hero-main { display: contents; }
+  .aw-hero h1,
+  .aw-hero-top .aw-hero-sub,
+  .aw-hero-phone,
+  .aw-hero-side { position: relative; }
+  .aw-hero h1 { order: 1; margin-bottom: 0.75rem; font-size: clamp(2rem, 9vw, 2.6rem); }
+  .aw-hero-top .aw-hero-sub { order: 1; font-size: 1rem; line-height: 1.5; }
+  .aw-hero .aw-stage { order: 2; margin-top: 1.25rem; }
+  .aw-hero-phone { order: 3; margin: 1.5rem 0 0; }
+  .aw-hero-side { order: 4; margin-top: 1rem; }
+  /* The guide is one row that scrolls sideways, so the console itself starts higher. */
+  .aw-stage .aw-stage-guide { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .aw-stage-guide::-webkit-scrollbar { display: none; }
+  .aw-stage .aw-stage-guide > span { display: none; }
+  .aw-stage .aw-stage-guide button { flex: none; }
+}
+
 /* The shared hero wrapper adds side padding on phones; the stage is a window, so it keeps none. */
 .aw-hero .aw-stage { padding: 0; }
 
