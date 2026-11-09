@@ -98,9 +98,9 @@ function initNavigation() {
 // Copy code blocks
 function addCopyButtons() {
   document.querySelectorAll('pre').forEach(pre => {
-    // Explorer excerpts are partial files and "Recently shipped" snippets are examples;
-    // both link to the source instead.
-    if (pre.querySelector('.copy-code-button') || pre.closest('[data-gen], [data-new]')) return;
+    // Explorer excerpts are partial files, and "Recently shipped" and "Start, check, fix" snippets are examples
+    // with a shell prompt in the text; none of them should be pasted as they stand.
+    if (pre.querySelector('.copy-code-button') || pre.closest('[data-gen], [data-new], [data-tabs]')) return;
     const button = document.createElement('button');
     button.className = 'btn btn-sm btn-outline-light copy-code-button';
     button.style.cssText = 'position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.25rem 0.75rem; font-size: 0.75rem;';

@@ -29,6 +29,24 @@ layout: default
 
         <p>Save scene: <code>flisk import</code> and <code>flisk up</code> on a one-service Node app in Docker Compose, then one changed string in its source file. The new response came back {{ site.data.flisk.save_update }} after the save. A larger app, or a change to its dependencies, takes longer.</p>
 
+        <h2 id="agent-run">Agent run</h2>
+
+        <p>The Start, Check and Fix section on the homepage quotes one run on 2026-11-09, on a two-service app as plain local processes, using only the MCP tools. <code>doctor</code> passed, <code>up</code> started both services, <code>status</code> showed both unhealthy, and <code>logs</code> named the cause (<code>DATABASE_URL is not set</code>). The code was fixed, <code>down</code> and <code>up</code> restarted the stack, and <code>status</code> showed both ready and answering.</p>
+
+        <p>In this mode restarting a single service is not available, so the agent stopped and started the whole stack. Restarting one service needs Docker and Tilt.</p>
+
+        <h2 id="console">Homepage console</h2>
+
+        <p>The console in the homepage hero is the FliskOS interface itself, copied unchanged from <a href="https://github.com/flisk-sh/fliskos">flisk-sh/fliskos</a> (version 0.2.0). On the homepage it reads sample data in place of a local server, so nothing starts on your machine and nothing leaves your browser. Creating projects, running tools and starting agent threads are switched off there.</p>
+
+        <p>The sample data was captured on 2026-11-09 from FliskOS and Flisk CLI {{ site.data.flisk.terminal_capture_version }} running two small projects as plain local processes: the two-service demo app, and a two-service app with <code>DATABASE_URL</code> left unset. The doctor results, the log line and the agent thread are real output. We edited four things: folder paths and the user name are replaced, both projects are shown as running with separate platform ports, the agent thread is shortened to the steps about this project, and Start, Stop, Restart and "Apply the fix" switch between the captured states instead of running anything.</p>
+
+        <p>The agent thread is one read-only Claude Code run started from FliskOS, asked why the api service was not healthy. It found the cause and proposed a fix. The fix the homepage applies is the one-line change we made by hand.</p>
+
+        <h2 id="fix-a-bug">Fix a bug scene</h2>
+
+        <p>The Fix a bug tab in the homepage terminal replays one run of Flisk CLI {{ site.data.flisk.terminal_capture_version }} on 2026-11-09, on a two-service app as plain local processes, with <code>DATABASE_URL</code> deliberately left unset. The output is shortened to the lines shown. The commands were run in a terminal and the one-line fix was made by hand, not by an agent. This scene shows what the CLI reports; the agent run above is the one that used the MCP tools.</p>
+
         <h2>14-service demo</h2>
 
         <blockquote><p>14 tiny services healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot.</p></blockquote>

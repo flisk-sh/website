@@ -1,0 +1,111 @@
+// AI prompts for Flisk: "Inspect with" output and the "Build with AI" starter. Plain script with no imports: index.html loads it before app.js,
+// and test/inspect.test.js runs it in a bare VM context.
+const FLISK_INSPECT = (() => {
+  // The chat services take the prompt in the URL, so the pasted output is capped to keep the link usable.
+  const MAX_OUTPUT_CHARS = 4000;
+  // Same three services and brand colours as the "Review this PR in" badges in flisk.
+  const PROVIDERS = [
+    { label: "Grok", color: "#111111", base: "https://grok.com/?q=", logo: '<path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>' },
+    { label: "Claude", color: "#D97757", base: "https://claude.ai/new?q=", logo: '<path fill="currentColor" d="M17.304 3.541h-3.672l6.696 16.918H24Zm-10.608 0L0 20.459h3.744l1.37-3.553h7.005l1.369 3.553h3.744L10.536 3.541Zm-.371 10.223L8.616 7.82l2.291 5.945Z"/>' },
+    { label: "Codex", color: "#10A37F", base: "https://chatgpt.com/?q=", logo: '<path fill="currentColor" d="M22.28 9.82a6 6 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.07 6.07 0 0 0 4.98 4.18a6 6 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 6 6 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.52 2.9A6 6 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 6 6 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07z"/>' },
+  ];
+  const SECRET_NAME = "(secret|token|passw(or)?d|pwd|api[_-]?key|private[_-]?key|credential|authorization)";
+
+  // Hide values that look like secrets before any text leaves the machine.
+  function redact(text) {
+    return String(text)
+      .replace(/\b(bearer\s+)[\w.~+\/=-]+/gi, "$1[redacted]")
+      .replace(/(\b[a-z][a-z0-9+.-]*:\/\/[^\s\/:@]+:)[^\s@\/]+@/gi, "$1[redacted]@")
+      .replace(/\b(sk|pk|ghp|gho|xox[abprs])[-_][\w-]{12,}/g, "[redacted]")
+      .replace(new RegExp(`(\\b[\\w.-]*${SECRET_NAME}[\\w.-]*["']?\\s*[=:]\\s*["']?)[^\\s"',;]+`, "gi"), "$1[redacted]");
+  }
+
+  // Keep the newest output, since the end of a log is what usually matters, and cut at a line break.
+  function clip(text, max = MAX_OUTPUT_CHARS) {
+    if (text.length <= max) return text;
+    const tail = text.slice(-max);
+    const newline = tail.indexOf("\n");
+    return `(earlier output cut to keep the link short)\n${newline === -1 ? tail : tail.slice(newline + 1)}`;
+  }
+
+  function fence(text) {
+    return `\`\`\`\n${String(text || "(no output)").replaceAll("```", "'''")}\n\`\`\``;
+  }
+
+  function logsPrompt({ project, path, resource, lines }) {
+    return [
+      `Inspect these recent logs from the "${resource}" resource in the Flisk project "${project}" (${path}).`,
+      "Find the root cause of any error, crash or restart loop, point to the lines that show it, and say what to check or change. If the logs look healthy, say so.",
+      "",
+      "Logs:",
+      fence(clip(redact(lines.join("\n")))),
+    ].join("\n");
+  }
+
+  function runPrompt({ project, path, action, exitCode, output }) {
+    return [
+      `Flisk ran "${action}" for the project "${project}" (${path}) and it exited with code ${exitCode ?? "unknown"}.`,
+      "Explain why it failed from this output, say what to change, and give the command to run next.",
+      "",
+      "Output:",
+      fence(clip(redact(output || ""))),
+    ].join("\n");
+  }
+
+  // `program` is the binary the app discovered (see cliProgram() in app.js), so the prompt
+  // names the command that actually ran — a legacy install still runs `tdk doctor`.
+  function doctorPrompt({ project, path, score, issues, program = "flisk" }) {
+    const rank = { fail: 0, warning: 1 };
+    const list = [...issues]
+      .sort((left, right) => (rank[left.status] ?? 2) - (rank[right.status] ?? 2))
+      .map((check) => `- [${check.status}] ${check.name}: ${redact(check.message)}${check.fix ? ` (suggested fix: ${redact(check.fix)})` : ""}`)
+      .join("\n");
+    return [
+      `These checks from \`${program} doctor\` failed or warned for the Flisk project "${project}" (${path}). Health score: ${score ?? "unknown"}/100.`,
+      "For each one, explain what it means, the likely cause and the fix. Start with the failures.",
+      "",
+      list,
+    ].join("\n");
+  }
+
+  // The "Build with AI" starter prompt. It holds no project data, so it is sent as soon as the link is clicked.
+  function buildPrompt() {
+    return [
+      "I want to build an app with Flisk, a CLI that runs a project as Docker services under Tilt, with Traefik routing. Learn the model below before you answer, and do not suggest running anything until I confirm the plan.",
+      "",
+      "Architecture",
+      "- Project > Stack > Resource. A project (.tdk/project.json) holds resources (services). Stacks group resources so they start together.",
+      "- Each resource has a service.json, which is the source of truth: appName, appType, stack, port, healthCheckPath, dependsOn. Default ports come from 4000-5999.",
+      "- Starter code (src/) is mine to edit.",
+      "- Generated files (.autogenerated/, service.yaml, and the master files such as Tiltfile) are rewritten by Flisk. Change service.json or .tdk/project.json and run flisk config regenerate, never edit generated output.",
+      "- Tilt reads the service.json files, generates the runtime config and starts the resources. Traefik serves each one at a path, for example orders-api at /api/orders.",
+      "",
+      "Commands",
+      "- flisk doctor: check Docker, Tilt and Bun 1.2+ (install: curl -fsSL https://flisk.sh/install.sh | sh)",
+      "- flisk project [saas|restaurant|erp|user-management|ecommerce|example] --yes: create the project, blank or from a starter",
+      "- flisk resource <name> --type backend|frontend|worker|mcp|bring-your-own|sdk --stack <stack> --yes",
+      "  backend: --framework hono|express|elysia|fastify|nestjs|koa|h3, --language bun|python|go|rust, --feature prisma",
+      "  frontend: --framework react|vue|svelte|preact|lit|solid|qwik|vanilla|tanstack-router",
+      "  bring-your-own: --image <name> or --dockerfile <path>, --health-path /healthz",
+      "- flisk stack <stack> --resources <a> <b> --yes: group resources into a stack",
+      "- flisk up [stack] [--only <resource>]: start. flisk down --force: stop",
+      "- flisk status --tilt, flisk logs -s <resource> --since 5m, flisk networks: check state, logs and URLs",
+      "- flisk config regenerate | verify: sync generated files with project.json",
+      "- flisk import [dir] --dry-run: adopt existing compose, Dockerfile or package.json services",
+      "- flisk resources --json, flisk stacks --json: machine-readable lists",
+      "",
+      "How to help",
+      "1. Ask what I am building. Then propose the stacks and resources, with type, framework, port and dependsOn. Wait for my OK.",
+      "2. Give the exact flisk commands in order, one per code block, with --yes. Use --dry-run where it exists to preview first.",
+      "3. Show the service.json for any resource I need to change.",
+      "4. Tell me where each URL is after flisk up.",
+    ].join("\n");
+  }
+
+  function providerLinks(prompt) {
+    const q = encodeURIComponent(prompt);
+    return PROVIDERS.map((provider) => ({ ...provider, href: `${provider.base}${q}` }));
+  }
+
+  return { redact, logsPrompt, runPrompt, doctorPrompt, buildPrompt, providerLinks };
+})();
