@@ -1,5 +1,5 @@
 # Homepage benchmark panel. Every number is copied from a committed result file in
-# flisk-sh/flisk/benchmarks/results; update both together, never round up.
+# flisk-sh/flisk/docs/benchmarks/results; update both together, never round up.
 #
 # scale  value that fills a full bar        key    highlighted row
 # speed  (optional) the Replay button re-runs the bars in real time at this speed-up;
@@ -22,7 +22,7 @@
     - { label: "warm 3", value: 40, display: "40 s" }
   row_suffix: run
   note: flisk-restaurant-example (6 services, Traefik, Postgres) · macOS 26.5.2, arm64, 8 CPUs, 16 GB, Docker 29.8.2 · run after a cold start, images and build cache kept
-  source: benchmarks/results/tdk-up-warm-start-2026-10-11/summary.json
+  source: docs/benchmarks/results/tdk-up-warm-start-2026-10-11/summary.json
   repro: scripts/benchmark/README.md
 
 - id: cold
@@ -39,7 +39,7 @@
     - { label: "to healthy", value: 281, display: "281 s", key: true }
   row_suffix: step
   note: Same machine as Warm start · golden layers, service images and build cache removed first · one run, so it can vary
-  source: benchmarks/results/tdk-up-warm-start-2026-10-11/summary.json
+  source: docs/benchmarks/results/tdk-up-warm-start-2026-10-11/summary.json
   repro: scripts/benchmark/README.md
 
 - id: boot
@@ -61,7 +61,7 @@
     - { label: "100", value: 73.9, display: "73.9s", key: true }
   row_suffix: services
   note: "Docker Compose mode · 16 GB host, Docker VM 7.75 GiB · one run per tier. The 80-service tier ran at host load 24 (100-service tier: 14), which is why it is slower than 100. Treat tier-to-tier order as noise; a repeated run is planned."
-  source: benchmarks/results/container-scale-2026-09-25T22-18-28-371Z.json
+  source: docs/benchmarks/results/container-scale-2026-09-25T22-18-28-371Z.json
   repro: scripts/benchmark/README.md
 
 - id: memory
@@ -82,7 +82,7 @@
     - { label: "100", value: 1668, display: "1.63 GiB", key: true }
   row_suffix: services
   note: Same run as Boot · service containers only, no Postgres or Traefik · tiny health-check services use far less than real apps
-  source: benchmarks/results/container-scale-2026-09-25T22-18-28-371Z.json
+  source: docs/benchmarks/results/container-scale-2026-09-25T22-18-28-371Z.json
   repro: scripts/benchmark/README.md
 
 - id: cpu
@@ -103,7 +103,7 @@
     - { label: "100", value: 48.0, display: "48.0%", key: true }
   row_suffix: services
   note: Same run as Boot · one sample per tier right after services report healthy, so it is not monotonic
-  source: benchmarks/results/container-scale-2026-09-25T22-18-28-371Z.json
+  source: docs/benchmarks/results/container-scale-2026-09-25T22-18-28-371Z.json
   repro: scripts/benchmark/README.md
 
 - id: latency
@@ -124,7 +124,7 @@
     - { label: "100", value: 5.6, display: "5.6 ms", key: true }
   row_suffix: services
   note: Same run as Boot · one request routed to each service, median of the 200 responses · single run
-  source: benchmarks/results/container-scale-2026-09-25T22-18-28-371Z.json
+  source: docs/benchmarks/results/container-scale-2026-09-25T22-18-28-371Z.json
   repro: scripts/benchmark/README.md
 
 - id: cli
@@ -143,5 +143,5 @@
     - { label: "stacks", name: "flisk stacks", sub: "flisk cmd", value: 524, display: "524 ms" }
   row_suffix: flisk cmd
   note: Windows x64, i5-12600KF, Node 24 · no containers started · flisk status is left out because it waits on a Tilt probe
-  source: benchmarks/results/cli-startup-2026-10-06T21-18-27.093Z.json
+  source: docs/benchmarks/results/cli-startup-2026-10-06T21-18-27.093Z.json
   repro: scripts/benchmark/README.md
