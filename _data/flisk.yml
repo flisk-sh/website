@@ -33,6 +33,7 @@ machine: "16 GB M1 MacBook"   # daily driver the demo was captured on
 demo_command: "npx @flisk-sh/flisk demo" # the homepage's one action; same command as the CLI README
 save_update: "2.9 s"       # homepage terminal: one saved line in an imported one-service Compose app until the new response, one run, see docs/claims
 terminal_capture_version: "1.4.45" # CLI version the homepage terminal transcript was captured with (2026-11-09)
+compose_import_time: "49 s" # plain Compose app (Node API and Postgres) answering after flisk import, clean Ubuntu CI runner, one run, see docs/claims#compose-import
 
 # --- Calculator parameters (UI bounds + defaults) ---
 calc_devs_default: 10

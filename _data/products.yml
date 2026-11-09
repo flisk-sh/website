@@ -1,0 +1,55 @@
+# Homepage "More from Flisk" directory. List only products that answer today (inference.flisk.si was down on 2026-11-09, so it is left out).
+groups:
+  - name: Run your app
+    items:
+      - name: Flisk CLI
+        url: /features/
+        text: Your whole app running on your machine.
+      - name: FliskOS
+        url: https://github.com/flisk-sh/fliskos
+        text: A desktop command center for your Flisk projects.
+      - name: Build Me an App
+        url: https://mcp.flisk.sh/
+        text: Say what you want. Get the parts and the commands to run it.
+      - name: Run My Agents
+        url: https://run-my-agents.flisk.si/
+        text: Claude Code, simplified. No server, no keys.
+
+  - name: Publish and get found
+    items:
+      - name: Pages
+        url: https://pages.flisk.si
+        text: Your agent builds a page. One command makes it a link.
+      - name: Citable
+        url: https://citable.flisk.si
+        text: Find out if AI answers can cite your site.
+      - name: README Score
+        url: https://readme.flisk.si
+        text: Your README scored out of 100, with a fix for every miss.
+      - name: README Diagram
+        url: https://diagram.flisk.si
+        text: Turn any README into an animated SVG diagram.
+
+  - name: Compare and learn
+    items:
+      - name: DevEx Roadmap
+        url: https://roadmap.flisk.si
+        text: A community-edited map of local developer tools.
+      - name: Command Comparer
+        url: https://cmd.flisk.sh
+        text: Flisk commands next to Terraform, Compose, Tilt and more.
+      - name: Personal Demos
+        url: https://demo.flisk.sh
+        text: A demo stack generated just for you.
+
+  - name: Tools and help
+    items:
+      - name: Flisk Tools
+        url: https://tools.flisk.si/
+        text: Run small web and GitHub tools on your own GitHub, free.
+      - name: Helpdock
+        url: https://helpdock.flisk.sh
+        text: Your docs as a help center that answers with sources.
+      - name: Flisk Skills
+        url: https://github.com/flisk-sh/flisk-skills
+        text: Agent skills that teach your agent the Flisk manifest.

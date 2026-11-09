@@ -1,0 +1,93 @@
+# Homepage "Start it. Check it. Fix it." section. Every command here exists in the CLI (cli/src/commands in flisk-sh/flisk).
+# Keep the limits honest (POSITIONING.md, Known gaps): resource restart needs Docker and Tilt, and plain processes do not reload on save.
+# %COMPOSE_IMPORT_TIME% is filled from _data/flisk.yml, where the number and its source live.
+rows:
+  - id: start
+    verb: Start
+    title: your whole app from what you already have.
+    proof: A plain Compose app answered %COMPOSE_IMPORT_TIME% after <code>flisk import</code> on a clean CI runner.
+    link_text: How this was measured
+    link_href: /docs/claims/#compose-import
+    features:
+      - id: compose
+        tab: Compose import
+        text: Flisk reads your Compose file. Every service keeps its ports, names and env values.
+        code: |-
+          $ flisk import .
+          $ flisk up --wait
+      - id: plain
+        tab: Plain commands
+        text: A service that declares a command runs as a local process. Your app's own runtime is all it needs.
+        code: |-
+          {
+            "appName": "api",
+            "command": "node server.js",
+            "port": 4000,
+            "healthCheckPath": "/health"
+          }
+      - id: wait
+        tab: Wait for healthy
+        text: The wait flag returns once the stack is healthy, so the next step never runs against a half-started app.
+        code: $ flisk up --wait
+      - id: connect
+        tab: Agent setup
+        text: One command gives Claude Code, Cursor or Codex an MCP server, skills and an AGENTS.md.
+        code: $ flisk connect claude
+
+  - id: check
+    verb: Check
+    title: what is running, and why it is not.
+    proof: In one recorded agent run on a two-service app, <code>status</code> showed both services unhealthy and <code>logs</code> named the cause, <code>DATABASE_URL is not set</code>.
+    link_text: Read the run
+    link_href: /docs/claims/#agent-run
+    features:
+      - id: doctor
+        tab: The machine
+        text: Doctor checks your machine first and ranks failing checks by what blocks you most.
+        code: $ flisk doctor
+      - id: status
+        tab: Service health
+        text: In a big project, see only the services that are failing or still starting.
+        code: $ flisk status --unhealthy
+      - id: logs
+        tab: Logs
+        text: Read the recent logs of the services in trouble, and skip the rest.
+        code: $ flisk logs --unhealthy --tail 50
+      - id: verify
+        tab: Generated files
+        text: Confirm the generated files still match your manifests.
+        code: $ flisk config verify --json
+
+  - id: fix
+    verb: Fix
+    title: it without leaving the loop.
+    proof: In that same run, the agent fixed the code, restarted the stack with <code>down</code> and <code>up</code>, and <code>status</code> showed both services ready.
+    link_text: Read the run
+    link_href: /docs/claims/#agent-run
+    features:
+      - id: tools
+        tab: Agent tools
+        text: Your agent calls these as MCP tools, so it can act on what it reads without you relaying errors.
+        code: |-
+          doctor
+          up
+          status
+          logs
+          down
+      - id: restart
+        tab: Restart one service
+        text: On the Docker and Tilt path, restart a single service and leave the others running.
+        code: $ flisk restart api
+      - id: processes
+        tab: Plain processes
+        text: Local processes do not reload on save. Stop and start the stack to pick up a change.
+        code: |-
+          $ flisk down
+          $ flisk up
+      - id: live
+        tab: Update on save
+        text: On the Docker and Tilt path, containers update when you save a file.
+        code: |-
+          # edit api/server.js and save
+          $ curl localhost:4310
+          hello after save

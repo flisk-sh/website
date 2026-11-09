@@ -11,7 +11,7 @@ image: /assets/images/flisk-social-card.png
   <!-- ================= SECTION INDEX (header's second row after the hero; letter keys jump) ================= -->
   <nav class="aw-index" aria-label="Page sections" data-aw-index>
     <div class="aw-index-links">
-      {%- assign index_items = "A|paths|Your app,H|how-it-works|How it works,G|generated|Files,T|proof|Proof,R|replaces|Replaces,N|new|New,F|faq|FAQ,P|pricing|Pricing" | split: "," %}
+      {%- assign index_items = "A|paths|Your app,L|agent-loop|Agent loop,H|how-it-works|How it works,G|generated|Files,T|proof|Proof,R|replaces|Replaces,N|new|New,F|faq|FAQ,P|pricing|Pricing" | split: "," %}
       {%- for item in index_items %}
       {%- assign part = item | split: "|" %}
       <a href="#{{ part[1] }}" data-index-key="{{ part[0] }}" aria-keyshortcuts="{{ part[0] }}"><kbd aria-hidden="true">{{ part[0] }}</kbd>{{ part[2] }}</a>
@@ -25,20 +25,53 @@ image: /assets/images/flisk-social-card.png
     <div class="aw-hero-wash"></div>
     <div class="aw-hero-grain"></div>
 
-    <div class="aw-hero-inner aw-hero-grid">
+    <div class="aw-hero-inner aw-hero-grid aw-hero-top">
       <div class="aw-hero-main">
       <h1>The local runtime your <span class="aw-accent">AI agent</span> can start, check and fix.</h1>
       <p class="aw-hero-sub">Run your whole app on your machine, from a Compose file or plain commands. Your agent reads its health and logs, and fixes what breaks.</p>
       <a class="aw-btn aw-btn-solid aw-hero-phone" href="{{ '/sandbox/' | relative_url }}" data-cta="hero_sandbox_phone">Watch the tour in your browser</a>
+      </div>
+      <div class="aw-hero-side">
       {% include demo-box.html source="hero" %}
       <p class="aw-hero-status">Free, MIT licensed, not a deploy tool. <a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener" data-cta="hero_github">Source</a></p>
       </div>
+    </div>
 
+    <!-- ================= STAGE: the product itself, clickable, in the first screen ================= -->
+    <div class="aw-hero-inner aw-stage" data-tabs data-stage>
+      <div class="aw-stage-bar">
+        <div class="aw-stage-tabs" role="tablist" aria-label="Live demos">
+          <button type="button" role="tab" class="aw-stage-tab is-active" id="aw-stage-tab-console" aria-controls="aw-stage-console" aria-selected="true" data-cta="stage_console">FliskOS console</button>
+          <button type="button" role="tab" class="aw-stage-tab" id="aw-stage-tab-terminal" aria-controls="aw-stage-terminal" aria-selected="false" tabindex="-1" data-cta="stage_terminal">Terminal</button>
+        </div>
+        <span class="aw-stage-tag">runs in your browser, nothing to install</span>
+      </div>
+
+      <!-- The real FliskOS frontend (console/, copied from flisk-sh/fliskos) answering from sample data; see /docs/claims/#console. -->
+      <div class="aw-stage-panel" role="tabpanel" id="aw-stage-console" aria-labelledby="aw-stage-tab-console">
+        <div class="aw-stage-guide" role="group" aria-label="Guided steps" data-stage-guide>
+          <span>Click around, or follow the bug:</span>
+          <button type="button" data-stage-step="project" data-cta="stage_step_project">Open the failing app</button>
+          <button type="button" data-stage-step="logs" data-cta="stage_step_logs">Read the api logs</button>
+          <button type="button" data-stage-step="agent" data-cta="stage_step_agent">See the agent's answer</button>
+          <button type="button" data-stage-step="fix" data-cta="stage_step_fix">Apply the fix</button>
+          <button type="button" class="aw-stage-reset" data-stage-step="reset" data-cta="stage_step_reset">Start over</button>
+        </div>
+        <iframe class="aw-stage-frame" src="{{ '/console/' | relative_url }}" title="FliskOS, the desktop console for Flisk projects, with sample data" data-stage-frame></iframe>
+        <p class="aw-try-note">This is the real FliskOS interface with sample data. Nothing starts on your machine and nothing leaves your browser. <a href="{{ '/docs/claims/' | relative_url }}#console">How it was made</a></p>
+      </div>
+
+      <div class="aw-stage-panel aw-stage-terminal" role="tabpanel" id="aw-stage-terminal" aria-labelledby="aw-stage-tab-terminal" hidden>
       <!-- Real output, not a mock-up. Scene 1: the published CLI's local-process demo. Scene 2: flisk import on a one-service
            Compose app, then one saved line. Both captured with CLI {{ site.data.flisk.terminal_capture_version }}; see _data/flisk.yml. -->
       <aside class="aw-try" id="demo" aria-label="Terminal replay of real Flisk output" data-try>
         <div class="aw-terminal">
           <div class="aw-terminal-bar"><i></i><i></i><i></i><span data-try-title>try flisk</span></div>
+          <div class="aw-try-tabs" role="group" aria-label="Choose a demo" data-try-tabs hidden>
+            <button type="button" class="aw-try-tab" data-try-scene="1" aria-pressed="false" data-cta="try_tab_demo">Run the demo</button>
+            <button type="button" class="aw-try-tab" data-try-scene="2" aria-pressed="false" data-cta="try_tab_compose">Import Compose</button>
+            <button type="button" class="aw-try-tab" data-try-scene="3" aria-pressed="false" data-cta="try_tab_fix">Fix a bug</button>
+          </div>
           <div class="aw-try-stage">
             <div class="aw-terminal-body aw-try-body" data-try-body>
               <span class="aw-tline" data-scene="1" data-cmd><span class="p">$ </span><span data-text>npx @flisk-sh/flisk demo</span></span>
@@ -61,6 +94,29 @@ image: /assets/images/flisk-social-card.png
               <span class="aw-tline" data-scene="2" data-wait="500"><span class="dim"># edit api/server.js and save</span></span>
               <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>curl localhost:4310</span></span>
               <span class="aw-tline" data-scene="2" data-wait="500"><span class="ok">hello after save</span> <span class="dim"># {{ site.data.flisk.save_update }} after the save</span></span>
+
+              <!-- Scene 3: one captured run of a two-service app with DATABASE_URL missing, shortened; see /docs/claims/#homepage-terminal. Each data-step is one click. -->
+              <span class="aw-tline" data-scene="3" data-step="1" data-step-label="Check the machine" data-cmd><span class="p">$ </span><span data-text>flisk doctor</span></span>
+              <span class="aw-tline" data-scene="3" data-step="1"><span class="ok">✓</span> Local processes: 2 services declare a command</span>
+              <span class="aw-tline" data-scene="3" data-step="1"><span class="ok">✓ Doctor passed.</span> <span class="dim">Next: flisk up</span></span>
+              <span class="aw-tline" data-scene="3" data-step="2" data-step-label="Start the stack" data-cmd><span class="p">$ </span><span data-text>flisk up --wait --wait-timeout 12</span></span>
+              <span class="aw-tline" data-scene="3" data-step="2" data-wait="900"><span class="bad">the stack was not healthy after 12 seconds</span></span>
+              <span class="aw-tline" data-scene="3" data-step="3" data-step-label="Read the health" data-cmd><span class="p">$ </span><span data-text>flisk status</span></span>
+              <span class="aw-tline" data-scene="3" data-step="3">Runtime: local processes (no Docker, no Tilt)</span>
+              <span class="aw-tline" data-scene="3" data-step="3">0/2 healthy</span>
+              <span class="aw-tline" data-scene="3" data-step="3">  … web  <span class="dim">pending (starting)</span></span>
+              <span class="aw-tline" data-scene="3" data-step="3">  … api  <span class="dim">pending (starting)</span></span>
+              <span class="aw-tline" data-scene="3" data-step="4" data-step-label="Read the logs" data-cmd><span class="p">$ </span><span data-text>flisk logs --unhealthy --tail 5</span></span>
+              <span class="aw-tline" data-scene="3" data-step="4"><span class="bad">api | api: DATABASE_URL is not set</span></span>
+              <span class="aw-tline" data-scene="3" data-step="5" data-step-label="Fix it and restart"><span class="dim"># give DATABASE_URL a default in api/server.mjs</span></span>
+              <span class="aw-tline" data-scene="3" data-step="5" data-cmd><span class="p">$ </span><span data-text>flisk down -y</span></span>
+              <span class="aw-tline" data-scene="3" data-step="5">Stopped local processes: web, api</span>
+              <span class="aw-tline" data-scene="3" data-step="5" data-cmd><span class="p">$ </span><span data-text>flisk up --wait --wait-timeout 12</span></span>
+              <span class="aw-tline" data-scene="3" data-step="5" data-wait="900"><span class="ok">Stack is healthy.</span></span>
+              <span class="aw-tline" data-scene="3" data-step="6" data-step-label="Check it again" data-cmd><span class="p">$ </span><span data-text>flisk status</span></span>
+              <span class="aw-tline" data-scene="3" data-step="6">2/2 healthy</span>
+              <span class="aw-tline" data-scene="3" data-step="6">  <span class="ok">✓</span> web  ready</span>
+              <span class="aw-tline" data-scene="3" data-step="6">  <span class="ok">✓</span> api  ready</span>
             </div>
             <figure class="aw-try-shot" data-try-shot>
               <img src="{{ '/assets/images/demo-menu-page.jpg' | relative_url }}" alt="The page the demo opens: a restaurant menu served by two services Flisk started as local processes" width="800" height="500" loading="lazy" decoding="async">
@@ -72,8 +128,9 @@ image: /assets/images/flisk-social-card.png
             <button type="button" class="aw-try-replay" data-try-replay hidden>Replay</button>
           </div>
         </div>
-        <p class="aw-try-note" data-try-note>Real output, replayed faster than it ran. Without Docker you get this two-service app. <a href="{{ '/docs/claims/' | relative_url }}#homepage-terminal">How this was captured</a></p>
+        <p class="aw-try-note" data-try-note>Real output, replayed faster than it ran. Without Docker you get this two-service app. <a href="{{ '/docs/claims/' | relative_url }}#homepage-terminal">How these were captured</a></p>
       </aside>
+      </div>
     </div>
   </section>
 
@@ -126,7 +183,7 @@ flisk connect claude{% endcapture %}
   </section>
 
   <!-- ================= ADOPTERS (Social proof) ================= -->
-  <section class="aw-section aw-adopters" id="adopters" style="padding-top: 0;">
+  <section class="aw-section aw-adopters" id="adopters">
     <div class="aw-wrap aw-adopters-grid">
       <div class="aw-adopters-intro">
         <span class="aw-adopters-eyebrow aw-mono">Adopters</span>
@@ -175,8 +232,40 @@ flisk connect claude{% endcapture %}
     </div>
   </section>
 
+  <!-- ================= START, CHECK, FIX: the headline's three verbs, each with its proof and its commands ================= -->
+  <section class="aw-section aw-loop" id="agent-loop">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>Start it. Check it. Fix it.</h2>
+        <p>The same three jobs, from your terminal or from your agent.</p>
+      </div>
+
+      {%- for row in site.data.loop.rows %}
+      <article class="aw-loop-row{% if forloop.index == 2 %} is-flipped{% endif %}" data-tabs>
+        <div class="aw-loop-copy">
+          <h3><span class="aw-accent">{{ row.verb }}</span> {{ row.title }}</h3>
+          <p class="aw-loop-proof">{{ row.proof | replace: "%COMPOSE_IMPORT_TIME%", site.data.flisk.compose_import_time }} <a href="{{ row.link_href | relative_url }}">{{ row.link_text }}</a></p>
+          <div class="aw-loop-tabs" role="tablist" aria-label="{{ row.verb }} features">
+            {%- for f in row.features %}
+            <button type="button" role="tab" class="aw-loop-tab{% if forloop.first %} is-active{% endif %}" id="aw-loop-tab-{{ row.id }}-{{ f.id }}" aria-controls="aw-loop-{{ row.id }}-{{ f.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %} data-cta="loop_{{ row.id }}_{{ f.id }}">{{ f.tab }}</button>
+            {%- endfor %}
+          </div>
+        </div>
+        <div class="aw-loop-panels">
+          {%- for f in row.features %}
+          <div class="aw-loop-panel" role="tabpanel" id="aw-loop-{{ row.id }}-{{ f.id }}" aria-labelledby="aw-loop-tab-{{ row.id }}-{{ f.id }}" tabindex="0"{% unless forloop.first %} hidden{% endunless %}>
+            <p>{{ f.text }}</p>
+            <pre class="aw-code aw-mono">{{ f.code | escape }}</pre>
+          </div>
+          {%- endfor %}
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+
   <!-- ================= BENTO (Interest) ================= -->
-  <section class="aw-section" id="how-it-works" style="padding-top: 0;">
+  <section class="aw-section" id="how-it-works">
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>How it works</h2>
@@ -308,7 +397,7 @@ flisk connect claude{% endcapture %}
   </section>
 
   <!-- ================= PROOF: numbers you can rerun ================= -->
-  <section class="aw-section aw-proof" id="proof" style="padding-top: 0;">
+  <section class="aw-section aw-proof" id="proof">
     <div class="aw-wrap aw-proof-split">
       <div class="aw-proof-copy">
         <h2>Numbers you can rerun.</h2>
@@ -367,7 +456,7 @@ flisk connect claude{% endcapture %}
   </section>
 
   <!-- ================= CARD STACKING (Desire) ================= -->
-  <section class="aw-section" id="replaces" style="padding-top: 0;">
+  <section class="aw-section" id="replaces">
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>Everything you stop paying for</h2>
@@ -469,7 +558,7 @@ flisk connect claude{% endcapture %}
 
   <!-- ================= RECENTLY SHIPPED (numbered list + panel, after warp.dev's SDLC section) ================= -->
   {%- assign wn = site.data.whats_new %}
-  <section class="aw-section aw-new" id="new" style="padding-top: 0;">
+  <section class="aw-section aw-new" id="new">
     <div class="aw-wrap">
       <div class="aw-head">
         <p class="aw-new-kicker"># recently shipped</p>
@@ -509,8 +598,31 @@ flisk connect claude{% endcapture %}
     </div>
   </section>
 
+  <!-- ================= MORE FROM FLISK: the product directory ================= -->
+  <section class="aw-section aw-products" id="products">
+    <div class="aw-wrap aw-products-grid">
+      <div class="aw-head">
+        <h2>More from Flisk.</h2>
+        <p>Other products from the team behind the CLI.</p>
+      </div>
+      <div class="aw-products-groups">
+        {%- for group in site.data.products.groups %}
+        <div class="aw-products-group">
+          <h3>{{ group.name }}</h3>
+          <ul>
+            {%- for item in group.items %}
+            {%- assign external = item.url | slice: 0, 4 %}
+            <li><a href="{% if external == 'http' %}{{ item.url }}{% else %}{{ item.url | relative_url }}{% endif %}"{% if external == 'http' %} target="_blank" rel="noopener"{% endif %} data-cta="product_{{ item.name | slugify }}">{{ item.name }}<span>{{ item.text }}</span></a></li>
+            {%- endfor %}
+          </ul>
+        </div>
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
   <!-- ================= FAQ — plain list with [+] / [−] toggles (after warp.dev) ================= -->
-  <section class="aw-section aw-faq" id="faq" style="padding-top: 0;">
+  <section class="aw-section aw-faq" id="faq">
     <div class="aw-wrap">
       <div class="aw-head">
         <h2>Honest answers</h2>
@@ -594,7 +706,7 @@ flisk connect claude{% endcapture %}
   </section>
 
   <!-- ================= CTA / LICENSE REQUEST (Action) ================= -->
-  <section class="aw-section aw-cta aw-cta-quiet" id="waitlist" style="padding-top: 0;">
+  <section class="aw-section aw-cta aw-cta-quiet" id="waitlist">
     <div class="aw-wrap">
       <h2>Get your<br />Premium license.</h2>
       <p class="aw-cta-sub">Core stays free. Premium is a separate key for the extras above; no key required to run <span class="aw-mono">flisk up</span>. Need SSO, air-gapped, or an SLA? Pick Enterprise.</p>
@@ -637,7 +749,7 @@ flisk connect claude{% endcapture %}
 
 
   <!-- ================= CLOSE: back to the one action ================= -->
-  <section class="aw-section aw-final" id="try" style="padding-top: 0;">
+  <section class="aw-section aw-final" id="try">
     <div class="aw-wrap">
       <h2>See it run on your machine.</h2>
       {% include demo-box.html source="final" %}

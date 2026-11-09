@@ -83,6 +83,9 @@ near-black calm, one green signal light, monospace evidence everywhere.
   off-white with a dot grid, 1px ink hairlines, sharp corners, mono only,
   near-monochrome code, and a single deep-green accent (#15803D) carrying
   white text. Keep it to that one section; do not add other light bands.
+- Homepage frame: two hairline rails down the page sides from 1024px up, one
+  hairline rule between sections, a small cross where they meet. Sections use
+  `clamp(6rem, 8vw, 8rem)` padding above and below the rule.
 - One corner-radius doctrine: pills for interactive, 24px for cards,
   16px for code, circles for icon buttons.
 

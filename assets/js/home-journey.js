@@ -5,7 +5,7 @@
   /* The transcript is in the HTML, so it reads without JavaScript or with reduced motion. This only replays it. */
   function initTerminal() {
     const root = document.querySelector('[data-try]');
-    if (!root || REDUCED) return;
+    if (!root) return;
     const body = root.querySelector('[data-try-body]');
     const shot = root.querySelector('[data-try-shot]');
     const controls = root.querySelector('[data-try-controls]');
@@ -14,10 +14,16 @@
     const own = root.querySelector('[data-try-own]');
     const replay = root.querySelector('[data-try-replay]');
     const title = root.querySelector('[data-try-title]');
+    const tabBar = root.querySelector('[data-try-tabs]');
+    const tabs = Array.from(root.querySelectorAll('[data-try-scene]'));
+    const TITLES = { 1: 'try flisk', 2: 'your compose app', 3: 'a broken app' };
     const lines = Array.from(body.querySelectorAll('.aw-tline'));
     const scene = (n) => lines.filter((line) => line.dataset.scene === String(n));
-    const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
-    let current = 0; // bumped by every replay, so an older one stops
+    const step = (s) => scene(3).filter((line) => line.dataset.step === String(s));
+    /* Reduced motion keeps the clicks and drops the typing and the pauses. */
+    const wait = (ms) => (REDUCED ? Promise.resolve() : new Promise((resolve) => window.setTimeout(resolve, ms)));
+    let current = 0; // bumped by every play, so an older one stops
+    let active = 1;
 
     lines.forEach((line) => {
       const text = line.querySelector('[data-text]');
@@ -25,9 +31,16 @@
     });
 
     function clear() {
-      lines.forEach((line) => { line.hidden = true; });
+      lines.forEach((line) => {
+        line.hidden = true;
+        const text = line.querySelector('[data-text]');
+        if (text) text.textContent = text.dataset.full;
+      });
       shot.classList.remove('is-open');
       body.scrollTop = 0;
+      run.hidden = true;
+      own.hidden = true;
+      replay.hidden = true;
     }
 
     function setRun(label, cta, next) {
@@ -37,17 +50,8 @@
       run.onclick = next;
     }
 
-    function ready() {
-      current += 1;
-      clear();
-      title.textContent = 'try flisk';
-      scene(1)[0].hidden = false;
-      own.hidden = true;
-      replay.hidden = true;
-      setRun('Run it', 'try_run_demo', () => play(1));
-    }
-
     async function type(line, id) {
+      if (REDUCED) return;
       const text = line.querySelector('[data-text]');
       const full = text.dataset.full;
       for (let i = 0; i <= full.length; i += 1) {
@@ -58,39 +62,85 @@
       await wait(160);
     }
 
+    /* Resolves false when a newer play took over. */
+    async function show(list, id) {
+      for (const line of list) {
+        line.hidden = false;
+        if ('cmd' in line.dataset) {
+          body.scrollTop = body.scrollHeight;
+          await type(line, id);
+        } else {
+          await wait(Number(line.dataset.wait || 150));
+        }
+        if (id !== current) return false;
+        body.scrollTop = body.scrollHeight;
+      }
+      return true;
+    }
+
+    function finish() {
+      own.hidden = false;
+      replay.hidden = false;
+    }
+
+    async function playStep(s, id) {
+      run.hidden = true;
+      if (!(await show(step(s), id))) return;
+      const next = step(s + 1)[0];
+      if (next) setRun(next.dataset.stepLabel, `try_step_${s + 1}`, () => playStep(s + 1, id));
+      else finish();
+    }
+
     async function play(n) {
       current += 1;
       const id = current;
-      run.hidden = true;
-      replay.hidden = true;
-      if (n === 2) {
-        clear();
-        title.textContent = 'your compose app';
+      active = n;
+      tabs.forEach((tab) => {
+        const on = tab.dataset.tryScene === String(n);
+        tab.classList.toggle('is-active', on);
+        tab.setAttribute('aria-pressed', String(on));
+      });
+      clear();
+      title.textContent = TITLES[n];
+      if (n === 3) {
+        await playStep(1, id);
+        return;
       }
-      for (const [i, line] of scene(n).entries()) {
-        if (n === 1 && i === 0) continue; // already on screen, waiting for Enter
-        line.hidden = false;
-        body.scrollTop = body.scrollHeight;
-        if ('cmd' in line.dataset) await type(line, id);
-        else await wait(Number(line.dataset.wait || 150));
-        if (id !== current) return;
-      }
+      if (!(await show(scene(n), id))) return;
       if (n === 1) {
         title.textContent = 'localhost:3001';
         await wait(700);
         if (id !== current) return;
         shot.classList.add('is-open');
         setRun('Now save one line', 'try_run_save', () => play(2));
+        replay.hidden = false;
       } else {
-        own.hidden = false;
+        finish();
       }
-      replay.hidden = false;
     }
 
     root.classList.add('is-live');
     controls.hidden = false;
-    replay.addEventListener('click', ready);
-    ready();
+    tabBar.hidden = false;
+    clear();
+    tabs.forEach((tab) => tab.addEventListener('click', () => play(Number(tab.dataset.tryScene))));
+    replay.addEventListener('click', () => play(active));
+
+    /* The demo plays by itself the first time it is on screen. */
+    const onScreen = () => {
+      const box = root.getBoundingClientRect();
+      return box.top < window.innerHeight && box.bottom > 0;
+    };
+    if (onScreen() || !('IntersectionObserver' in window)) {
+      play(1);
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        if (current === 0) play(1);
+      }, { threshold: 0.25 });
+      observer.observe(root);
+    }
 
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter' || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
@@ -101,9 +151,7 @@
     });
   }
 
-  function initPaths() {
-    const root = document.querySelector('[data-paths]');
-    if (!root) return;
+  function initTabs(root) {
     const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
 
     function select(tab, focus) {
@@ -125,6 +173,23 @@
         event.preventDefault();
         select(tabs[(i + step + tabs.length) % tabs.length], true);
       });
+    });
+  }
+
+  /* The guide above the console drives the FliskOS demo in the frame (console/sample.js listens). */
+  function initStage() {
+    const frame = document.querySelector('[data-stage-frame]');
+    const guide = document.querySelector('[data-stage-guide]');
+    if (!frame || !guide) return;
+    const steps = Array.from(guide.querySelectorAll('[data-stage-step]'));
+    guide.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-stage-step]');
+      if (!button) return;
+      const name = button.dataset.stageStep;
+      frame.contentWindow.postMessage({ fliskDemo: name }, window.location.origin);
+      steps.forEach((step) => step.classList.toggle('is-active', step === button && name !== 'reset'));
+      if (name === 'reset') steps.forEach((step) => step.classList.remove('is-done'));
+      else button.classList.add('is-done');
     });
   }
 
@@ -160,7 +225,8 @@
   }
 
   initTerminal();
-  initPaths();
+  document.querySelectorAll('[data-paths], [data-tabs]').forEach(initTabs);
+  initStage();
   initLicense();
   initPhoneBar();
 })();
