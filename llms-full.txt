@@ -5,7 +5,7 @@ sitemap: false
 ---
 # Flisk CLI (full)
 
-> Kubernetes-free microservice development. Run your whole service landscape locally without learning Kubernetes. One service.json per service generates the Dockerfile, Compose, Traefik, Postgres, NATS and frontend config Flisk needs, on plain Docker.
+> The local runtime your AI coding agent can start, check and fix. Flisk runs your multi-service app on your machine from a Compose file or plain commands, and an MCP server gives Claude Code, Cursor and Codex its health, logs and controls. Free, MIT core, no account.
 
 Flisk is a manifest-driven CLI built on Tilt and Starlark. Write one `service.json` per service and Flisk generates Dockerfiles, Docker Compose, Vite/TypeScript config (React or Vue 3 frontends), Traefik, Postgres, NATS JetStream wiring, Prisma, and other stack-wide artifacts from it. It runs on plain Docker, no Kubernetes cluster required. The free tier needs no license key.
 

@@ -1,9 +1,9 @@
 title: Flisk CLI
-tagline: Turns service.json into a local Docker + Tilt stack
+tagline: The local runtime your AI agent can start, check and fix
 email: hello@flisk.sh
 lang: en_US
 description: >-
-  Flisk CLI turns a service.json per service into a local Docker stack, with Tilt (the local development tool) watching services and live-updating containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.
+  Flisk CLI runs your multi-service app on your machine from a Compose file or plain commands, and gives AI coding agents an MCP server to start it, read its health and logs, and fix what breaks. For containers it builds on Docker and Tilt. It is not a deploy tool. Production stays on Helm.
 author:
   name: Flisk Team
 
