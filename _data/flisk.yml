@@ -107,7 +107,7 @@ waitlist_features:         # static checkbox options (2 dynamic ones stay in HTM
   - "Prisma + PostgreSQL"
   - "E2E Playwright tests"
 
-manifest_features:         # service.json "featuresEnabled": the exact enum in engine/schemas/service-schema.json
+manifest_features:         # service.json "featuresEnabled": the exact enum in runtime/engine/schemas/service-schema.json
   - name: "nats"
     desc: "NATS JetStream eventing. Flisk injects TILT_NATS_URL; you provide the broker (see the auth + queue + email example)"
   - name: "prisma"
