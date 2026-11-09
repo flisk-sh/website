@@ -3118,7 +3118,7 @@ body:has(.aw) .page-content {
 
 .aw-adopter-row {
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr) auto auto;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
   align-items: center;
   gap: 1.5rem;
   padding: clamp(1.25rem, 2.2vw, 1.75rem) 0.5rem;
@@ -3157,15 +3157,6 @@ body:has(.aw) .page-content {
   letter-spacing: -0.02em;
 }
 
-.aw-adopter-ver {
-  font-size: 0.8125rem;
-  padding: 0.3rem 0.75rem;
-  border-radius: 100px;
-  border: 1px solid rgba(110, 231, 160, 0.25);
-  color: #6EE7A0;
-  white-space: nowrap;
-}
-
 .aw-adopter-arrow {
   font-size: 1.25rem;
   color: rgba(236, 236, 241, 0.4);
@@ -3185,10 +3176,6 @@ body:has(.aw) .page-content {
   .aw-adopter-row {
     grid-template-columns: 4rem minmax(0, 1fr) auto;
     row-gap: 0.5rem;
-  }
-
-  .aw-adopter-ver {
-    grid-column: 2;
   }
 
   .aw-adopter-arrow {
