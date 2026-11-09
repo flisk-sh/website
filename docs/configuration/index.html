@@ -28,10 +28,10 @@ description: "Reference for the two Flisk CLI config files: service.json for eac
   <span class="k">"dependsOn"</span>: []
 }</pre>
         </div>
-        <p><code>appName</code>, <code>appType</code>, <code>stack</code>, and <code>schemaVersion</code> are required; a backend also needs a port. Optional fields include <code>dependsOn</code> and <code>healthCheckPath</code>. See the <a href="https://github.com/flisk-sh/flisk/blob/main/engine/schemas/service-schema.json" target="_blank" rel="noopener">service schema source</a>. VS Code and other JSON editors can read the <code>$schema</code> hint.</p>
+        <p><code>appName</code>, <code>appType</code>, <code>stack</code>, and <code>schemaVersion</code> are required; a backend also needs a port. Optional fields include <code>dependsOn</code> and <code>healthCheckPath</code>. See the <a href="https://github.com/flisk-sh/flisk/blob/main/runtime/engine/schemas/service-schema.json" target="_blank" rel="noopener">service schema source</a>. VS Code and other JSON editors can read the <code>$schema</code> hint.</p>
 
         <h2>.flisk/project.json</h2>
-        <p>Use the <a href="https://github.com/flisk-sh/flisk/blob/main/engine/schemas/project-schema.json" target="_blank" rel="noopener">project configuration schema</a> through an editor association. In VS Code, add this to workspace <code>.vscode/settings.json</code>:</p>
+        <p>Use the <a href="https://github.com/flisk-sh/flisk/blob/main/runtime/engine/schemas/project-schema.json" target="_blank" rel="noopener">project configuration schema</a> through an editor association. In VS Code, add this to workspace <code>.vscode/settings.json</code>:</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>.vscode/settings.json</span></div>
           <pre>{
