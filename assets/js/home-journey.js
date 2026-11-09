@@ -181,6 +181,21 @@
     const frame = document.querySelector('[data-stage-frame]');
     const guide = document.querySelector('[data-stage-guide]');
     if (!frame || !guide) return;
+
+    /* The window's address line follows the open tab, and a live site loads the first time its tab opens. */
+    const stage = document.querySelector('[data-stage]');
+    const host = stage.querySelector('[data-stage-host]');
+    const open = stage.querySelector('[data-stage-open]');
+    stage.querySelectorAll('[role="tab"]').forEach((tab) => {
+      const show = () => {
+        host.textContent = tab.dataset.stageHostName;
+        open.href = tab.dataset.stageUrl;
+        const site = document.getElementById(tab.getAttribute('aria-controls')).querySelector('iframe[data-src]');
+        if (site && !site.src) site.src = site.dataset.src;
+      };
+      tab.addEventListener('click', show);
+      tab.addEventListener('focus', () => { if (tab.getAttribute('aria-selected') === 'true') show(); });
+    });
     const steps = Array.from(guide.querySelectorAll('[data-stage-step]'));
     guide.addEventListener('click', (event) => {
       const button = event.target.closest('[data-stage-step]');

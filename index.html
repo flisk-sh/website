@@ -39,12 +39,20 @@ image: /assets/images/flisk-social-card.png
 
     <!-- ================= STAGE: the product itself, clickable, in the first screen ================= -->
     <div class="aw-hero-inner aw-stage" data-tabs data-stage>
+      <div class="aw-stage-chrome">
+        <span class="aw-stage-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="aw-stage-address"><span data-stage-host>FliskOS</span><a href="https://os.flisk.si/" target="_blank" rel="noopener" data-stage-open data-cta="stage_open">Open <span aria-hidden="true">↗</span></a></span>
+        <span class="aw-stage-live">Try it here</span>
+      </div>
       <div class="aw-stage-bar">
-        <div class="aw-stage-tabs" role="tablist" aria-label="Live demos">
-          <button type="button" role="tab" class="aw-stage-tab is-active" id="aw-stage-tab-console" aria-controls="aw-stage-console" aria-selected="true" data-cta="stage_console">FliskOS console</button>
-          <button type="button" role="tab" class="aw-stage-tab" id="aw-stage-tab-terminal" aria-controls="aw-stage-terminal" aria-selected="false" tabindex="-1" data-cta="stage_terminal">Terminal</button>
+        <div class="aw-stage-tabs" role="tablist" aria-label="Flisk products you can try here">
+          <button type="button" role="tab" class="aw-stage-tab is-active" id="aw-stage-tab-console" aria-controls="aw-stage-console" aria-selected="true" data-stage-host-name="FliskOS" data-stage-url="https://os.flisk.si/" data-cta="stage_console"><img src="{{ '/assets/img/products/fliskos.svg' | relative_url }}" alt="" width="18" height="18">FliskOS</button>
+          <button type="button" role="tab" class="aw-stage-tab" id="aw-stage-tab-terminal" aria-controls="aw-stage-terminal" aria-selected="false" tabindex="-1" data-stage-host-name="Flisk CLI" data-stage-url="{{ '/docs/quickstart/' | relative_url }}" data-cta="stage_terminal"><img src="{{ '/assets/img/products/flisk-cli.svg' | relative_url }}" alt="" width="18" height="18">Flisk CLI</button>
+          {%- for embed in site.data.stage.embeds %}
+          <button type="button" role="tab" class="aw-stage-tab" id="aw-stage-tab-{{ embed.id }}" aria-controls="aw-stage-{{ embed.id }}" aria-selected="false" tabindex="-1" data-stage-host-name="{{ embed.host }}" data-stage-url="{{ embed.url }}" data-cta="stage_{{ embed.id }}"><img src="{{ '/assets/img/products/' | append: embed.icon | append: '.svg' | relative_url }}" alt="" width="18" height="18">{{ embed.tab }}</button>
+          {%- endfor %}
         </div>
-        <span class="aw-stage-tag">runs in your browser, nothing to install</span>
+        <a class="aw-stage-more" href="https://flisk.si/" data-cta="stage_all_products">All products <span aria-hidden="true">→</span></a>
       </div>
 
       <!-- The real FliskOS frontend (console/, copied from flisk-sh/fliskos) answering from sample data; see /docs/claims/#console. -->
@@ -60,6 +68,14 @@ image: /assets/images/flisk-social-card.png
         <iframe class="aw-stage-frame" src="{{ '/console/' | relative_url }}" title="FliskOS, the desktop console for Flisk projects, with sample data" data-stage-frame></iframe>
         <p class="aw-try-note">This is the real FliskOS interface with sample data. Nothing starts on your machine and nothing leaves your browser. <a href="{{ '/docs/claims/' | relative_url }}#console">How it was made</a></p>
       </div>
+
+      {%- for embed in site.data.stage.embeds %}
+      <!-- A live Flisk site in the window. It loads the first time its tab is opened (data-src), so the homepage stays light. -->
+      <div class="aw-stage-panel" role="tabpanel" id="aw-stage-{{ embed.id }}" aria-labelledby="aw-stage-tab-{{ embed.id }}" hidden>
+        <iframe class="aw-stage-frame aw-stage-site" data-src="{{ embed.url }}" title="{{ embed.tab }}, live at {{ embed.host }}" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <p class="aw-try-note">{{ embed.note }} <a href="{{ embed.url }}" target="_blank" rel="noopener">Open {{ embed.host }} <span aria-hidden="true">↗</span></a></p>
+      </div>
+      {%- endfor %}
 
       <div class="aw-stage-panel aw-stage-terminal" role="tabpanel" id="aw-stage-terminal" aria-labelledby="aw-stage-tab-terminal" hidden>
       <!-- Real output, not a mock-up. Scene 1: the published CLI's local-process demo. Scene 2: flisk import on a one-service
