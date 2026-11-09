@@ -81,6 +81,7 @@ exclude:
   - README.md
   - ASAP_DOD_INSTALL_SMOKE.md
   - DESIGN.md
+  - POSITIONING.md
   - EMAIL_SETUP.md
   - docker-compose.yml
   - Dockerfile
