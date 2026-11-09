@@ -508,7 +508,7 @@ html {
 /* ---------------- Header: thin full-width bar, mono uppercase menu (after warp.dev) ---------------- */
 .aw-nav {
   position: fixed;
-  top: 0;
+  top: var(--flisk-bar, 0px); /* the shared Flisk bar sits above the nav until it scrolls away */
   left: 0;
   right: 0;
   z-index: 1000;
