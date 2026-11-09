@@ -1,5 +1,7 @@
 # Design System: Flisk CLI Website
 
+> What we say about Flisk, and to whom, lives in [POSITIONING.md](POSITIONING.md). This file covers how it looks.
+
 > Single source of truth for every tab of the Flisk marketing site
 > (home, features, compare, why, waiting, docs). Dark devtool aesthetic:
 > honest terminal proof over stock decoration. Brand accent is Flisk green
