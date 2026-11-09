@@ -6,7 +6,7 @@ groups:
         url: /features/
         text: Your whole app running on your machine.
       - name: FliskOS
-        url: https://github.com/flisk-sh/fliskos
+        url: https://os.flisk.si
         text: A desktop command center for your Flisk projects.
       - name: Build Me an App
         url: https://mcp.flisk.sh/
