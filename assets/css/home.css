@@ -2982,7 +2982,6 @@ button.aw-gen-node:focus-visible,
 .aw-proof-copy .aw-hero-proof a { color: #6EE7A0; }
 
 .aw-cta-quiet { text-align: left; }
-.aw-cta-quiet h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
 .aw-cta-quiet .aw-cta-sub { margin-left: 0; text-align: left; }
 
 .aw-license > summary {
@@ -2995,7 +2994,6 @@ button.aw-gen-node:focus-visible,
 .aw-license[open] > summary { margin-bottom: 2rem; }
 .aw-license > summary:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 3px; }
 
-.aw-final h2 { margin: 0 0 1.75rem; font-size: clamp(2rem, 4vw, 3.75rem); }
 .aw-final .aw-install { margin-bottom: 0; }
 
 .aw-phone-bar { display: none; }
@@ -3031,3 +3029,19 @@ button.aw-gen-node:focus-visible,
 }
 
 .aw-head .aw-stack-note { margin-top: 0.75rem; color: rgba(236, 236, 241, 0.56); font-size: 0.9rem; }
+
+/* One heading recipe for every homepage section title. The generated-files band (.aw-gen) keeps its own mono style
+   through a more specific rule, as DESIGN.md allows, and the hero h1 is styled separately. */
+.aw-head h2,
+.aw-adopters-intro h2,
+.aw-proof-copy h2,
+.aw-cta h2,
+.aw-final h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #fff;
+  margin: 0 0 1.25rem;
+}
