@@ -97,11 +97,33 @@ test('docs pages skip reveal animations when the reader asks for reduced motion'
 
 test('searchRequest takes a smaller limit for the wake-up search', () => {
   assert.equal(searchRequest('flisk', 0, 1).params.arguments.limit, 1);
-  assert.equal(searchRequest('flisk').params.arguments.limit, 8);
+  assert.equal(searchRequest('flisk').params.arguments.limit, 12);
 });
 
 test('the script wakes Helpdock from docs pages and docs links', () => {
   const source = readFileSync(new URL('../assets/js/aw-docs-search.js', import.meta.url), 'utf8');
   for (const type of ['pointerover', 'focusin', 'touchstart']) assert.ok(source.includes(`'${type}'`));
   assert.ok(source.includes("doc.querySelector('.aw-docs-body')) prewarm()"));
+});
+
+test('parseHits opens the page in Helpdock and keeps the GitHub file for the AI prompt', () => {
+  const [hit] = parseHits(
+    answer({
+      hits: [
+        {
+          section: 'Leaving',
+          url: 'https://github.com/flisk-sh/flisk/blob/abc/docs/leaving-flisk.md#leaving',
+          page: 'https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/#page=docs%2Fleaving-flisk.md',
+        },
+      ],
+    }),
+  );
+  assert.match(hit.url, /^https:\/\/helpdock\.flisk\.si\//);
+  assert.match(hit.github, /^https:\/\/github\.com\//);
+  assert.ok(aiPrompt('q', [hit]).includes('(https://github.com/'));
+});
+
+test('parseHits keeps at most two sections of one page', () => {
+  const hits = parseHits(answer({ hits: ['a', 'a', 'a', 'b', 'a', 'c'].map((source, i) => ({ source, section: `s${i}` })) }));
+  assert.deepEqual(hits.map((h) => h.source), ['a', 'a', 'b', 'c']);
 });

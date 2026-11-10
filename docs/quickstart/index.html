@@ -10,8 +10,8 @@ description: "Install Flisk CLI, check your machine with flisk doctor, clone a w
       {% include docs-sidebar.html %}
 
       <div class="aw-docs-body">
-        <h1>Simple setup</h1>
-        <p class="aw-lead">The shortest path for vibe coders: install Flisk, let it check your machine, clone a working stack, and run it.</p>
+        <h1>Quick Start</h1>
+        <p class="aw-lead">Install Flisk, let <code>flisk doctor</code> check your machine, start a working example stack, then add your own services.</p>
 
         <div class="aw-quickstart-hero">
           <div>
@@ -35,34 +35,6 @@ description: "Install Flisk CLI, check your machine with flisk doctor, clone a w
           <li><a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a> {{ site.data.flisk.prereq_node }} only when installing the CLI from npm</li>
         </ul>
         <p><strong>Full local runtime:</strong> macOS, Linux, and Ubuntu in WSL2. The latest release also includes a Windows AMD64 CLI for inspection; native Windows does not support running a landscape.</p>
-
-        <h2 id="windows-setup">Windows AMD64: inspect the CLI</h2>
-        <p>The latest release includes <code>flisk-windows-amd64.exe</code>. Install it from PowerShell, then check the binary and its bundled files:</p>
-        <ol>
-          <li>Install Flisk:
-            <div class="aw-codeblock">
-              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>irm https://flisk.sh/install.ps1 | iex</pre>
-            </div>
-            <p>Or download and inspect the script before running it:</p>
-            <div class="aw-codeblock">
-              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>Invoke-WebRequest https://flisk.sh/install.ps1 -OutFile install-flisk.ps1
-powershell -ExecutionPolicy Bypass -File .\install-flisk.ps1</pre>
-            </div>
-          </li>
-          <li>Close PowerShell and open a new window so the updated PATH is loaded.</li>
-          <li>Verify the CLI and packaged assets:
-            <div class="aw-codeblock">
-              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>flisk --version
-flisk runtime --check-assets
-flisk doctor</pre>
-            </div>
-            <p>On native Windows, <code>flisk doctor</code> reports that landscape startup requires WSL2 Ubuntu. This is the expected support boundary.</p>
-          </li>
-        </ol>
-        <p>For the full inner loop, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>. Windows ARM64 binaries are not published.</p>
 
         <h2 id="install-options">Install options</h2>
         <p>Using an AI coding agent? Paste the line below into its chat — it'll fetch <span class="aw-mono">llms.txt</span>, install Flisk, and configure the local MCP server for your agent. Use curl if you just want the fastest CLI install yourself. Use npm, npx, pnpm, or bun if you prefer package-manager workflows.</p>
@@ -108,7 +80,35 @@ flisk doctor</pre>
         Remove it once, then install Flisk: <code>npm uninstall -g @tdk-landscape/tdk-cli-core &amp;&amp; npm install -g @flisk-sh/flisk</code>.
         Without that, npm stops with <code>EEXIST: file already exists</code> and the <code>flisk</code> command never lands on your PATH.
         The <code>curl</code> installer above has no such conflict: it writes <code>flisk</code> directly.</p>
-        <h2 id="simple-setup">Simple setup</h2>
+        <h2 id="windows-setup">Windows AMD64: inspect the CLI</h2>
+        <p>The latest release includes <code>flisk-windows-amd64.exe</code>. Install it from PowerShell, then check the binary and its bundled files:</p>
+        <ol>
+          <li>Install Flisk:
+            <div class="aw-codeblock">
+              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
+              <pre>irm https://flisk.sh/install.ps1 | iex</pre>
+            </div>
+            <p>Or download and inspect the script before running it:</p>
+            <div class="aw-codeblock">
+              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
+              <pre>Invoke-WebRequest https://flisk.sh/install.ps1 -OutFile install-flisk.ps1
+powershell -ExecutionPolicy Bypass -File .\install-flisk.ps1</pre>
+            </div>
+          </li>
+          <li>Close PowerShell and open a new window so the updated PATH is loaded.</li>
+          <li>Verify the CLI and packaged assets:
+            <div class="aw-codeblock">
+              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
+              <pre>flisk --version
+flisk runtime --check-assets
+flisk doctor</pre>
+            </div>
+            <p>On native Windows, <code>flisk doctor</code> reports that landscape startup requires WSL2 Ubuntu. This is the expected support boundary.</p>
+          </li>
+        </ol>
+        <p>For the full inner loop, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>. Windows ARM64 binaries are not published.</p>
+
+        <h2 id="simple-setup">The happy path, step by step</h2>
         <p>Once Flisk is installed — pick a method above — this is the whole happy path if you already have Docker running.</p>
         <div class="aw-codeblock aw-codeblock--primary">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
@@ -145,11 +145,11 @@ flisk up</pre>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>flisk --version
-<span class="c"># prints the installed version, e.g. 1.3.74</span></pre>
+<span class="c"># prints the installed version</span></pre>
         </div>
 
         <h2>Add your license (if using premium features)</h2>
-        <p>Core stays free. Premium is a separate key for Verdaccio, DDD scaffolding, and Sablier idle stop. Playwright, C4, and AGENTS.md are free when generated in-repo; a key is required only to download their implementations.</p>
+        <p>Core stays free. Premium is a separate key for paid extras such as Verdaccio (a local npm registry) and Sablier (stopping idle services). Playwright, C4, and AGENTS.md are free when generated in-repo; a key is required only to download their implementations.</p>
         <div class="aw-license-panel">
           <div>
             <h3>Have a Premium or Enterprise key?</h3>
@@ -197,20 +197,19 @@ Run <span class="hot">`flisk doctor`</span> for a full environment check.</pre>
         <p>Fix what it flags, run <code>flisk doctor</code> to confirm, and you're clear to boot.</p>
 
         <h2 id="start-from-a-working-example">Start from a working example</h2>
-        <p>Use one known-good example first. Check the machine, clone the example, generate its local configuration, and start its shop stack.</p>
+        <p>Use one known-good example first: check the machine, copy the example, and start it.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>flisk doctor
 flisk project example
 cd flisk-example
-flisk project --yes
-flisk up shop</pre>
+flisk up</pre>
         </div>
-        <p>Keep <code>flisk up shop</code> running. Use <code>flisk networks</code> for the example's URLs. See <a href="{{ '/docs/examples/' | relative_url }}">Examples</a> for other templates after the first run.</p>
+        <p><code>flisk project example</code> copies the order tracker bundled with the CLI: an API with Postgres, a worker and a web UI in the <code>shop</code> stack. Keep <code>flisk up</code> running; it prints the URLs when the stack is ready, and <code>flisk networks</code> lists them again. See <a href="{{ '/docs/examples/' | relative_url }}">Examples</a> for other templates after the first run.</p>
 
         <div class="aw-callout">
           <h4>Success</h4>
-          <p>Your stack is now running locally. Every new teammate who clones the repo gets the same result in minutes, not weeks.</p>
+          <p>Your stack is running locally. A teammate who clones the repo runs the same commands and gets the same stack.</p>
         </div>
 
         <h2>Build from scratch</h2>

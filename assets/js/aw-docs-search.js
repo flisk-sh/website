@@ -11,7 +11,8 @@
 (function (root) {
   var HELPDOCK = 'https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/';
   var MCP_URL = HELPDOCK + 'mcp';
-  var LIMIT = 8;
+  var LIMIT = 12;
+  var MAX_PER_PAGE = 2;
   var EXCERPT_CHARS = 200;
   var PASSAGE_CHARS = 600;
   var PROMPT_HITS = 4;
@@ -43,6 +44,10 @@
     };
   }
 
+  function httpsOr(value, fallback) {
+    return typeof value === 'string' && /^https:\/\//.test(value) ? value : fallback;
+  }
+
   // MCP tools/call response -> [{ section, title, source, text, url }].
   // Throws when the server answered with an error, so the caller can say so.
   function parseHits(response) {
@@ -55,14 +60,24 @@
       throw new Error((first && first.text) || 'empty response');
     }
     var payload = JSON.parse(first.text);
-    return (payload.hits || []).map(function (hit) {
+    // At most two sections of one page, so a question shows several pages instead of one page's sections.
+    var perPage = {};
+    var hits = (payload.hits || []).filter(function (hit) {
+      var key = hit.source || hit.url || '';
+      perPage[key] = (perPage[key] || 0) + 1;
+      return perPage[key] <= MAX_PER_PAGE;
+    });
+    return hits.map(function (hit) {
       return {
         section: hit.section || hit.title || hit.source || '',
         title: hit.title || '',
         source: hit.source || '',
         text: excerpt(hit.text),
         passage: String(hit.text || '').slice(0, PASSAGE_CHARS),
-        url: typeof hit.url === 'string' && /^https:\/\//.test(hit.url) ? hit.url : HELPDOCK,
+        // The page in Helpdock, at its heading, keeps the reader in a docs view with navigation; the file on GitHub
+        // is the fallback.
+        url: httpsOr(hit.page, httpsOr(hit.url, HELPDOCK)),
+        github: httpsOr(hit.url, ''),
       };
     });
   }
@@ -77,7 +92,7 @@
       '',
     ];
     (hits || []).slice(0, PROMPT_HITS).forEach(function (hit, i) {
-      lines.push('[' + (i + 1) + '] ' + hit.section + ' (' + hit.url + ')');
+      lines.push('[' + (i + 1) + '] ' + hit.section + ' (' + (hit.github || hit.url) + ')');
       lines.push(hit.passage || hit.text || '');
       lines.push('');
     });
