@@ -50,24 +50,24 @@ near-black calm, one green signal light, monospace evidence everywhere.
 
 ## 4. Component Stylings
 
-- **Buttons:** Full-pill radius. Primary: white fill, near-black text.
+- **Buttons:** 4px radius (`--radius`), never pills. Primary: white fill, near-black text.
   Secondary: transparent with 1px white/25 border, white text. Hover lifts
   2px. Active presses to scale 0.98. No outer glow. One label per intent
   across the whole site ("Join waitlist" everywhere).
-- **Cards:** 24px radius, hairline border, lift 4px + green-tinted border on
+- **Cards:** 4px radius (`--radius`), hairline border, lift 4px + green-tinted border on
   hover. Used only where elevation carries hierarchy.
 - **Grids:** Asymmetric only. Never 3 equal columns of uniform cards. Varied
   spans with dense flow, mathematically gapless. Two-column pairs for
   verdict-style content.
-- **Code windows:** 16-20px radius, traffic-light bar with filename in mono,
+- **Code windows:** 4px radius (`--radius`), traffic-light bar with filename in mono,
   syntax tint (green keys, blue strings, sky numbers, grey comments).
 - **Terminal demo:** real mini-version of the product CLI, typed live on
   scroll into view, instant static render under prefers-reduced-motion.
 - **Inputs:** Dark fill, label above, green focus ring with soft halo,
   placeholder at readable contrast. No floating labels.
-- **Carousel:** Arrow buttons (round, hairline) plus dot indicators. Never
+- **Carousel:** Arrow buttons (square 4px, hairline) plus dot indicators. Never
   numeric "1 / 5" pagination.
-- **Nav:** Floating glass pill, fixed, blur 20px, collapses to burger.
+- **Nav:** Floating glass bar with 4px corners, fixed, blur 20px, collapses to burger.
 
 ## 5. Layout Principles
 
@@ -89,8 +89,11 @@ near-black calm, one green signal light, monospace evidence everywhere.
 - Homepage hero window: a window frame with lights, an address line and product tabs. Each tab is a real
   Flisk product the visitor can use in place: FliskOS on sample data, the terminal replay, and live Flisk
   sites listed in `_data/stage.yml`. A soft green glow under this one window is allowed.
-- One corner-radius doctrine: pills for interactive, 24px for cards,
-  16px for code, circles for icon buttons.
+- One corner-radius doctrine: sharp. Every card, panel, code window,
+  button, input, chip, menu and nav bar uses `--radius` (4px, defined once
+  in `assets/css/style.css`). No pills, no 12-24px rounding, no second
+  radius token. Only true circles (status dots, avatars, window lights)
+  use `50%`. The `#generated` paper band stays at 0.
 
 ## 6. Motion & Interaction
 

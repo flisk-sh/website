@@ -46,11 +46,16 @@
   --space-20: 5rem;
   --space-24: 6rem;
 
-  /* Border radius */
-  --radius-sm: 6px;
-  --radius: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  /* Border radius: one sharp corner for the whole site (DESIGN.md section 5).
+     Every card, panel, code window, button, input and chip uses it.
+     Only true circles (dots, avatars, window lights) use 50%. */
+  --radius: 4px;
+  --bs-border-radius: var(--radius);
+  --bs-border-radius-sm: var(--radius);
+  --bs-border-radius-lg: var(--radius);
+  --bs-border-radius-xl: var(--radius);
+  --bs-border-radius-xxl: var(--radius);
+  --bs-border-radius-pill: var(--radius);
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -172,7 +177,7 @@ pre {
   color: var(--color-purple);
   background: rgba(34, 197, 94, 0.1);
   padding: 0.5rem 1rem;
-  border-radius: 100px;
+  border-radius: var(--radius);
   margin-bottom: 1.5rem;
 }
 
@@ -252,7 +257,7 @@ pre {
   align-items: center;
   font-weight: 500;
   padding: 0.35rem 0.75rem;
-  border-radius: 100px;
+  border-radius: var(--radius);
   border: 1px solid var(--color-gray-300);
   background: transparent;
   color: var(--color-gray-700);
@@ -268,7 +273,7 @@ pre {
 .card {
   background: white;
   border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   transition: all 0.3s ease;
   overflow: hidden;
 }
@@ -308,7 +313,7 @@ pre {
   color: var(--color-purple);
   background: rgba(34, 197, 94, 0.1);
   padding: 0.5rem 1rem;
-  border-radius: 100px;
+  border-radius: var(--radius);
   margin-bottom: 1rem;
 }
 
@@ -374,7 +379,7 @@ pre {
   background: var(--color-gray-900);
   color: var(--color-gray-100);
   padding: 1.5rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   overflow-x: auto;
   font-size: 0.875rem;
   line-height: 1.7;
@@ -383,7 +388,7 @@ pre {
 code {
   background: var(--color-gray-100);
   padding: 0.2rem 0.4rem;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   font-size: 0.875em;
   color: var(--color-purple-dark);
 }
@@ -445,7 +450,7 @@ html {
 .feature-matrix {
   background: white;
   border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
 }
@@ -548,7 +553,7 @@ html {
   place-items: center;
   width: 1.75rem;
   height: 1.75rem;
-  border-radius: 0.25rem;
+  border-radius: var(--radius);
   background: #22C55E;
   color: #0a0a0e;
   font: 700 0.72rem/1 'JetBrains Mono', monospace;
@@ -565,7 +570,7 @@ html {
   align-items: center;
   gap: 0.35rem;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
+  border-radius: var(--radius);
   color: rgba(236, 236, 241, 0.82);
   font: 600 0.75rem 'JetBrains Mono', monospace;
   letter-spacing: 0.05em;
@@ -658,7 +663,7 @@ html {
   align-items: center;
   padding: 0.4rem 1rem;
   border: 1px solid #22C55E;
-  border-radius: 0.25rem;
+  border-radius: var(--radius);
   background: #22C55E;
   color: #0a0a0e;
   font: 500 0.75rem 'JetBrains Mono', monospace;
@@ -681,7 +686,7 @@ html {
   width: 2.25rem;
   height: 2.25rem;
   border: 1px solid rgba(236, 236, 241, 0.3);
-  border-radius: 0.25rem;
+  border-radius: var(--radius);
   background: none;
   cursor: pointer;
 }
