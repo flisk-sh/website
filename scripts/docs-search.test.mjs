@@ -86,3 +86,11 @@ test('the Ask bar on the docs overview offers ready-made questions', () => {
   const chips = page.match(/data-docs-ask-q/g) || [];
   assert.ok(chips.length >= 6, 'at least six questions');
 });
+
+test('docs pages skip reveal animations when the reader asks for reduced motion', () => {
+  for (const page of ['index.html', 'quickstart/index.html', 'configuration/index.html', 'scripts/index.html', 'examples/index.html']) {
+    const source = readFileSync(new URL(`../docs/${page}`, import.meta.url), 'utf8');
+    if (!source.includes('gsap.from(')) continue;
+    assert.ok(source.includes('prefers-reduced-motion: reduce'), `${page} animates without checking reduced motion`);
+  }
+});

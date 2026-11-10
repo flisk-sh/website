@@ -339,7 +339,7 @@ if (window.initAwTerminal) {
 <script>
 // Runs after the deferred GSAP scripts have loaded.
 document.addEventListener('DOMContentLoaded', function () {
-if (window.gsap && window.ScrollTrigger) {
+if (window.gsap && window.ScrollTrigger && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   gsap.registerPlugin(ScrollTrigger);
   gsap.from('.aw-docs-body h1, .aw-docs-body .aw-lead', { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', delay: 0.1 });
   gsap.from('.aw-terminal', {
