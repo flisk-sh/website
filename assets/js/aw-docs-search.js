@@ -34,12 +34,12 @@
   }
 
   // The JSON-RPC body of one search_docs call.
-  function searchRequest(query, id) {
+  function searchRequest(query, id, limit) {
     return {
       jsonrpc: '2.0',
       id: id || 1,
       method: 'tools/call',
-      params: { name: 'search_docs', arguments: { query: query, limit: LIMIT } },
+      params: { name: 'search_docs', arguments: { query: query, limit: limit || LIMIT } },
     };
   }
 
@@ -91,9 +91,49 @@
   }
 
   var doc = root.document;
+  if (!doc || !root.fetch) return;
+
+  // Helpdock sleeps when nobody uses it and builds a repository's search index on the first question. Wake it
+  // and build the index before the reader needs it: when a docs page opens, and when a pointer, a finger or
+  // the keyboard reaches any link to the docs. One small search, at most once every ten minutes per browser.
+  var WARM_KEY = 'flisk-docs-warm';
+  var WARM_EVERY_MS = 10 * 60 * 1000;
+  function prewarm() {
+    var now = Date.now();
+    try {
+      if (now - Number(root.sessionStorage.getItem(WARM_KEY) || 0) < WARM_EVERY_MS) return;
+      root.sessionStorage.setItem(WARM_KEY, String(now));
+    } catch (e) {
+      if (prewarm.done) return;
+    }
+    prewarm.done = true;
+    root
+      .fetch(MCP_URL, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream' },
+        body: JSON.stringify(searchRequest('flisk', 0, 1)),
+        keepalive: true,
+      })
+      .catch(function () {});
+  }
+  function isDocsLink(node) {
+    var link = node && node.closest ? node.closest('a[href]') : null;
+    return !!link && /\/docs(\/|$)/.test(link.getAttribute('href'));
+  }
+  ['pointerover', 'focusin', 'touchstart'].forEach(function (type) {
+    doc.addEventListener(
+      type,
+      function (event) {
+        if (isDocsLink(event.target)) prewarm();
+      },
+      { passive: true }
+    );
+  });
+  if (doc.querySelector('.aw-docs-body')) prewarm();
+
   var opener = doc && doc.querySelector('[data-docs-search]');
   var askForm = doc && doc.querySelector('[data-docs-ask]');
-  if ((!opener && !askForm) || typeof root.HTMLDialogElement === 'undefined' || !root.fetch) return;
+  if ((!opener && !askForm) || typeof root.HTMLDialogElement === 'undefined') return;
 
   function el(tag, className, text) {
     var node = doc.createElement(tag);

@@ -3578,3 +3578,38 @@ body:has(.aw) .page-content {
 }
 
 .aw-docs-search-ai[hidden] { display: none; }
+
+/* Previous / next links at the end of a docs page (aw-docs-toc.js). */
+.aw-docs-pager {
+  display: flex;
+  gap: 1rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.aw-docs-body .aw-docs-pager a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.875rem;
+  color: #fff;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.aw-docs-body .aw-docs-pager a:hover { border-color: rgba(110, 231, 160, 0.6); }
+
+.aw-docs-pager span {
+  color: rgba(236, 236, 241, 0.55);
+  font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.aw-docs-pager-next { text-align: right; margin-left: auto; }
+
+.aw-docs-pager a:only-child { flex: 0 1 50%; }

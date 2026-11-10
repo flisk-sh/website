@@ -86,3 +86,22 @@ test('the Ask bar on the docs overview offers ready-made questions', () => {
   const chips = page.match(/data-docs-ask-q/g) || [];
   assert.ok(chips.length >= 6, 'at least six questions');
 });
+
+test('docs pages skip reveal animations when the reader asks for reduced motion', () => {
+  for (const page of ['index.html', 'quickstart/index.html', 'configuration/index.html', 'scripts/index.html', 'examples/index.html']) {
+    const source = readFileSync(new URL(`../docs/${page}`, import.meta.url), 'utf8');
+    if (!source.includes('gsap.from(')) continue;
+    assert.ok(source.includes('prefers-reduced-motion: reduce'), `${page} animates without checking reduced motion`);
+  }
+});
+
+test('searchRequest takes a smaller limit for the wake-up search', () => {
+  assert.equal(searchRequest('flisk', 0, 1).params.arguments.limit, 1);
+  assert.equal(searchRequest('flisk').params.arguments.limit, 8);
+});
+
+test('the script wakes Helpdock from docs pages and docs links', () => {
+  const source = readFileSync(new URL('../assets/js/aw-docs-search.js', import.meta.url), 'utf8');
+  for (const type of ['pointerover', 'focusin', 'touchstart']) assert.ok(source.includes(`'${type}'`));
+  assert.ok(source.includes("doc.querySelector('.aw-docs-body')) prewarm()"));
+});
