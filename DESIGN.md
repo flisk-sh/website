@@ -94,6 +94,8 @@ near-black calm, one green signal light, monospace evidence everywhere.
   in `assets/css/style.css`). No pills, no 12-24px rounding, no second
   radius token. Only true circles (status dots, avatars, window lights)
   use `50%`. The `#generated` paper band stays at 0.
+  `node scripts/check-radius.mjs` enforces this in CI: any other
+  `border-radius` value or radius token fails the Site workflow.
 
 ## 6. Motion & Interaction
 

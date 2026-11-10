@@ -3571,7 +3571,7 @@ body:has(.aw) .page-content {
   margin: 0 1.25rem 0.5rem;
   padding: 0.75rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
+  border-radius: var(--radius);
   max-height: 40vh;
   overflow-y: auto;
   color: rgba(236, 236, 241, 0.85);
@@ -3593,7 +3593,7 @@ body:has(.aw) .page-content {
 
 .aw-docs-ai-button[hidden] { display: none; }
 .aw-docs-ai-button:disabled { color: rgba(236, 236, 241, 0.4); cursor: default; }
-.aw-docs-ai-button:focus-visible { outline: 2px solid #22C55E; outline-offset: 2px; border-radius: 0.25rem; }
+.aw-docs-ai-button:focus-visible { outline: 2px solid #22C55E; outline-offset: 2px; border-radius: var(--radius); }
 
 .aw-docs-ai-out:empty { display: none; }
 .aw-docs-ai-out p { margin: 0.5rem 0 0; }
@@ -3603,7 +3603,7 @@ body:has(.aw) .page-content {
 
 .aw-docs-ai-out code {
   padding: 0.0625rem 0.3125rem;
-  border-radius: 0.3125rem;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
   font: 0.8125rem 'JetBrains Mono', ui-monospace, monospace;
@@ -3613,7 +3613,7 @@ body:has(.aw) .page-content {
 .aw-docs-ai-out pre {
   margin: 0.5rem 0 0;
   padding: 0.625rem 0.75rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.04);
   overflow-x: auto;
 }
