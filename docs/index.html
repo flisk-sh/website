@@ -13,7 +13,7 @@ description: "Flisk CLI documentation: quick start, configuration, package.json 
         <h1>Documentation</h1>
         <p class="aw-lead">Learn how to run services locally without Kubernetes and use <code>flisk doctor</code> and <code>flisk up</code> in place of a setup wiki.</p>
 
-        {% comment %} Ask bar: assets/js/aw-docs-search.js answers it from the repository docs through Helpdock. Without the script it opens Helpdock. {% endcomment %}
+        {% comment %} Ask bar: assets/js/aw-docs-search.js answers it from the repository docs through Helpdock, with an optional AI answer from Helpdock's /answer. Without the script it opens Helpdock. {% endcomment %}
         <div class="aw-docs-ask">
           <form class="aw-docs-ask-form" data-docs-ask action="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" method="get" target="_blank" role="search">
             <span class="aw-docs-ask-mark" aria-hidden="true">✦</span>
@@ -33,7 +33,7 @@ description: "Flisk CLI documentation: quick start, configuration, package.json 
             </div>
           </details>
           <datalist id="aw-docs-ask-list">{% for q in site.data.docs_questions.start %}<option value="{{ q }}">{% endfor %}{% for q in site.data.docs_questions.compare %}<option value="{{ q }}">{% endfor %}</datalist>
-          <p class="aw-docs-ask-note">Answers are passages from the docs in the Flisk repository, found by <a href="https://helpdock.flisk.si/">Helpdock</a>. No AI is called; you can hand the passages to your own.</p>
+          <p class="aw-docs-ask-note">Answers are passages from the docs in the Flisk repository, found by <a href="https://helpdock.flisk.si/">Helpdock</a>. Search calls no AI. Under the passages you can ask for a short AI answer written from them (beta), or hand them to your own AI.</p>
         </div>
 
         <div class="aw-doc-cards">

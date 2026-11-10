@@ -7,10 +7,19 @@
    the same endpoint an AI assistant would.
 
    The button it wires up is a plain link to Helpdock, so search still works
-   when this script does not run. */
+   when this script does not run.
+
+   Under the results, "Write an answer (beta)" asks Helpdock's /answer for a
+   short answer written by a model from those same passages, on request only.
+   Helpdock drops any line that quotes a command the passages do not show.
+   When it has no answer, the reader gets Discord and a GitHub issue instead;
+   when it is off or busy, the passages stay as they are. */
 (function (root) {
   var HELPDOCK = 'https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/';
   var MCP_URL = HELPDOCK + 'mcp';
+  var ANSWER_URL = HELPDOCK + 'answer';
+  var DISCORD = 'https://discord.gg/qMu5Xn8Kaq';
+  var NEW_ISSUE = 'https://github.com/flisk-sh/flisk/issues/new';
   var LIMIT = 12;
   var MAX_PER_PAGE = 2;
   var EXCERPT_CHARS = 200;
@@ -82,7 +91,7 @@
     });
   }
 
-  // The question plus the passages found, for the reader's own AI. Flisk never calls a model.
+  // The question plus the passages found, for the reader's own AI.
   function aiPrompt(query, hits) {
     var lines = [
       'Answer this question about Flisk (https://flisk.sh), a CLI that runs a local development stack.',
@@ -99,7 +108,100 @@
     return lines.join('\n').trim();
   }
 
-  var api = { aiPrompt: aiPrompt, excerpt: excerpt, searchRequest: searchRequest, parseHits: parseHits, MCP_URL: MCP_URL, HELPDOCK: HELPDOCK };
+  // Helpdock's /answer response, by HTTP status and body, as what the page shows:
+  // answer, not-covered (offer Discord and an issue), rate (wait), off (AI answers are switched off) or down.
+  function parseAnswer(status, json) {
+    if (status === 429) return { kind: 'rate' };
+    if (status === 404) return { kind: 'off' };
+    if (status !== 200 || !json || json.available === false) return { kind: 'down' };
+    var sources = (json.sources || []).map(function (src, i) {
+      return {
+        n: Number(src.n) || i + 1,
+        label: src.section || src.title || src.source || '',
+        url: httpsOr(src.page, httpsOr(src.url, HELPDOCK)),
+      };
+    });
+    if (typeof json.answer !== 'string' || !json.answer.trim()) return { kind: 'not-covered', sources: sources };
+    return { kind: 'answer', text: json.answer.trim(), sources: sources };
+  }
+
+  // One line of the answer as parts: text, inline code, and citations ([1], [1, 3]). Bold markers are dropped.
+  function inlineParts(line) {
+    var parts = [];
+    var re = /`([^`]+)`|\[(\d+(?:\s*,\s*\d+)*)\]/g;
+    var last = 0;
+    var m;
+    var push = function (text) {
+      text = text.replace(/\*\*([^*]+)\*\*/g, '$1');
+      if (text) parts.push({ type: 'text', value: text });
+    };
+    while ((m = re.exec(line))) {
+      push(line.slice(last, m.index));
+      if (m[1] !== undefined) parts.push({ type: 'code', value: m[1] });
+      else
+        m[2].split(',').forEach(function (n) {
+          parts.push({ type: 'cite', value: Number(n.trim()) });
+        });
+      last = re.lastIndex;
+    }
+    push(line.slice(last));
+    return parts;
+  }
+
+  // The answer as blocks to build with DOM nodes (never as HTML): paragraphs, lists and code blocks.
+  function answerBlocks(text) {
+    var blocks = [];
+    var lines = String(text || '').replace(/\r\n/g, '\n').split('\n');
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if (/^\s*(```|~~~)/.test(line)) {
+        var code = [];
+        for (i++; i < lines.length && !/^\s*(```|~~~)/.test(lines[i]); i++) code.push(lines[i]);
+        blocks.push({ type: 'pre', code: code.join('\n') });
+        continue;
+      }
+      var bullet = /^\s*[-*]\s+(.*)$/.exec(line);
+      var numbered = /^\s*\d+[.)]\s+(.*)$/.exec(line);
+      var item = bullet || numbered;
+      if (item) {
+        var kind = bullet ? 'ul' : 'ol';
+        var prev = blocks[blocks.length - 1];
+        if (!prev || prev.type !== kind) blocks.push((prev = { type: kind, items: [] }));
+        prev.items.push(inlineParts(item[1]));
+        continue;
+      }
+      if (line.trim()) blocks.push({ type: 'p', parts: inlineParts(line.trim()) });
+    }
+    return blocks;
+  }
+
+  // Where a question the docs do not answer goes: the community, or an issue with the question filled in.
+  function handoffLinks(question) {
+    var q = String(question || '').trim().slice(0, 200);
+    return {
+      discord: DISCORD,
+      issue:
+        NEW_ISSUE +
+        '?title=' +
+        encodeURIComponent('Docs question: ' + q.slice(0, 120)) +
+        '&body=' +
+        encodeURIComponent('Asked in the docs search on flisk.sh/docs:\n\n> ' + q + '\n\nThe docs had no answer.'),
+    };
+  }
+
+  var api = {
+    aiPrompt: aiPrompt,
+    excerpt: excerpt,
+    searchRequest: searchRequest,
+    parseHits: parseHits,
+    parseAnswer: parseAnswer,
+    inlineParts: inlineParts,
+    answerBlocks: answerBlocks,
+    handoffLinks: handoffLinks,
+    MCP_URL: MCP_URL,
+    ANSWER_URL: ANSWER_URL,
+    HELPDOCK: HELPDOCK,
+  };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;
@@ -205,8 +307,19 @@
   foot.appendChild(browse);
   foot.appendChild(copy);
 
+  // The AI answer, on request, between the status line and the results.
+  var ai = el('div', 'aw-docs-ai');
+  ai.hidden = true;
+  var aiButton = el('button', 'aw-docs-ai-button', 'Write an answer from these passages (beta)');
+  aiButton.type = 'button';
+  var aiOut = el('div', 'aw-docs-ai-out');
+  aiOut.setAttribute('aria-live', 'polite');
+  ai.appendChild(aiButton);
+  ai.appendChild(aiOut);
+
   dialog.appendChild(form);
   dialog.appendChild(status);
+  dialog.appendChild(ai);
   dialog.appendChild(list);
   dialog.appendChild(foot);
   doc.body.appendChild(dialog);
@@ -221,9 +334,44 @@
     status.hidden = !text;
   }
 
+  // AI answers: shown only once Helpdock says they are on (GET /answer, always 200 so no console error). Asked once per
+  // page, on the first results; switched off for the rest of the visit if a later answer says they are off.
+  var aiOff = false;
+  var aiReady = false;
+  var aiProbe = null;
+  var aiRun = 0;
+  var aiQuery = '';
+  var aiHits = 0;
+
+  function probeAi() {
+    if (aiProbe) return;
+    aiProbe = root
+      .fetch(ANSWER_URL)
+      .then(function (res) {
+        return res.ok ? res.json() : null;
+      })
+      .then(function (json) {
+        aiReady = Boolean(json && json.available === true);
+      })
+      .catch(function () {
+        aiReady = false;
+      })
+      .then(function () {
+        ai.hidden = !aiReady || aiOff || !aiHits;
+      });
+  }
+
   function render(hits, query) {
     list.textContent = '';
     hand.hidden = !hits.length;
+    aiRun++;
+    aiQuery = query;
+    aiHits = hits.length;
+    aiOut.textContent = '';
+    aiButton.hidden = false;
+    aiButton.disabled = false;
+    ai.hidden = !aiReady || aiOff || !hits.length;
+    if (hits.length) probeAi();
     if (hits.length) {
       var prompt = encodeURIComponent(aiPrompt(query, hits));
       aiLinks.forEach(function (link, i) {
@@ -284,6 +432,107 @@
         clearTimeout(slow);
       });
   }
+
+  function aiNote(text, className) {
+    aiOut.textContent = '';
+    aiOut.appendChild(el('p', className || 'aw-docs-ai-note', text));
+  }
+
+  function appendParts(parent, parts, sources) {
+    parts.forEach(function (part) {
+      if (part.type === 'code') parent.appendChild(el('code', '', part.value));
+      else if (part.type === 'cite') {
+        var src = sources[part.value - 1];
+        if (!src) return;
+        var cite = el('a', 'aw-docs-ai-cite', '[' + part.value + ']');
+        cite.href = src.url;
+        cite.target = '_blank';
+        cite.rel = 'noopener';
+        cite.title = src.label;
+        parent.appendChild(cite);
+      } else parent.appendChild(doc.createTextNode(part.value));
+    });
+  }
+
+  function showAnswer(result) {
+    aiOut.textContent = '';
+    aiOut.appendChild(el('p', 'aw-docs-ai-label', "AI answer (beta), written by Wolf's base model from the passages below. Check it against them."));
+    answerBlocks(result.text).forEach(function (block) {
+      if (block.type === 'pre') {
+        var pre = el('pre');
+        pre.appendChild(el('code', '', block.code));
+        aiOut.appendChild(pre);
+      } else if (block.type === 'p') {
+        var p = el('p');
+        appendParts(p, block.parts, result.sources);
+        aiOut.appendChild(p);
+      } else {
+        var listEl = el(block.type);
+        block.items.forEach(function (parts) {
+          var li = el('li');
+          appendParts(li, parts, result.sources);
+          listEl.appendChild(li);
+        });
+        aiOut.appendChild(listEl);
+      }
+    });
+  }
+
+  function showHandoff(question) {
+    var links = handoffLinks(question);
+    aiNote('The docs do not cover this yet. Ask the people who build Flisk:');
+    var row = el('p', 'aw-docs-ai-handoff');
+    [
+      ['Ask on Discord', links.discord],
+      ['Open an issue', links.issue],
+    ].forEach(function (pair) {
+      var a = el('a', '', pair[0]);
+      a.href = pair[1];
+      a.target = '_blank';
+      a.rel = 'noopener';
+      row.appendChild(a);
+    });
+    aiOut.appendChild(row);
+  }
+
+  aiButton.addEventListener('click', function () {
+    var run = ++aiRun;
+    var question = aiQuery;
+    aiButton.disabled = true;
+    aiNote('Writing an answer from these passages...');
+    root
+      .fetch(ANSWER_URL, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ question: question }),
+      })
+      .then(function (res) {
+        return res.json().then(
+          function (json) {
+            return parseAnswer(res.status, json);
+          },
+          function () {
+            return parseAnswer(res.status, null);
+          }
+        );
+      })
+      .catch(function () {
+        return { kind: 'down' };
+      })
+      .then(function (result) {
+        if (run !== aiRun) return;
+        if (root.plausible) root.plausible('Docs AI answer', { props: { result: result.kind } });
+        aiButton.hidden = result.kind !== 'rate';
+        aiButton.disabled = false;
+        if (result.kind === 'answer') showAnswer(result);
+        else if (result.kind === 'not-covered') showHandoff(question);
+        else if (result.kind === 'rate') aiNote('Too many AI answers from this address. Wait a while and try again.');
+        else if (result.kind === 'off') {
+          aiOff = true;
+          ai.hidden = true;
+        } else aiNote('The AI answer is not available right now. The passages below still answer.');
+      });
+  });
 
   function onInput() {
     clearTimeout(timer);

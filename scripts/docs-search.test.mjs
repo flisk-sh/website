@@ -132,3 +132,66 @@ test('parseHits keeps at most two sections of one page', () => {
   const hits = parseHits(answer({ hits: ['a', 'a', 'a', 'b', 'a', 'c'].map((source, i) => ({ source, section: `s${i}` })) }));
   assert.deepEqual(hits.map((h) => h.source), ['a', 'a', 'b', 'c']);
 });
+
+// The AI answer (beta) under the results: Helpdock's /answer, see services/agents/agent/src/ai-answer.ts in flisk-sh/helpdock.
+const { parseAnswer, inlineParts, answerBlocks, handoffLinks, ANSWER_URL } = require('../assets/js/aw-docs-search.js');
+
+test('ANSWER_URL is the help center answer route next to the MCP endpoint', () => {
+  assert.equal(ANSWER_URL, HELPDOCK + 'answer');
+});
+
+test('parseAnswer reads an answer with its sources', () => {
+  const r = parseAnswer(200, {
+    available: true,
+    answer: 'Use `flisk down --purge` [1].',
+    sources: [{ n: 1, source: 'docs/cheat-sheet.md', section: 'flisk down', page: 'https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/#page=x' }],
+  });
+  assert.equal(r.kind, 'answer');
+  assert.equal(r.text, 'Use `flisk down --purge` [1].');
+  assert.deepEqual(r.sources, [{ n: 1, label: 'flisk down', url: 'https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/#page=x' }]);
+});
+
+test('parseAnswer maps every other outcome', () => {
+  assert.equal(parseAnswer(200, { available: true, answer: null, notCovered: true, sources: [] }).kind, 'not-covered');
+  assert.equal(parseAnswer(429, null).kind, 'rate');
+  assert.equal(parseAnswer(404, { available: false }).kind, 'off');
+  assert.equal(parseAnswer(503, { available: false }).kind, 'down');
+  assert.equal(parseAnswer(502, null).kind, 'down');
+  assert.equal(parseAnswer(200, null).kind, 'down');
+});
+
+test('parseAnswer never links a source outside https', () => {
+  const r = parseAnswer(200, { answer: 'x [1]', sources: [{ section: 's', page: 'javascript:alert(1)', url: 'http://evil' }] });
+  assert.equal(r.sources[0].url, HELPDOCK);
+});
+
+test('inlineParts splits code, citations and text, and drops bold markers', () => {
+  assert.deepEqual(inlineParts('Run `flisk up` [1, 3] then **check** it.'), [
+    { type: 'text', value: 'Run ' },
+    { type: 'code', value: 'flisk up' },
+    { type: 'text', value: ' ' },
+    { type: 'cite', value: 1 },
+    { type: 'cite', value: 3 },
+    { type: 'text', value: ' then check it.' },
+  ]);
+});
+
+test('answerBlocks builds paragraphs, lists and code blocks, never HTML', () => {
+  const blocks = answerBlocks('First <b>line</b> [1].\n- one\n- two\n1. step\n```bash\nflisk up\n```');
+  assert.deepEqual(
+    blocks.map((b) => b.type),
+    ['p', 'ul', 'ol', 'pre'],
+  );
+  assert.deepEqual(blocks[0].parts[0], { type: 'text', value: 'First <b>line</b> ' });
+  assert.equal(blocks[1].items.length, 2);
+  assert.equal(blocks[3].code, 'flisk up');
+});
+
+test('handoffLinks fills in the question for an issue', () => {
+  const links = handoffLinks('How do I add a Python worker?');
+  assert.equal(links.discord, 'https://discord.gg/qMu5Xn8Kaq');
+  const url = new URL(links.issue);
+  assert.equal(url.origin + url.pathname, 'https://github.com/flisk-sh/flisk/issues/new');
+  assert.equal(url.searchParams.get('title'), 'Docs question: How do I add a Python worker?');
+  assert.match(url.searchParams.get('body'), /> How do I add a Python worker\?/);
+});
