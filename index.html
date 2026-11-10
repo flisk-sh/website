@@ -54,7 +54,7 @@ image: /assets/images/flisk-social-card.png
           <button type="button" data-stage-step="fix" data-cta="stage_step_fix">Apply the fix</button>
           <button type="button" class="aw-stage-reset" data-stage-step="reset" data-cta="stage_step_reset">Start over</button>
         </div>
-        <iframe class="aw-stage-frame" src="{{ '/console/' | relative_url }}" title="FliskOS, the desktop console for Flisk projects, with sample data" data-stage-frame></iframe>
+        <iframe class="aw-stage-frame" src="{{ '/console/' | relative_url }}?v={{ site.time | date: '%s' }}" title="FliskOS, the desktop console for Flisk projects, with sample data" data-stage-frame></iframe>
         <p class="aw-try-note">This is the real FliskOS interface with sample data. Nothing starts on your machine and nothing leaves your browser. <a href="{{ '/docs/claims/' | relative_url }}#console">How it was made</a></p>
       </div>
 
