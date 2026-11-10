@@ -327,7 +327,7 @@ body:has(.aw) .page-content {
   align-items: center;
   justify-content: center;
   padding: 1rem 2.25rem;
-  border-radius: 100px;
+  border-radius: var(--radius);
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -386,7 +386,7 @@ body:has(.aw) .page-content {
 /* ---------------- Cards & rows ---------------- */
 .aw-card {
   position: relative;
-  border-radius: 1.25rem;
+  border-radius: var(--radius);
   background: #121218;
   border: 1px solid rgba(255, 255, 255, 0.07);
   padding: 2rem;
@@ -567,7 +567,7 @@ body:has(.aw) .page-content {
 .aw-codeblock {
   background: #0d0d13;
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 1rem;
+  border-radius: var(--radius);
   overflow: hidden;
   min-width: 0;
   max-width: 100%;
@@ -656,7 +656,7 @@ body:has(.aw) .page-content {
   background: #0d0d13;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-bottom: none;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: var(--radius) var(--radius) 0 0;
   overflow: hidden;
   padding: 0;
 }
@@ -696,7 +696,7 @@ body:has(.aw) .page-content {
   align-items: end;
   margin: 0 0 3rem;
   border: 1px solid rgba(77, 208, 255, 0.18);
-  border-radius: 1.25rem;
+  border-radius: var(--radius);
   background:
     radial-gradient(ellipse 80% 100% at 100% 0%, rgba(77, 208, 255, 0.14), transparent 58%),
     linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
@@ -743,7 +743,7 @@ body:has(.aw) .page-content {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  border-radius: 0.75rem;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.055);
   padding: 0.75rem 0.875rem;
   color: #fff;
@@ -768,7 +768,7 @@ body:has(.aw) .page-content {
   place-items: center;
   width: 1.75rem;
   height: 1.75rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   background: rgba(77, 208, 255, 0.13);
   color: #9eeaff;
   font-family: 'JetBrains Mono', monospace;
@@ -790,7 +790,7 @@ body:has(.aw) .page-content {
 .aw-setup-step {
   min-width: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.875rem;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.035);
   padding: 1rem;
 }
@@ -827,7 +827,7 @@ body:has(.aw) .page-content {
   margin: 0;
   border-left: 2px solid rgba(110, 231, 183, 0.65);
   background: rgba(110, 231, 183, 0.045);
-  border-radius: 0 0.75rem 0.75rem 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
   padding: 0.75rem 1rem;
 }
 
@@ -838,7 +838,7 @@ body:has(.aw) .page-content {
   align-items: center;
   margin: 1rem 0 1.25rem;
   border: 1px solid rgba(110, 231, 160, 0.18);
-  border-radius: 1rem;
+  border-radius: var(--radius);
   background:
     radial-gradient(ellipse 70% 120% at 0% 0%, rgba(110, 231, 160, 0.13), transparent 58%),
     rgba(255, 255, 255, 0.03);
@@ -862,7 +862,7 @@ body:has(.aw) .page-content {
 .aw-docs-details {
   margin: 1rem 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.875rem;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.03);
   overflow: hidden;
 }
@@ -889,7 +889,7 @@ body:has(.aw) .page-content {
 /* ---------- Compare matrix (dark) ---------- */
 .aw-matrix {
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 1.25rem;
+  border-radius: var(--radius);
   overflow: hidden;
   overflow-x: auto;
 }
@@ -985,7 +985,7 @@ body:has(.aw) .page-content {
 .aw-docs-side a {
   display: block;
   padding: 0.625rem 1rem;
-  border-radius: 0.625rem;
+  border-radius: var(--radius);
   font-size: 0.9375rem;
   color: rgba(236, 236, 241, 0.7);
   text-decoration: none;
@@ -1028,7 +1028,7 @@ body:has(.aw) .page-content {
 .aw-docs-toc a {
   display: block;
   padding: 0.375rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   font-size: 0.8125rem;
   line-height: 1.4;
   color: rgba(236, 236, 241, 0.6);
@@ -1094,7 +1094,7 @@ body:has(.aw) .page-content {
 .aw-terminal {
   background: #0d0d13;
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 1.25rem;
+  border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
@@ -1229,7 +1229,7 @@ body:has(.aw) .page-content {
   background: rgba(34, 197, 94, 0.12);
   color: #86EFAC;
   padding: 0.15em 0.45em;
-  border-radius: 0.375rem;
+  border-radius: var(--radius);
 }
 
 .aw-docs-body .aw-codeblock code {
@@ -1241,7 +1241,7 @@ body:has(.aw) .page-content {
 .aw-callout {
   border: 1px solid rgba(110, 231, 183, 0.3);
   background: rgba(110, 231, 183, 0.06);
-  border-radius: 1rem;
+  border-radius: var(--radius);
   padding: 1.5rem 1.75rem;
   margin: 2rem 0;
 }
@@ -1284,7 +1284,7 @@ body:has(.aw) .page-content {
 .aw-blog-kicker {
   align-self: end;
   border: 1px solid rgba(110, 231, 160, 0.18);
-  border-radius: 1.5rem;
+  border-radius: var(--radius);
   background:
     linear-gradient(140deg, rgba(34, 197, 94, 0.14), rgba(18, 18, 24, 0.92) 42%),
     #121218;
@@ -1316,7 +1316,7 @@ body:has(.aw) .page-content {
 }
 
 .aw-article-card {
-  border-radius: 1.5rem;
+  border-radius: var(--radius);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 18rem),
     #121218;
@@ -1334,7 +1334,7 @@ body:has(.aw) .page-content {
 .aw-article-meta span {
   display: inline-flex;
   align-items: center;
-  border-radius: 100px;
+  border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.45rem 0.75rem;
   font-family: 'JetBrains Mono', monospace;
@@ -1401,7 +1401,7 @@ body:has(.aw) .page-content {
 
 .aw-article-note {
   margin: 2.25rem 0;
-  border-radius: 1rem;
+  border-radius: var(--radius);
   border: 1px solid rgba(110, 231, 160, 0.25);
   background: rgba(34, 197, 94, 0.08);
   padding: 1.25rem 1.5rem;
@@ -1419,7 +1419,7 @@ body:has(.aw) .page-content {
 }
 
 .aw-blog-side-card {
-  border-radius: 1.25rem;
+  border-radius: var(--radius);
   background: #0d0d13;
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1.25rem;
@@ -1470,7 +1470,7 @@ body:has(.aw) .page-content {
 
 .aw-matter {
   min-height: 11rem;
-  border-radius: 1.25rem;
+  border-radius: var(--radius);
   background: #121218;
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1.4rem;
@@ -1541,7 +1541,7 @@ body:has(.aw) .page-content {
 
 .aw-library-card {
   min-height: 15rem;
-  border-radius: 1.25rem;
+  border-radius: var(--radius);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 55%),
     #121218;
@@ -1572,7 +1572,7 @@ body:has(.aw) .page-content {
 }
 
 .aw-library-meta span:last-child {
-  border-radius: 100px;
+  border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.09);
   padding: 0.3rem 0.55rem;
   white-space: nowrap;
@@ -1658,7 +1658,7 @@ body:has(.aw) .page-content {
   margin: 0 0.05em;
   vertical-align: 0.08em;
   border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 999px;
+  border-radius: 50%;
   background: url('https://picsum.photos/seed/tdk-runtime-console/480/180') center / cover no-repeat;
   filter: grayscale(1) contrast(1.25);
 }
@@ -1763,7 +1763,7 @@ body:has(.aw) .page-content {
   min-width: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
+  border-radius: var(--radius);
   color: #fff;
   text-decoration: none;
   isolation: isolate;
@@ -1870,7 +1870,7 @@ body:has(.aw) .page-content {
   min-height: 27rem;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 1rem;
+  border-radius: var(--radius);
 }
 
 .aw-path {
@@ -1980,7 +1980,7 @@ body:has(.aw) .page-content {
   margin-bottom: 1rem;
   padding: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
+  border-radius: var(--radius);
   background: rgba(13, 13, 18, 0.9);
   backdrop-filter: blur(18px);
 }
@@ -2027,7 +2027,7 @@ body:has(.aw) .page-content {
 .aw-library-filters button {
   flex: 0 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
+  border-radius: var(--radius);
   background: transparent;
   padding: 0.5rem 0.78rem;
   color: rgba(255, 255, 255, 0.79);
@@ -2049,7 +2049,7 @@ body:has(.aw) .page-content {
 
 .aw-blog-index .aw-library-card {
   min-height: 14rem;
-  border-radius: 1rem;
+  border-radius: var(--radius);
   padding: 1.5rem;
 }
 
@@ -2163,7 +2163,7 @@ body:has(.aw) .page-content {
 }
 
 .aw-blog-action .aw-band {
-  border-radius: 1rem;
+  border-radius: var(--radius);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2293,7 +2293,7 @@ body:has(.aw) .page-content {
 /* ---------------- CTA band ---------------- */
 .aw-band {
   position: relative;
-  border-radius: 1.5rem;
+  border-radius: var(--radius);
   overflow: hidden;
   background:
     radial-gradient(ellipse 70% 90% at 50% 110%, rgba(34, 197, 94, 0.35) 0%, transparent 65%),
@@ -2402,7 +2402,7 @@ body:has(.aw) .page-content {
   color: rgba(236, 236, 241, 0.75);
   background: #121218;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 100px;
+  border-radius: var(--radius);
   padding: 0.5rem 1rem;
   transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
@@ -2433,7 +2433,7 @@ body:has(.aw) .page-content {
     transform: none;
     width: 100%;
     height: auto;
-    border-radius: 1.25rem;
+    border-radius: var(--radius);
     padding: 1.5rem;
     order: -1;
     animation: none;
@@ -2662,7 +2662,7 @@ body:has(.aw) .page-content {
   flex: 1 1 auto;
   min-height: 11rem;
   margin: -0.5rem -0.5rem 1.35rem;
-  border-radius: 1rem;
+  border-radius: var(--radius);
   background-image:
     linear-gradient(180deg, rgba(10, 10, 14, 0.05), rgba(10, 10, 14, 0.55)),
     url('https://picsum.photos/seed/tdk-restaurant-service-pass/900/1100');
@@ -2718,7 +2718,7 @@ body:has(.aw) .page-content {
   margin: 1.75rem 0 2rem;
   padding: clamp(2rem, 4.5vw, 3.5rem);
   border: 1px solid rgba(110, 231, 160, 0.16);
-  border-radius: 1.5rem;
+  border-radius: var(--radius);
   overflow: hidden;
   background:
     radial-gradient(ellipse 70% 90% at 95% 0%, rgba(34, 197, 94, 0.2), transparent 60%),
@@ -2811,7 +2811,7 @@ body:has(.aw) .page-content {
   width: 86%;
   padding: 1.1rem 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
+  border-radius: var(--radius);
   background: rgba(12, 12, 17, 0.78);
   box-shadow: 0 20px 50px rgba(6, 4, 16, 0.45);
   backdrop-filter: blur(16px);
@@ -2853,7 +2853,7 @@ body:has(.aw) .page-content {
   gap: 0.3rem;
   padding: 0.95rem 1.1rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.875rem;
+  border-radius: var(--radius);
   background: rgba(18, 18, 24, 0.85);
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.5s ease;
 }
@@ -2884,7 +2884,7 @@ body:has(.aw) .page-content {
   gap: 0.5rem;
   padding: 1.35rem;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 1.25rem;
+  border-radius: var(--radius);
   background: #121218;
   text-decoration: none;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.45s ease, background 0.45s ease;
@@ -3026,7 +3026,7 @@ body:has(.aw) .page-content {
   width: 100%;
   height: auto;
   border: 1px solid rgba(110, 231, 160, 0.18);
-  border-radius: 0.875rem;
+  border-radius: var(--radius);
 }
 
 .aw-shot-row figcaption {
@@ -3092,7 +3092,7 @@ body:has(.aw) .page-content {
   align-items: baseline;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border-radius: 100px;
+  border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.07);
   background: #121218;
   font-size: 0.875rem;
@@ -3141,7 +3141,7 @@ body:has(.aw) .page-content {
   width: 4.5rem;
   height: 3rem;
   padding: 0.35rem 0.5rem;
-  border-radius: 10px;
+  border-radius: var(--radius);
   background: #fff;
 }
 
@@ -3184,28 +3184,14 @@ body:has(.aw) .page-content {
 }
 
 /* ============================================================
-   Inner pages, after warp.dev: sharp corners, mono headings with
+   Inner pages, after warp.dev: mono headings with
    "# page / 01" kickers, hairline card grids, small square buttons.
    Scoped to body.aw-inner (every page except the homepage).
    ============================================================ */
 
-/* Sharp corners: every card, panel, code window and calculator shell. */
-.aw-inner :is(.aw-acc-item, .aw-accordion, .aw-article-card, .aw-article-note, .aw-band, .aw-library-card, .aw-blog-kicker,
-  .aw-blog-side-card, .aw-burn, .aw-burn-cell, .aw-callout, .aw-card, .aw-code, .aw-codeblock, .aw-docs-details,
-  .aw-erp-domain-grid a, .aw-erp-panel, .aw-example-showcase, .aw-featured-story, .aw-fit-questions, .aw-fit-result,
-  .aw-form, .aw-form input[type="email"], .aw-inline-error, .aw-install-tabs-bar, .aw-issued-key, .aw-library-tools,
-  .aw-license-panel, .aw-mailto-fallback, .aw-manifest-wall, .aw-matrix, .aw-matter, .aw-orbit-center, .aw-path-accordion,
-  .aw-price-card, .aw-quickstart-flow a, .aw-quickstart-hero, .aw-reel, .aw-reel-shell, .aw-restaurant-panel,
-  .aw-restaurant-photo, .aw-restaurant-resource-grid a, .aw-roi-cell, .aw-setup-step, .aw-shot-row img, .aw-stack-card,
-  .aw-term-left, .aw-terminal, .aw-week, .aw-why, .sb-bento-card, .sb-bento-img, .sb-copyline, .sb-cta-band,
-  .sb-file-modal, .sb-hacc, .sb-step, .sb-term, pre) {
-  border-radius: 0.25rem;
-}
-
 /* Small square buttons: mono, uppercase, no hover lift. */
 .aw-inner .aw-btn {
   padding: 0.6rem 1.15rem;
-  border-radius: 0.25rem;
   font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -3354,7 +3340,7 @@ body:has(.aw) .page-content {
 .aw-docs-search-close {
   padding: 0.1rem 0.45rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 0.375rem;
+  border-radius: var(--radius);
   background: transparent;
   color: rgba(236, 236, 241, 0.6);
   font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
@@ -3367,7 +3353,7 @@ body:has(.aw) .page-content {
   margin: 5rem auto auto;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 1rem;
+  border-radius: var(--radius);
   background: #121218;
   color: #ececf1;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.6);
@@ -3429,7 +3415,7 @@ body:has(.aw) .page-content {
   flex-direction: column;
   gap: 0.25rem;
   padding: 0.75rem;
-  border-radius: 0.625rem;
+  border-radius: var(--radius);
   color: inherit;
   text-decoration: none;
 }
@@ -3500,7 +3486,7 @@ body:has(.aw) .page-content {
   gap: 0.75rem;
   padding: 0.5rem 0.5rem 0.5rem 1.25rem;
   border: 1px solid rgba(110, 231, 160, 0.45);
-  border-radius: 1rem;
+  border-radius: var(--radius);
   background: #121218;
   box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.08);
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
@@ -3532,7 +3518,7 @@ body:has(.aw) .page-content {
 .aw-docs-ask-form button {
   padding: 0.7rem 1.4rem;
   border: 0;
-  border-radius: 0.75rem;
+  border-radius: var(--radius);
   background: #6EE7A0;
   color: #0a0a0e;
   font-weight: 700;
@@ -3552,7 +3538,7 @@ body:has(.aw) .page-content {
 .aw-docs-body a.aw-docs-ask-chip {
   padding: 0.35rem 0.8rem;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
+  border-radius: var(--radius);
   color: rgba(236, 236, 241, 0.75);
   font-size: 0.8125rem;
   text-decoration: none;
@@ -3585,7 +3571,7 @@ body:has(.aw) .page-content {
   margin: 0 1.25rem 0.5rem;
   padding: 0.75rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
+  border-radius: var(--radius);
   max-height: 40vh;
   overflow-y: auto;
   color: rgba(236, 236, 241, 0.85);
@@ -3607,7 +3593,7 @@ body:has(.aw) .page-content {
 
 .aw-docs-ai-button[hidden] { display: none; }
 .aw-docs-ai-button:disabled { color: rgba(236, 236, 241, 0.4); cursor: default; }
-.aw-docs-ai-button:focus-visible { outline: 2px solid #22C55E; outline-offset: 2px; border-radius: 0.25rem; }
+.aw-docs-ai-button:focus-visible { outline: 2px solid #22C55E; outline-offset: 2px; border-radius: var(--radius); }
 
 .aw-docs-ai-out:empty { display: none; }
 .aw-docs-ai-out p { margin: 0.5rem 0 0; }
@@ -3617,7 +3603,7 @@ body:has(.aw) .page-content {
 
 .aw-docs-ai-out code {
   padding: 0.0625rem 0.3125rem;
-  border-radius: 0.3125rem;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
   font: 0.8125rem 'JetBrains Mono', ui-monospace, monospace;
@@ -3627,7 +3613,7 @@ body:has(.aw) .page-content {
 .aw-docs-ai-out pre {
   margin: 0.5rem 0 0;
   padding: 0.625rem 0.75rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.04);
   overflow-x: auto;
 }
@@ -3669,7 +3655,7 @@ body:has(.aw) .page-content {
   gap: 0.25rem;
   padding: 1rem 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.875rem;
+  border-radius: var(--radius);
   color: #fff;
   text-decoration: none;
   transition: border-color 0.2s ease;

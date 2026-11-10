@@ -33,7 +33,7 @@ description: Every Dockerfile Flisk generates builds in the same four layers, ea
 .ly-band-n b { color: #6EE7A0; font-weight: 500; }
 .ly-band strong { font: 600 clamp(1.05rem, 1.8vw, 1.35rem) 'Satoshi', sans-serif; letter-spacing: -0.02em; }
 .ly-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-.ly-chip { padding: 0.18rem 0.55rem; border: 1px solid currentColor; border-radius: 999px; font-size: 0.66rem; opacity: 0.55; white-space: nowrap; }
+.ly-chip { padding: 0.18rem 0.55rem; border: 1px solid currentColor; border-radius: var(--radius); font-size: 0.66rem; opacity: 0.55; white-space: nowrap; }
 .ly-band-desc { justify-self: end; color: var(--muted); font-size: 0.78rem; text-align: right; }
 .ly-band[data-n="4"] .ly-band-n, .ly-band[data-n="4"] .ly-band-n b, .ly-band[data-n="4"] .ly-band-desc { color: rgba(10, 10, 14, 0.75); }
 .ly-band[data-n="4"]:hover { color: #0a0a0e; }
@@ -72,7 +72,7 @@ description: Every Dockerfile Flisk generates builds in the same four layers, ea
 .ly-cell.is-built { border-color: #22C55E; background: rgba(34, 197, 94, 0.14); color: #6EE7A0; }
 
 .ly-next { display: flex; flex-wrap: wrap; gap: 0.75rem; padding-top: clamp(4rem, 8vw, 6rem); padding-bottom: clamp(6rem, 10vw, 8rem); }
-.ly-btn { display: inline-flex; align-items: center; padding: 0.55rem 1.1rem; border: 1px solid rgba(236, 236, 241, 0.3); border-radius: 0.25rem; color: #ececf1; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; }
+.ly-btn { display: inline-flex; align-items: center; padding: 0.55rem 1.1rem; border: 1px solid rgba(236, 236, 241, 0.3); border-radius: var(--radius); color: #ececf1; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; }
 .ly-btn:hover { border-color: #ececf1; color: #fff; }
 .ly-btn.is-solid { border-color: #22C55E; background: #22C55E; color: #0a0a0e; }
 .ly-btn.is-solid:hover { background: #6EE7A0; border-color: #6EE7A0; }
