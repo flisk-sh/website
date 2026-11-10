@@ -64,3 +64,40 @@
     entries.forEach(function (e) { observer.observe(e.heading); });
   }
 })();
+
+/* Previous and next page links at the end of every docs page, in the order
+   of the sidebar, so a reader can go through the docs without scrolling back
+   up to the menu. */
+(function () {
+  var body = document.querySelector('.aw-docs-body');
+  var links = Array.prototype.slice.call(document.querySelectorAll('.aw-docs-side nav a'));
+  if (!body || !links.length) return;
+
+  // Only the pages of this site; the Helpdock link opens elsewhere.
+  var pages = links.filter(function (a) { return a.host === location.host && !a.target; });
+  var here = -1;
+  pages.forEach(function (a, i) { if (a.classList.contains('is-active')) here = i; });
+  if (here < 0) return;
+
+  var nav = document.createElement('nav');
+  nav.className = 'aw-docs-pager';
+  nav.setAttribute('aria-label', 'Previous and next page');
+
+  function add(page, label, className) {
+    if (!page) return;
+    var a = document.createElement('a');
+    a.className = className;
+    a.href = page.href;
+    var small = document.createElement('span');
+    small.textContent = label;
+    var title = document.createElement('strong');
+    title.textContent = page.textContent.trim();
+    a.appendChild(small);
+    a.appendChild(title);
+    nav.appendChild(a);
+  }
+
+  add(pages[here - 1], 'Previous', 'aw-docs-pager-prev');
+  add(pages[here + 1], 'Next', 'aw-docs-pager-next');
+  if (nav.children.length) body.appendChild(nav);
+})();
