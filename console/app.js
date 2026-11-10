@@ -269,7 +269,7 @@ function renderOverview() {
       <button class="project-open" type="button" data-select-project="${esc(project.id)}">${symbolMarkup(project.name, project.error ? "error" : project.tiltRunning ? "ready" : "")}<span class="row-title"><strong>${esc(project.name)}${pinnedProjects.has(project.id) ? PIN_GLYPH : ""}</strong><small>${esc(project.path)}</small></span></button>
       ${project.pending ? `<span class="status-label"><i class="state-dot"></i>Checking…</span>` : project.error ? `<span class="status-label"><i class="state-dot error"></i>Unavailable</span>` : statusMarkup(project.tiltRunning ? "running" : "stopped")}
       ${scoreMarkup(project)}
-      <span class="row-meta resources-count" ${project.error ? `title="${esc(project.error)}"` : ""}>${project.pending ? "" : project.error ? esc(shortText(project.error, 60)) : `<span class="res-text">${(project.resources || []).length} resources</span>${conflicts ? ` <span class="badge warn" title="${conflicts} configured port conflicts">${conflicts} conflicts</span>` : ""}${doctors.get(project.id)?.error ? ` <span class="badge bad" title="${esc(doctors.get(project.id).error)}">Doctor failed</span>` : ""}`}</span>
+      <span class="row-meta resources-count ${project.error ? "row-error" : ""}" ${project.error ? `title="${esc(project.error)}"` : ""}>${project.pending ? "" : project.error ? esc(shortText(project.error, 60)) : `<span class="res-text">${(project.resources || []).length} resources</span>${conflicts ? ` <span class="badge warn" title="${conflicts} configured port conflicts">${conflicts} conflicts</span>` : ""}${doctors.get(project.id)?.error ? ` <span class="badge bad" title="${esc(doctors.get(project.id).error)}">Doctor failed</span>` : ""}`}</span>
       ${actionSet(project, "project", "", true)}
       ${progressMarkup(project.id, true)}
     </div>`;
@@ -282,7 +282,7 @@ function renderOverview() {
     ${collapsible("summary", "Summary", `<div class="gauges">${overviewGauges(ready, resources)}</div>${tokenBarMarkup(sumTokens(projects.map((project) => project.tokens)), "Generated share (est.)")}`)}
     ${pinnedResourcesPanel()}
     <div id="notice" class="notice" role="status"></div>
-    ${visible.length ? collapsible("projects", "Projects", `<section class="project-table" aria-label="Flisk projects">${rows}</section>`, `${visible.length} shown`) : `<div class="empty"><span class="empty-icon" aria-hidden="true">⌕</span><strong>${projects.length ? "No matching projects" : "No Flisk projects found"}</strong><p>${projects.length ? "Try another project name or folder path." : "FliskOS searches common development folders. Add a location with --scan-root or initialize a project with ${esc(cliProgram())} project."}</p></div>`}
+    ${visible.length ? collapsible("projects", "Projects", `<section class="project-table" aria-label="Flisk projects">${rows}</section>`, `${visible.length} shown`) : `<div class="empty"><span class="empty-icon" aria-hidden="true">⌕</span><strong>${projects.length ? "No matching projects" : "No Flisk projects found"}</strong><p>${projects.length ? "Try another project name or folder path." : `FliskOS searches common development folders. Add a location with --scan-root or initialize a project with ${esc(cliProgram())} project.`}</p></div>`}
   </div>`;
 }
 
