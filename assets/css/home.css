@@ -2521,9 +2521,20 @@ button.aw-gen-node:focus-visible,
 
 .aw-stage .aw-try-note { margin: 0; padding: 0.75rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.08); }
 
-.aw-stage-terminal { padding: clamp(1rem, 3vw, 2rem); }
-.aw-stage-terminal .aw-try { width: min(54rem, 100%); margin: 0 auto; }
-.aw-stage-terminal .aw-try-note { padding: 0.75rem 0 0; border-top: 0; }
+/* The Flisk CLI tab: the terminal fills the window (the window already has its own chrome) and is as tall as the console tab. */
+.aw-stage-terminal { padding: 0; }
+.aw-stage-terminal .aw-try { width: 100%; margin: 0; }
+.aw-stage-terminal .aw-terminal { border: 0; border-radius: 0; box-shadow: none; background: #0b0b10; }
+.aw-stage-terminal .aw-terminal-bar { display: none; }
+.aw-stage-terminal .aw-try-tabs { padding: 0.75rem 1rem; }
+.aw-stage-terminal .aw-try.is-live .aw-try-body {
+  height: calc(clamp(30rem, 70vh, 44rem) - 6.5rem);
+  padding: 1.5rem 2rem;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+.aw-stage-terminal .aw-try-controls { min-height: 4.5rem; }
+.aw-stage-terminal .aw-try-note { margin: 0; padding: 0.75rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.08); }
 
 @media (max-width: 1080px) {
   .aw-hero-top { grid-template-columns: minmax(0, 1fr); }
@@ -2533,6 +2544,7 @@ button.aw-gen-node:focus-visible,
   .aw-stage { margin-inline: -0.5rem; border-radius: 1rem; }
   .aw-stage-tag { display: none; }
   .aw-stage-frame { height: 34rem; }
+  .aw-stage-terminal .aw-try.is-live .aw-try-body { height: 22rem; padding: 1rem; font-size: 0.8rem; line-height: 1.7; }
   .aw-stage-guide .aw-stage-reset { margin-left: 0; }
 }
 
