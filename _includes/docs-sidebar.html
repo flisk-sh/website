@@ -1,4 +1,8 @@
 <aside class="aw-docs-side">
+  {% comment %} A plain link to Helpdock; assets/js/aw-docs-search.js turns it into an in-page search. {% endcomment %}
+  <a class="aw-docs-search-open" data-docs-search href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">
+    <span>Search the docs</span><kbd>/</kbd>
+  </a>
   <nav aria-label="Documentation navigation">
     <a href="{{ '/docs/' | relative_url }}" class="{% if page.url == '/docs/' %}is-active{% endif %}">Overview</a>
     <a href="{{ '/docs/quickstart/' | relative_url }}" class="{% if page.url contains '/docs/quickstart/' %}is-active{% endif %}">Quick Start</a>
@@ -8,5 +12,6 @@
     <a href="{{ '/docs/examples/' | relative_url }}" class="{% if page.url contains '/docs/examples/' %}is-active{% endif %}">Examples</a>
     <a href="{{ '/docs/agents/' | relative_url }}" class="{% if page.url contains '/docs/agents/' %}is-active{% endif %}">AI Agents &amp; Skills</a>
     <a href="{{ '/docs/claims/' | relative_url }}" class="{% if page.url contains '/docs/claims/' %}is-active{% endif %}">Claims</a>
+    <a href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">All docs in Helpdock ↗</a>
   </nav>
 </aside>
