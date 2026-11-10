@@ -3619,3 +3619,17 @@ body:has(.aw) .page-content {
 .aw-docs-body .aw-card h4 {
   margin-top: 0;
 }
+
+.aw-docs-ask-more {
+  margin-top: 0.75rem;
+}
+
+.aw-docs-ask-more summary {
+  cursor: pointer;
+  color: rgba(236, 236, 241, 0.7);
+  font-size: 0.8125rem;
+}
+
+.aw-docs-ask-more summary:hover {
+  color: #fff;
+}
