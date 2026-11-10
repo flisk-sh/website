@@ -3613,3 +3613,9 @@ body:has(.aw) .page-content {
 .aw-docs-pager-next { text-align: right; margin-left: auto; }
 
 .aw-docs-pager a:only-child { flex: 0 1 50%; }
+
+/* Card headings inside a docs page: the docs heading margin left a 40px gap above every card title. */
+.aw-docs-body .aw-card h3,
+.aw-docs-body .aw-card h4 {
+  margin-top: 0;
+}

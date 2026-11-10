@@ -75,7 +75,7 @@ description: "Reference for the two Flisk CLI config files: service.json for eac
         </div>
 
         <h3>port</h3>
-        <p>The port your service listens on. Backends need one in 4000-5999 and frontends use 3000-3999. Flisk runs the service on exactly this port, and other containers reach it as <code>http://&lt;appName&gt;:&lt;port&gt;</code>. Backend ports are not published on <code>localhost</code>; reach them through Traefik at <code>http://api.&lt;project&gt;.localhost/api/&lt;name without -api&gt;</code>.</p>
+        <p>The port your service listens on. Ranges by type: backends 4000-4999; <code>mcp</code>, <code>agent</code> and <code>bring-your-own</code> 4000-5999; frontends 3000-3999; workers, when they set one, 6000-6999. Flisk runs the service on exactly this port, and other containers reach it as <code>http://&lt;appName&gt;:&lt;port&gt;</code>. Backend ports are not published on <code>localhost</code>; reach them through Traefik at <code>http://api.&lt;project&gt;.localhost/api/&lt;name without -api&gt;</code>.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>service.json</span></div>
           <pre><span class="k">"port"</span>: <span class="n">4410</span></pre>

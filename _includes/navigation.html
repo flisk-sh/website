@@ -108,6 +108,8 @@
         </div>
       </details>
 
+      {%- comment %} The header's Docs link is hidden with the burger menu, so the menu has its own. {% endcomment %}
+      <a class="aw-nav-link aw-nav-docs-mobile{% if page.url contains '/docs/' %} is-active{% endif %}" href="{{ '/docs/' | relative_url }}">Docs</a>
       <a class="aw-nav-link" href="{{ '/#pricing' | relative_url }}">Pricing</a>
 
       <div class="aw-nav-mobile-actions">

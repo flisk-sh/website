@@ -580,6 +580,8 @@ html {
 .aw-nav-more[open] summary,
 .aw-nav-text:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
 
+.aw-nav-docs-mobile { display: none; }
+
 .aw-nav-link.is-active,
 .aw-nav-more.is-active summary { color: #6EE7A0; }
 
@@ -707,6 +709,7 @@ html {
   .aw-nav-burger { display: block; }
   .aw-nav-actions .aw-nav-text,
   .aw-nav-actions .aw-nav-cta { display: none; }
+  .aw-nav-links .aw-nav-docs-mobile { display: flex; }
 
   .aw-nav-links {
     position: absolute;
