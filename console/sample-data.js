@@ -771,7 +771,7 @@ window.FLISK_SAMPLE = {
    },
    {
     "id": "demo",
-    "name": "Demos",
+    "name": "Personal Demos",
     "url": "https://demo.flisk.si",
     "blurb": "Reply @grok bubbles on X and get a running local stack.",
     "actions": [],
@@ -834,7 +834,7 @@ window.FLISK_SAMPLE = {
    },
    {
     "id": "demo",
-    "name": "Demos",
+    "name": "Personal Demos",
     "url": "https://demo.flisk.si",
     "blurb": "Reply @grok bubbles on X and get a running local stack.",
     "actions": [],

@@ -129,7 +129,7 @@ Current skills include:
 - [No Vendor Lock-in]({{ '/no-lock-in/' | absolute_url }}): every generated file is open-standard Docker/TypeScript/Starlark, MIT-licensed
 - [Does Flisk fit?]({{ '/fit/' | absolute_url }}): check your stack in 30 seconds
 - [Sandbox]({{ '/sandbox/' | absolute_url }}): try Flisk without installing anything
-- [Personal demos](https://demo.flisk.si): a Flisk stack built for a person's X handle and the words they build with
+- [Personal Demos](https://demo.flisk.si): a Flisk stack built for a person's X handle and the words they build with
 
 ## Reference Landscapes (GitHub)
 
