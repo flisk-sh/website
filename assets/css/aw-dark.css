@@ -3331,3 +3331,160 @@ body:has(.aw) .page-content {
   .aw-faq-a { padding-left: 0.25rem; font-size: 0.8rem; }
 }
 
+
+/* Docs search (assets/js/aw-docs-search.js): the sidebar button and the
+   dialog that lists Helpdock's answers. */
+.aw-docs-side a.aw-docs-search-open {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #121218;
+  color: rgba(236, 236, 241, 0.6);
+}
+
+.aw-docs-side a.aw-docs-search-open:hover {
+  border-color: rgba(110, 231, 160, 0.45);
+  color: #fff;
+}
+
+.aw-docs-search-open kbd,
+.aw-docs-search-close {
+  padding: 0.1rem 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0.375rem;
+  background: transparent;
+  color: rgba(236, 236, 241, 0.6);
+  font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
+  box-shadow: none;
+}
+
+.aw-docs-search {
+  width: min(44rem, calc(100vw - 2rem));
+  max-height: min(38rem, calc(100vh - 6rem));
+  margin: 5rem auto auto;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: #121218;
+  color: #ececf1;
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.aw-docs-search[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.aw-docs-search::backdrop {
+  background: rgba(5, 5, 8, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.aw-docs-search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.aw-docs-search-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.75rem 0.25rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1.0625rem;
+}
+
+.aw-docs-search-input::placeholder { color: rgba(236, 236, 241, 0.4); }
+
+.aw-docs-search-close { cursor: pointer; }
+
+.aw-docs-search-status {
+  margin: 0;
+  padding: 1.25rem 1.25rem;
+  color: rgba(236, 236, 241, 0.6);
+  font-size: 0.9375rem;
+}
+
+.aw-docs-search-results {
+  flex: 1;
+  margin: 0;
+  padding: 0.5rem;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.aw-docs-search-results:empty { display: none; }
+
+.aw-docs-search-hit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  border-radius: 0.625rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.aw-docs-search-hit:hover,
+.aw-docs-search-hit:focus-visible {
+  background: rgba(34, 197, 94, 0.12);
+  outline: 0;
+}
+
+.aw-docs-search-hit strong {
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.aw-docs-search-text {
+  color: rgba(236, 236, 241, 0.65);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.aw-docs-search-source {
+  color: #6EE7A0;
+  font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
+  overflow-wrap: anywhere;
+}
+
+.aw-docs-search-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.8125rem;
+}
+
+.aw-docs-search-foot a {
+  color: #6EE7A0;
+  text-decoration: none;
+}
+
+.aw-docs-search-copy {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(236, 236, 241, 0.6);
+  font: inherit;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.aw-docs-search-copy:hover { color: #fff; }
