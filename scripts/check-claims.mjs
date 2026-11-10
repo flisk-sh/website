@@ -42,7 +42,7 @@ export function findForbiddenClaims(html) {
 }
 
 // The "@grok bubbles" instructions in llms.txt and llms-full.txt, from "## Personal Demos" to the heading
-// after "## Bubbles". demo.flisk.sh builds only from /<handle>/<words>: a bare /<handle> opens a demo the
+// after "## Bubbles". demo.flisk.si (demo.flisk.sh before the move) builds only from /<handle>/<words>: a bare /<handle> opens a demo the
 // person already has (a 404 otherwise), and /d/<id> ids are made by the server.
 export function demoSection(text) {
   const start = text.indexOf('## Personal Demos');
@@ -55,13 +55,13 @@ export function demoLinkProblems(text) {
   if (!section) return ['has no Personal Demos and Bubbles sections'];
   const problems = [];
   for (const sentence of section.split(/\n|(?<=\.)\s/)) {
-    for (const [link] of sentence.matchAll(/https:\/\/demo\.flisk\.sh\/[^\s`"]*/g)) {
+    for (const [link] of sentence.matchAll(/https:\/\/demo\.flisk\.s[hi]\/[^\s`"]*/g)) {
       if (/\/v1\/|\/mcp$/.test(link)) continue; // the JSON APIs and the MCP url, called and never posted as a demo link
-      if (link.startsWith('https://demo.flisk.sh/d/')) {
+      if (/^https:\/\/demo\.flisk\.s[hi]\/d\//.test(link)) {
         problems.push(`offers a /d/ link, whose ids only the server makes: ${link}`);
-      } else if (/^https:\/\/demo\.flisk\.sh\/<x-handle>$/.test(link)) {
+      } else if (/^https:\/\/demo\.flisk\.s[hi]\/<x-handle>$/.test(link)) {
         if (!sentence.includes('404')) problems.push(`offers a bare-handle demo link, which builds nothing: "${sentence.trim()}"`);
-      } else if (!/^https:\/\/demo\.flisk\.sh\/[^/]+\/[^/]+$/.test(link)) {
+      } else if (!/^https:\/\/demo\.flisk\.s[hi]\/[^/]+\/[^/]+$/.test(link)) {
         problems.push(`offers a demo link without words: ${link}`);
       }
     }
