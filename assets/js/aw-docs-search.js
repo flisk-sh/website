@@ -13,6 +13,8 @@
   var MCP_URL = HELPDOCK + 'mcp';
   var LIMIT = 8;
   var EXCERPT_CHARS = 200;
+  var PASSAGE_CHARS = 600;
+  var PROMPT_HITS = 4;
 
   // Markdown passage -> one line of plain text for a result row.
   function excerpt(markdown, max) {
@@ -59,12 +61,30 @@
         title: hit.title || '',
         source: hit.source || '',
         text: excerpt(hit.text),
+        passage: String(hit.text || '').slice(0, PASSAGE_CHARS),
         url: typeof hit.url === 'string' && /^https:\/\//.test(hit.url) ? hit.url : HELPDOCK,
       };
     });
   }
 
-  var api = { excerpt: excerpt, searchRequest: searchRequest, parseHits: parseHits, MCP_URL: MCP_URL, HELPDOCK: HELPDOCK };
+  // The question plus the passages found, for the reader's own AI. Flisk never calls a model.
+  function aiPrompt(query, hits) {
+    var lines = [
+      'Answer this question about Flisk (https://flisk.sh), a CLI that runs a local development stack.',
+      'Use only the passages from the Flisk docs below and cite them as [n]. Say so if they do not answer it.',
+      '',
+      'Question: ' + query,
+      '',
+    ];
+    (hits || []).slice(0, PROMPT_HITS).forEach(function (hit, i) {
+      lines.push('[' + (i + 1) + '] ' + hit.section + ' (' + hit.url + ')');
+      lines.push(hit.passage || hit.text || '');
+      lines.push('');
+    });
+    return lines.join('\n').trim();
+  }
+
+  var api = { aiPrompt: aiPrompt, excerpt: excerpt, searchRequest: searchRequest, parseHits: parseHits, MCP_URL: MCP_URL, HELPDOCK: HELPDOCK };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;
@@ -72,7 +92,8 @@
 
   var doc = root.document;
   var opener = doc && doc.querySelector('[data-docs-search]');
-  if (!opener || typeof root.HTMLDialogElement === 'undefined' || !root.fetch) return;
+  var askForm = doc && doc.querySelector('[data-docs-ask]');
+  if ((!opener && !askForm) || typeof root.HTMLDialogElement === 'undefined' || !root.fetch) return;
 
   function el(tag, className, text) {
     var node = doc.createElement(tag);
@@ -110,6 +131,22 @@
   browse.rel = 'noopener';
   var copy = el('button', 'aw-docs-search-copy', 'Copy MCP URL for your AI');
   copy.type = 'button';
+  // Shown once a search has results: the question and the passages, handed to the reader's own AI.
+  var hand = el('span', 'aw-docs-search-ai');
+  hand.hidden = true;
+  hand.appendChild(el('span', '', 'Ask your AI:'));
+  var AI_TARGETS = [
+    ['Claude', 'https://claude.ai/new?q='],
+    ['ChatGPT', 'https://chatgpt.com/?q='],
+  ];
+  var aiLinks = AI_TARGETS.map(function (target) {
+    var link = el('a', '', target[0]);
+    link.target = '_blank';
+    link.rel = 'noopener';
+    hand.appendChild(link);
+    return link;
+  });
+  foot.appendChild(hand);
   foot.appendChild(browse);
   foot.appendChild(copy);
 
@@ -129,8 +166,15 @@
     status.hidden = !text;
   }
 
-  function render(hits) {
+  function render(hits, query) {
     list.textContent = '';
+    hand.hidden = !hits.length;
+    if (hits.length) {
+      var prompt = encodeURIComponent(aiPrompt(query, hits));
+      aiLinks.forEach(function (link, i) {
+        link.href = AI_TARGETS[i][1] + prompt;
+      });
+    }
     hits.forEach(function (hit) {
       var item = el('li');
       var link = el('a', 'aw-docs-search-hit');
@@ -169,12 +213,12 @@
       .then(function (json) {
         if (run !== latest) return;
         var hits = parseHits(json);
-        render(hits);
+        render(hits, query);
         setStatus(hits.length ? '' : 'Nothing found for "' + query + '". Try fewer words.');
       })
       .catch(function (err) {
         if (run !== latest || (err && err.name === 'AbortError')) return;
-        list.textContent = '';
+        render([], query);
         setStatus(
           err && err.message === 'rate'
             ? 'Too many searches from this address. Wait a minute and try again.'
@@ -192,7 +236,7 @@
     if (query.length < 2) {
       latest++;
       if (controller) controller.abort();
-      list.textContent = '';
+      render([], '');
       setStatus(IDLE);
       return;
     }
@@ -201,13 +245,21 @@
     }, 250);
   }
 
-  function open() {
-    if (dialog.open) return;
-    dialog.showModal();
+  // With a question, the dialog opens already searching for it.
+  function open(question) {
+    if (!dialog.open) {
+      dialog.showModal();
+      if (root.plausible) root.plausible('Docs search open');
+    }
+    if (question) {
+      input.value = question;
+      clearTimeout(timer);
+      search(question);
+    } else if (!input.value.trim()) {
+      setStatus(IDLE);
+    }
     input.focus();
-    input.select();
-    if (!input.value.trim()) setStatus(IDLE);
-    if (root.plausible) root.plausible('Docs search open');
+    if (!question) input.select();
   }
 
   input.addEventListener('input', onInput);
@@ -230,11 +282,30 @@
     if (root.navigator.clipboard) root.navigator.clipboard.writeText(MCP_URL).then(done, function () {});
   });
 
-  opener.addEventListener('click', function (event) {
-    if (event.metaKey || event.ctrlKey || event.shiftKey) return;
-    event.preventDefault();
-    open();
-  });
+  if (opener) {
+    opener.addEventListener('click', function (event) {
+      if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+      event.preventDefault();
+      open();
+    });
+  }
+
+  // The Ask bar on the docs overview: its box and its ready-made questions open the dialog.
+  if (askForm) {
+    var askInput = askForm.querySelector('input');
+    askForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var question = askInput.value.trim();
+      open(question.length >= 2 ? question : '');
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('[data-docs-ask-q]'), function (chip) {
+      chip.addEventListener('click', function (event) {
+        event.preventDefault();
+        askInput.value = chip.textContent.trim();
+        open(askInput.value);
+      });
+    });
+  }
   doc.addEventListener('keydown', function (event) {
     var target = event.target;
     var typing = target && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));

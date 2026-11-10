@@ -5,7 +5,7 @@ import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 
 const require = createRequire(import.meta.url);
-const { excerpt, searchRequest, parseHits, MCP_URL, HELPDOCK } = require('../assets/js/aw-docs-search.js');
+const { aiPrompt, excerpt, searchRequest, parseHits, MCP_URL, HELPDOCK } = require('../assets/js/aw-docs-search.js');
 
 const answer = (payload) => ({ jsonrpc: '2.0', id: 1, result: { content: [{ type: 'text', text: JSON.stringify(payload) }] } });
 
@@ -69,4 +69,20 @@ test('the sidebar link and the script point at the same Helpdock docs', () => {
   const sidebar = readFileSync(new URL('../_includes/docs-sidebar.html', import.meta.url), 'utf8');
   assert.ok(sidebar.includes(`data-docs-search href="${HELPDOCK}"`));
   assert.equal(MCP_URL, `${HELPDOCK}mcp`);
+});
+
+test('aiPrompt hands over the question and at most four numbered passages', () => {
+  const hits = [1, 2, 3, 4, 5].map((n) => ({ section: `Section ${n}`, url: `https://github.com/x#${n}`, passage: `Passage ${n}` }));
+  const prompt = aiPrompt('Do we need Kubernetes?', hits);
+  assert.ok(prompt.includes('Question: Do we need Kubernetes?'));
+  assert.ok(prompt.includes('[1] Section 1 (https://github.com/x#1)\nPassage 1'));
+  assert.ok(prompt.includes('[4] Section 4'));
+  assert.ok(!prompt.includes('Section 5'));
+});
+
+test('the Ask bar on the docs overview offers ready-made questions', () => {
+  const page = readFileSync(new URL('../docs/index.html', import.meta.url), 'utf8');
+  assert.ok(page.includes(`data-docs-ask action="${HELPDOCK}"`));
+  const chips = page.match(/data-docs-ask-q/g) || [];
+  assert.ok(chips.length >= 6, 'at least six questions');
 });

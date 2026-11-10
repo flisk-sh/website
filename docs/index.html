@@ -13,6 +13,26 @@ description: "Flisk CLI documentation: quick start, configuration, package.json 
         <h1>Documentation</h1>
         <p class="aw-lead">Learn how to run services locally without Kubernetes and use <code>flisk doctor</code> and <code>flisk up</code> in place of a setup wiki. Onboarding time has not been measured on a hiring cohort.</p>
 
+        {% comment %} Ask bar: assets/js/aw-docs-search.js answers it from the repository docs through Helpdock. Without the script it opens Helpdock. {% endcomment %}
+        <div class="aw-docs-ask">
+          <form class="aw-docs-ask-form" data-docs-ask action="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" method="get" target="_blank" role="search">
+            <span class="aw-docs-ask-mark" aria-hidden="true">✦</span>
+            <input type="search" name="q" placeholder="Ask the docs, like: do we need Kubernetes?" aria-label="Ask the Flisk docs" autocomplete="off" maxlength="200">
+            <button type="submit">Ask</button>
+          </form>
+          <div class="aw-docs-ask-chips" aria-label="Questions to start with">
+            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">Do we need Kubernetes to run Flisk?</a>
+            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">How do I add Flisk to an existing repo?</a>
+            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">Which files does Flisk generate?</a>
+            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">How do I use Flisk in CI?</a>
+            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">What happens if we leave Flisk?</a>
+            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">How do AI agents use Flisk?</a>
+            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">How do I run database migrations?</a>
+            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">Port is already in use</a>
+          </div>
+          <p class="aw-docs-ask-note">Answers are passages from the docs in the Flisk repository, found by <a href="https://helpdock.flisk.si/">Helpdock</a>. No AI is called; you can hand the passages to your own.</p>
+        </div>
+
         <div class="aw-doc-cards">
           <a class="aw-card" href="{{ '/docs/quickstart/' | relative_url }}">
             <h3>Quick Start</h3>
@@ -83,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
   gsap.from('.aw-docs-body h1, .aw-docs-body .aw-lead', { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', delay: 0.1 });
+  gsap.from('.aw-docs-ask', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 });
   gsap.from('.aw-doc-cards .aw-card', { y: 40, opacity: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out', delay: 0.3 });
 }
 });
