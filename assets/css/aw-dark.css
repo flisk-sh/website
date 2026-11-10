@@ -3579,6 +3579,80 @@ body:has(.aw) .page-content {
 
 .aw-docs-search-ai[hidden] { display: none; }
 
+/* The AI answer in the docs search (aw-docs-search.js): on request, above the passages it was written from. */
+.aw-docs-ai {
+  flex-shrink: 0; /* the dialog is a flex column; the results list scrolls, not this */
+  margin: 0 1.25rem 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  max-height: 40vh;
+  overflow-y: auto;
+  color: rgba(236, 236, 241, 0.85);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.aw-docs-ai[hidden] { display: none; }
+
+.aw-docs-ai-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #6EE7A0;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.aw-docs-ai-button[hidden] { display: none; }
+.aw-docs-ai-button:disabled { color: rgba(236, 236, 241, 0.4); cursor: default; }
+.aw-docs-ai-button:focus-visible { outline: 2px solid #22C55E; outline-offset: 2px; border-radius: 0.25rem; }
+
+.aw-docs-ai-out:empty { display: none; }
+.aw-docs-ai-out p { margin: 0.5rem 0 0; }
+.aw-docs-ai-out ul,
+.aw-docs-ai-out ol { margin: 0.5rem 0 0; padding-left: 1.25rem; }
+.aw-docs-ai-out li + li { margin-top: 0.25rem; }
+
+.aw-docs-ai-out code {
+  padding: 0.0625rem 0.3125rem;
+  border-radius: 0.3125rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font: 0.8125rem 'JetBrains Mono', ui-monospace, monospace;
+  overflow-wrap: anywhere;
+}
+
+.aw-docs-ai-out pre {
+  margin: 0.5rem 0 0;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  overflow-x: auto;
+}
+
+.aw-docs-ai-out pre code { padding: 0; background: transparent; }
+
+.aw-docs-ai-out .aw-docs-ai-label,
+.aw-docs-ai-out .aw-docs-ai-note {
+  margin-top: 0;
+  color: rgba(236, 236, 241, 0.55);
+  font-size: 0.8125rem;
+}
+
+.aw-docs-ai-cite {
+  margin-left: 0.125rem;
+  color: #6EE7A0;
+  font: 500 0.75rem 'JetBrains Mono', ui-monospace, monospace;
+  text-decoration: none;
+}
+
+.aw-docs-ai-handoff { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+.aw-docs-ai-handoff a { color: #6EE7A0; text-decoration: none; }
+.aw-docs-ai-handoff a:hover,
+.aw-docs-ai-cite:hover { text-decoration: underline; }
+
 /* Previous / next links at the end of a docs page (aw-docs-toc.js). */
 .aw-docs-pager {
   display: flex;
