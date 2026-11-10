@@ -83,8 +83,13 @@ test('aiPrompt hands over the question and at most four numbered passages', () =
 test('the Ask bar on the docs overview offers ready-made questions', () => {
   const page = readFileSync(new URL('../docs/index.html', import.meta.url), 'utf8');
   assert.ok(page.includes(`data-docs-ask action="${HELPDOCK}"`));
-  const chips = page.match(/data-docs-ask-q/g) || [];
-  assert.ok(chips.length >= 6, 'at least six questions');
+  assert.ok(page.includes('data-docs-ask-q'), 'question chips');
+  assert.ok(page.includes('list="aw-docs-ask-list"'), 'questions suggested while typing');
+  const data = readFileSync(new URL('../_data/docs_questions.yml', import.meta.url), 'utf8');
+  const start = data.split('compare:')[0].match(/^ {2}- /gm) || [];
+  const compare = data.split('compare:')[1].match(/^ {2}- /gm) || [];
+  assert.ok(start.length >= 6, 'at least six starter questions');
+  assert.ok(compare.length >= 10, 'look-alike commands compared');
 });
 
 test('docs pages skip reveal animations when the reader asks for reduced motion', () => {

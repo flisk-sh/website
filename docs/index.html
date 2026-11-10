@@ -11,25 +11,28 @@ description: "Flisk CLI documentation: quick start, configuration, package.json 
 
       <div class="aw-docs-body">
         <h1>Documentation</h1>
-        <p class="aw-lead">Learn how to run services locally without Kubernetes and use <code>flisk doctor</code> and <code>flisk up</code> in place of a setup wiki. Onboarding time has not been measured on a hiring cohort.</p>
+        <p class="aw-lead">Learn how to run services locally without Kubernetes and use <code>flisk doctor</code> and <code>flisk up</code> in place of a setup wiki.</p>
 
         {% comment %} Ask bar: assets/js/aw-docs-search.js answers it from the repository docs through Helpdock. Without the script it opens Helpdock. {% endcomment %}
         <div class="aw-docs-ask">
           <form class="aw-docs-ask-form" data-docs-ask action="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" method="get" target="_blank" role="search">
             <span class="aw-docs-ask-mark" aria-hidden="true">✦</span>
-            <input type="search" name="q" placeholder="Ask the Flisk docs" aria-label="Ask the Flisk docs" autocomplete="off" maxlength="200">
+            <input type="search" name="q" placeholder="Ask the Flisk docs" aria-label="Ask the Flisk docs" autocomplete="off" maxlength="200" list="aw-docs-ask-list">
             <button type="submit">Ask</button>
           </form>
+          {% assign hd = 'https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/' %}
           <div class="aw-docs-ask-chips" aria-label="Questions to start with">
-            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">Do we need Kubernetes to run Flisk?</a>
-            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">How do I add Flisk to an existing repo?</a>
-            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">Which files does Flisk generate?</a>
-            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">How do I use Flisk in CI?</a>
-            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">What happens if we leave Flisk?</a>
-            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">How do AI agents use Flisk?</a>
-            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">How do I run database migrations?</a>
-            <a class="aw-docs-ask-chip" data-docs-ask-q href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">Port is already in use</a>
+            {% for q in site.data.docs_questions.start %}<a class="aw-docs-ask-chip" data-docs-ask-q href="{{ hd }}" target="_blank" rel="noopener">{{ q }}</a>
+            {% endfor %}
           </div>
+          <details class="aw-docs-ask-more">
+            <summary>Which command when? {{ site.data.docs_questions.compare | size }} look-alike commands compared</summary>
+            <div class="aw-docs-ask-chips">
+              {% for q in site.data.docs_questions.compare %}<a class="aw-docs-ask-chip" data-docs-ask-q href="{{ hd }}" target="_blank" rel="noopener">{{ q }}</a>
+              {% endfor %}
+            </div>
+          </details>
+          <datalist id="aw-docs-ask-list">{% for q in site.data.docs_questions.start %}<option value="{{ q }}">{% endfor %}{% for q in site.data.docs_questions.compare %}<option value="{{ q }}">{% endfor %}</datalist>
           <p class="aw-docs-ask-note">Answers are passages from the docs in the Flisk repository, found by <a href="https://helpdock.flisk.si/">Helpdock</a>. No AI is called; you can hand the passages to your own.</p>
         </div>
 
