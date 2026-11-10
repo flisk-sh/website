@@ -53,6 +53,12 @@ test('demo links an agent is told to write carry words', () => {
   assert.equal(demoLinkProblems(demo('Reply with https://demo.flisk.sh/d/<id>.')).length, 1);
 });
 
+test('demo links on demo.flisk.si, the host after the move, get the same checks', () => {
+  assert.deepEqual(demoLinkProblems(demo('  https://demo.flisk.si/<x-handle>/postgres')), []);
+  assert.equal(demoLinkProblems(demo('Reply with https://demo.flisk.si/d/<id>.')).length, 1);
+  assert.equal(demoLinkProblems(demo('- If none, use the handle alone: https://demo.flisk.si/<x-handle>')).length, 1);
+});
+
 test('the demo section must say to never write a /d/ link', () => {
   assert.deepEqual(demoLinkProblems('## Personal Demos\n\n## Bubbles\n\nx\n\n## Next\n'), ['does not say to never write a /d/ link']);
   assert.deepEqual(demoLinkProblems('no demo section'), ['has no Personal Demos and Bubbles sections']);

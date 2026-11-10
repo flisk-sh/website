@@ -748,7 +748,7 @@ window.FLISK_SAMPLE = {
    {
     "id": "helpdock",
     "name": "Helpdock",
-    "url": "https://helpdock.flisk.sh",
+    "url": "https://helpdock.flisk.si",
     "blurb": "A repo's docs as a help center and an MCP server for your agent.",
     "actions": [],
     "note": null
@@ -756,7 +756,7 @@ window.FLISK_SAMPLE = {
    {
     "id": "cmd",
     "name": "Command Comparer",
-    "url": "https://cmd.flisk.sh",
+    "url": "https://cmd.flisk.si",
     "blurb": "Flisk commands next to Compose, Tilt, Terraform and more.",
     "actions": [],
     "note": null
@@ -772,7 +772,7 @@ window.FLISK_SAMPLE = {
    {
     "id": "demo",
     "name": "Demos",
-    "url": "https://demo.flisk.sh",
+    "url": "https://demo.flisk.si",
     "blurb": "Reply @grok bubbles on X and get a running local stack.",
     "actions": [],
     "note": null
@@ -811,7 +811,7 @@ window.FLISK_SAMPLE = {
    {
     "id": "helpdock",
     "name": "Helpdock",
-    "url": "https://helpdock.flisk.sh",
+    "url": "https://helpdock.flisk.si",
     "blurb": "A repo's docs as a help center and an MCP server for your agent.",
     "actions": [],
     "note": "Push this project to GitHub to get its help center."
@@ -819,7 +819,7 @@ window.FLISK_SAMPLE = {
    {
     "id": "cmd",
     "name": "Command Comparer",
-    "url": "https://cmd.flisk.sh",
+    "url": "https://cmd.flisk.si",
     "blurb": "Flisk commands next to Compose, Tilt, Terraform and more.",
     "actions": [],
     "note": null
@@ -835,7 +835,7 @@ window.FLISK_SAMPLE = {
    {
     "id": "demo",
     "name": "Demos",
-    "url": "https://demo.flisk.sh",
+    "url": "https://demo.flisk.si",
     "blurb": "Reply @grok bubbles on X and get a running local stack.",
     "actions": [],
     "note": null

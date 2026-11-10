@@ -9,7 +9,7 @@ groups:
         url: https://os.flisk.si
         text: A desktop command center for your Flisk projects.
       - name: Build Me an App
-        url: https://mcp.flisk.sh/
+        url: https://build.flisk.si/
         text: Say what you want. Get the parts and the commands to run it.
       - name: Run My Agents
         url: https://run-my-agents.flisk.si/
@@ -36,10 +36,10 @@ groups:
         url: https://roadmap.flisk.si
         text: A community-edited map of local developer tools.
       - name: Command Comparer
-        url: https://cmd.flisk.sh
+        url: https://cmd.flisk.si
         text: Flisk commands next to Terraform, Compose, Tilt and more.
       - name: Personal Demos
-        url: https://demo.flisk.sh
+        url: https://demo.flisk.si
         text: A demo stack generated just for you.
 
   - name: Tools and help
@@ -48,7 +48,7 @@ groups:
         url: https://tools.flisk.si/
         text: Run small web and GitHub tools on your own GitHub, free.
       - name: Helpdock
-        url: https://helpdock.flisk.sh
+        url: https://helpdock.flisk.si
         text: Your docs as a help center that answers with sources.
       - name: Flisk Skills
         url: https://github.com/flisk-sh/flisk-skills

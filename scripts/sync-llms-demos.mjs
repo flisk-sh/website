@@ -1,7 +1,7 @@
 // Copyright (c) 2026 Flisk Landscape contributors
 // SPDX-License-Identifier: MIT
 // Copies the "Personal Demos" and "Bubbles" instructions into the llms files from their one source, the demo worker
-// (https://demo.flisk.sh/llms-demos.txt, flisk-sh/flisk-demo-worker src/llms.js). The same text was kept by hand in
+// (https://demo.flisk.si/llms-demos.txt, flisk-sh/flisk-demo-worker src/llms.js). The same text was kept by hand in
 // flisk (docs/agents) and website (llms) and drifted. Edit it at the source; this script, and a weekly job that opens
 // the pull request, bring the copies in line.
 //   node scripts/sync-llms-demos.mjs               write the copies
@@ -10,7 +10,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-export const SOURCE_URL = "https://demo.flisk.sh/llms-demos.txt";
+export const SOURCE_URL = "https://demo.flisk.si/llms-demos.txt";
 // The llms files of whichever repository this is: flisk keeps them in docs/agents, website at its root.
 export const CANDIDATES = ["docs/agents/llms.txt", "docs/agents/llms-full.txt", "llms.txt", "llms-full.txt"];
 
