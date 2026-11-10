@@ -15,7 +15,7 @@ url: "https://flisk.sh"
 
 twitter_username: brookservers
 github_username: flisk-sh
-social_image: "/assets/images/flisk-social-card.png"
+social_image: "/assets/images/flisk-social-card.png?v=2"
 logo: "/assets/images/flisk-social-card.png"
 
 markdown: kramdown
@@ -37,7 +37,7 @@ defaults:
   - scope:
       path: ""
     values:
-      image: "/assets/images/flisk-social-card.png"
+      image: "/assets/images/flisk-social-card.png?v=2"
       sitemap: true
   - scope:
       path: "blog/articles"
