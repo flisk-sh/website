@@ -31,5 +31,5 @@ compare:
   - "backend vs worker resource"
   - "agent vs mcp resource"
   - "backend vs bring-your-own resource"
-  - "migrator resource vs migrating at start (AUTO_MIGRATE)"
+  - "migrator resource vs migrating at start"
   - "flisk upgrade vs reinstalling"
