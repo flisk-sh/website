@@ -1,0 +1,122 @@
+---
+layout: default
+title: Flisk MCP servers - Flisk CLI
+description: "Add Flisk's free MCP servers to Claude, Claude Code, Cursor, Gemini CLI or Codex with one copy and paste. No account, no key."
+---
+
+<div class="aw">
+
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <h1>Add Flisk to your agent <span class="aw-accent">in one paste.</span></h1>
+      <p class="aw-subhero-sub">Pick your client, press Copy, run it. Every server is remote, read-only and keyless: <strong>no account, no sign-in.</strong></p>
+    </div>
+  </section>
+
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+
+      <div class="aw-mcp-clients" role="tablist" aria-label="Your client">
+        <button type="button" role="tab" class="aw-mcp-client is-active" aria-selected="true" data-client="claude-code">Claude Code</button>
+        <button type="button" role="tab" class="aw-mcp-client" aria-selected="false" data-client="claude">Claude app</button>
+        <button type="button" role="tab" class="aw-mcp-client" aria-selected="false" data-client="cursor">Cursor</button>
+        <button type="button" role="tab" class="aw-mcp-client" aria-selected="false" data-client="gemini">Gemini CLI</button>
+        <button type="button" role="tab" class="aw-mcp-client" aria-selected="false" data-client="codex">Codex</button>
+      </div>
+      <p class="aw-mcp-hint" data-mcp-hint>Run the command in your terminal.</p>
+
+      <div class="aw-mcp-list">
+        {%- for s in site.data.mcp_servers %}
+        <article class="aw-mcp-item" data-mcp-name="{{ s.id }}" data-mcp-url="{{ s.url }}">
+          <div class="aw-mcp-head">
+            <h3>{{ s.name }}</h3>
+            <p>{{ s.what }}</p>
+          </div>
+          <div class="aw-mcp-bar">
+            <code data-mcp-snippet>claude mcp add --transport http {{ s.id }} {{ s.url }}</code>
+            <button class="aw-mcp-copy" type="button" data-mcp-copy aria-label="Copy the {{ s.name }} snippet">
+              <i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span>
+            </button>
+          </div>
+          {%- if s.prompts != "" %}
+          <p class="aw-mcp-prompts">Prompts: <code>{{ s.prompts }}</code></p>
+          {%- endif %}
+        </article>
+        {%- endfor %}
+      </div>
+
+      <div class="aw-mcp-local">
+        <h3>Drive your local stack</h3>
+        <p>After you install the CLI, <code>flisk mcp</code> gives your agent status, logs, restart and config checks for the app running on your machine.</p>
+        <div class="aw-mcp-bar">
+          <code data-mcp-local>claude mcp add flisk -- flisk mcp</code>
+          <button class="aw-mcp-copy" type="button" data-mcp-copy aria-label="Copy the local Flisk MCP snippet">
+            <i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span>
+          </button>
+        </div>
+      </div>
+
+      <p class="aw-mcp-note">Gemini CLI, Cursor and Codex change flags and file names between versions. If a snippet fails, check it against that client's docs. See also the <a href="{{ '/agents/' | relative_url }}">agents page</a>.</p>
+      <span class="visually-hidden" data-mcp-status aria-live="polite"></span>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var local = { name: 'flisk', cmd: 'flisk', args: ['mcp'] };
+  var hints = {
+    'claude-code': 'Run the command in your terminal.',
+    'claude': 'Settings, Connectors, Add custom connector, then paste the URL.',
+    'cursor': 'Add this to ~/.cursor/mcp.json (or .cursor/mcp.json in a project).',
+    'gemini': 'Run the command, or add the block to ~/.gemini/settings.json.',
+    'codex': 'Add this to ~/.codex/config.toml.'
+  };
+  function build(client, name, url) {
+    if (client === 'claude') return url;
+    if (client === 'cursor') return '{ "mcpServers": { "' + name + '": { "url": "' + url + '" } } }';
+    if (client === 'gemini') return 'gemini mcp add --transport http ' + name + ' ' + url;
+    if (client === 'codex') return '[mcp_servers.' + name + ']\nurl = "' + url + '"';
+    return 'claude mcp add --transport http ' + name + ' ' + url;
+  }
+  function buildLocal(client) {
+    if (client === 'claude') return 'Not available: the Claude app cannot start local commands. Use Claude Code.';
+    if (client === 'cursor') return '{ "mcpServers": { "flisk": { "command": "flisk", "args": ["mcp"] } } }';
+    if (client === 'gemini') return 'gemini mcp add flisk flisk mcp';
+    if (client === 'codex') return '[mcp_servers.flisk]\ncommand = "flisk"\nargs = ["mcp"]';
+    return 'claude mcp add flisk -- flisk mcp';
+  }
+  var client = 'claude-code';
+  function render() {
+    document.querySelectorAll('.aw-mcp-item').forEach(function (el) {
+      el.querySelector('[data-mcp-snippet]').textContent = build(client, el.dataset.mcpName, el.dataset.mcpUrl);
+    });
+    var l = document.querySelector('[data-mcp-local]');
+    l.textContent = buildLocal(client);
+    document.querySelector('[data-mcp-hint]').textContent = hints[client];
+    document.querySelectorAll('.aw-mcp-client').forEach(function (b) {
+      var on = b.dataset.client === client;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+  document.querySelectorAll('.aw-mcp-client').forEach(function (b) {
+    b.addEventListener('click', function () { client = b.dataset.client; render(); });
+  });
+  document.querySelectorAll('[data-mcp-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.parentNode.querySelector('code').textContent;
+      var label = btn.querySelector('span');
+      var status = document.querySelector('[data-mcp-status]');
+      function done(msg) {
+        label.textContent = msg;
+        if (status) status.textContent = msg;
+        window.setTimeout(function () { label.textContent = 'Copy'; }, 1800);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done('Copied'); }, function () { done('Select and copy'); });
+      } else { done('Select and copy'); }
+    });
+  });
+})();
+</script>

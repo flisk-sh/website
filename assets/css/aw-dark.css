@@ -3693,3 +3693,52 @@ body:has(.aw) .page-content {
 .aw-docs-ask-more summary:hover {
   color: #fff;
 }
+
+/* /mcp/: client tabs and one copy bar per MCP server.  */
+.aw-mcp-clients { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; }
+.aw-mcp-client {
+  padding: 0.5rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius);
+  background: transparent;
+  color: rgba(236, 236, 241, 0.7);
+  font: 600 0.85rem 'Satoshi', sans-serif;
+  cursor: pointer;
+}
+.aw-mcp-client:hover { color: #ececf1; border-color: rgba(255, 255, 255, 0.28); }
+.aw-mcp-client.is-active { background: #22c55e; border-color: #22c55e; color: #0a0a0e; }
+.aw-mcp-client:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 3px; }
+.aw-mcp-hint { margin: 0 0 1.5rem; color: rgba(236, 236, 241, 0.55); font-size: 0.9rem; }
+.aw-mcp-list { display: grid; gap: 1rem; max-width: 52rem; }
+.aw-mcp-item, .aw-mcp-local {
+  padding: 1.1rem 1.25rem;
+  background: #121218;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius);
+}
+.aw-mcp-local { max-width: 52rem; margin-top: 1rem; }
+.aw-mcp-head h3, .aw-mcp-local h3 { margin: 0 0 0.25rem; font-size: 1.1rem; }
+.aw-mcp-head p, .aw-mcp-local p { margin: 0 0 0.8rem; color: rgba(236, 236, 241, 0.6); }
+.aw-mcp-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 1.1rem;
+  background: #0d0d13; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: var(--radius);
+}
+.aw-mcp-bar code {
+  min-width: 0; padding: 0; background: none; overflow-x: auto; white-space: pre;
+  scrollbar-width: none; color: #ececf1; font: 500 0.85rem/1.6 'JetBrains Mono', monospace;
+}
+.aw-mcp-bar code::-webkit-scrollbar { display: none; }
+.aw-mcp-copy {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.55rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08); color: #ececf1; font: 600 0.8rem 'Satoshi', sans-serif; cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+.aw-mcp-copy:hover { background: rgba(255, 255, 255, 0.14); }
+.aw-mcp-copy:active { transform: scale(0.97); }
+.aw-mcp-copy:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 3px; }
+.aw-mcp-prompts { margin: 0.7rem 0 0; color: rgba(236, 236, 241, 0.5); font-size: 0.85rem; }
+.aw-mcp-note { max-width: 52rem; margin-top: 1.5rem; color: rgba(236, 236, 241, 0.5); font-size: 0.85rem; }
+.aw-mcp-note a { color: #4dd0ff; }
+.aw-mcp-prompts code { background: none; padding: 0; color: rgba(236, 236, 241, 0.7); }
