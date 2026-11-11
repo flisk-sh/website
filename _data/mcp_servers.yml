@@ -1,0 +1,26 @@
+# Remote MCP servers shown on /mcp/. Read-only, keyless. Source of truth: flisk-sh/flisk-marketplaces INSTALL.md
+- id: flisk-app-builder
+  name: Build Me an App
+  url: https://mcp.flisk.sh/mcp
+  what: Say what app you want, get a plan and the commands to run it.
+  prompts: build_my_app, pick_a_starter
+- id: put-my-page-online
+  name: Put My Page Online
+  url: https://pages.flisk.si/mcp
+  what: Check a web page, then put it online as a free link.
+  prompts: put_my_page_online
+- id: ai-search-checker
+  name: Get My Site Found by AI
+  url: https://citable.flisk.si/mcp
+  what: Check if AI search can find and quote your site.
+  prompts: check_my_site
+- id: readme-checker
+  name: Improve My README
+  url: https://readme.flisk.si/mcp
+  what: Score a README out of 100 and get a fix for each miss.
+  prompts: improve_my_readme
+- id: flisk-docs
+  name: Flisk docs
+  url: https://helpdock.flisk.sh/mcp
+  what: Search the Flisk docs from your agent.
+  prompts: ""
