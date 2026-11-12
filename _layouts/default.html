@@ -53,11 +53,15 @@
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/home.css?v={{ site.time | date: '%s' }}" />
   {% endif %}
   
-  {% if site.plausible_domain %}
-  {% assign plausible_domain = site.plausible_domain | strip %}
-  {% if plausible_domain != "" %}
-  <script defer data-domain="{{ plausible_domain | escape }}" src="https://plausible.io/js/script.js"></script>
-  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };</script>
+  {% if site.plausible_script %}
+  {% assign plausible_script = site.plausible_script | strip %}
+  {% if plausible_script != "" %}
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/{{ plausible_script | escape }}.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
   {% endif %}
   {% endif %}
 

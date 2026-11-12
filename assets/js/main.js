@@ -161,7 +161,7 @@ function initCopyButtons() {
   });
 }
 
-// Sends [data-cta] clicks to the analytics tool when one is configured (plausible_domain in _config.yml).
+// Sends [data-cta] clicks to the analytics tool when one is configured (plausible_script in _config.yml).
 function initCtaEvents() {
   if (initCtaEvents.ready) return;
   initCtaEvents.ready = true;
