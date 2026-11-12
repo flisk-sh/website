@@ -54,8 +54,11 @@
   {% endif %}
   
   {% if site.plausible_domain %}
-  <script defer data-domain="{{ site.plausible_domain }}" src="https://plausible.io/js/script.js"></script>
+  {% assign plausible_domain = site.plausible_domain | strip %}
+  {% if plausible_domain != "" %}
+  <script defer data-domain="{{ plausible_domain | escape }}" src="https://plausible.io/js/script.js"></script>
   <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };</script>
+  {% endif %}
   {% endif %}
 
   <!-- SEO -->
