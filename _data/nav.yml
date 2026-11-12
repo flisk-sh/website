@@ -1,7 +1,6 @@
 # Header dropdown menus, rendered by _includes/navigation.html.
 # Each link: name, desc (one plain line on what it does), href.
-# icon: a tile from flisk-emoji (products/<name>, examples/<repo> or kinds/<name>, under assets/img/).
-# bi: a Bootstrap icon name, for links that are pages rather than products.
+# icon: a tile from flisk-emoji (products/<name>, examples/<repo>, site/<page> or kinds/<name>, under assets/img/).
 # Links that leave flisk.sh get an arrow automatically.
 
 products:
@@ -37,31 +36,31 @@ products:
 enterprise:
   - label: Enterprise
     links:
-      - { name: "enterprise license", desc: "sso, air-gapped installs and an sla", href: "/#waitlist", bi: building }
-      - { name: "who uses flisk", desc: "teams that agreed to be listed", href: "/#adopters", bi: people }
-      - { name: "flisk with helm", desc: "flisk on laptops, helm in your cluster", href: /docs/with-helm/, bi: diagram-3 }
-      - { name: "no lock-in", desc: "every generated file is plain docker and starlark", href: /no-lock-in/, bi: unlock }
-      - { name: "migrate to flisk", desc: "tell us your stack and we help you move", href: /migrate/, bi: box-arrow-in-right }
+      - { name: "enterprise license", desc: "sso, air-gapped installs and an sla", href: "/#waitlist", icon: site/enterprise-license }
+      - { name: "who uses flisk", desc: "teams that agreed to be listed", href: "/#adopters", icon: site/who-uses-flisk }
+      - { name: "flisk with helm", desc: "flisk on laptops, helm in your cluster", href: /docs/with-helm/, icon: site/flisk-with-helm }
+      - { name: "no lock-in", desc: "every generated file is plain docker and starlark", href: /no-lock-in/, icon: site/no-lock-in }
+      - { name: "migrate to flisk", desc: "tell us your stack and we help you move", href: /migrate/, icon: site/migrate-to-flisk }
   - label: Evaluate
     links:
-      - { name: "compare", desc: "flisk next to compose, tilt, skaffold and kind", href: /compare/, bi: layout-split }
-      - { name: "why flisk", desc: "what teams get from one command and one file", href: /why/, bi: lightbulb }
-      - { name: "does flisk fit?", desc: "a few questions and an honest answer", href: /fit/, bi: check2-square }
-      - { name: "cut the cost of waiting", desc: "a calculator for what slow setup costs", href: /waiting/, bi: calculator }
-      - { name: "claims and benchmarks", desc: "every number on this site and its evidence", href: /docs/claims/, bi: clipboard-data }
+      - { name: "compare", desc: "flisk next to compose, tilt, skaffold and kind", href: /compare/, icon: site/compare }
+      - { name: "why flisk", desc: "what teams get from one command and one file", href: /why/, icon: site/why-flisk }
+      - { name: "does flisk fit?", desc: "a few questions and an honest answer", href: /fit/, icon: site/does-flisk-fit }
+      - { name: "cut the cost of waiting", desc: "a calculator for what slow setup costs", href: /waiting/, icon: site/cut-the-cost-of-waiting }
+      - { name: "claims and benchmarks", desc: "every number on this site and its evidence", href: /docs/claims/, icon: site/claims-and-benchmarks }
   - label: Security
     links:
-      - { name: "security contact", desc: "report a vulnerability", href: /.well-known/security.txt, bi: shield-lock }
-      - { name: "mit license", desc: "the core is open source", href: "https://github.com/flisk-sh/flisk/blob/main/LICENSE", bi: file-earmark-text }
+      - { name: "security contact", desc: "report a vulnerability", href: /.well-known/security.txt, icon: site/security-contact }
+      - { name: "mit license", desc: "the core is open source", href: "https://github.com/flisk-sh/flisk/blob/main/LICENSE", icon: site/mit-license }
 
 resources:
   - label: Learn
     links:
-      - { name: "docs", desc: "every command and file explained", href: /docs/, bi: book }
-      - { name: "quickstart", desc: "install flisk and run your first stack", href: /docs/quickstart/, bi: play-circle }
-      - { name: "faq", desc: "short answers to common questions", href: "/#faq", bi: question-circle }
-      - { name: "field notes", desc: "articles from the flisk team", href: /blog/, bi: journal-text }
-      - { name: "benchmarks", desc: "start times for every stack, measured nightly", href: /benchmarks/, bi: speedometer2 }
+      - { name: "docs", desc: "every command and file explained", href: /docs/, icon: site/docs }
+      - { name: "quickstart", desc: "install flisk and run your first stack", href: /docs/quickstart/, icon: site/quickstart }
+      - { name: "faq", desc: "short answers to common questions", href: "/#faq", icon: site/faq }
+      - { name: "field notes", desc: "articles from the flisk team", href: /blog/, icon: site/field-notes }
+      - { name: "benchmarks", desc: "start times for every stack, measured nightly", href: /benchmarks/, icon: site/benchmarks }
   - label: Starters
     links:
       - { name: "flisk-example", desc: "hono, vite and bun", href: "https://github.com/flisk-sh/flisk-example", icon: examples/flisk-example }

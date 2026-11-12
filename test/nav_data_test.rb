@@ -39,6 +39,10 @@ class NavDataTest < Minitest::Test
     end
   end
 
+  def test_every_link_has_its_own_icon_tile
+    links.each { |l| assert l["icon"], "#{l['name']} has no icon tile; draw one in flisk-emoji" }
+  end
+
   def test_no_two_links_share_an_icon
     icons = links.filter_map { |l| l["icon"] }
     repeated = icons.tally.select { |_icon, count| count > 1 }.keys
