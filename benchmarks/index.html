@@ -107,7 +107,7 @@ footer a{color:var(--dim)}
 @media (prefers-reduced-motion:reduce){.grow{animation:none}}
 @media (max-width:980px){.tools label{display:none}}
 @media (max-width:900px){.app{grid-template-columns:1fr}main{border-right:0}aside{position:static;max-height:none;border-top:1px solid var(--line)}.hd{gap:12px;padding:0 16px}.hd .sw{display:none}}
-@media (max-width:600px){.intro,.chart{padding-left:16px;padding-right:16px}.tools{display:none}}
+@media (max-width:600px){.intro,.chart{padding-left:16px;padding-right:16px}.tools label{display:none}.tools{gap:0}}
 </style>
 </head>
 <body>
@@ -172,7 +172,7 @@ footer a{color:var(--dim)}
       <div class="ch"><div><h2>Coverage</h2><p>Stacks Flisk supports, by kind: measured, ran without a timing, or not in CI yet.</p></div></div>
       <div class="plot" id="c-coverage"></div>
     </section>
-    <footer>Numbers from the <a href="https://github.com/flisk-sh/flisk/actions/workflows/e2e-resource-types.yml">E2E | Resource types</a> workflow · <a id="raw" href="#">raw JSON</a> · <a href="/claims/">claims and other benchmarks</a> · <a href="/">flisk.sh</a></footer>
+    <footer>Numbers from the <a href="https://github.com/flisk-sh/flisk/actions/workflows/e2e-resource-types.yml">E2E | Resource types</a> workflow · <a id="raw" href="#">raw JSON</a> · <a href="/docs/claims/">claims and other benchmarks</a> · <a href="/">flisk.sh</a></footer>
   </main>
 
   <aside>
@@ -251,7 +251,7 @@ footer a{color:var(--dim)}
     rows.forEach((r, i) => {
       const y = T + i * RH, c = st.color[r.s.key];
       tile(s, r.s, L - 28, y + 2.5, 19);
-      add(s, "text", { x: L - 36, y: y + 15, "text-anchor": "end", class: "lbl", fill: c }, i + 1 + ". " + r.s.name).appendChild(document.createElementNS(NS, "title")).textContent = r.s.name + " · " + kindTitle(r.s.group);
+      add(s, "text", { x: L - 36, y: y + 15, "text-anchor": "end", class: "lbl", fill: c }, i + 1 + ". " + (W < 520 && r.s.name.length > 13 ? r.s.name.slice(0, 12) + "…" : r.s.name)).appendChild(document.createElementNS(NS, "title")).textContent = r.s.name + " · " + kindTitle(r.s.group);
       if (r.ghost != null) add(s, "rect", { x: L, y: y + 3, width: Math.max(2, x(r.ghost) - L), height: RH - 8, fill: "none", stroke: c, "stroke-opacity": 0.5, class: "nobar" });
       add(s, "rect", { x: L, y: y + 3, width: Math.max(2, x(r.v) - L), height: RH - 8, fill: c, "fill-opacity": 0.85, class: "grow", style: "animation-delay:" + i * 15 + "ms" });
       add(s, "text", { x: Math.max(x(r.v), r.ghost != null ? x(r.ghost) : 0) + 6, y: y + 15, class: "val" }, r.label ?? format(r.v));
@@ -438,7 +438,7 @@ footer a{color:var(--dim)}
     shownIf("scaffold", metricChart("c-scaffold", "scaffold", "flisk resource to files on disk · fastest on top"), any("scaffold"));
     shownIf("reload", metricChart("c-reload", "hot_reload", "edit to new response · fastest on top"), any("hot_reload"));
     const tr = trend(); shownIf("trend", tr, tr || new Set(st.d.stacks.flatMap((s) => (s.history || []).map((h) => h.date))).size > 1);
-    coverage(); side();
+    coverage(); side(); mark();
   }
 
   function csv() {
@@ -465,8 +465,15 @@ footer a{color:var(--dim)}
   $("reset").addEventListener("click", () => { st.hidden.clear(); st.kind = "all"; st.find = ""; $("find").value = ""; if (st.d) draw(); });
   document.addEventListener("keydown", (e) => { if (e.key === "/" && document.activeElement !== $("find")) { e.preventDefault(); $("find").focus(); } });
   const tabs = [...document.querySelectorAll("#tabs a")];
-  const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) for (const t of tabs) t.classList.toggle("on", t.getAttribute("href") === "#" + e.target.id); }, { rootMargin: "-45% 0px -50% 0px" });
-  document.querySelectorAll(".chart").forEach((s) => io.observe(s));
+  // The current tab is the last visible chart whose top has passed the header, so the first chart is current on load.
+  const mark = () => {
+    let cur = null;
+    for (const c of document.querySelectorAll(".chart")) if (!c.hidden && c.getBoundingClientRect().top <= 140) cur = c.id;
+    cur ||= [...document.querySelectorAll(".chart")].find((c) => !c.hidden)?.id;
+    for (const t of tabs) t.classList.toggle("on", t.getAttribute("href") === "#" + cur);
+  };
+  addEventListener("scroll", () => requestAnimationFrame(mark), { passive: true });
+  setTimeout(mark, 0);
   $("raw").href = DATA;
   let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => st.d && draw(), 150); });
 
