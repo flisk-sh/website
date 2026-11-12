@@ -77,10 +77,11 @@ aside{padding:20px 20px 30px;position:sticky;top:56px;align-self:start;max-heigh
 .kinds{display:flex;flex-wrap:wrap;gap:4px 12px;font:13px var(--sans)}
 .kinds button{background:none;border:0;padding:2px 0;color:var(--dim);cursor:pointer;font:inherit}
 .kinds button.on{color:var(--green)}
+.kinds button{display:inline-flex;align-items:center;gap:6px}.kinds button i{width:8px;height:8px;display:inline-block}
 .list{display:grid;gap:2px}
 .it{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;color:var(--ink);font:13.5px var(--sans);padding:6px 4px;cursor:pointer;text-align:left}
 .it:hover{background:var(--panel)}
-.it .bd{display:grid;place-items:center;width:24px;height:24px;flex-shrink:0;font:600 9.5px/1 var(--mono);color:#0b0b0d}
+.it .bd{display:grid;place-items:center;width:24px;height:24px;flex-shrink:0;font:600 9.5px/1 var(--mono);color:#0b0b0d}.it .bd img{display:block}
 .it .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .it .st{font:500 10px var(--mono);letter-spacing:.06em;color:var(--faint)}
 .it .st.ok{color:var(--dim)}
@@ -180,6 +181,26 @@ footer a{color:var(--dim)}
   const qd = new URLSearchParams(location.search).get("data");
   const DATA = qd && /^(https:\/\/raw\.githubusercontent\.com\/flisk-sh\/|\/)/.test(qd) ? qd : DEFAULT;
   const RUNS = "https://github.com/flisk-sh/flisk/actions/workflows/e2e-resource-types.yml";
+  const ICON_CDN = "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/";
+  const NAMES = { bun: "Bun", python: "Python", go: "Go", rust: "Rust", node: "Node.js", hono: "Hono", express: "Express", elysia: "Elysia", fastify: "Fastify", h3: "h3", koa: "Koa", nestjs: "NestJS", react: "React", vue: "Vue", svelte: "Svelte", preact: "Preact", lit: "Lit", solid: "Solid", qwik: "Qwik", vanilla: "Vanilla JS", "tanstack-router": "TanStack Router", next: "Next.js", library: "Library", sdk: "SDK", worker: "Worker", migrator: "Migrator", mcp: "MCP server", agent: "Agent", database: "Database", prisma: "Prisma", drizzle: "Drizzle", byo: "BYO container", "byo-jobs": "BYO jobs", "byo-pair": "BYO pair", monitoring: "Monitoring", elk: "ELK", debezium: "Debezium", golden_image: "Golden image", verdaccio: "Verdaccio" };
+  const ICONS = { bun: "bun", python: "python", go: "go", rust: "rust", node: "nodedotjs", hono: "hono", express: "express", fastify: "fastify", h3: "h3", koa: "koa", nestjs: "nestjs", react: "react", vue: "vuedotjs", svelte: "svelte", preact: "preact", lit: "lit", solid: "solid", qwik: "qwik", vanilla: "javascript", next: "nextdotjs", prisma: "prisma", drizzle: "drizzle", library: "npm", database: "postgresql", byo: "docker", "byo-jobs": "docker", "byo-pair": "docker", golden_image: "docker", monitoring: "grafana", elk: "elastic", verdaccio: "verdaccio" };
+  const initials = (n) => n.replace(/[^a-z0-9 ]/gi, "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase() || "?";
+  // A logo on a white tile, as podlytics does; stacks without a logo get their initials on the kind's colour.
+  function tile(parent, s, x, y, size) {
+    if (s.icon) {
+      add(parent, "rect", { x, y, width: size, height: size, fill: "#ececf1" });
+      add(parent, "image", { href: ICON_CDN + s.icon + ".svg", x: x + 3, y: y + 3, width: size - 6, height: size - 6 });
+    } else {
+      add(parent, "rect", { x, y, width: size, height: size, fill: st.color[s.key] });
+      add(parent, "text", { x: x + size / 2, y: y + size / 2 + 3.5, "text-anchor": "middle", fill: "#0b0b0d", "font-size": "9", "font-weight": "700", "font-family": "Geist Mono, monospace" }, initials(s.name));
+    }
+  }
+  function tileEl(s) {
+    const t = el("span", "bd");
+    if (s.icon) { const i = document.createElement("img"); i.src = ICON_CDN + s.icon + ".svg"; i.alt = ""; i.width = 16; i.height = 16; i.loading = "lazy"; t.style.background = "#ececf1"; t.appendChild(i); }
+    else { t.textContent = initials(s.name); t.style.background = st.color[s.key]; }
+    return t;
+  }
   const PAL = ["#3ddc84", "#ff8a5c", "#ffc94d", "#6fa8ff", "#c792ea", "#5ce1e6", "#f78fb3", "#b8e986", "#ff6b6b", "#a3a3ff", "#d4a373", "#7fd1b9", "#f3a6ff", "#e0e0e8"];
   const SUB = {
     cold_start: "First flisk up on a fresh runner, until the route answers 200 through Traefik. Fastest on top.",
@@ -213,13 +234,14 @@ footer a{color:var(--dim)}
     box.textContent = "";
     if (!rows.length) { wait(box, "No " + what + " yet", " They appear here after a nightly run measures them."); missing(box, missingList, what); return; }
     box.appendChild(el("div", "cap", cap));
-    const W = box.clientWidth || 760, L = W < 520 ? 118 : 190, R = W < 520 ? 52 : 70, T = 22, RH = 25, H = T + rows.length * RH + 4;
+    const W = box.clientWidth || 760, L = W < 520 ? 140 : 214, R = W < 520 ? 52 : 70, T = 22, RH = 25, H = T + rows.length * RH + 4;
     const { step, top } = nice(Math.max(...rows.map((r) => r.v)));
     const s = svg(W, H), x = (v) => L + (v / top) * (W - L - R);
     for (let v = 0; v <= top + 1e-9; v += step) { add(s, "line", { x1: x(v), x2: x(v), y1: T - 4, y2: H, class: "grid" }); add(s, "text", { x: x(v), y: 12, "text-anchor": "middle", class: "tick" }, format(v)); }
     rows.forEach((r, i) => {
       const y = T + i * RH, c = st.color[r.s.key];
-      add(s, "text", { x: L - 10, y: y + 15, "text-anchor": "end", class: "lbl", fill: c }, i + 1 + ". " + r.s.name).appendChild(document.createElementNS(NS, "title")).textContent = r.s.name + " · " + kindTitle(r.s.group);
+      tile(s, r.s, L - 28, y + 2.5, 19);
+      add(s, "text", { x: L - 36, y: y + 15, "text-anchor": "end", class: "lbl", fill: c }, i + 1 + ". " + r.s.name).appendChild(document.createElementNS(NS, "title")).textContent = r.s.name + " · " + kindTitle(r.s.group);
       if (r.ghost != null) add(s, "rect", { x: L, y: y + 3, width: Math.max(2, x(r.ghost) - L), height: RH - 8, fill: "none", stroke: c, "stroke-opacity": 0.5, class: "nobar" });
       add(s, "rect", { x: L, y: y + 3, width: Math.max(2, x(r.v) - L), height: RH - 8, fill: c, "fill-opacity": 0.85, class: "grow", style: "animation-delay:" + i * 15 + "ms" });
       add(s, "text", { x: Math.max(x(r.v), r.ghost != null ? x(r.ghost) : 0) + 6, y: y + 15, class: "val" }, r.label ?? format(r.v));
@@ -324,7 +346,9 @@ footer a{color:var(--dim)}
     $("count").textContent = d.stacks.length;
     const kinds = $("kinds"); kinds.textContent = "";
     [{ id: "all", title: "All" }, ...d.groups.filter((g) => d.stacks.some((s) => s.group === g.id))].forEach((g) => {
-      const b = el("button", st.kind === g.id ? "on" : "", g.id === "all" ? "All" : g.title.replace(/ \(.*\)$/, ""));
+      const b = el("button", st.kind === g.id ? "on" : "");
+      if (g.id !== "all") { const dot = el("i"); dot.style.background = st.gcolor[g.id]; b.appendChild(dot); }
+      b.append(g.id === "all" ? "All" : g.title.replace(/ \(.*\)$/, ""));
       b.type = "button"; b.addEventListener("click", () => { st.kind = g.id; draw(); }); kinds.appendChild(b);
     });
     const list = $("list"); list.textContent = "";
@@ -333,7 +357,7 @@ footer a{color:var(--dim)}
       if (st.find && !(s.name + " " + kindTitle(s.group)).toLowerCase().includes(st.find)) continue;
       if (st.only && s.status !== "measured") continue;
       const b = el("button", "it" + (st.hidden.has(s.key) ? " off" : "")); b.type = "button";
-      const bd = el("span", "bd", s.name.replace(/[^a-z0-9]/gi, "").slice(0, 2).toUpperCase()); bd.style.background = st.color[s.key];
+      const bd = tileEl(s);
       const label = { measured: "MEASURED", "no-data": "NO DATA", "coming-soon": "SOON" }[s.status] || s.status;
       const dt = el("span", "dt"); dt.style.background = s.status === "measured" ? st.color[s.key] : "transparent"; dt.style.border = "1px solid " + st.color[s.key];
       b.append(bd, el("span", "nm", s.name), el("span", "st" + (s.status === "measured" ? " ok" : ""), label), dt);
@@ -393,8 +417,8 @@ footer a{color:var(--dim)}
   fetch(DATA, { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).catch(() => null).then((d) => {
     if (!(d && d.schema === 1 && Array.isArray(d.stacks) && Array.isArray(d.groups))) return waiting();
     st.d = d;
-    d.stacks.forEach((s, i) => { s.key = s.group + ":" + s.id; st.color[s.key] = PAL[i % PAL.length]; });
     d.groups.forEach((g, i) => (st.gcolor[g.id] = PAL[i % PAL.length]));
+    d.stacks.forEach((s) => { s.key = s.group + ":" + s.id; s.icon = ICONS[s.name] || null; s.name = NAMES[s.name] || s.name; st.color[s.key] = st.gcolor[s.group]; });
     $("meta").textContent = "Measured " + (d.generated || "").slice(0, 10) + " on a GitHub-hosted " + (d.runner || "runner") + ", commit " + String(d.commit || "").slice(0, 7) + (d.trigger ? " (" + d.trigger + " run)" : "") + ".";
     if (d.runUrl) { const a = el("a", "", " CI run ↗"); a.href = d.runUrl; a.rel = "noopener"; $("meta").appendChild(a); }
     kp(); csv(); draw();
