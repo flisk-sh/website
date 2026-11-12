@@ -21,19 +21,5 @@ jobs:
         with:
           ruby-version: 3.3
           bundler-cache: true
-      - name: Test the claims check
-        run: node --test scripts/check-claims.test.mjs
-      - name: Test the llms demo sync
-        run: node --test scripts/sync-llms-demos.test.mjs
-      - name: Test the corner radius check
-        run: node --test scripts/check-radius.test.mjs
-      - name: Check every corner radius is the sharp token
-        run: node scripts/check-radius.mjs
-      - name: Check registered public claims
-        run: node scripts/check-claims.mjs
-      - name: Test the header menu data
-        run: ruby test/nav_data_test.rb
-      - name: Build site
-        run: bundle exec jekyll build
-      - name: Check every built page for forbidden claims
-        run: node scripts/check-claims.mjs --built
+      - name: Run every check
+        run: scripts/check.sh

@@ -35,6 +35,14 @@ bundle exec jekyll serve --livereload
 
 Visit `http://localhost:4000` to view the site.
 
+### Checking your change
+
+```bash
+scripts/check.sh
+```
+
+This is the command CI runs: all Node tests (claims, corner radius, llms sync, docs Ask AI search), the Ruby tests, the Jekyll build and the built-page checks. Set `SKIP_SYNC_CHECK=1` when you are offline.
+
 ### Building for Production
 
 ```bash
