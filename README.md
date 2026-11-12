@@ -16,7 +16,7 @@ This is a Jekyll-based static site for Flisk CLI. The site features:
 
 ### Prerequisites
 
-- Ruby 2.6+ with Bundler
+- Ruby 3.3 with Bundler (`.ruby-version` says 3.3, and CI uses 3.3). The Ruby that ships with macOS (2.6) is too old: `Gemfile.lock` pins Bundler 2.6.9, which needs Ruby 3.1 or newer. Install 3.3 with rbenv, asdf or mise, or use the Docker command below.
 - Node.js 18+ (optional, for this website's asset build; the Flisk CLI npm package requires 22.12+)
 
 ### Installation
@@ -42,6 +42,16 @@ scripts/check.sh
 ```
 
 This is the command CI runs: all Node tests (claims, corner radius, llms sync, docs Ask AI search), the Ruby tests, the Jekyll build and the built-page checks. Set `SKIP_SYNC_CHECK=1` when you are offline.
+
+No Ruby on your machine? Build or serve the site in a `ruby:3.3` container:
+
+```bash
+# Build into _site/
+docker run --rm -v "$PWD":/site -w /site ruby:3.3 sh -c 'bundle install && bundle exec jekyll build'
+
+# Serve on http://localhost:4000
+docker run --rm -p 4000:4000 -v "$PWD":/site -w /site ruby:3.3 sh -c 'bundle install && bundle exec jekyll serve --host 0.0.0.0'
+```
 
 ### Building for Production
 
