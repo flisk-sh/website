@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "static-preview",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8123"],
-      "port": 8123
+      "name": "jekyll-preview",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "bundle exec jekyll serve --port ${PORT:-4000}"],
+      "port": 4000
     }
   ]
 }
