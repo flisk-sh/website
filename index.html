@@ -1,863 +1,149 @@
----
-layout: default
-title: "Flisk: the local runtime your AI agent can start, check and fix"
-description: Run your whole multi-service app locally with one command, from a Compose file or plain commands. An MCP server lets Claude Code, Cursor and Codex start it, read its health and logs, and fix what breaks. Free, MIT.
-image: /assets/images/flisk-social-card.png?v=2
----
+<!doctype html><meta charset=utf-8><body style="background:#0b0b0d;color:#ececf1;font:15px system-ui;--radius:10px">
 
+<style>
+.sl-controls { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.sl-tabs { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.sl-tabs button { font: inherit; font-size: 0.875rem; color: rgba(236, 236, 241, 0.6); background: none; border: 0; border-bottom: 2px solid transparent; padding: 0.4rem 0.7rem; cursor: pointer; }
+.sl-tabs button:hover { color: #ececf1; }
+.sl-tabs button[aria-pressed="true"] { color: #ececf1; border-bottom-color: var(--accent, #3ddc84); }
+.sl-panel { border-radius: var(--radius); background: #121218; border: 1px solid rgba(255, 255, 255, 0.07); padding: clamp(1rem, 3vw, 2rem); }
+.sl-title { margin: 0 0 0.25rem; font-size: 1.125rem; font-weight: 600; }
+.sl-sub { margin: 0 0 1.25rem; color: rgba(236, 236, 241, 0.6); font-size: 0.9rem; }
+.sl-row { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 6rem 5.5rem; gap: 0.75rem; align-items: center; padding: 0.4rem 0; font-size: 0.9rem; }
+.sl-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sl-track { height: 1.35rem; background: rgba(255, 255, 255, 0.04); border-radius: 4px; overflow: hidden; }
+.sl-bar { height: 100%; background: var(--accent, #3ddc84); border-radius: 0 4px 4px 0; opacity: 0.85; transform-origin: left; animation: sl-grow 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.sl-row.is-best .sl-bar { opacity: 1; }
+.sl-val { text-align: right; font-variant-numeric: tabular-nums; font-family: ui-monospace, Menlo, monospace; }
+.sl-row.is-soon { color: rgba(236, 236, 241, 0.4); }
+.sl-row.is-soon .sl-track { background: none; border: 1px dashed rgba(255, 255, 255, 0.15); }
+.sl-spark { width: 100%; height: 1.35rem; }
+.sl-note { margin: 1rem 0 0; color: rgba(236, 236, 241, 0.55); font-size: 0.8rem; }
+.sl-note a { color: inherit; }
+.sl-empty { padding: 2rem 0; color: rgba(236, 236, 241, 0.7); }
+@keyframes sl-grow { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .sl-bar { animation: none; } }
+@media (max-width: 640px) { .sl-row { grid-template-columns: 6.5rem minmax(0, 1fr) 4.5rem; } .sl-spark-cell { display: none; } }
+</style>
 
 <div class="aw">
-
-  <!-- ================= HERO: one ask, then show it working ================= -->
-  <section class="aw-hero" id="top">
-    <div class="aw-hero-bg"></div>
-    <div class="aw-hero-wash"></div>
-    <div class="aw-hero-grain"></div>
-
-    <div class="aw-hero-inner aw-hero-grid aw-hero-top">
-      <div class="aw-hero-main">
-      <h1>The local runtime your <span class="aw-accent">AI agent</span> can start, check and fix.</h1>
-      <p class="aw-hero-sub">Run your whole app on your machine, from a Compose file or plain commands. Your agent reads its health and logs, and fixes what breaks.</p>
-      <a class="aw-btn aw-btn-solid aw-hero-phone" href="{{ '/sandbox/' | relative_url }}" data-cta="hero_sandbox_phone">Watch the tour in your browser</a>
-      </div>
-      <div class="aw-hero-side">
-      {% include demo-box.html source="hero" %}
-      <p class="aw-hero-status">Free, MIT licensed, not a deploy tool. <a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener" data-cta="hero_github">Source</a></p>
-      </div>
-    </div>
-
-    <!-- ================= STAGE: the product itself, clickable, in the first screen ================= -->
-    <div class="aw-hero-inner aw-stage" data-tabs data-stage>
-      <div class="aw-stage-chrome">
-        <span class="aw-stage-lights" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="aw-stage-address"><span data-stage-host>FliskOS</span><a href="https://os.flisk.si/" target="_blank" rel="noopener" data-stage-open data-cta="stage_open">Open <span aria-hidden="true">↗</span></a></span>
-        <span class="aw-stage-live">Try it here</span>
-      </div>
-      <div class="aw-stage-bar">
-        <div class="aw-stage-tabs" role="tablist" aria-label="Flisk products you can try here">
-          <button type="button" role="tab" class="aw-stage-tab is-active" id="aw-stage-tab-console" aria-controls="aw-stage-console" aria-selected="true" data-stage-host-name="FliskOS" data-stage-url="https://os.flisk.si/" data-cta="stage_console"><img src="{{ '/assets/img/products/fliskos.svg' | relative_url }}" alt="" width="18" height="18">FliskOS</button>
-          <button type="button" role="tab" class="aw-stage-tab" id="aw-stage-tab-terminal" aria-controls="aw-stage-terminal" aria-selected="false" tabindex="-1" data-stage-host-name="Flisk CLI" data-stage-url="{{ '/docs/quickstart/' | relative_url }}" data-cta="stage_terminal"><img src="{{ '/assets/img/products/flisk-cli.svg' | relative_url }}" alt="" width="18" height="18">Flisk CLI</button>
-          {%- for embed in site.data.stage.embeds %}
-          <button type="button" role="tab" class="aw-stage-tab" id="aw-stage-tab-{{ embed.id }}" aria-controls="aw-stage-{{ embed.id }}" aria-selected="false" tabindex="-1" data-stage-host-name="{{ embed.host }}" data-stage-url="{{ embed.url }}" data-cta="stage_{{ embed.id }}"><img src="{{ '/assets/img/products/' | append: embed.icon | append: '.svg' | relative_url }}" alt="" width="18" height="18">{{ embed.tab }}</button>
-          {%- endfor %}
-        </div>
-        <a class="aw-stage-more" href="https://flisk.si/" data-cta="stage_all_products">All products <span aria-hidden="true">→</span></a>
-      </div>
-
-      <!-- The real FliskOS frontend (console/, copied from flisk-sh/fliskos) answering from sample data; see /docs/claims/#console. -->
-      <div class="aw-stage-panel" role="tabpanel" id="aw-stage-console" aria-labelledby="aw-stage-tab-console">
-        <div class="aw-stage-guide" role="group" aria-label="Guided steps" data-stage-guide>
-          <span>Click around, or follow the bug:</span>
-          <button type="button" data-stage-step="project" data-cta="stage_step_project">Open the failing app</button>
-          <button type="button" data-stage-step="logs" data-cta="stage_step_logs">Read the api logs</button>
-          <button type="button" data-stage-step="agent" data-cta="stage_step_agent">See the agent's answer</button>
-          <button type="button" data-stage-step="fix" data-cta="stage_step_fix">Apply the fix</button>
-          <button type="button" class="aw-stage-reset" data-stage-step="reset" data-cta="stage_step_reset">Start over</button>
-        </div>
-        <iframe class="aw-stage-frame" src="{{ '/console/' | relative_url }}?v={{ site.time | date: '%s' }}" title="FliskOS, the desktop console for Flisk projects, with sample data" data-stage-frame></iframe>
-        <p class="aw-try-note">This is the real FliskOS interface with sample data. Nothing starts on your machine and nothing leaves your browser. <a href="{{ '/docs/claims/' | relative_url }}#console">How it was made</a></p>
-      </div>
-
-      {%- for embed in site.data.stage.embeds %}
-      <!-- A live Flisk site in the window. It loads the first time its tab is opened (data-src), so the homepage stays light. -->
-      <div class="aw-stage-panel" role="tabpanel" id="aw-stage-{{ embed.id }}" aria-labelledby="aw-stage-tab-{{ embed.id }}" hidden>
-        <iframe class="aw-stage-frame aw-stage-site" data-src="{{ embed.url }}" title="{{ embed.tab }}, live at {{ embed.host }}" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-        <p class="aw-try-note">{{ embed.note }} <a href="{{ embed.url }}" target="_blank" rel="noopener">Open {{ embed.host }} <span aria-hidden="true">↗</span></a></p>
-      </div>
-      {%- endfor %}
-
-      <div class="aw-stage-panel aw-stage-terminal" role="tabpanel" id="aw-stage-terminal" aria-labelledby="aw-stage-tab-terminal" hidden>
-      <!-- Real output, not a mock-up. Scene 1: the published CLI's local-process demo. Scene 2: flisk import on a one-service
-           Compose app, then one saved line. Both captured with CLI {{ site.data.flisk.terminal_capture_version }}; see _data/flisk.yml. -->
-      <aside class="aw-try" id="demo" aria-label="Terminal replay of real Flisk output" data-try>
-        <div class="aw-terminal">
-          <div class="aw-terminal-bar"><i></i><i></i><i></i><span data-try-title>try flisk</span></div>
-          <div class="aw-try-tabs" role="group" aria-label="Choose a demo" data-try-tabs hidden>
-            <button type="button" class="aw-try-tab" data-try-scene="1" aria-pressed="false" data-cta="try_tab_demo">Run the demo</button>
-            <button type="button" class="aw-try-tab" data-try-scene="2" aria-pressed="false" data-cta="try_tab_compose">Import Compose</button>
-            <button type="button" class="aw-try-tab" data-try-scene="3" aria-pressed="false" data-cta="try_tab_fix">Fix a bug</button>
-          </div>
-          <div class="aw-try-stage">
-            <div class="aw-terminal-body aw-try-body" data-try-body>
-              <span class="aw-tline" data-scene="1" data-cmd><span class="p">$ </span><span data-text>npx @flisk-sh/flisk demo</span></span>
-              <span class="aw-tline" data-scene="1"><span class="dim">Flisk demo, without Docker</span></span>
-              <span class="aw-tline" data-scene="1"><span class="ok">✔</span>  Writing the demo app            <span class="dim">0.0s</span></span>
-              <span class="aw-tline" data-scene="1" data-wait="650"><span class="ok">✔</span>  Starting services (no Docker)   <span class="dim">0.8s</span></span>
-              <span class="aw-tline" data-scene="1">2 of 2 services ready</span>
-              <span class="aw-tline" data-scene="1"><span class="ok">✔</span>  Your stack is running           <span class="dim">0.8s</span></span>
-              <span class="aw-tline" data-scene="1">   <span class="hot">http://localhost:3001</span></span>
-              <span class="aw-tline" data-scene="1">   <span class="hot">http://localhost:4000/api/menu</span></span>
-
-              <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>flisk import . --yes</span></span>
-              <span class="aw-tline" data-scene="2">Found 1 service(s) and 0 job(s)</span>
-              <span class="aw-tline" data-scene="2">  api  <span class="dim">port 4310 (from Compose), routed through Traefik</span></span>
-              <span class="aw-tline" data-scene="2"><span class="ok">Wrote 1 service.json file(s)</span></span>
-              <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>flisk up --wait</span></span>
-              <span class="aw-tline" data-scene="2" data-wait="900"><span class="ok">Stack is healthy.</span></span>
-              <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>curl localhost:4310</span></span>
-              <span class="aw-tline" data-scene="2">hello from compose</span>
-              <span class="aw-tline" data-scene="2" data-wait="500"><span class="dim"># edit api/server.js and save</span></span>
-              <span class="aw-tline" data-scene="2" data-cmd><span class="p">$ </span><span data-text>curl localhost:4310</span></span>
-              <span class="aw-tline" data-scene="2" data-wait="500"><span class="ok">hello after save</span> <span class="dim"># {{ site.data.flisk.save_update }} after the save</span></span>
-
-              <!-- Scene 3: one captured run of a two-service app with DATABASE_URL missing, shortened; see /docs/claims/#homepage-terminal. Each data-step is one click. -->
-              <span class="aw-tline" data-scene="3" data-step="1" data-step-label="Check the machine" data-cmd><span class="p">$ </span><span data-text>flisk doctor</span></span>
-              <span class="aw-tline" data-scene="3" data-step="1"><span class="ok">✓</span> Local processes: 2 services declare a command</span>
-              <span class="aw-tline" data-scene="3" data-step="1"><span class="ok">✓ Doctor passed.</span> <span class="dim">Next: flisk up</span></span>
-              <span class="aw-tline" data-scene="3" data-step="2" data-step-label="Start the stack" data-cmd><span class="p">$ </span><span data-text>flisk up --wait --wait-timeout 12</span></span>
-              <span class="aw-tline" data-scene="3" data-step="2" data-wait="900"><span class="bad">the stack was not healthy after 12 seconds</span></span>
-              <span class="aw-tline" data-scene="3" data-step="3" data-step-label="Read the health" data-cmd><span class="p">$ </span><span data-text>flisk status</span></span>
-              <span class="aw-tline" data-scene="3" data-step="3">Runtime: local processes (no Docker, no Tilt)</span>
-              <span class="aw-tline" data-scene="3" data-step="3">0/2 healthy</span>
-              <span class="aw-tline" data-scene="3" data-step="3">  … web  <span class="dim">pending (starting)</span></span>
-              <span class="aw-tline" data-scene="3" data-step="3">  … api  <span class="dim">pending (starting)</span></span>
-              <span class="aw-tline" data-scene="3" data-step="4" data-step-label="Read the logs" data-cmd><span class="p">$ </span><span data-text>flisk logs --unhealthy --tail 5</span></span>
-              <span class="aw-tline" data-scene="3" data-step="4"><span class="bad">api | api: DATABASE_URL is not set</span></span>
-              <span class="aw-tline" data-scene="3" data-step="5" data-step-label="Fix it and restart"><span class="dim"># give DATABASE_URL a default in api/server.mjs</span></span>
-              <span class="aw-tline" data-scene="3" data-step="5" data-cmd><span class="p">$ </span><span data-text>flisk down -y</span></span>
-              <span class="aw-tline" data-scene="3" data-step="5">Stopped local processes: web, api</span>
-              <span class="aw-tline" data-scene="3" data-step="5" data-cmd><span class="p">$ </span><span data-text>flisk up --wait --wait-timeout 12</span></span>
-              <span class="aw-tline" data-scene="3" data-step="5" data-wait="900"><span class="ok">Stack is healthy.</span></span>
-              <span class="aw-tline" data-scene="3" data-step="6" data-step-label="Check it again" data-cmd><span class="p">$ </span><span data-text>flisk status</span></span>
-              <span class="aw-tline" data-scene="3" data-step="6">2/2 healthy</span>
-              <span class="aw-tline" data-scene="3" data-step="6">  <span class="ok">✓</span> web  ready</span>
-              <span class="aw-tline" data-scene="3" data-step="6">  <span class="ok">✓</span> api  ready</span>
-            </div>
-            <figure class="aw-try-shot" data-try-shot>
-              <img src="{{ '/assets/images/demo-menu-page.jpg' | relative_url }}" alt="The page the demo opens: a restaurant menu served by two services Flisk started as local processes" width="2000" height="1250" loading="lazy" decoding="async">
-            </figure>
-          </div>
-          <div class="aw-try-controls" data-try-controls hidden>
-            <button type="button" class="aw-btn aw-btn-solid aw-try-run" data-try-run data-cta="try_run_demo"><kbd aria-hidden="true">Enter</kbd><span data-try-run-label>Run it</span></button>
-            <a class="aw-btn aw-btn-solid aw-try-run" href="#paths" data-try-own data-cta="try_own_app" hidden>Run this on your app</a>
-            <button type="button" class="aw-try-replay" data-try-replay hidden>Replay</button>
-          </div>
-        </div>
-        <p class="aw-try-note" data-try-note>Real output, replayed faster than it ran. Without Docker you get this two-service app. <a href="{{ '/docs/claims/' | relative_url }}#homepage-terminal">How these were captured</a></p>
-      </aside>
-      </div>
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <h1>Stacklytics. <span class="aw-accent">How fast does your stack start?</span></h1>
+      <p class="aw-subhero-sub">Flisk's own CI scaffolds and starts every language, framework and resource type it supports, on a fresh runner every night, and publishes the times. Pick a stack, then try it with <code>npx @flisk-sh/flisk demo</code>.</p>
     </div>
   </section>
 
-  <!-- ================= PATHS: from the demo to the visitor's own app ================= -->
-  <section class="aw-section aw-paths" id="paths">
+  <section class="aw-section" style="padding-top: 0;">
     <div class="aw-wrap">
-      <div class="aw-head">
-        <h2>Now run your own app.</h2>
-        <p>Pick where you are starting from. Each path is a few commands.</p>
+      <div class="sl-controls">
+        <div class="sl-tabs" id="sl-metrics" role="group" aria-label="Measurement"></div>
+        <div class="sl-tabs" id="sl-groups" role="group" aria-label="Kind of stack"></div>
       </div>
-
-      <div class="aw-paths-grid" data-paths>
-        <div class="aw-paths-list" role="tablist" aria-label="Where you are starting from" aria-orientation="vertical">
-          <button type="button" role="tab" class="aw-paths-tab is-active" id="aw-path-tab-compose" aria-controls="aw-path-compose" aria-selected="true" data-cta="path_compose">I have a <code>docker-compose.yml</code></button>
-          <button type="button" role="tab" class="aw-paths-tab" id="aw-path-tab-new" aria-controls="aw-path-new" aria-selected="false" tabindex="-1" data-cta="path_new">I am starting something new</button>
-          <button type="button" role="tab" class="aw-paths-tab" id="aw-path-tab-agent" aria-controls="aw-path-agent" aria-selected="false" tabindex="-1" data-cta="path_agent">I build with an AI coding agent</button>
-        </div>
-
-        <div class="aw-paths-panels">
-          <div class="aw-paths-panel" role="tabpanel" id="aw-path-compose" aria-labelledby="aw-path-tab-compose" tabindex="0">
-            <p>Every service keeps its ports, names and env values. Nothing starts until you run <code>flisk up</code>.</p>
-            {% capture path_compose %}{{ site.data.flisk.install_npm }}
-cd your-project
-flisk import .
-flisk up{% endcapture %}
-            {% include command-block.html text=path_compose cta="copy_path_compose" %}
-            <a class="aw-paths-more" href="{{ '/migrate/' | relative_url }}" data-cta="path_compose_more">How the import works <span aria-hidden="true">→</span></a>
-          </div>
-
-          <div class="aw-paths-panel" role="tabpanel" id="aw-path-new" aria-labelledby="aw-path-tab-new" tabindex="0" hidden>
-            <p>Create the project, add services when you need them, and run them with one command.</p>
-            {% capture path_new %}{{ site.data.flisk.install_npm }}
-flisk project
-flisk up{% endcapture %}
-            {% include command-block.html text=path_new cta="copy_path_new" %}
-            <a class="aw-paths-more" href="{{ '/docs/quickstart/' | relative_url }}" data-cta="path_new_more">Read the quickstart <span aria-hidden="true">→</span></a>
-          </div>
-
-          <div class="aw-paths-panel" role="tabpanel" id="aw-path-agent" aria-labelledby="aw-path-tab-agent" tabindex="0" hidden>
-            <p>Give Claude Code, Cursor or Codex the Flisk MCP server and skills, then describe the app you want.</p>
-            {% capture path_agent %}{{ site.data.flisk.install_npm }}
-flisk connect claude{% endcapture %}
-            {% include command-block.html text=path_agent cta="copy_path_agent" %}
-            <a class="aw-paths-more" href="{{ '/agents/' | relative_url }}" data-cta="path_agent_more">Set up Cursor, Codex or another agent <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </div>
-      <p class="aw-paths-foot">Prefer pnpm, Bun or a prebuilt binary? See the <a href="{{ '/docs/quickstart/' | relative_url }}#install-options">install options</a>.</p>
-    </div>
-  </section>
-
-  <!-- ================= START, CHECK, FIX: the headline's three verbs, each with its proof and its commands ================= -->
-  <section class="aw-section aw-loop" id="agent-loop">
-    <div class="aw-wrap">
-      <div class="aw-head">
-        <h2>Start it. Check it. Fix it.</h2>
-        <p>The same three jobs, from your terminal or from your agent.</p>
-      </div>
-
-      {%- for row in site.data.loop.rows %}
-      <article class="aw-loop-row{% if forloop.index == 2 %} is-flipped{% endif %}" data-tabs>
-        <div class="aw-loop-copy">
-          <h3><span class="aw-accent">{{ row.verb }}</span> {{ row.title }}</h3>
-          <p class="aw-loop-proof">{{ row.proof | replace: "%COMPOSE_IMPORT_TIME%", site.data.flisk.compose_import_time }} <a href="{{ row.link_href | relative_url }}">{{ row.link_text }}</a></p>
-          <div class="aw-loop-tabs" role="tablist" aria-label="{{ row.verb }} features">
-            {%- for f in row.features %}
-            <button type="button" role="tab" class="aw-loop-tab{% if forloop.first %} is-active{% endif %}" id="aw-loop-tab-{{ row.id }}-{{ f.id }}" aria-controls="aw-loop-{{ row.id }}-{{ f.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %} data-cta="loop_{{ row.id }}_{{ f.id }}">{{ f.tab }}</button>
-            {%- endfor %}
-          </div>
-        </div>
-        <div class="aw-loop-panels">
-          {%- for f in row.features %}
-          <div class="aw-loop-panel" role="tabpanel" id="aw-loop-{{ row.id }}-{{ f.id }}" aria-labelledby="aw-loop-tab-{{ row.id }}-{{ f.id }}" tabindex="0"{% unless forloop.first %} hidden{% endunless %}>
-            <p>{{ f.text }}</p>
-            <pre class="aw-code aw-mono">{{ f.code | escape }}</pre>
-          </div>
-          {%- endfor %}
-        </div>
-      </article>
-      {%- endfor %}
-    </div>
-  </section>
-
-  <!-- ================= GENERATED FILES EXPLORER ================= -->
-  {%- assign gen = site.data.explorer %}
-  <section class="aw-section aw-gen" id="generated">
-    <div class="aw-wrap">
-      <div class="aw-head">
-        <p class="aw-gen-kicker"># generated <span>[from service.json]</span></p>
-        <h2>Your local stack, generated from one file.</h2>
-        <p>One real service from the restaurant example. Pick a file, then hover the marked lines to see why each part is there.</p>
-      </div>
-
-      <div class="aw-gen-frame" data-gen>
-        <div class="aw-gen-tabs" role="tablist" aria-label="Generated file">
-          {%- for t in gen.tabs %}
-          <button type="button" role="tab" class="aw-gen-tab{% if forloop.first %} is-active{% endif %}" id="aw-gen-tab-{{ t.id }}" aria-controls="aw-gen-{{ t.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-keyshortcuts="{{ forloop.index }}"{% unless forloop.first %} tabindex="-1"{% endunless %}><kbd aria-hidden="true">{{ forloop.index }}</kbd>{{ t.tab }}</button>
-          {%- endfor %}
-        </div>
-
-        <div class="aw-gen-descs">
-          {%- for t in gen.tabs %}
-          <p class="aw-gen-desc" data-gen-desc="{{ t.id }}"{% unless forloop.first %} hidden{% endunless %}>{{ t.desc }}</p>
-          {%- endfor %}
-        </div>
-
-        <figure class="aw-gen-fig">
-          <figcaption class="aw-gen-fig-bar">
-            <span class="aw-gen-fig-icon" aria-hidden="true"><i class="bi bi-code"></i></span>
-            <span class="aw-gen-fig-title">[ fig. 1 / generated service files ]</span>
-            <span class="aw-gen-fig-icon" aria-hidden="true"><i class="bi bi-grid-3x3"></i></span>
-          </figcaption>
-
-          <div class="aw-gen-grid">
-            <nav class="aw-gen-tree" aria-label="Files in the example service">
-              <ul>
-                <li class="aw-gen-dir" data-gen-dir>
-                  <span class="aw-gen-node"><i class="bi bi-folder2" aria-hidden="true"></i>.autogenerated/</span>
-                  <ul>
-                    <li><button type="button" class="aw-gen-node" data-gen-target="compose"><i class="bi bi-file-earmark-code" aria-hidden="true"></i>docker-compose.app.autogenerated.yml</button></li>
-                  </ul>
-                </li>
-                <li class="aw-gen-dir" data-gen-dir>
-                  <span class="aw-gen-node"><i class="bi bi-folder2" aria-hidden="true"></i>reservation-api/</span>
-                  <ul>
-                    <li class="aw-gen-dir" data-gen-dir>
-                      <span class="aw-gen-node"><i class="bi bi-folder2" aria-hidden="true"></i>.autogenerated/</span>
-                      <ul>
-                        {%- for f in gen.api_generated %}
-                        {%- assign hit = gen.tabs | where: "file", f | first %}
-                        <li>{% if hit %}<button type="button" class="aw-gen-node" data-gen-target="{{ hit.id }}"><i class="bi bi-file-earmark-code" aria-hidden="true"></i>{{ f }}</button>{% else %}<span class="aw-gen-node is-muted"><i class="bi bi-file-earmark" aria-hidden="true"></i>{{ f }}</span>{% endif %}</li>
-                        {%- endfor %}
-                      </ul>
-                    </li>
-                    <li><span class="aw-gen-node is-muted"><i class="bi bi-folder2" aria-hidden="true"></i>src/</span></li>
-                    <li><button type="button" class="aw-gen-node" data-gen-target="manifest"><i class="bi bi-file-earmark-text" aria-hidden="true"></i>service.json</button></li>
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-
-            <div class="aw-gen-panels">
-            {%- for t in gen.tabs %}
-            <div class="aw-gen-panel" role="tabpanel" id="aw-gen-{{ t.id }}" aria-labelledby="aw-gen-tab-{{ t.id }}"{% unless forloop.first %} hidden{% endunless %}>
-              <div class="aw-gen-file">
-                <span>{{ t.path | remove_first: "services/guest/" }}</span>
-                <a href="{{ gen.repo }}/blob/main/{{ t.path }}" target="_blank" rel="noopener">{{ t.lang }} <span aria-hidden="true">↗</span><span class="visually-hidden"> (open the whole file on GitHub)</span></a>
-              </div>
-              <div class="aw-gen-code" data-lang="{{ t.lang }}">
-                {%- for l in t.lines %}
-                {%- assign n = forloop.index %}
-                {%- for note in t.notes %}{% if note.from == n %}<div class="aw-gen-block" tabindex="0" aria-describedby="aw-gen-{{ t.id }}-note-{{ forloop.index }}">{% endif %}{% endfor -%}
-                <span class="aw-gen-line"><code>{{ l | escape }}</code></span>
-                {%- for note in t.notes %}{% if note.to == n %}<span class="aw-gen-tip" role="note" id="aw-gen-{{ t.id }}-note-{{ forloop.index }}">{{ note.text }}</span></div>{% endif %}{% endfor %}
-                {%- endfor %}
-              </div>
-            </div>
-            {%- endfor %}
-            </div>
-          </div>
-        </figure>
+      <div class="sl-panel">
+        <h2 class="sl-title" id="sl-title">Cold start</h2>
+        <p class="sl-sub" id="sl-sub"></p>
+        <div id="sl-rows" aria-live="polite"><p class="sl-empty">Loading the latest CI numbers.</p></div>
+        <p class="sl-note" id="sl-note"></p>
       </div>
     </div>
   </section>
-
-  <!-- ================= PROOF: numbers you can rerun ================= -->
-  <section class="aw-section aw-proof" id="proof">
-    <div class="aw-wrap aw-proof-split">
-      <div class="aw-proof-copy">
-        <h2>Numbers you can rerun.</h2>
-        <p class="aw-hero-proof">A plain Compose app (a Node API and Postgres) answered 49 s after <code>flisk import</code> on a clean Ubuntu CI runner, images pulled and built from scratch, install not counted. <a href="https://github.com/flisk-sh/flisk/actions/runs/40660606705" target="_blank" rel="noopener">Run</a> · <a href="{{ '/docs/claims/' | relative_url }}#compose-import">Claim details</a>.</p>
-        <p class="aw-hero-status">Stability: 1.x local dev. Generated files are a contract; verify with flisk config verify. Core CLI is MIT and needs no key. Premium is optional.</p>
-      </div>
-      <aside class="aw-bench" aria-label="Flisk benchmark results" data-bench>
-        <div class="aw-bench-tabs" role="tablist" aria-label="Benchmark">
-          {%- for b in site.data.benchmarks %}
-          <button type="button" role="tab" class="aw-bench-tab{% if forloop.first %} is-active{% endif %}" id="aw-bench-tab-{{ b.id }}" aria-controls="aw-bench-{{ b.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %}>{{ b.tab }}</button>
-          {%- endfor %}
-        </div>
-        <div class="aw-bench-panels">
-        {%- for b in site.data.benchmarks %}
-        <div class="aw-bench-panel" role="tabpanel" id="aw-bench-{{ b.id }}" aria-labelledby="aw-bench-tab-{{ b.id }}"{% if b.speed %} data-speed="{{ b.speed }}"{% endif %}{% unless forloop.first %} hidden{% endunless %}>
-          <div class="aw-bench-head">
-            <div>
-              <h2>{{ b.title }}</h2>
-              <p>{{ b.subtitle }}</p>
-            </div>
-            <div class="aw-bench-actions">
-              <span class="aw-bench-clock" data-bench-clock aria-hidden="true" hidden></span>
-              <button type="button" class="aw-bench-replay" data-bench-replay>Replay{% if b.speed %} {{ b.speed }}×{% endif %}</button>
-            </div>
-          </div>
-          <ul class="aw-bench-stats">
-            {%- for st in b.stats %}
-            <li><strong>{{ st.value }}</strong><span>{{ st.label }}</span></li>
-            {%- endfor %}
-          </ul>
-          <ol class="aw-bench-rows">
-            {%- for r in b.rows %}
-            <li class="aw-bench-row{% if r.key %} is-key{% endif %}" style="--v: {{ r.value | times: 1.0 | divided_by: b.scale | round: 3 }}; --i: {{ forloop.index0 }}" data-v="{{ r.value | times: 1.0 | divided_by: b.scale | round: 3 }}" data-value="{{ r.value }}">
-              <span class="aw-bench-name">{{ r.label }}<small>{{ r.sub | default: b.row_suffix }}</small></span>
-              <span class="aw-bench-track" aria-hidden="true"><span class="aw-bench-bar"></span></span>
-              <span class="aw-bench-val">{{ r.display }}</span>
-            </li>
-            {%- endfor %}
-          </ol>
-          <div class="aw-bench-foot">
-            <p>{{ b.note }}</p>
-            <span class="aw-bench-links">
-              <a href="{{ '/docs/claims/' | relative_url }}#benchmark-panel">Claim details</a>
-              <a href="https://github.com/flisk-sh/flisk/blob/main/{{ b.repro }}" target="_blank" rel="noopener">Reproduce ↗</a>
-              <a href="https://github.com/flisk-sh/flisk/blob/main/{{ b.source }}" target="_blank" rel="noopener">Raw data ↗</a>
-            </span>
-          </div>
-        </div>
-        {%- endfor %}
-        </div>
-        <p class="aw-bench-share">
-          Different hardware? <a href="https://github.com/orgs/flisk-sh/discussions/1016" target="_blank" rel="noopener">Run it and share your numbers ↗</a>
-        </p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- ================= ADOPTERS (Social proof) ================= -->
-  <section class="aw-section aw-adopters" id="adopters">
-    <div class="aw-wrap aw-adopters-grid">
-      <div class="aw-adopters-intro">
-        <span class="aw-adopters-eyebrow aw-mono">Adopters</span>
-        <h2>Who uses Flisk</h2>
-        <p>Teams that run <span class="aw-mono">flisk up</span> on their own code. Listed with their consent in <a href="https://github.com/flisk-sh/flisk/blob/main/docs/project/ADOPTERS.md" target="_blank" rel="noopener">ADOPTERS.md</a>.</p>
-        <div class="aw-adopters-count"><span class="aw-mono">5</span> teams listed</div>
-      </div>
-
-      <ul class="aw-adopter-list">
-        <li>
-          <a class="aw-adopter-row" href="https://github.com/biolend83/tubehaus" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/tubehaus.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">TubeHaus</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://www.linkedin.com/company/lekast/" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/lekast.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">Lekast</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://medium.com/@mfin.services" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/mfin-services.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">mfin.services</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://www.linkedin.com/company/makeofferio" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/makeoffer.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">MakeOffer</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a class="aw-adopter-row" href="https://redmoon.digital/" target="_blank" rel="noopener">
-            <span class="aw-adopter-logo"><img src="{{ '/assets/img/adopters/redmoon-digital.png' | relative_url }}" alt="" loading="lazy"></span>
-            <span class="aw-adopter-name">Red Moon Digital</span>
-            <span class="aw-adopter-arrow" aria-hidden="true">↗</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ================= RECENTLY SHIPPED (numbered list + panel, after warp.dev's SDLC section) ================= -->
-  {%- assign wn = site.data.whats_new %}
-  <section class="aw-section aw-new" id="new">
-    <div class="aw-wrap">
-      <div class="aw-head">
-        <p class="aw-new-kicker"># recently shipped</p>
-        <h2>Recently shipped</h2>
-        {%- assign wn_next = wn.items | where: "status", "next" %}
-        <p>Recent additions, available on npm.{% if wn_next.size > 0 %} Items marked next are merged and ship in the next release.{% endif %} <a href="https://github.com/flisk-sh/flisk/releases" target="_blank" rel="noopener">See every release</a>.</p>
-      </div>
-
-      <div class="aw-new-grid" data-new>
-        <div class="aw-new-list" role="tablist" aria-label="Recently shipped" aria-orientation="vertical">
-          {%- for it in wn.items %}
-          <button type="button" role="tab" class="aw-new-row{% if forloop.first %} is-active{% endif %}" id="aw-new-tab-{{ forloop.index }}" aria-controls="aw-new-{{ forloop.index }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %}>
-            <span class="aw-new-n">0{{ forloop.index }}</span>
-            <span class="aw-new-text"><strong>{{ it.title }}</strong><small>{{ it.short }}</small></span>
-          </button>
-          {%- endfor %}
-        </div>
-
-        <div class="aw-new-panels">
-          {%- for it in wn.items %}
-          <div class="aw-new-panel" role="tabpanel" id="aw-new-{{ forloop.index }}" aria-labelledby="aw-new-tab-{{ forloop.index }}"{% unless forloop.first %} hidden{% endunless %}>
-            <p class="aw-new-status{% if it.status == 'released' %} is-released{% endif %}">{% if it.status == 'released' %}on npm{% else %}merged / next release{% endif %}</p>
-            <h3>{{ it.title }}</h3>
-            <p class="aw-new-body">{{ it.body | escape }}</p>
-            {%- if it.code %}
-            <pre class="aw-new-code" data-tint-lang="json">{% assign code_lines = it.code | newline_to_br | split: "<br />" %}{% for l in code_lines %}<span class="aw-gen-line"><code>{{ l | strip_newlines | escape }}</code></span>{% endfor %}</pre>
-            {%- endif %}
-            <p class="aw-new-try"><span aria-hidden="true">$</span> <code>{{ it.try }}</code></p>
-            <p class="aw-new-links">
-              {%- for pr in it.prs %}<a href="https://github.com/flisk-sh/flisk/pull/{{ pr }}" target="_blank" rel="noopener">#{{ pr }} <span aria-hidden="true">↗</span></a>{% endfor %}
-              {%- if it.doc %}<a href="{{ it.doc }}" target="_blank" rel="noopener">guide <span aria-hidden="true">↗</span></a>{% endif %}
-            </p>
-          </div>
-          {%- endfor %}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= MORE FROM FLISK: the product directory ================= -->
-  <section class="aw-section aw-products" id="products">
-    <div class="aw-wrap aw-products-grid">
-      <div class="aw-head">
-        <h2>More from Flisk.</h2>
-        <p>Other products from the team behind the CLI.</p>
-      </div>
-      <div class="aw-products-groups">
-        {%- for group in site.data.products.groups %}
-        <div class="aw-products-group">
-          <h3>{{ group.name }}</h3>
-          <ul>
-            {%- for item in group.items %}
-            {%- assign external = item.url | slice: 0, 4 %}
-            <li><a href="{% if external == 'http' %}{{ item.url }}{% else %}{{ item.url | relative_url }}{% endif %}"{% if external == 'http' %} target="_blank" rel="noopener"{% endif %} data-cta="product_{{ item.name | slugify }}">{{ item.name }}<span>{{ item.text }}</span></a></li>
-            {%- endfor %}
-          </ul>
-        </div>
-        {%- endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= FAQ — plain list with [+] / [−] toggles (after warp.dev) ================= -->
-  <section class="aw-section aw-faq" id="faq">
-    <div class="aw-wrap">
-      <div class="aw-head">
-        <h2>Honest answers</h2>
-        <p>The same answers we give in engineering reviews.</p>
-      </div>
-
-      <div class="aw-faq-list">
-        <details class="aw-faq-item">
-          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>We need Kubernetes for production</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
-          <div class="aw-faq-a">Local dev doesn't need to match production. The 14 tiny services were healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot. Production stays on Helm. <a href="{{ '/docs/claims/' | relative_url }}">Claim details</a>.</div>
-        </details>
-        <details class="aw-faq-item">
-          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>What about CI/CD?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
-          <div class="aw-faq-a">Flisk is completely decoupled from your CI. Use it for local development and whatever you want for CI/CD. Nothing to migrate away from later.</div>
-        </details>
-        <details class="aw-faq-item">
-          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Is {{ site.data.flisk.scale_plain }} services locally realistic?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
-          <div class="aw-faq-a">As a boot test, yes: this generated <code>/health</code> fixture has {{ site.data.flisk.scale_plain }} small generated services (about 20 lines each) that all became healthy through Traefik in {{ site.data.flisk.erp_boot_seconds }} s on a clean CI runner, images built from scratch (<a href="{{ site.data.flisk.erp_ci_run }}" target="_blank" rel="noopener">the run</a>). It is a scale fixture, not a real ERP product. Real services with real dependencies use more memory. Selective startup runs only what you're working on, and golden L1–L4 layers keep rebuilds near-instant. The discovery daemon regenerates only what changed. Our daily driver is a {{ site.data.flisk.demo_services }}-service stack on a {{ site.data.flisk.machine }}, and it performs superbly; the same engine runs a {{ site.data.flisk.monorepo_services }}-service monorepo every day.</div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= PRICING (Action) ================= -->
-  <section class="aw-section" id="pricing" style="background: #0e0e14;">
-    <div class="aw-wrap">
-      <div class="aw-head aw-head-center">
-        <h2>Priced against what it replaces</h2>
-        <p>Core stays free, and most teams should stay on free. Premium is a separate key for the extras above; no key required to run <span class="aw-mono">flisk up</span>. <a href="{{ '/waiting/' | relative_url }}">See what waiting costs</a>.</p>
-      </div>
-
-      <div class="aw-pricing-grid">
-        <div class="aw-price-card">
-          <div class="aw-price-name">Free</div>
-          <div class="aw-price-value">{{ site.data.flisk.community_price }} <small>/ MIT core</small></div>
-          <p class="aw-price-desc">The full CLI, MIT-licensed, with no license key required.</p>
-          <ul class="aw-price-list">
-            <li><code>flisk up</code>, scaffold, Traefik, Postgres, Tilt live update, golden layers</li>
-            <li>Playwright, C4 and AGENTS.md, if you generate them in your repo</li>
-            <li>No key required to run the core CLI</li>
-            <li>Community support</li>
-          </ul>
-          <a class="aw-price-cta" href="{{ '/docs/quickstart/' | relative_url }}" data-cta="pricing_free">Start free →</a>
-        </div>
-
-        <div class="aw-price-card aw-price-featured">
-          <div class="aw-price-name">Premium</div>
-          <div class="aw-price-value">${{ site.data.flisk.team_price }} <small>/ dev / month</small></div>
-          <p class="aw-price-desc">Unlocks the paid extras and gives your team a human on the other end.</p>
-          <ul class="aw-price-list">
-            <li>Everything in Free</li>
-            <li>Verdaccio private npm registry, DDD scaffold and Sablier idle stop</li>
-            <li>Ready-made Playwright, C4 and AGENTS.md implementations, downloaded with your key</li>
-            <li>Up to {{ site.data.flisk.premium_project_limit }} project IDs per license key</li>
-            <li>Priority support, next business day</li>
-            <li>Onboarding session for your stack</li>
-          </ul>
-          <a class="aw-price-cta" href="{{ '/#waitlist' | relative_url }}" data-cta="pricing_premium">Request a license →</a>
-          <p class="aw-price-footnote">Need SSO, air-gapped, or an SLA? Pick Enterprise in the license request below — custom pricing.</p>
-        </div>
-      </div>
-
-      <div class="aw-why">
-        <h3>How ${{ site.data.flisk.team_price }} compares</h3>
-        <div class="aw-why-grid">
-          <div class="aw-why-item">
-            <strong>vs cloud dev envs</strong>
-            <p>Gitpod starts at {{ site.data.flisk.gitpod_entry }}/mo plus compute. Codespaces runs {{ site.data.flisk.codespaces_range }} per dev per month at full-time usage. Flisk Premium is ${{ site.data.flisk.team_price }} flat — compute is your machine.</p>
-          </div>
-          <div class="aw-why-item">
-            <strong>vs enterprise CDEs</strong>
-            <p>Coder and Okteto gate RBAC and SSO behind "contact sales". So does Flisk: SSO is on Enterprise, at custom pricing. Premium is the self-serve plan for the extras listed above.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CTA / LICENSE REQUEST (Action) ================= -->
-  <section class="aw-section aw-cta aw-cta-quiet" id="waitlist">
-    <div class="aw-wrap">
-      <h2>Get your<br />Premium license.</h2>
-      <p class="aw-cta-sub">Core stays free. Premium is a separate key for the extras above; no key required to run <span class="aw-mono">flisk up</span>. Need SSO, air-gapped, or an SLA? Pick Enterprise.</p>
-
-      <details class="aw-license" data-license>
-        <summary class="aw-btn aw-btn-ghost" data-cta="license_open">Request a license</summary>
-      <form class="aw-form" onsubmit="handleLicenseSubmit(event); return false;">
-        <label for="waitlist-email">Your email <span style="font-weight: 400; color: rgba(236,236,241,0.65);">(required — it's the only way we can send your key or reply)</span></label>
-        <input type="email" id="waitlist-email" placeholder="you@company.com" required />
-
-        <label>Which license do you want?</label>
-        <div class="aw-features">
-          <label><input type="radio" name="license-plan" class="plan-radio" value="Premium — ${{ site.data.flisk.team_price }}/dev/month, up to {{ site.data.flisk.premium_project_limit }} project IDs per key" checked /> Premium — ${{ site.data.flisk.team_price }}/dev/mo</label>
-          <label><input type="radio" name="license-plan" class="plan-radio" value="Enterprise — custom pricing, unlimited project IDs, SSO/audit logs/air-gapped/SLA" /> Enterprise — custom</label>
-        </div>
-
-        <label>Which features interest you?</label>
-        <div class="aw-features">
-          <label><input type="checkbox" class="feature-checkbox" value="Local service development" /> Local service development</label>
-          <label><input type="checkbox" class="feature-checkbox" value="{{ site.data.flisk.scale_services }} services scale" /> {{ site.data.flisk.scale_services }} services</label>
-          {% for feature in site.data.flisk.waitlist_features %}
-          <label><input type="checkbox" class="feature-checkbox" value="{{ feature }}" /> {{ feature }}</label>
-          {% endfor %}
-        </div>
-
-        <button type="submit" class="aw-btn aw-btn-solid" id="waitlist-submit-btn">Request my license →</button>
-        <p class="aw-form-note">Free needs no license key — install and run <span class="aw-mono">flisk up</span>. Premium/Enterprise requests are submitted directly — no mail client needed, no spam, unsubscribe anytime.</p>
-        <div class="aw-form-note aw-issued-key" id="waitlist-request-received" style="display:none;">
-          Request received — we'll follow up by email if you gave us one. Thanks for your interest in Flisk!
-        </div>
-        <p class="aw-form-note aw-inline-error" id="waitlist-inline-error" style="display:none;"></p>
-        <p class="aw-form-note aw-mailto-fallback" id="waitlist-mailto-fallback" style="display:none;">
-          Couldn't reach our server. <a id="waitlist-mailto-link" href="#">Click here to email us</a>, or
-          <button type="button" id="waitlist-copy-btn" class="aw-btn-link">copy the message</button>.
-        </p>
-      </form>
-      </details>
-    </div>
-  </section>
-
-
-  <!-- ================= CLOSE: back to the one action ================= -->
-  <section class="aw-section aw-final" id="try">
-    <div class="aw-wrap">
-      <h2>See it run on your machine.</h2>
-      {% include demo-box.html source="final" %}
-    </div>
-  </section>
-
-  <a class="aw-phone-bar" href="{{ '/sandbox/' | relative_url }}" data-phone-bar data-cta="phone_bar_sandbox" hidden>Watch the tour in your browser</a>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 <script>
-// Runs after the deferred GSAP scripts have loaded.
-document.addEventListener('DOMContentLoaded', function () {
-function startWhenNearViewport(target, start, options) {
-  if (!target) return;
-  options = options || {};
-  var started = false;
-  var rootMargin = options.rootMargin || '220px 0px';
-  var timeout = options.timeout || 1800;
-  var observer = null;
-  var fallbackTimer = null;
+(() => {
+  const DATA = "/latest.json";
+  const METRICS = [
+    { id: "cold_start", label: "Cold start", sub: "First flisk up on a fresh runner, until the route answers 200 through Traefik. Lower is faster.", fallback: "listed" },
+    { id: "warm_start", label: "Warm start", sub: "flisk down, then flisk up again with the images cached, until the route answers 200." },
+    { id: "scaffold", label: "Scaffold", sub: "flisk resource, from the command to the files on disk." },
+    { id: "hot_reload", label: "Hot reload", sub: "Edit a file until the new response is served." },
+  ];
+  const $ = (id) => document.getElementById(id);
+  const state = { metric: "cold_start", group: null, data: null };
+  const secs = (ms) => (ms < 1000 ? ms + " ms" : (ms / 1000).toFixed(ms < 10000 ? 1 : 0) + " s");
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const valueOf = (s, m) => { const v = s.metrics[m.id]; return v != null ? v : m.fallback ? s.metrics[m.fallback] : null; };
 
-  function run() {
-    if (started) return;
-    started = true;
-    window.clearTimeout(fallbackTimer);
-    window.removeEventListener('scroll', check, { passive: true });
-    window.removeEventListener('resize', check);
-    if (observer) observer.disconnect();
-    start();
+  function spark(history, m) {
+    const pts = (history || []).map((h) => (h[m.id] != null ? h[m.id] : m.fallback ? h[m.fallback] : null)).filter((v) => v != null);
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 100 20"); svg.setAttribute("class", "sl-spark"); svg.setAttribute("preserveAspectRatio", "none");
+    if (pts.length < 2) return svg;
+    const lo = Math.min(...pts), hi = Math.max(...pts), span = hi - lo || 1;
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+    line.setAttribute("points", pts.map((v, i) => (i / (pts.length - 1)) * 100 + "," + (18 - ((v - lo) / span) * 16)).join(" "));
+    line.setAttribute("fill", "none"); line.setAttribute("stroke", "currentColor"); line.setAttribute("stroke-width", "1.5"); line.setAttribute("opacity", "0.6"); line.setAttribute("vector-effect", "non-scaling-stroke");
+    svg.appendChild(line);
+    return svg;
   }
 
-  function check() {
-    var rect = target.getBoundingClientRect();
-    var buffer = Math.max(window.innerHeight * 0.32, 220);
-    if (rect.top < window.innerHeight + buffer && rect.bottom > -buffer) run();
-  }
-
-  if ('IntersectionObserver' in window) {
-    observer = new IntersectionObserver(function (entries) {
-      if (entries.some(function (entry) { return entry.isIntersecting; })) run();
-    }, { threshold: 0.01, rootMargin: rootMargin });
-    observer.observe(target);
-  }
-
-  window.addEventListener('scroll', check, { passive: true });
-  window.addEventListener('resize', check);
-  requestAnimationFrame(check);
-  fallbackTimer = window.setTimeout(run, timeout);
-}
-
-/* ROI calculator */
-function calcRoi() {
-  var devs = parseInt(document.getElementById('roi-devs').value, 10);
-  var salary = parseInt(document.getElementById('roi-salary').value, 10);
-  var perWeek = parseInt(document.getElementById('roi-hours-week').value, 10);
-  var hours = devs * perWeek * {{ site.data.flisk.weeks_per_year_num }};
-  var productivity = Math.round(hours * (salary / {{ site.data.flisk.work_hours_num }}));
-  var total = productivity - devs * {{ site.data.flisk.team_price }} * 12;
-  document.getElementById('roi-devs-value').textContent = devs;
-  document.getElementById('roi-hours-week-value').textContent = perWeek;
-  document.getElementById('roi-salary-value').textContent = '$' + salary.toLocaleString('en-US');
-  document.getElementById('roi-hours').textContent = hours.toLocaleString('en-US');
-  document.getElementById('roi-productivity').textContent = '$' + productivity.toLocaleString('en-US');
-  document.getElementById('roi-total').textContent = '$' + total.toLocaleString('en-US');
-}
-// Homepage no longer renders the ROI widget; initialize only when its controls exist.
-if (document.getElementById('roi-devs')) calcRoi();
-
-/* Premium and Enterprise requests are filed via the worker for manual follow-up.
-   Free needs no license key; the quickstart is the path for free users.
-   mailto is only a last-resort fallback if the worker itself is unreachable. */
-var REQUEST_LICENSE_URL = 'https://tdk-extension-dist.oranguman.workers.dev/v1/request-license';
-
-async function handleLicenseSubmit(event) {
-  event.preventDefault();
-  // Disable immediately, before any awaiting, so a slow network request
-  // can't be mistaken for a dead button and mashed repeatedly.
-  var btn = document.getElementById('waitlist-submit-btn');
-  var originalLabel = btn.textContent;
-  btn.disabled = true;
-  hideInlineError();
-
-  var emailInput = document.getElementById('waitlist-email').value.trim();
-  var planRadio = document.querySelector('.plan-radio:checked');
-  var plan = planRadio ? planRadio.value : 'Premium — ${{ site.data.flisk.team_price }}/dev/month';
-
-  // Belt-and-braces on top of the input's `required` attribute: without an
-  // email there is no way left to send a key or follow up on a
-  // request (mailto no longer runs on the happy path), so a submission
-  // with no email is never useful - refuse it outright instead of filing
-  // a request nobody can act on.
-  if (!emailInput) {
-    showInlineError('Please enter your email - we have no other way to send a key or a reply back to you.');
-    btn.disabled = false;
-    btn.textContent = originalLabel;
-    return;
-  }
-
-  btn.textContent = 'Sending your request…';
-  var checkboxes = document.querySelectorAll('.feature-checkbox:checked');
-  var requestedFeatures = [];
-  checkboxes.forEach(function (cb) { requestedFeatures.push(cb.value); });
-
-  try {
-    var reqRes = await fetch(REQUEST_LICENSE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan: plan, email: emailInput, requestedFeatures: requestedFeatures })
+  function draw() {
+    const m = METRICS.find((x) => x.id === state.metric);
+    $("sl-title").textContent = m.label;
+    $("sl-sub").textContent = m.sub;
+    const rows = $("sl-rows");
+    rows.textContent = "";
+    const d = state.data;
+    if (!d) { rows.appendChild(el("p", "sl-empty", "The first numbers arrive after the next nightly CI run. Every stack below is already listed.")); return; }
+    for (const b of document.querySelectorAll("#sl-metrics button")) b.setAttribute("aria-pressed", String(b.dataset.id === state.metric));
+    for (const b of document.querySelectorAll("#sl-groups button")) b.setAttribute("aria-pressed", String(b.dataset.id === state.group));
+    const list = d.stacks.filter((s) => s.group === state.group).map((s) => ({ s, v: s.status === "measured" || s.status === "no-data" ? valueOf(s, m) : null }));
+    const measured = list.filter((r) => r.v != null).sort((a, b) => a.v - b.v);
+    const rest = list.filter((r) => r.v == null);
+    const max = Math.max(...measured.map((r) => r.v), 1);
+    measured.forEach((r, i) => {
+      const row = el("div", "sl-row" + (i === 0 ? " is-best" : ""));
+      row.appendChild(el("span", "sl-name", r.s.name));
+      const track = el("div", "sl-track");
+      const bar = el("div", "sl-bar");
+      bar.style.width = Math.max(1.5, (r.v / max) * 100) + "%";
+      track.appendChild(bar);
+      row.appendChild(track);
+      row.appendChild(el("span", "sl-val", secs(r.v)));
+      const cell = el("span", "sl-spark-cell"); cell.appendChild(spark(r.s.history, m)); row.appendChild(cell);
+      rows.appendChild(row);
     });
-    if (reqRes.status === 429) {
-      var reqLimitBody = await reqRes.json().catch(function () { return {}; });
-      showInlineError(reqLimitBody.error || 'Too many requests - try again shortly.');
-      btn.disabled = false;
-      btn.textContent = originalLabel;
-      return;
+    for (const r of rest) {
+      const row = el("div", "sl-row is-soon");
+      row.appendChild(el("span", "sl-name", r.s.name));
+      row.appendChild(el("div", "sl-track"));
+      row.appendChild(el("span", "sl-val", r.s.status === "no-data" ? "no data" : "coming soon"));
+      row.appendChild(el("span", "sl-spark-cell"));
+      rows.appendChild(row);
     }
-    if (!reqRes.ok) throw new Error('request failed: HTTP ' + reqRes.status);
-    showRequestReceived();
-    // Request is filed - remove the button so it can't be resubmitted.
-    btn.style.display = 'none';
-  } catch (err) {
-    console.warn('License request submission failed, falling back to email:', err);
-    sendWaitlistEmail(btn, originalLabel);
-  }
-}
-
-function showRequestReceived() {
-  var box = document.getElementById('waitlist-request-received');
-  if (!box) return;
-  box.style.display = 'block';
-  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-function showInlineError(message) {
-  var box = document.getElementById('waitlist-inline-error');
-  if (!box) return;
-  box.textContent = message;
-  box.style.display = 'block';
-  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-function hideInlineError() {
-  var box = document.getElementById('waitlist-inline-error');
-  if (box) box.style.display = 'none';
-}
-
-/* License request mailto */
-function sendWaitlistEmail(btn, originalLabel) {
-  var emailInput = document.getElementById('waitlist-email').value.trim();
-  var email = emailInput || '(see From: in your email app)';
-  var planRadio = document.querySelector('.plan-radio:checked');
-  var plan = planRadio ? planRadio.value : 'Premium — ${{ site.data.flisk.team_price }}/dev/month';
-  var checkboxes = document.querySelectorAll('.feature-checkbox:checked');
-  var features = [];
-  checkboxes.forEach(function (cb) { features.push(cb.value); });
-  var featuresList = features.length > 0
-    ? features.map(function (f) { return '[x] ' + f; }).join('\n')
-    : '(no features selected)';
-  var subject = 'Flisk License Request - ' + plan.split(' — ')[0];
-  var body = 'Hi Flisk team!\n\n' +
-    "I'd like to request a Flisk license.\n\n" +
-    'Plan: ' + plan + '\n' +
-    'My email: ' + email + '\n\n' +
-    "I'm interested in these features:\n" + featuresList + '\n\n' +
-    "What I'm building: (tell us about your project)\n\nThanks!\n---\nSent from https://flisk.sh/";
-  var mailtoUrl = 'mailto:hello@flisk.sh?subject=' +
-    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-  // A real anchor click hands off to the OS mail-client protocol handler more
-  // reliably across browsers/macOS versions than a script-set location.href.
-  var link = document.createElement('a');
-  link.href = mailtoUrl;
-  link.style.display = 'none';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-
-  // There is no reliable "mailto succeeded" signal across browsers/OSes, so
-  // rather than guess (and risk the click looking dead when no mail client
-  // is configured), always reveal the manual fallback right away.
-  var fallback = document.getElementById('waitlist-mailto-fallback');
-  var fallbackLink = document.getElementById('waitlist-mailto-link');
-  var copyBtn = document.getElementById('waitlist-copy-btn');
-  fallbackLink.href = mailtoUrl;
-  fallback.style.display = 'block';
-  fallback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-  // Confirm the click registered even when the OS has no default mail
-  // client to actually open — otherwise the button looks unchanged and
-  // invites repeat clicks.
-  if (btn) {
-    btn.textContent = 'Request prepared ↓';
-    window.setTimeout(function () {
-      btn.disabled = false;
-      btn.textContent = originalLabel;
-    }, 1800);
+    if (!list.length) rows.appendChild(el("p", "sl-empty", "Nothing in this group yet."));
+    const note = $("sl-note");
+    note.textContent = "";
+    const when = d.generated ? new Date(d.generated).toISOString().slice(0, 10) : "";
+    note.append("Measured " + when + " on a GitHub-hosted " + (d.runner || "runner") + " (commit " + String(d.commit || "").slice(0, 7) + "). Numbers vary with the runner; compare stacks with each other, not with your laptop. ");
+    if (d.runUrl) { const a = el("a", "", "CI run"); a.href = d.runUrl; a.rel = "noopener"; note.appendChild(a); note.append(". "); }
+    const src = el("a", "", "Raw data"); src.href = DATA; src.rel = "noopener"; note.appendChild(src); note.append(".");
   }
 
-  copyBtn.onclick = function () {
-    var fullMessage = 'To: hello@flisk.sh\nSubject: ' + subject + '\n\n' + body;
-    navigator.clipboard.writeText(fullMessage).then(function () {
-      copyBtn.textContent = 'Copied!';
-      window.setTimeout(function () { copyBtn.textContent = 'copy the message'; }, 2000);
-    }, function () {
-      copyBtn.textContent = "Couldn't copy - select the message manually";
-      window.setTimeout(function () { copyBtn.textContent = 'copy the message'; }, 2500);
+  function tabs(id, items, key) {
+    const box = $(id);
+    box.textContent = "";
+    for (const it of items) {
+      const b = el("button", "", it.label);
+      b.type = "button"; b.dataset.id = it.id; b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", () => { state[key] = it.id; draw(); });
+      box.appendChild(b);
+    }
+  }
+
+  tabs("sl-metrics", METRICS, "metric");
+  fetch(DATA, { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
+    .then((d) => {
+      if (d && d.schema === 1 && Array.isArray(d.stacks)) {
+        state.data = d;
+        const groups = d.groups.filter((g) => d.stacks.some((s) => s.group === g.id && s.status !== "coming-soon")).concat(d.groups.filter((g) => !d.stacks.some((s) => s.group === g.id && s.status !== "coming-soon")));
+        tabs("sl-groups", groups.map((g) => ({ id: g.id, label: g.title })), "group");
+        state.group = groups[0] && groups[0].id;
+      }
+      draw();
     });
-  };
-}
-
-/* FAQ accordion — tap support for touch devices */
-document.querySelectorAll('.aw-acc-item').forEach(function (item) {
-  item.addEventListener('click', function () {
-    document.querySelectorAll('.aw-acc-item').forEach(function (i) { i.classList.remove('is-open'); });
-    item.classList.add('is-open');
-  });
-});
-
-/* GSAP motion (skipped under prefers-reduced-motion) */
-var REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (!REDUCED_MOTION && window.gsap && window.ScrollTrigger) {
-  gsap.registerPlugin(ScrollTrigger);
-
-  /* Hero entrance */
-  gsap.from('.aw-hero-pill', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' });
-  /* The h1 is the LCP element: keep it visible from the first paint instead of fading it in. */
-  gsap.from('.aw-hero-sub', { y: 40, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.35 });
-  gsap.from('.aw-hero .aw-install', { y: 30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.45 });
-  gsap.from('.aw-hero-ctas', { y: 30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.55 });
-  gsap.from('.aw-try', { x: 40, opacity: 0, duration: 1.1, ease: 'power3.out', delay: 0.4 });
-  gsap.to('.aw-hero-bg', {
-    scale: 1, ease: 'none',
-    scrollTrigger: { trigger: '.aw-hero', start: 'top top', end: 'bottom top', scrub: true }
-  });
-
-  /* Pricing rise-in */
-  gsap.from('.aw-price-card', {
-    y: 60, opacity: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out',
-    scrollTrigger: { trigger: '.aw-pricing-grid', start: 'top 80%' }
-  });
-} else {
-  document.documentElement.classList.add('aw-motion-fallback');
-  document.querySelectorAll('.aw-price-card').forEach(function (el, i) {
-    el.style.setProperty('--aw-delay', Math.min(i * 70, 420) + 'ms');
-    startWhenNearViewport(el, function () {
-      el.classList.add('is-motion-visible');
-    }, { rootMargin: '180px 0px', timeout: 900 + i * 20 });
-  });
-  if (REDUCED_MOTION) {
-    document.querySelectorAll('.aw-price-card').forEach(function (el) {
-      el.classList.add('is-motion-visible');
-    });
-  }
-}
-
-window.handleLicenseSubmit = handleLicenseSubmit;
-});
+})();
 </script>
-<script src="{{ site.baseurl }}/assets/js/home-journey.js?v={{ site.time | date: '%s' }}" defer></script>
