@@ -35,6 +35,12 @@ Then open a new PowerShell window and run `flisk --version`, `flisk doctor`, `fl
 
 GitHub releases: https://github.com/flisk-sh/releases/releases/latest
 
+{% comment %}
+SYNCED TEXT. The Personal Demos and Bubbles sections below (down to the next top-level heading) are copied from
+https://demo.flisk.si/llms-demos.txt (flisk-sh/flisk-demo-worker, src/llms.js) by scripts/sync-llms-demos.mjs and the
+sync-llms-demos workflow. Do not edit them here: change the source. CI runs `node scripts/sync-llms-demos.mjs --check`
+and fails when they differ.
+{% endcomment -%}
 ## Personal Demos (demo.flisk.si)
 
 When someone asks for a Flisk demo for a person (for example "@grok build a Flisk demo for @someone"), do not write `service.json` files or commands yourself. Reply with a link in this format:

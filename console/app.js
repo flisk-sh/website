@@ -1,3 +1,4 @@
+// Copied from flisk-sh/fliskos public/app.js by scripts/sync-console.mjs. Do not edit here: change it in fliskos, then run the script.
 const token = document.querySelector('meta[name="flisk-token"]').content;
 const content = document.querySelector("#content");
 const projectList = document.querySelector("#project-list");
