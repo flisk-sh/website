@@ -23,7 +23,6 @@ products:
       - { name: "pages", desc: "publish a page your agent built as a public link", href: "https://pages.flisk.si/", icon: products/put-my-page-online }
       - { name: "citable", desc: "check whether ai answers can find and cite your site", href: "https://citable.flisk.si/", icon: products/citable }
       - { name: "readme score", desc: "score your readme and get a fix for each miss", href: "https://readme.flisk.si/", icon: products/readme-checker }
-      - { name: "helpdock", desc: "turn your docs into a help center", href: "https://helpdock.flisk.si/", icon: products/helpdock }
       - { name: "flisk tools", desc: "a free store of dev tools, agent skills and flisk apps", href: "https://tools.flisk.si/", icon: products/flisk-tools }
   - label: Compare and learn
     links:
