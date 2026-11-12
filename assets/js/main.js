@@ -509,6 +509,48 @@ if (document.readyState === 'loading') {
     .catch(() => {});
 })();
 
+// Live Discord numbers (people online, total members) from the public invite on every [data-discord] link.
+(function showDiscordOnline() {
+  const links = document.querySelectorAll('[data-discord]');
+  if (!links.length) return;
+
+  const cacheKey = 'flisk-discord';
+  const render = (online, total) => {
+    if (typeof online !== 'number' || typeof total !== 'number') return;
+    links.forEach((link) => {
+      const count = link.querySelector('[data-discord-count]');
+      if (count) {
+        count.textContent = online + ' online of ' + total;
+        count.hidden = false;
+      }
+      link.classList.add('is-live');
+      link.title = online + ' online, ' + total + ' members on Discord';
+      link.setAttribute('aria-label', 'Flisk community on Discord, ' + online + ' online of ' + total + ' members');
+    });
+  };
+
+  try {
+    const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
+    if (cached && Date.now() - cached.at < 300000) {
+      render(cached.online, cached.total);
+      return;
+    }
+  } catch (e) { /* storage unavailable */ }
+
+  fetch('https://discord.com/api/v10/invites/qMu5Xn8Kaq?with_counts=true')
+    .then((res) => (res.ok ? res.json() : null))
+    .then((invite) => {
+      if (!invite) return;
+      const online = invite.approximate_presence_count;
+      const total = invite.approximate_member_count;
+      render(online, total);
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({ online, total, at: Date.now() }));
+      } catch (e) { /* storage unavailable */ }
+    })
+    .catch(() => {});
+})();
+
 // The shared Flisk bar (flisk.si/assets/bar.js) sits at the top of the page and scrolls away; keep the fixed nav under it.
 (function () {
   const root = document.documentElement;
