@@ -1,7 +1,7 @@
 ---
 layout: null
-title: Stacklytics, how fast each stack starts under Flisk - Flisk CLI
-description: "Scaffold, cold start and warm start times for every language, HTTP framework, frontend framework and resource type Flisk supports, measured by Flisk's own CI every night."
+title: Stacklytics, how long Flisk takes to bring each stack up - Flisk CLI
+description: "How long Flisk takes to scaffold and bring up every language, framework and resource type it supports, from Flisk's own nightly CI. A setup-time measure, not a runtime benchmark."
 ---
 <!doctype html>
 <html lang="en">
@@ -142,7 +142,7 @@ footer a{color:var(--dim)}
 
     <section class="chart" id="start">
       <div class="ch"><div><h2>Start time</h2><p id="start-sub"></p></div>
-        <div class="seg" id="start-seg"><button data-v="cold_start" class="on">Cold</button><button data-v="warm_start">Warm</button><button data-v="listed">Listed</button></div></div>
+        <div class="seg" id="start-seg"><button data-v="cold_start" class="on" aria-pressed="true">Cold</button><button data-v="warm_start">Warm</button><button data-v="listed">Listed</button></div></div>
       <div class="plot" id="c-start"></div>
     </section>
     <section class="chart" id="table">
@@ -167,7 +167,7 @@ footer a{color:var(--dim)}
     </section>
     <section class="chart" id="trend">
       <div class="ch"><div><h2>Trend</h2><p>Median per kind of stack, one point per nightly run.</p></div>
-        <div class="seg" id="trend-seg"><button data-v="cold_start" class="on">Cold</button><button data-v="warm_start">Warm</button><button data-v="scaffold">Scaffold</button></div></div>
+        <div class="seg" id="trend-seg"><button data-v="cold_start" class="on" aria-pressed="true">Cold</button><button data-v="warm_start">Warm</button><button data-v="scaffold">Scaffold</button></div></div>
       <div class="plot" id="c-trend"></div>
     </section>
     <section class="chart" id="coverage">
@@ -236,7 +236,7 @@ footer a{color:var(--dim)}
   const kindTitle = (id) => (st.d.groups.find((g) => g.id === id) || { title: id }).title;
   const shown = () => st.d.stacks.filter((s) => !st.hidden.has(s.key) && (st.kind === "all" || s.group === st.kind) && (!st.find || (s.name + " " + kindTitle(s.group)).toLowerCase().includes(st.find)));
 
-  function svg(w, h) { const s = document.createElementNS(NS, "svg"); s.setAttribute("viewBox", `0 0 ${w} ${h}`); s.setAttribute("width", w); s.setAttribute("height", h); return s; }
+  function svg(w, h) { const s = document.createElementNS(NS, "svg"); s.setAttribute("role", "img"); s.setAttribute("viewBox", `0 0 ${w} ${h}`); s.setAttribute("width", w); s.setAttribute("height", h); return s; }
   function add(p, tag, attrs, text) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; p.appendChild(e); return e; }
   function nice(max) { const raw = max / 4, p = 10 ** Math.floor(Math.log10(raw)), m = raw / p; const step = (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p; return { step, top: Math.ceil(max / step) * step }; }
   function wait(box, title, text) { box.textContent = ""; const w = el("div", "wait"); w.append(el("b", "", title), text); box.appendChild(w); }
@@ -268,6 +268,7 @@ footer a{color:var(--dim)}
         add(s, "text", { x: L + 6, y: y + 15, class: "tick" }, m.status === "coming-soon" ? "not in CI yet" : m.status === "no-data" ? "ran, no timing" : "no " + what.replace(/s$/, "") + " timed yet");
       });
     }
+    s.setAttribute("aria-label", box.closest("section")?.querySelector("h2")?.textContent + ": " + rows.map((r, i) => i + 1 + ". " + r.s.name + " " + (r.label ?? format(r.v))).join(", "));
     box.appendChild(s);
     return true;
   }
@@ -391,7 +392,7 @@ footer a{color:var(--dim)}
     $("count").textContent = d.stacks.length;
     const kinds = $("kinds"); kinds.textContent = "";
     [{ id: "all", title: "All" }, ...d.groups.filter((g) => d.stacks.some((s) => s.group === g.id))].forEach((g) => {
-      const b = el("button", st.kind === g.id ? "on" : "");
+      const b = el("button", st.kind === g.id ? "on" : ""); b.setAttribute("aria-pressed", String(st.kind === g.id));
       if (g.id !== "all") { const dot = el("i"); dot.style.background = st.gcolor[g.id]; b.appendChild(dot); }
       b.append(g.id === "all" ? "All" : g.title.replace(/ \(.*\)$/, ""));
       b.type = "button"; b.addEventListener("click", () => { st.kind = g.id; draw(); }); kinds.appendChild(b);
@@ -460,7 +461,7 @@ footer a{color:var(--dim)}
   }
 
   for (const [id, key] of [["start-seg", "start"], ["trend-seg", "trend"]]) for (const b of $(id).querySelectorAll("button")) b.addEventListener("click", () => {
-    st[key] = b.dataset.v; for (const x of $(id).querySelectorAll("button")) x.classList.toggle("on", x === b); if (st.d) draw();
+    st[key] = b.dataset.v; for (const x of $(id).querySelectorAll("button")) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", String(x === b)); } if (st.d) draw();
   });
   $("find").addEventListener("input", (e) => { st.find = e.target.value.trim().toLowerCase(); if (st.d) draw(); });
   $("only").addEventListener("change", (e) => { st.only = e.target.checked; if (st.d) draw(); });
