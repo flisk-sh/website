@@ -163,9 +163,12 @@ function initCopyButtons() {
 
 // Sends [data-cta] clicks to the analytics tool when one is configured (plausible_domain in _config.yml).
 function initCtaEvents() {
+  if (initCtaEvents.ready) return;
+  initCtaEvents.ready = true;
   document.addEventListener('click', (event) => {
-    const element = event.target.closest('[data-cta]');
-    if (element && typeof window.plausible === 'function') {
+    const target = event.target instanceof Element ? event.target : null;
+    const element = target && target.closest('[data-cta]');
+    if (element && element.dataset.cta && typeof window.plausible === 'function') {
       window.plausible('cta', { props: { name: element.dataset.cta } });
     }
   });
