@@ -241,11 +241,11 @@ footer a{color:var(--dim)}
   // Ranked horizontal bars with an axis on top, after podlytics.
   function ranked(box, rows, { cap, format = fmt, missingList = [], what }) {
     box.textContent = "";
-    if (!rows.length) return false;
+    if (!rows.length && !missingList.length) return false;
     box.appendChild(el("div", "cap", cap));
     const gap = missingList.length ? 14 : 0;
     const W = box.clientWidth || 760, L = W < 520 ? 140 : 214, R = W < 520 ? 52 : 70, T = 22, RH = 25, H = T + (rows.length + missingList.length) * RH + gap + 4;
-    const { step, top } = nice(Math.max(...rows.map((r) => r.v)));
+    const { step, top } = nice(Math.max(1, ...rows.map((r) => r.v)));
     const s = svg(W, H), x = (v) => L + (v / top) * (W - L - R);
     for (let v = 0; v <= top + 1e-9; v += step) { add(s, "line", { x1: x(v), x2: x(v), y1: T - 4, y2: H, class: "grid" }); add(s, "text", { x: x(v), y: 12, "text-anchor": "middle", class: "tick" }, format(v)); }
     rows.forEach((r, i) => {
@@ -358,7 +358,7 @@ footer a{color:var(--dim)}
       for (const [k] of cols) {
         const v = val(s, k), c = el("span", "tc" + (v == null ? " none" : ""));
         if (v != null) { const i = el("i"); i.style.width = Math.max(1.5, (v / max[k]) * 100) + "%"; i.style.background = st.color[s.key]; c.appendChild(i); }
-        c.appendChild(el("em", "", v == null ? (s.status === "coming-soon" ? "not in CI yet" : "no data") : fmt(v)));
+        c.appendChild(el("em", "", v == null ? (s.status === "coming-soon" ? "not in CI" : "no data") : fmt(v)));
         r.appendChild(c);
       }
       box.appendChild(r);
@@ -408,6 +408,7 @@ footer a{color:var(--dim)}
       b.addEventListener("click", () => { st.hidden.has(s.key) ? st.hidden.delete(s.key) : st.hidden.add(s.key); draw(); });
       list.appendChild(b);
     }
+    if (!list.children.length) list.appendChild(el("p", "note", st.find ? "No stack matches \u201c" + st.find + "\u201d." : "No stack in this view."));
   }
 
   function kp() {
@@ -415,25 +416,28 @@ footer a{color:var(--dim)}
     const best = m.slice().sort((a, b) => val(a, "cold_start") - val(b, "cold_start"))[0];
     const warm = m.map((s) => s.metrics?.warm_start).filter((v) => v != null);
     const box = $("kp"); box.textContent = "";
-    [[m.length + " / " + st.d.stacks.length, "stacks measured"], [best ? fmt(val(best, "cold_start")) : "–", "fastest cold start" + (best ? " · " + best.name : "")], [fmt(median(m.map((s) => val(s, "cold_start")))), "median cold start"], [fmt(median(warm)), "median warm start"], [(st.d.generated || "").slice(0, 10), "last CI run · " + String(st.d.commit || "").slice(0, 7)]]
+    [[m.length + " / " + st.d.stacks.length, "with a cold start"], [best ? fmt(val(best, "cold_start")) : "–", "fastest cold start" + (best ? " · " + best.name : "")], [fmt(median(m.map((s) => val(s, "cold_start")))), "median cold start"], [fmt(median(warm)), "median warm start"], [(st.d.generated || "").slice(0, 10), "last CI run · " + String(st.d.commit || "").slice(0, 7)]]
       .forEach(([b, t]) => { const d = el("div"); d.append(el("b", "", b), t); box.appendChild(d); });
   }
 
   // A chart with nothing to show is left out, tab and all, as podlytics does.
-  function shownIf(id, on) {
-    $(id).hidden = !on;
-    const t = document.querySelector('#tabs a[href="#' + id + '"]'); if (t) t.hidden = !on;
+  function shownIf(id, on, has = on) {
+    const sec = $(id), box = sec.querySelector(".plot,.tbl");
+    sec.hidden = !has;
+    if (has && !on && box) { box.textContent = ""; box.appendChild(el("p", "note", st.find ? "No stack matches \u201c" + st.find + "\u201d." : st.kind !== "all" ? "No " + kindTitle(st.kind).replace(/ \(.*\)$/, "") + " stack has this timing yet." : "Every stack with this timing is hidden. Press \u21ba to show them again.")); }
+    const t = document.querySelector('#tabs a[href="#' + id + '"]'); if (t) t.hidden = !has;
   }
 
   function draw() {
     $("start-sub").textContent = SUB[st.start];
-    shownIf("start", metricChart("c-start", st.start, (st.start === "listed" ? "flisk status lists the URL" : "route answers 200") + " · GitHub " + (st.d.runner || "runner") + " · fastest on top") || st.start !== "cold_start");
-    shownIf("table", table());
-    shownIf("scatter", scatter() !== false);
-    shownIf("saving", saving());
-    shownIf("scaffold", metricChart("c-scaffold", "scaffold", "flisk resource to files on disk · fastest on top"));
-    shownIf("reload", metricChart("c-reload", "hot_reload", "edit to new response · fastest on top"));
-    shownIf("trend", trend());
+    const any = (k) => st.d.stacks.some((s) => val(s, k) != null);
+    shownIf("start", metricChart("c-start", st.start, (st.start === "listed" ? "flisk status lists the URL" : "route answers 200") + " · GitHub " + (st.d.runner || "runner") + " · fastest on top"), true);
+    shownIf("table", table(), true);
+    shownIf("scatter", scatter() !== false, st.d.stacks.some((s) => val(s, "cold_start") != null && val(s, "warm_start") != null));
+    shownIf("saving", saving(), any("warm_start"));
+    shownIf("scaffold", metricChart("c-scaffold", "scaffold", "flisk resource to files on disk · fastest on top"), any("scaffold"));
+    shownIf("reload", metricChart("c-reload", "hot_reload", "edit to new response · fastest on top"), any("hot_reload"));
+    const tr = trend(); shownIf("trend", tr, tr || new Set(st.d.stacks.flatMap((s) => (s.history || []).map((h) => h.date))).size > 1);
     coverage(); side();
   }
 
@@ -471,7 +475,7 @@ footer a{color:var(--dim)}
     st.d = d;
     d.groups.forEach((g, i) => (st.gcolor[g.id] = PAL[i % PAL.length]));
     d.stacks.forEach((s) => { s.key = s.group + ":" + s.id; s.icon = ICONS[s.name] || null; s.name = NAMES[s.name] || s.name; st.color[s.key] = st.gcolor[s.group]; });
-    $("meta").textContent = "Measured " + (d.generated || "").slice(0, 10) + " on a GitHub-hosted " + (d.runner || "runner") + ", commit " + String(d.commit || "").slice(0, 7) + (d.trigger ? " (" + d.trigger + " run)" : "") + ".";
+    $("meta").textContent = "Measured " + (d.generated || "").slice(0, 10) + " on a GitHub-hosted " + (d.runner || "runner") + ", commit " + String(d.commit || "").slice(0, 7) + (d.trigger ? " (" + ({ schedule: "nightly", nightly: "nightly", workflow_run: "after a release", workflow_dispatch: "manual", release: "after a release", manual: "manual" }[d.trigger] || d.trigger) + " run)" : "") + ".";
     if (d.runUrl) { const a = el("a", "", " CI run ↗"); a.href = d.runUrl; a.rel = "noopener"; $("meta").appendChild(a); }
     kp(); csv(); draw();
   });
