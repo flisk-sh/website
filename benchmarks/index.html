@@ -1,0 +1,153 @@
+---
+layout: default
+title: Stacklytics, how fast each stack starts under Flisk - Flisk CLI
+description: "Scaffold, cold start and warm start times for every language, HTTP framework, frontend framework and resource type Flisk supports, measured by Flisk's own CI every night."
+---
+
+<style>
+.sl-controls { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.sl-tabs { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.sl-tabs button { font: inherit; font-size: 0.875rem; color: rgba(236, 236, 241, 0.6); background: none; border: 0; border-bottom: 2px solid transparent; padding: 0.4rem 0.7rem; cursor: pointer; }
+.sl-tabs button:hover { color: #ececf1; }
+.sl-tabs button[aria-pressed="true"] { color: #ececf1; border-bottom-color: var(--accent, #3ddc84); }
+.sl-panel { border-radius: var(--radius); background: #121218; border: 1px solid rgba(255, 255, 255, 0.07); padding: clamp(1rem, 3vw, 2rem); }
+.sl-title { margin: 0 0 0.25rem; font-size: 1.125rem; font-weight: 600; }
+.sl-sub { margin: 0 0 1.25rem; color: rgba(236, 236, 241, 0.6); font-size: 0.9rem; }
+.sl-row { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 6rem 5.5rem; gap: 0.75rem; align-items: center; padding: 0.4rem 0; font-size: 0.9rem; }
+.sl-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sl-track { height: 1.35rem; background: rgba(255, 255, 255, 0.04); border-radius: 4px; overflow: hidden; }
+.sl-bar { height: 100%; background: var(--accent, #3ddc84); border-radius: 0 4px 4px 0; opacity: 0.85; transform-origin: left; animation: sl-grow 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.sl-row.is-best .sl-bar { opacity: 1; }
+.sl-val { text-align: right; font-variant-numeric: tabular-nums; font-family: ui-monospace, Menlo, monospace; }
+.sl-row.is-soon { color: rgba(236, 236, 241, 0.4); }
+.sl-row.is-soon .sl-track { background: none; border: 1px dashed rgba(255, 255, 255, 0.15); }
+.sl-spark { width: 100%; height: 1.35rem; }
+.sl-note { margin: 1rem 0 0; color: rgba(236, 236, 241, 0.55); font-size: 0.8rem; }
+.sl-note a { color: inherit; }
+.sl-empty { padding: 2rem 0; color: rgba(236, 236, 241, 0.7); }
+@keyframes sl-grow { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .sl-bar { animation: none; } }
+@media (max-width: 640px) { .sl-row { grid-template-columns: 6.5rem minmax(0, 1fr) 4.5rem; } .sl-spark-cell { display: none; } }
+</style>
+
+<div class="aw">
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <h1>Stacklytics. <span class="aw-accent">How fast does your stack start?</span></h1>
+      <p class="aw-subhero-sub">Flisk's own CI scaffolds and starts every language, framework and resource type it supports, on a fresh runner every night, and publishes the times. Pick a stack, then try it with <code>npx @flisk-sh/flisk demo</code>.</p>
+    </div>
+  </section>
+
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="sl-controls">
+        <div class="sl-tabs" id="sl-metrics" role="group" aria-label="Measurement"></div>
+        <div class="sl-tabs" id="sl-groups" role="group" aria-label="Kind of stack"></div>
+      </div>
+      <div class="sl-panel">
+        <h2 class="sl-title" id="sl-title">Cold start</h2>
+        <p class="sl-sub" id="sl-sub"></p>
+        <div id="sl-rows" aria-live="polite"><p class="sl-empty">Loading the latest CI numbers.</p></div>
+        <p class="sl-note" id="sl-note"></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const DATA = "https://raw.githubusercontent.com/flisk-sh/flisk/benchmarks-data/stack-timings/latest.json";
+  const METRICS = [
+    { id: "cold_start", label: "Cold start", sub: "First flisk up on a fresh runner, until the route answers 200 through Traefik. Lower is faster.", fallback: "listed" },
+    { id: "warm_start", label: "Warm start", sub: "flisk down, then flisk up again with the images cached, until the route answers 200." },
+    { id: "scaffold", label: "Scaffold", sub: "flisk resource, from the command to the files on disk." },
+    { id: "hot_reload", label: "Hot reload", sub: "Edit a file until the new response is served." },
+  ];
+  const $ = (id) => document.getElementById(id);
+  const state = { metric: "cold_start", group: null, data: null };
+  const secs = (ms) => (ms < 1000 ? ms + " ms" : (ms / 1000).toFixed(ms < 10000 ? 1 : 0) + " s");
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const valueOf = (s, m) => { const v = s.metrics[m.id]; return v != null ? v : m.fallback ? s.metrics[m.fallback] : null; };
+
+  function spark(history, m) {
+    const pts = (history || []).map((h) => (h[m.id] != null ? h[m.id] : m.fallback ? h[m.fallback] : null)).filter((v) => v != null);
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 100 20"); svg.setAttribute("class", "sl-spark"); svg.setAttribute("preserveAspectRatio", "none");
+    if (pts.length < 2) return svg;
+    const lo = Math.min(...pts), hi = Math.max(...pts), span = hi - lo || 1;
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+    line.setAttribute("points", pts.map((v, i) => (i / (pts.length - 1)) * 100 + "," + (18 - ((v - lo) / span) * 16)).join(" "));
+    line.setAttribute("fill", "none"); line.setAttribute("stroke", "currentColor"); line.setAttribute("stroke-width", "1.5"); line.setAttribute("opacity", "0.6"); line.setAttribute("vector-effect", "non-scaling-stroke");
+    svg.appendChild(line);
+    return svg;
+  }
+
+  function draw() {
+    const m = METRICS.find((x) => x.id === state.metric);
+    $("sl-title").textContent = m.label;
+    $("sl-sub").textContent = m.sub;
+    const rows = $("sl-rows");
+    rows.textContent = "";
+    const d = state.data;
+    if (!d) { rows.appendChild(el("p", "sl-empty", "The first numbers arrive after the next nightly CI run. Every stack below is already listed.")); return; }
+    for (const b of document.querySelectorAll("#sl-metrics button")) b.setAttribute("aria-pressed", String(b.dataset.id === state.metric));
+    for (const b of document.querySelectorAll("#sl-groups button")) b.setAttribute("aria-pressed", String(b.dataset.id === state.group));
+    const list = d.stacks.filter((s) => s.group === state.group).map((s) => ({ s, v: s.status === "measured" || s.status === "no-data" ? valueOf(s, m) : null }));
+    const measured = list.filter((r) => r.v != null).sort((a, b) => a.v - b.v);
+    const rest = list.filter((r) => r.v == null);
+    const max = Math.max(...measured.map((r) => r.v), 1);
+    measured.forEach((r, i) => {
+      const row = el("div", "sl-row" + (i === 0 ? " is-best" : ""));
+      row.appendChild(el("span", "sl-name", r.s.name));
+      const track = el("div", "sl-track");
+      const bar = el("div", "sl-bar");
+      bar.style.width = Math.max(1.5, (r.v / max) * 100) + "%";
+      track.appendChild(bar);
+      row.appendChild(track);
+      row.appendChild(el("span", "sl-val", secs(r.v)));
+      const cell = el("span", "sl-spark-cell"); cell.appendChild(spark(r.s.history, m)); row.appendChild(cell);
+      rows.appendChild(row);
+    });
+    for (const r of rest) {
+      const row = el("div", "sl-row is-soon");
+      row.appendChild(el("span", "sl-name", r.s.name));
+      row.appendChild(el("div", "sl-track"));
+      row.appendChild(el("span", "sl-val", r.s.status === "no-data" ? "no data" : "coming soon"));
+      row.appendChild(el("span", "sl-spark-cell"));
+      rows.appendChild(row);
+    }
+    if (!list.length) rows.appendChild(el("p", "sl-empty", "Nothing in this group yet."));
+    const note = $("sl-note");
+    note.textContent = "";
+    const when = d.generated ? new Date(d.generated).toISOString().slice(0, 10) : "";
+    note.append("Measured " + when + " on a GitHub-hosted " + (d.runner || "runner") + " (commit " + String(d.commit || "").slice(0, 7) + "). Numbers vary with the runner; compare stacks with each other, not with your laptop. ");
+    if (d.runUrl) { const a = el("a", "", "CI run"); a.href = d.runUrl; a.rel = "noopener"; note.appendChild(a); note.append(". "); }
+    const src = el("a", "", "Raw data"); src.href = DATA; src.rel = "noopener"; note.appendChild(src); note.append(".");
+  }
+
+  function tabs(id, items, key) {
+    const box = $(id);
+    box.textContent = "";
+    for (const it of items) {
+      const b = el("button", "", it.label);
+      b.type = "button"; b.dataset.id = it.id; b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", () => { state[key] = it.id; draw(); });
+      box.appendChild(b);
+    }
+  }
+
+  tabs("sl-metrics", METRICS, "metric");
+  fetch(DATA, { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
+    .then((d) => {
+      if (d && d.schema === 1 && Array.isArray(d.stacks)) {
+        state.data = d;
+        const groups = d.groups.filter((g) => d.stacks.some((s) => s.group === g.id && s.status !== "coming-soon")).concat(d.groups.filter((g) => !d.stacks.some((s) => s.group === g.id && s.status !== "coming-soon")));
+        tabs("sl-groups", groups.map((g) => ({ id: g.id, label: g.title })), "group");
+        state.group = groups[0] && groups[0].id;
+      }
+      draw();
+    });
+})();
+</script>

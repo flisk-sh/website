@@ -1,6 +1,6 @@
 {%- assign product_paths = '/features/,/layers/,/sandbox/,/agents/' | split: ',' %}
 {%- assign enterprise_paths = '/why/,/fit/,/migrate/,/waiting/,/no-lock-in/,/compare/,/docs/with-helm/,/docs/claims/' | split: ',' %}
-{%- assign resource_paths = '/docs/,/blog/' | split: ',' %}
+{%- assign resource_paths = '/docs/,/blog/,/benchmarks/' | split: ',' %}
 {%- assign in_product = false %}{% assign in_enterprise = false %}{% assign in_resources = false %}
 {%- for p in product_paths %}{% if page.url contains p %}{% assign in_product = true %}{% endif %}{% endfor %}
 {%- for p in enterprise_paths %}{% if page.url contains p %}{% assign in_enterprise = true %}{% endif %}{% endfor %}
@@ -82,7 +82,7 @@
       <details class="aw-nav-more{% if in_resources %} is-active{% endif %}">
         <summary>Resources <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
         <div class="aw-nav-menu">
-          <p class="aw-nav-menu-head"><span>nav/resources</span><span>11 links</span></p>
+          <p class="aw-nav-menu-head"><span>nav/resources</span><span>12 links</span></p>
           <div class="aw-nav-menu-cols">
             <div>
               <p class="aw-nav-menu-label">Learn</p>
@@ -90,6 +90,7 @@
               <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a>
               <a href="{{ '/#faq' | relative_url }}">faq</a>
               <a href="{{ '/blog/' | relative_url }}">field notes</a>
+              <a href="{{ '/benchmarks/' | relative_url }}">benchmarks</a>
             </div>
             <div>
               <p class="aw-nav-menu-label">Starters</p>
