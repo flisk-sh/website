@@ -38,4 +38,10 @@ class NavDataTest < Minitest::Test
       assert File.exist?(path), "#{l['name']} points at missing icon #{path}"
     end
   end
+
+  def test_no_two_links_share_an_icon
+    icons = links.filter_map { |l| l["icon"] }
+    repeated = icons.tally.select { |_icon, count| count > 1 }.keys
+    assert_empty repeated, "menu links share an icon; add a tile to flisk-emoji instead: #{repeated.join(', ')}"
+  end
 end

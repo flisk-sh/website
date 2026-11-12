@@ -1,6 +1,6 @@
 # Header dropdown menus, rendered by _includes/navigation.html.
 # Each link: name, desc (one plain line on what it does), href.
-# icon: a tile from flisk-emoji (products/<name> or kinds/<name>, under assets/img/).
+# icon: a tile from flisk-emoji (products/<name>, examples/<repo> or kinds/<name>, under assets/img/).
 # bi: a Bootstrap icon name, for links that are pages rather than products.
 # Links that leave flisk.sh get an arrow automatically.
 
@@ -8,13 +8,13 @@ products:
   - label: Run your app
     links:
       - { name: "flisk cli", desc: "start your whole app on your laptop with one command", href: /features/, icon: products/flisk-cli }
-      - { name: "flisk sandbox", desc: "try flisk in your browser with nothing to install", href: /sandbox/, icon: kinds/lab }
+      - { name: "flisk sandbox", desc: "try flisk in your browser with nothing to install", href: /sandbox/, icon: products/flisk-sandbox }
       - { name: "build me an app", desc: "describe an app and get its parts and commands", href: "https://build.flisk.si/", icon: products/build-me-an-app }
       - { name: "fliskos", desc: "a desktop app to watch and control your stacks", href: "https://os.flisk.si/", icon: products/fliskos }
   - label: Agents and AI
     links:
-      - { name: "flisk for agents", desc: "let claude code or cursor start and fix your stack", href: /agents/, icon: kinds/skills }
-      - { name: "mcp servers", desc: "free mcp servers for claude, cursor and codex", href: /mcp/, icon: kinds/plugin }
+      - { name: "flisk for agents", desc: "let claude code or cursor start and fix your stack", href: /agents/, icon: products/flisk-agents }
+      - { name: "mcp servers", desc: "free mcp servers for claude, cursor and codex", href: /mcp/, icon: products/flisk-mcp }
       - { name: "run my agents", desc: "a claude code plugin that stops agents overwriting each other", href: "https://run-my-agents.flisk.si/", icon: products/run-my-agents }
       - { name: "flisk inference", desc: "a free model that reviews service.json in your pull requests", href: "https://inference.flisk.si/", icon: products/flisk-inference }
       - { name: "fleet", desc: "one api that starts agent sandboxes on any provider", href: "https://fleet.flisk.si/", icon: products/fleet }
@@ -30,7 +30,7 @@ products:
       - { name: "devex roadmap", desc: "a map of local dev tools and what each one does", href: "https://roadmap.flisk.si/", icon: products/devex-roadmap }
       - { name: "command comparer", desc: "the same task in flisk, compose and tilt", href: "https://cmd.flisk.si/", icon: products/command-comparer }
       - { name: "personal demos", desc: "a running demo stack made from your post on x", href: "https://demo.flisk.si/", icon: products/personal-demos }
-      - { name: "golden layers", desc: "shared base images that make rebuilds fast", href: /layers/, icon: kinds/stack }
+      - { name: "golden layers", desc: "shared base images that make rebuilds fast", href: /layers/, icon: products/golden-layers }
       - { name: "recently shipped", desc: "the newest features and releases", href: "/#new", icon: kinds/doc }
       - { name: "all flisk products", desc: "every flisk app on one page", href: "/#products", icon: kinds/emoji }
 
@@ -64,12 +64,12 @@ resources:
       - { name: "benchmarks", desc: "start times for every stack, measured nightly", href: /benchmarks/, bi: speedometer2 }
   - label: Starters
     links:
-      - { name: "flisk-example", desc: "hono, vite and bun", href: "https://github.com/flisk-sh/flisk-example", icon: kinds/template }
-      - { name: "flisk-saas-starter", desc: "dashboard and checkout", href: "https://github.com/flisk-sh/flisk-saas-starter", icon: kinds/template }
-      - { name: "flisk-ecommerce-example", desc: "vue storefront and catalog api", href: "https://github.com/flisk-sh/flisk-ecommerce-example", icon: kinds/template }
+      - { name: "flisk-example", desc: "hono, vite and bun", href: "https://github.com/flisk-sh/flisk-example", icon: examples/flisk-example }
+      - { name: "flisk-saas-starter", desc: "dashboard and checkout", href: "https://github.com/flisk-sh/flisk-saas-starter", icon: examples/flisk-saas-starter }
+      - { name: "flisk-ecommerce-example", desc: "vue storefront and catalog api", href: "https://github.com/flisk-sh/flisk-ecommerce-example", icon: examples/flisk-ecommerce-example }
   - label: Systems
     links:
-      - { name: "restaurant", desc: "reservations, kitchen and menu", href: "https://github.com/flisk-sh/flisk-restaurant-example", icon: kinds/example }
-      - { name: "auth, queue and email", desc: "identity, queue and email services", href: "https://github.com/flisk-sh/flisk-auth-queue-email-example", icon: kinds/example }
-      - { name: "user management", desc: "scim 2.0 sync and pkce sign-in", href: "https://github.com/flisk-sh/flisk-user-management", icon: kinds/example }
-      - { name: "erp example", desc_from: erp, href: "https://github.com/flisk-sh/flisk-erp-system", icon: kinds/example }
+      - { name: "restaurant", desc: "reservations, kitchen and menu", href: "https://github.com/flisk-sh/flisk-restaurant-example", icon: examples/flisk-restaurant-example }
+      - { name: "auth, queue and email", desc: "identity, queue and email services", href: "https://github.com/flisk-sh/flisk-auth-queue-email-example", icon: examples/flisk-auth-queue-email-example }
+      - { name: "user management", desc: "scim 2.0 sync and pkce sign-in", href: "https://github.com/flisk-sh/flisk-user-management", icon: examples/flisk-user-management }
+      - { name: "erp example", desc_from: erp, href: "https://github.com/flisk-sh/flisk-erp-system", icon: examples/flisk-erp-system }
