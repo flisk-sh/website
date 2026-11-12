@@ -1,4 +1,4 @@
-{%- assign product_paths = '/features/,/layers/,/sandbox/,/agents/' | split: ',' %}
+{%- assign product_paths = '/features/,/layers/,/sandbox/,/agents/,/mcp/' | split: ',' %}
 {%- assign enterprise_paths = '/why/,/fit/,/migrate/,/waiting/,/no-lock-in/,/compare/,/docs/with-helm/,/docs/claims/' | split: ',' %}
 {%- assign resource_paths = '/docs/,/blog/,/benchmarks/' | split: ',' %}
 {%- assign in_product = false %}{% assign in_enterprise = false %}{% assign in_resources = false %}
@@ -13,101 +13,36 @@
     </a>
 
     <div class="aw-nav-links" id="aw-nav-links">
-      <details class="aw-nav-more{% if in_product %} is-active{% endif %}">
-        <summary>Products <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
-        <div class="aw-nav-menu">
-          <p class="aw-nav-menu-head"><span>nav/products</span><span>17 links</span></p>
+      {%- assign menus = "products,enterprise,resources" | split: "," %}
+      {%- for key in menus %}
+      {%- assign groups = site.data.nav[key] %}
+      {%- assign link_count = 0 %}{% for g in groups %}{% assign link_count = link_count | plus: g.links.size %}{% endfor %}
+      {%- assign menu_active = false %}
+      {%- if key == "products" and in_product %}{% assign menu_active = true %}{% endif %}
+      {%- if key == "enterprise" and in_enterprise %}{% assign menu_active = true %}{% endif %}
+      {%- if key == "resources" and in_resources %}{% assign menu_active = true %}{% endif %}
+      <details class="aw-nav-more{% if menu_active %} is-active{% endif %}">
+        <summary>{{ key | capitalize }} <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
+        <div class="aw-nav-menu aw-nav-menu-{{ key }}">
+          <p class="aw-nav-menu-head"><span>nav/{{ key }}</span><span>{{ link_count }} links</span></p>
           <div class="aw-nav-menu-cols">
+            {%- for g in groups %}
             <div>
-              <p class="aw-nav-menu-label">Run your app</p>
-              <a href="{{ '/features/' | relative_url }}">flisk cli<small>your app running on your laptop</small></a>
-              <a href="{{ '/sandbox/' | relative_url }}">flisk sandbox<small>a guided tour in the browser</small></a>
-              <a href="{{ '/agents/' | relative_url }}">flisk for agents<small>mcp server and skills for coding agents</small></a>
-              <a href="https://os.flisk.si">fliskos<small>a desktop command center</small></a>
-              <a href="https://run-my-agents.flisk.si/">run my agents<small>claude code, simplified</small></a>
-              <a href="https://build.flisk.si/">build me an app<small>the parts and the commands</small></a>
+              <p class="aw-nav-menu-label">{{ g.label }}</p>
+              {%- for l in g.links %}
+              {%- assign external = false %}{% if l.href contains "://" %}{% assign external = true %}{% endif %}
+              <a class="aw-nav-item" href="{% if external %}{{ l.href }}{% else %}{{ l.href | relative_url }}{% endif %}"{% if l.href contains "github.com" %} target="_blank" rel="noopener"{% endif %}>
+                {%- if l.icon %}<img class="aw-nav-icon" src="{{ '/assets/img/' | append: l.icon | append: '.svg' | relative_url }}" alt="" width="28" height="28" loading="lazy">{% elsif l.bi %}<i class="aw-nav-glyph bi bi-{{ l.bi }}" aria-hidden="true"></i>{% endif %}
+                <span class="aw-nav-text-block"><span class="aw-nav-name">{{ l.name }}{% if external %} <span class="aw-nav-ext" aria-label="opens another site">↗</span>{% endif %}</span>
+                <small>{% if l.desc_from == "erp" %}{{ site.data.flisk.erp_services }} services in {{ site.data.flisk.erp_domains }} domains{% else %}{{ l.desc }}{% endif %}</small></span>
+              </a>
+              {%- endfor %}
             </div>
-            <div>
-              <p class="aw-nav-menu-label">Publish and get found</p>
-              <a href="https://pages.flisk.si">pages<small>an agent-built page as a link</small></a>
-              <a href="https://citable.flisk.si">citable<small>can ai answers cite your site</small></a>
-              <a href="https://readme.flisk.si">readme score<small>your readme out of 100</small></a>
-              <a href="https://helpdock.flisk.si">helpdock<small>docs as a help center</small></a>
-              <a href="https://tools.flisk.si/">flisk tools<small>small web and github tools</small></a>
-            </div>
-            <div>
-              <p class="aw-nav-menu-label">Compare and learn</p>
-              <a href="https://roadmap.flisk.si">devex roadmap<small>a map of local dev tools</small></a>
-              <a href="https://cmd.flisk.si">command comparer<small>flisk next to compose and tilt</small></a>
-              <a href="https://demo.flisk.si">personal demos<small>a demo stack made for you</small></a>
-              <a href="{{ '/layers/' | relative_url }}">golden layers</a>
-              <a href="{{ '/#new' | relative_url }}">recently shipped</a>
-              <a href="{{ '/#products' | relative_url }}">all flisk products</a>
-            </div>
+            {%- endfor %}
           </div>
         </div>
       </details>
-
-      <details class="aw-nav-more{% if in_enterprise %} is-active{% endif %}">
-        <summary>Enterprise <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
-        <div class="aw-nav-menu">
-          <p class="aw-nav-menu-head"><span>nav/enterprise</span><span>12 links</span></p>
-          <div class="aw-nav-menu-cols">
-            <div>
-              <p class="aw-nav-menu-label">Enterprise</p>
-              <a href="{{ '/#waitlist' | relative_url }}">enterprise license<small>sso, air-gapped, sla</small></a>
-              <a href="{{ '/#adopters' | relative_url }}">who uses flisk<small>teams listed with consent</small></a>
-              <a href="{{ '/docs/with-helm/' | relative_url }}">flisk with helm<small>local dev and cluster deployment</small></a>
-              <a href="{{ '/no-lock-in/' | relative_url }}">no lock-in<small>mit core, open standard files</small></a>
-              <a href="{{ '/migrate/' | relative_url }}">migrate to flisk<small>move from compose, tilt or a wiki</small></a>
-            </div>
-            <div>
-              <p class="aw-nav-menu-label">Evaluate</p>
-              <a href="{{ '/compare/' | relative_url }}">compare</a>
-              <a href="{{ '/why/' | relative_url }}">why flisk</a>
-              <a href="{{ '/fit/' | relative_url }}">does flisk fit?</a>
-              <a href="{{ '/waiting/' | relative_url }}">cut the cost of waiting</a>
-              <a href="{{ '/docs/claims/' | relative_url }}">claims and benchmarks</a>
-            </div>
-            <div>
-              <p class="aw-nav-menu-label">Security</p>
-              <a href="https://github.com/flisk-sh/flisk-user-management" target="_blank" rel="noopener">scim and pkce example <span aria-hidden="true">↗</span></a>
-              <a href="{{ '/.well-known/security.txt' | relative_url }}">security contact</a>
-              <a href="https://github.com/flisk-sh/flisk/blob/main/LICENSE" target="_blank" rel="noopener">mit license <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </div>
-      </details>
-
-      <details class="aw-nav-more{% if in_resources %} is-active{% endif %}">
-        <summary>Resources <i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
-        <div class="aw-nav-menu">
-          <p class="aw-nav-menu-head"><span>nav/resources</span><span>12 links</span></p>
-          <div class="aw-nav-menu-cols">
-            <div>
-              <p class="aw-nav-menu-label">Learn</p>
-              <a href="{{ '/docs/' | relative_url }}">docs</a>
-              <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a>
-              <a href="{{ '/#faq' | relative_url }}">faq</a>
-              <a href="{{ '/blog/' | relative_url }}">field notes</a>
-              <a href="{{ '/benchmarks/' | relative_url }}">benchmarks</a>
-            </div>
-            <div>
-              <p class="aw-nav-menu-label">Starters</p>
-              <a href="https://github.com/flisk-sh/flisk-example" target="_blank" rel="noopener">flisk-example<small>hono, vite and bun</small></a>
-              <a href="https://github.com/flisk-sh/flisk-saas-starter" target="_blank" rel="noopener">flisk-saas-starter<small>dashboard and checkout</small></a>
-              <a href="https://github.com/flisk-sh/flisk-ecommerce-example" target="_blank" rel="noopener">flisk-ecommerce-example<small>vue storefront, catalog api</small></a>
-            </div>
-            <div>
-              <p class="aw-nav-menu-label">Systems</p>
-              <a href="https://github.com/flisk-sh/flisk-restaurant-example" target="_blank" rel="noopener">flisk-restaurant-example<small>reservations, kitchen, menu</small></a>
-              <a href="https://github.com/flisk-sh/flisk-auth-queue-email-example" target="_blank" rel="noopener">flisk-auth-queue-email-example<small>identity, queue and email</small></a>
-              <a href="https://github.com/flisk-sh/flisk-user-management" target="_blank" rel="noopener">flisk-user-management<small>scim 2.0 and pkce</small></a>
-              <a href="https://github.com/flisk-sh/flisk-erp-system" target="_blank" rel="noopener">flisk-erp-system<small>{{ site.data.flisk.erp_services }} services, {{ site.data.flisk.erp_domains }} domains</small></a>
-            </div>
-          </div>
-        </div>
-      </details>
+      {%- endfor %}
 
       {%- comment %} The header's Docs link is hidden with the burger menu, so the menu has its own. {% endcomment %}
       <a class="aw-nav-link aw-nav-docs-mobile{% if page.url contains '/docs/' %} is-active{% endif %}" href="{{ '/docs/' | relative_url }}">Docs</a>

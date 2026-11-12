@@ -1,0 +1,75 @@
+# Header dropdown menus, rendered by _includes/navigation.html.
+# Each link: name, desc (one plain line on what it does), href.
+# icon: a tile from flisk-emoji (products/<name> or kinds/<name>, under assets/img/).
+# bi: a Bootstrap icon name, for links that are pages rather than products.
+# Links that leave flisk.sh get an arrow automatically.
+
+products:
+  - label: Run your app
+    links:
+      - { name: flisk cli, desc: start your whole app on your laptop with one command, href: /features/, icon: products/flisk-cli }
+      - { name: flisk sandbox, desc: try flisk in your browser with nothing to install, href: /sandbox/, icon: kinds/lab }
+      - { name: build me an app, desc: describe an app and get its parts and commands, href: "https://build.flisk.si/", icon: products/build-me-an-app }
+      - { name: fliskos, desc: a desktop app to watch and control your stacks, href: "https://os.flisk.si/", icon: products/fliskos }
+  - label: Agents and AI
+    links:
+      - { name: flisk for agents, desc: let claude code or cursor start and fix your stack, href: /agents/, icon: kinds/skills }
+      - { name: mcp servers, desc: free mcp servers for claude, cursor and codex, href: /mcp/, icon: kinds/plugin }
+      - { name: run my agents, desc: a claude code plugin that stops agents overwriting each other, href: "https://run-my-agents.flisk.si/", icon: products/run-my-agents }
+      - { name: flisk inference, desc: a free model that reviews service.json in your pull requests, href: "https://inference.flisk.si/", icon: products/flisk-inference }
+      - { name: fleet, desc: one api that starts agent sandboxes on any provider, href: "https://fleet.flisk.si/", icon: products/fleet }
+  - label: Publish and get found
+    links:
+      - { name: pages, desc: publish a page your agent built as a public link, href: "https://pages.flisk.si/", icon: products/put-my-page-online }
+      - { name: citable, desc: check whether ai answers can find and cite your site, href: "https://citable.flisk.si/", icon: products/citable }
+      - { name: readme score, desc: score your readme and get a fix for each miss, href: "https://readme.flisk.si/", icon: products/readme-checker }
+      - { name: helpdock, desc: turn your docs into a help center, href: "https://helpdock.flisk.si/", icon: products/helpdock }
+      - { name: flisk tools, desc: a free store of dev tools, agent skills and flisk apps, href: "https://tools.flisk.si/", icon: products/flisk-tools }
+  - label: Compare and learn
+    links:
+      - { name: devex roadmap, desc: a map of local dev tools and what each one does, href: "https://roadmap.flisk.si/", icon: products/devex-roadmap }
+      - { name: command comparer, desc: the same task in flisk, compose and tilt, href: "https://cmd.flisk.si/", icon: products/command-comparer }
+      - { name: personal demos, desc: a running demo stack made from your post on x, href: "https://demo.flisk.si/", icon: products/personal-demos }
+      - { name: golden layers, desc: shared base images that make rebuilds fast, href: /layers/, icon: kinds/stack }
+      - { name: recently shipped, desc: the newest features and releases, href: "/#new", icon: kinds/doc }
+      - { name: all flisk products, desc: every flisk app on one page, href: "/#products", icon: kinds/emoji }
+
+enterprise:
+  - label: Enterprise
+    links:
+      - { name: enterprise license, desc: sso, air-gapped installs and an sla, href: "/#waitlist", bi: building }
+      - { name: who uses flisk, desc: teams that agreed to be listed, href: "/#adopters", bi: people }
+      - { name: flisk with helm, desc: flisk on laptops, helm in your cluster, href: /docs/with-helm/, bi: diagram-3 }
+      - { name: no lock-in, desc: every generated file is plain docker and starlark, href: /no-lock-in/, bi: unlock }
+      - { name: migrate to flisk, desc: tell us your stack and we help you move, href: /migrate/, bi: box-arrow-in-right }
+  - label: Evaluate
+    links:
+      - { name: compare, desc: flisk next to compose, tilt, skaffold and kind, href: /compare/, bi: layout-split }
+      - { name: why flisk, desc: what teams get from one command and one file, href: /why/, bi: lightbulb }
+      - { name: does flisk fit?, desc: a few questions and an honest answer, href: /fit/, bi: check2-square }
+      - { name: cut the cost of waiting, desc: a calculator for what slow setup costs, href: /waiting/, bi: calculator }
+      - { name: claims and benchmarks, desc: every number on this site and its evidence, href: /docs/claims/, bi: clipboard-data }
+  - label: Security
+    links:
+      - { name: security contact, desc: report a vulnerability, href: /.well-known/security.txt, bi: shield-lock }
+      - { name: mit license, desc: the core is open source, href: "https://github.com/flisk-sh/flisk/blob/main/LICENSE", bi: file-earmark-text }
+
+resources:
+  - label: Learn
+    links:
+      - { name: docs, desc: every command and file explained, href: /docs/, bi: book }
+      - { name: quickstart, desc: install flisk and run your first stack, href: /docs/quickstart/, bi: play-circle }
+      - { name: faq, desc: short answers to common questions, href: "/#faq", bi: question-circle }
+      - { name: field notes, desc: articles from the flisk team, href: /blog/, bi: journal-text }
+      - { name: benchmarks, desc: start times for every stack, measured nightly, href: /benchmarks/, bi: speedometer2 }
+  - label: Starters
+    links:
+      - { name: flisk-example, desc: hono, vite and bun, href: "https://github.com/flisk-sh/flisk-example", icon: kinds/template }
+      - { name: flisk-saas-starter, desc: dashboard and checkout, href: "https://github.com/flisk-sh/flisk-saas-starter", icon: kinds/template }
+      - { name: flisk-ecommerce-example, desc: vue storefront and catalog api, href: "https://github.com/flisk-sh/flisk-ecommerce-example", icon: kinds/template }
+  - label: Systems
+    links:
+      - { name: restaurant, desc: reservations, kitchen and menu, href: "https://github.com/flisk-sh/flisk-restaurant-example", icon: kinds/example }
+      - { name: auth, queue and email, desc: identity, queue and email services, href: "https://github.com/flisk-sh/flisk-auth-queue-email-example", icon: kinds/example }
+      - { name: user management, desc: scim 2.0 sync and pkce sign-in, href: "https://github.com/flisk-sh/flisk-user-management", icon: kinds/example }
+      - { name: erp example, desc_from: erp, href: "https://github.com/flisk-sh/flisk-erp-system", icon: kinds/example }

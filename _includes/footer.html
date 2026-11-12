@@ -8,12 +8,18 @@
         </a>
         <p>the local runtime your AI agent can start, check and fix.</p>
         <a class="sf-mail" href="mailto:hello@flisk.sh">hello@flisk.sh</a>
+        <p class="sf-apps-label">the flisk apps</p>
+        <div class="sf-apps">
+          {%- for g in site.data.nav.products %}{% for l in g.links %}{% if l.icon contains "products/" %}
+          <a href="{% if l.href contains '://' %}{{ l.href }}{% else %}{{ l.href | relative_url }}{% endif %}" title="{{ l.name }}: {{ l.desc }}" aria-label="{{ l.name }}"><img src="{{ '/assets/img/' | append: l.icon | append: '.svg' | relative_url }}" alt="" width="28" height="28" loading="lazy"></a>
+          {%- endif %}{% endfor %}{% endfor %}
+        </div>
       </div>
 
       <nav class="sf-cols" aria-label="Footer">
         <div>
-          <p class="sf-label">product</p>
-          <a href="{{ '/features/' | relative_url }}">features</a>
+          <p class="sf-label">flisk cli</p>
+          <a href="{{ '/features/' | relative_url }}">what it does</a>
           <a href="{{ '/sandbox/' | relative_url }}">sandbox</a>
           <a href="{{ '/agents/' | relative_url }}">for ai agents</a>
           <a href="{{ '/mcp/' | relative_url }}">mcp servers</a>
@@ -26,7 +32,7 @@
         <div>
           <p class="sf-label">enterprise</p>
           <a href="{{ '/#waitlist' | relative_url }}">Premium license</a>
-          <a href="{{ '/#waitlist' | relative_url }}">Enterprise license</a>
+          <a href="{{ '/#waitlist' | relative_url }}">enterprise license</a>
           <a href="{{ '/#adopters' | relative_url }}">who uses flisk</a>
           <a href="{{ '/compare/' | relative_url }}">compare</a>
           <a href="{{ '/why/' | relative_url }}">why flisk</a>
@@ -42,23 +48,23 @@
           <a href="{{ '/docs/examples/' | relative_url }}">examples</a>
           <a href="{{ '/blog/' | relative_url }}">field notes</a>
           <a href="{{ '/#faq' | relative_url }}">faq</a>
-          <a href="https://flisk-sh.github.io/flisk-demo-animation/" target="_blank" rel="noopener">demo animation</a>
-          <a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">cli binaries</a>
-          <a href="https://github.com/flisk-sh/flisk-docker-compose-example" target="_blank" rel="noopener">docker compose example</a>
+          <a href="https://flisk-sh.github.io/flisk-demo-animation/" target="_blank" rel="noopener">watch the demo <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">download the cli <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/flisk-sh/flisk-docker-compose-example" target="_blank" rel="noopener">docker compose example <span aria-hidden="true">↗</span></a>
         </div>
         <div>
           <p class="sf-label">community</p>
-          <a href="https://discord.gg/qMu5Xn8Kaq" target="_blank" rel="noopener">discord</a>
-          <a href="https://github.com/flisk-sh" target="_blank" rel="noopener">github</a>
-          <a href="https://github.com/flisk-sh/.github/blob/main/profile/README.md" target="_blank" rel="noopener">organization readme</a>
-          <a href="https://github.com/flisk-sh/flisk/issues/new?template=usability-feedback.yml" target="_blank" rel="noopener">give feedback</a>
-          <a href="https://github.com/sponsors/flisk-sh" target="_blank" rel="noopener">sponsor</a>
+          <a href="https://discord.gg/qMu5Xn8Kaq" target="_blank" rel="noopener">discord <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/flisk-sh" target="_blank" rel="noopener">github <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/flisk-sh/.github/blob/main/profile/README.md" target="_blank" rel="noopener">github profile <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/flisk-sh/flisk/issues/new?template=usability-feedback.yml" target="_blank" rel="noopener">give feedback <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/sponsors/flisk-sh" target="_blank" rel="noopener">sponsor <span aria-hidden="true">↗</span></a>
         </div>
         <div>
           <p class="sf-label">legal</p>
-          <a href="https://github.com/flisk-sh/flisk/blob/main/LICENSE" target="_blank" rel="noopener">mit license</a>
+          <a href="https://github.com/flisk-sh/flisk/blob/main/LICENSE" target="_blank" rel="noopener">mit license <span aria-hidden="true">↗</span></a>
           <a href="{{ '/.well-known/security.txt' | relative_url }}">security contact</a>
-          <a href="{{ '/docs/claims/' | relative_url }}">claims</a>
+          <a href="{{ '/docs/claims/' | relative_url }}">claims and evidence</a>
         </div>
       </nav>
     </div>
