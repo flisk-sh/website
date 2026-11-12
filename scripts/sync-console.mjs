@@ -1,10 +1,10 @@
 // Copies the FliskOS frontend (flisk-sh/fliskos, MIT) into console/ for the homepage demo.
 // Usage: node scripts/sync-console.mjs <path to a fliskos checkout>
-// app.js, os.js and inspect.js are copied as they are; index.html loads every script with ?v=<fliskos commit> so a
+// app.js, os.js and inspect.js are copied as they are, under a one-line header that names the source; index.html loads every script with ?v=<fliskos commit> so a
 // cached copy never outlives a sync. index.html gets four changes: the token placeholder, relative script
 // paths, the dark colours on every system (the homepage is dark), and the two sample scripts that answer the /api/ calls.
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -16,9 +16,12 @@ if (!source) {
 
 const target = join(fileURLToPath(new URL('..', import.meta.url)), 'console');
 mkdirSync(target, { recursive: true });
-for (const file of ['app.js', 'os.js', 'inspect.js']) copyFileSync(join(source, 'public', file), join(target, file));
-
 const commit = execFileSync('git', ['-C', source, 'rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
+// Each copied script starts with one line naming its source, so nobody edits the copy (the next sync overwrites it).
+for (const file of ['app.js', 'os.js', 'inspect.js']) {
+  const header = `// Copied from flisk-sh/fliskos public/${file} by scripts/sync-console.mjs. Do not edit here: change it in fliskos, then run the script.\n`;
+  writeFileSync(join(target, file), header + readFileSync(join(source, 'public', file), 'utf8'));
+}
 const replaceOnce = (text, from, to) => {
   if (!text.includes(from)) throw new Error(`index.html no longer contains: ${from}`);
   return text.replace(from, to);

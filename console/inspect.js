@@ -1,3 +1,4 @@
+// Copied from flisk-sh/fliskos public/inspect.js by scripts/sync-console.mjs. Do not edit here: change it in fliskos, then run the script.
 // AI prompts for Flisk: "Inspect with" output and the "Build with AI" starter. Plain script with no imports: index.html loads it before app.js,
 // and test/inspect.test.js runs it in a bare VM context.
 const FLISK_INSPECT = (() => {

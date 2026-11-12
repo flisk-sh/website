@@ -1,3 +1,4 @@
+// Copied from flisk-sh/fliskos public/os.js by scripts/sync-console.mjs. Do not edit here: change it in fliskos, then run the script.
 // The FliskOS views next to the projects: Agents (coding agents working in a project, like T3 Code) and Apps
 // (the other Flisk tools, pointed at a project). Loaded after app.js and uses its globals (api, esc, render, page, ...).
 

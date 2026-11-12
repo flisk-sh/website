@@ -73,7 +73,13 @@ The server automatically rebuilds whenever you save a file.
 
 ## 3. Validating Your Changes
 
-The CI pipeline (`.github/workflows/site.yml`) runs **two checks** in order. Run both locally before pushing.
+The CI pipeline (`.github/workflows/site.yml`) runs one command, `scripts/check.sh`. Run it locally before pushing and you get the same result as CI:
+
+```bash
+scripts/check.sh
+```
+
+It runs, in order: every `scripts/*.test.mjs` (including the docs Ask AI tests), the corner radius and claims checks, the Ruby tests, the check that the synced llms text matches its source, the Jekyll build, the claims check on the built pages, and the Ruby test that reads `_site/`. Set `SKIP_SYNC_CHECK=1` to skip the one step that needs the network. The steps below explain each part, and you can run them one at a time.
 
 ### Step 1 – Public claims check
 
@@ -103,12 +109,13 @@ The built output lands in `_site/`. A clean build (exit code 0, no warnings you 
 
 > **Note:** There is no `package.json` in this repository, so `npm run build` does not apply. The correct build command is `bundle exec jekyll build`.
 
-### Optional – Ruby minitest suite
+### Ruby tests
 
-A small Ruby test suite lives in `test/`. You can run it after the Jekyll build (it reads files from `_site/`):
+The Ruby tests live in `test/`. `scripts/check.sh` runs both. `licensing_copy_test.rb` reads files from `_site/`, so run it after the Jekyll build:
 
 ```bash
-bundle exec ruby test/licensing_copy_test.rb
+ruby test/nav_data_test.rb
+ruby test/licensing_copy_test.rb
 ```
 
 ---

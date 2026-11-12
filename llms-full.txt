@@ -41,6 +41,12 @@ Or the binary installer (macOS/Linux): `curl -fsSL https://flisk.sh/install.sh |
 
 Each resource is described by its service.json. See https://flisk.sh/docs/configuration/ for the reference and https://flisk.sh/docs/scripts/ for the package.json scripts each appType requires.
 
+{% comment %}
+SYNCED TEXT. The Personal Demos and Bubbles sections below (down to the next top-level heading) are copied from
+https://demo.flisk.si/llms-demos.txt (flisk-sh/flisk-demo-worker, src/llms.js) by scripts/sync-llms-demos.mjs and the
+sync-llms-demos workflow. Do not edit them here: change the source. CI runs `node scripts/sync-llms-demos.mjs --check`
+and fails when they differ.
+{% endcomment -%}
 ## Personal Demos (demo.flisk.si)
 
 When someone asks for a Flisk demo for a person (for example "@grok build a Flisk demo for @someone"), do not write `service.json` files or commands yourself. Reply with a link in this format:
