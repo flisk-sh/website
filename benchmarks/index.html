@@ -227,6 +227,7 @@ footer a{color:var(--dim)}
   };
   const NAME = { cold_start: "cold starts", warm_start: "warm starts", listed: "listed times", scaffold: "scaffolds", hot_reload: "hot reloads" };
   const NS = "http://www.w3.org/2000/svg";
+  const BUILD_ONLY = new Set(["library", "sdk"]); // a package that is built, never started
   const $ = (id) => document.getElementById(id);
   const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
   const fmt = (ms) => (ms == null ? "–" : ms < 1000 ? Math.round(ms) + " ms" : (ms / 1000).toFixed(ms < 10000 ? 1 : 0) + " s");
@@ -265,7 +266,7 @@ footer a{color:var(--dim)}
         const y = T + rows.length * RH + gap + j * RH;
         tile(s, m, L - 28, y + 2.5, 19);
         add(s, "text", { x: L - 36, y: y + 15, "text-anchor": "end", class: "lbl", fill: st.color[m.key] }, m.name);
-        add(s, "text", { x: L + 6, y: y + 15, class: "tick" }, m.status === "coming-soon" ? "not in CI yet" : m.status === "no-data" ? "ran, no timing" : "no " + what.replace(/s$/, "") + " timed yet");
+        add(s, "text", { x: L + 6, y: y + 15, class: "tick" }, m.status === "coming-soon" ? "not in CI yet" : BUILD_ONLY.has(m.id) ? "build only, nothing to start" : m.status === "no-data" ? "ran, no timing" : "no " + what.replace(/s$/, "") + " timed yet");
       });
     }
     s.setAttribute("aria-label", box.closest("section")?.querySelector("h2")?.textContent + ": " + rows.map((r, i) => i + 1 + ". " + r.s.name + " " + (r.label ?? format(r.v))).join(", "));
@@ -309,8 +310,12 @@ footer a{color:var(--dim)}
     });
     for (const p of pts) {
       const cx = x(p.c), cy = y(p.w), w = p.s.name.length * 6.6 + 22;
-      const spot = [{ x: cx + 8, y: cy - 8 }, { x: cx + 8, y: cy + 2 }, { x: cx - 8 - w, y: cy - 8 }, { x: cx - 8 - w, y: cy + 2 }, { x: cx - w / 2, y: cy - 22 }].map((o) => ({ ...o, w, h: 13 })).find((b) => b.x > L && b.x + b.w < W && free(b));
-      if (!spot) continue;
+      const near = [{ x: cx + 8, y: cy - 8 }, { x: cx + 8, y: cy + 2 }, { x: cx - 8 - w, y: cy - 8 }, { x: cx - 8 - w, y: cy + 2 }, { x: cx - w / 2, y: cy - 22 }, { x: cx - w / 2, y: cy + 10 }];
+      const far = [];
+      for (const d of [26, 40, 56, 72]) for (const [dx, dy] of [[1, -1], [1, 1], [-1, -1], [-1, 1], [0, -1], [0, 1], [1, 0], [-1, 0]]) far.push({ x: cx + dx * d - (dx < 0 ? w : dx === 0 ? w / 2 : 0), y: cy + dy * d * 0.7 - 6, lead: true });
+      const fits = (b) => b.x > L && b.x + b.w < W - 2 && b.y > T && b.y + b.h < H - B && free(b);
+      const spot = [...near, ...far].map((o) => ({ ...o, w, h: 13 })).find(fits) || { x: cx + 8, y: cy - 8, w, h: 13 };
+      if (spot.lead) add(s, "line", { x1: cx, y1: cy, x2: spot.x + (spot.x > cx ? 0 : w), y2: spot.y + 6, stroke: st.color[p.s.key], "stroke-opacity": 0.5 });
       boxes.push(spot);
       tile(s, p.s, spot.x, spot.y - 1, 15);
       add(s, "text", { x: spot.x + 19, y: spot.y + 10, class: "lbl", fill: st.color[p.s.key], "font-size": "11.5" }, p.s.name);
@@ -361,7 +366,7 @@ footer a{color:var(--dim)}
       for (const [k] of cols) {
         const v = val(s, k), c = el("span", "tc" + (v == null ? " none" : ""));
         if (v != null) { const i = el("i"); i.style.width = Math.max(1.5, (v / max[k]) * 100) + "%"; i.style.background = st.color[s.key]; c.appendChild(i); }
-        c.appendChild(el("em", "", v == null ? (s.status === "coming-soon" ? "not in CI" : "no data") : fmt(v)));
+        c.appendChild(el("em", "", v == null ? (s.status === "coming-soon" ? "not in CI" : BUILD_ONLY.has(s.id) ? "build only" : "no data") : fmt(v)));
         r.appendChild(c);
       }
       box.appendChild(r);
