@@ -44,6 +44,7 @@ main{min-width:0;border-right:1px solid var(--line)}
 .intro h1{margin:0;font:600 22px/1.2 var(--sans);letter-spacing:-.02em}
 .intro h1 span{color:var(--green)}
 .intro p{margin:6px 0 0;color:var(--dim);font-size:13.5px;max-width:720px}
+.caveat{margin:12px 0 0;max-width:760px;padding:10px 12px;border:1px solid var(--line);border-left:3px solid #ffc94d;background:var(--panel);color:var(--dim);font-size:13px}.caveat b{color:var(--ink)}
 .kp{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:14px;font-size:12.5px;color:var(--dim)}
 .kp b{display:block;font:500 18px/1.2 var(--mono);color:var(--ink)}
 .chart{padding:22px 26px 26px;border-bottom:1px solid var(--line);scroll-margin-top:64px}
@@ -133,8 +134,9 @@ footer a{color:var(--dim)}
 <div class="app">
   <main>
     <section class="intro">
-      <h1>Stacklytics. <span>How fast does your stack start?</span></h1>
+      <h1>Stacklytics. <span>How long Flisk takes to bring each stack up.</span></h1>
       <p>Flisk's own CI scaffolds and starts every language, framework and resource type it supports on a fresh GitHub runner every night, and publishes the times here. Try one with <code>npx @flisk-sh/flisk demo</code>.</p>
+      <p class="caveat"><b>Not a runtime benchmark.</b> A cold start here is the whole first <code>flisk up</code> on a fresh CI runner: pulling and building the image, installing dependencies and starting the container until the route answers. That is mostly Docker and package-install time, so it says how quickly Flisk gets a stack running, not which language or framework runs faster. Each number is one CI run: the same Bun stack took 47 s in one run and 27 s in the next, so differences of a few seconds are noise.</p>
       <div class="kp" id="kp"></div>
     </section>
 
@@ -219,8 +221,8 @@ footer a{color:var(--dim)}
   }
   const PAL = ["#3ddc84", "#ff8a5c", "#ffc94d", "#6fa8ff", "#c792ea", "#5ce1e6", "#f78fb3", "#b8e986", "#ff6b6b", "#a3a3ff", "#d4a373", "#7fd1b9", "#f3a6ff", "#e0e0e8"];
   const SUB = {
-    cold_start: "First flisk up on a fresh runner, until the route answers 200 through Traefik. Fastest on top.",
-    warm_start: "flisk down, then flisk up again with the images cached, until the route answers 200. Fastest on top.",
+    cold_start: "First flisk up on a fresh runner (image pull and build, install, start) until the route answers 200. One CI run; a few seconds apart is noise.",
+    warm_start: "flisk down, then flisk up again with the images cached, until the route answers 200. Closer to the stack's own start time.",
     listed: "flisk up until flisk status lists the resource's URL. Fastest on top.",
   };
   const NAME = { cold_start: "cold starts", warm_start: "warm starts", listed: "listed times", scaffold: "scaffolds", hot_reload: "hot reloads" };
@@ -416,7 +418,7 @@ footer a{color:var(--dim)}
     const best = m.slice().sort((a, b) => val(a, "cold_start") - val(b, "cold_start"))[0];
     const warm = m.map((s) => s.metrics?.warm_start).filter((v) => v != null);
     const box = $("kp"); box.textContent = "";
-    [[m.length + " / " + st.d.stacks.length, "with a cold start"], [best ? fmt(val(best, "cold_start")) : "–", "fastest cold start" + (best ? " · " + best.name : "")], [fmt(median(m.map((s) => val(s, "cold_start")))), "median cold start"], [fmt(median(warm)), "median warm start"], [(st.d.generated || "").slice(0, 10), "last CI run · " + String(st.d.commit || "").slice(0, 7)]]
+    [[m.length + " / " + st.d.stacks.length, "with a cold start"], [best ? fmt(val(best, "cold_start")) : "–", "quickest cold start this run" + (best ? " · " + best.name : "")], [fmt(median(m.map((s) => val(s, "cold_start")))), "median cold start"], [fmt(median(warm)), "median warm start"], [(st.d.generated || "").slice(0, 10), "last CI run · " + String(st.d.commit || "").slice(0, 7)]]
       .forEach(([b, t]) => { const d = el("div"); d.append(el("b", "", b), t); box.appendChild(d); });
   }
 
@@ -431,7 +433,7 @@ footer a{color:var(--dim)}
   function draw() {
     $("start-sub").textContent = SUB[st.start];
     const any = (k) => st.d.stacks.some((s) => val(s, k) != null);
-    shownIf("start", metricChart("c-start", st.start, (st.start === "listed" ? "flisk status lists the URL" : "route answers 200") + " · GitHub " + (st.d.runner || "runner") + " · fastest on top"), true);
+    shownIf("start", metricChart("c-start", st.start, (st.start === "listed" ? "flisk status lists the URL" : "route answers 200") + " · one run on GitHub " + (st.d.runner || "runner") + " · quickest on top"), true);
     shownIf("table", table(), true);
     shownIf("scatter", scatter() !== false, st.d.stacks.some((s) => val(s, "cold_start") != null && val(s, "warm_start") != null));
     shownIf("saving", saving(), any("warm_start"));
