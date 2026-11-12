@@ -421,10 +421,10 @@ pre code {
 .sf-cols a span { color: rgba(236, 236, 241, 0.3); font-size: 0.68rem; }
 .sf-apps-label { margin: 1.75rem 0 0.6rem !important; color: rgba(236, 236, 241, 0.4); font: 500 0.66rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
 .sf-apps { display: flex; flex-wrap: wrap; gap: 0.4rem; max-width: 17rem; }
-.sf-apps a { display: block; border-radius: 6px; opacity: 0.85; transition: opacity 140ms ease, transform 140ms ease; }
+.sf-apps a { display: block; border-radius: var(--radius); opacity: 0.85; transition: opacity 140ms ease, transform 140ms ease; }
 .sf-apps a:hover, .sf-apps a:focus-visible { opacity: 1; transform: translateY(-1px); }
 .sf-apps a:focus-visible { outline: 2px solid #6EE7A0; outline-offset: 2px; }
-.sf-apps img { display: block; width: 28px; height: 28px; border-radius: 6px; }
+.sf-apps img { display: block; width: 28px; height: 28px; border-radius: var(--radius); }
 
 .sf-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem; margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.07); }
 .sf-bottom p { margin: 0; font-size: 0.72rem; }
@@ -653,11 +653,11 @@ html {
 
 /* Each menu link: a flisk-emoji tile or a glyph, then the name and one line on what it does */
 .aw-nav-menu-products { left: 0; right: 0; width: auto; max-width: 66rem; margin: 0 auto; }
-.aw-nav-menu a.aw-nav-item { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.4rem 0.35rem; margin: 0 -0.35rem; border-radius: var(--radius, 4px); }
+.aw-nav-menu a.aw-nav-item { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.4rem 0.35rem; margin: 0 -0.35rem; border-radius: var(--radius); }
 .aw-nav-menu a.aw-nav-item:hover { background: rgba(255, 255, 255, 0.04); }
 .aw-nav-menu a.aw-nav-item:focus-visible { outline: 2px solid #6EE7A0; outline-offset: 1px; }
-.aw-nav-icon { flex: none; width: 28px; height: 28px; margin-top: 0.1rem; border-radius: 6px; }
-.aw-nav-glyph { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-top: 0.1rem; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: rgba(236, 236, 241, 0.7); font-size: 0.85rem; }
+.aw-nav-icon { flex: none; width: 28px; height: 28px; margin-top: 0.1rem; border-radius: var(--radius); }
+.aw-nav-glyph { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-top: 0.1rem; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius); color: rgba(236, 236, 241, 0.7); font-size: 0.85rem; }
 .aw-nav-menu a.aw-nav-item:hover .aw-nav-glyph { color: #6EE7A0; border-color: rgba(110, 231, 160, 0.4); }
 .aw-nav-text-block { min-width: 0; }
 .aw-nav-name { display: block; line-height: 1.3; }

@@ -31,6 +31,8 @@ jobs:
         run: node scripts/check-radius.mjs
       - name: Check registered public claims
         run: node scripts/check-claims.mjs
+      - name: Test the header menu data
+        run: ruby test/nav_data_test.rb
       - name: Build site
         run: bundle exec jekyll build
       - name: Check every built page for forbidden claims
