@@ -2754,3 +2754,14 @@ button.aw-gen-node:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   .aw-trust-faces > li, .aw-trust-card, .aw-trust-teams li a, .aw-agents-pill { transition: none; }
 }
+
+/* proof line under the install command, and the limits section */
+.aw-install-proof { margin: 0.6rem 0 0; font-size: 0.78rem; color: rgba(255, 255, 255, 0.62); }
+.aw-install-proof a { color: #4dd0ff; font-weight: 500; text-decoration: none; }
+.aw-install-proof a:hover { text-decoration: underline; }
+.aw-limits-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1.5rem; }
+.aw-limits-list li { padding: 0.9rem 1rem; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.95rem; line-height: 1.5; color: rgba(255, 255, 255, 0.75); }
+.aw-limits-list strong { display: block; color: #fff; margin-bottom: 0.2rem; }
+.aw-limits-list a { color: #4dd0ff; text-decoration: none; white-space: nowrap; }
+.aw-limits-list a:hover { text-decoration: underline; }
+@media (max-width: 720px) { .aw-limits-list { grid-template-columns: 1fr; } }
