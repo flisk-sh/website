@@ -85,6 +85,3 @@ exclude:
   - EMAIL_SETUP.md
   - docker-compose.yml
   - Dockerfile
-
-# Cookieless page and click analytics. Comment out to turn off; [data-cta] clicks are sent as a "cta" event.
-plausible_script: pa-ss9n7vj5lcBve254cSZP1
