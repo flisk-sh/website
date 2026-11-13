@@ -204,4 +204,8 @@ install_pnpm: "pnpm add -g @flisk-sh/flisk"
 install_bun: "bun add -g @flisk-sh/flisk"
 
 # --- Community (verified 2026-11-13) ---
-contributors_total: 80     # gh api repos/flisk-sh/flisk/contributors: 82 entries minus dependabot[bot] and the claude account
+contributors_total: 90     # unique GitHub users with commits across the 75 non-fork flisk-sh repos (gh api repos/flisk-sh/<repo>/contributors), minus claude, actions-user, OpenCode and ShahadatTest; flisk-sh/flisk alone has 80
+contributors_30d: 74       # unique human authors of merged PRs across flisk-sh, 2026-10-14 to 2026-11-13 (gh search prs --owner flisk-sh --merged, bots and test accounts removed)
+prs_merged_30d: "2,710"    # merged PRs across flisk-sh in the same window (search/issues total_count per window, summed)
+releases_30d: 103          # flisk-sh/flisk GitHub releases published in the same window
+npm_downloads_30d: "33,691" # api.npmjs.org/downloads/point/last-month/@flisk-sh/flisk, 2026-10-14 to 2026-11-12
