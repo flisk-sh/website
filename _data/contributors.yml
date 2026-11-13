@@ -5,11 +5,11 @@
 # Order: the 10 outside contributors with the most merged PRs (flisk-sh/flisk Hall of fame, issue 1799) first, then the rest. An optional avatar replaces the GitHub photo.
 - { id: 73680894, login: "sunny-kavixo", name: "Putluru Sandeep", sub: "Sunny AI Solutions", commits: 101 }
 - { id: 179229555, login: "AK-Lmn", name: "AK-Lmn", sub: "Flisk team", commits: 70, avatar: "https://cdn.discordapp.com/avatars/1531899075354558615/51c17af2abd78c8a0175fed07e232c0f.png?size=96" }
-- { id: 152394158, login: "sb123sb123", name: "NekoPaw", sub: "", commits: 48 }
+- { id: 152394158, login: "sb123sb123", name: "NekoPaw", sub: "", commits: 48, avatar: "/assets/img/octocats/sb123sb123.png" }
 - { id: 141821420, login: "minutechreview", name: "Rayan Abdul Cader", sub: "", commits: 35 }
 - { id: 195282707, login: "yoreva-01", name: "Yusuf Orçan", sub: "orhunlang", commits: 33 }
-- { id: 246079841, login: "dbdefault", name: "dbdefault", sub: "", commits: 19 }
-- { id: 190155483, login: "Delfi2007", name: "DELFI A", sub: "", commits: 14 }
+- { id: 246079841, login: "dbdefault", name: "dbdefault", sub: "", commits: 19, avatar: "/assets/img/octocats/dbdefault.png" }
+- { id: 190155483, login: "Delfi2007", name: "DELFI A", sub: "", commits: 14, avatar: "/assets/img/octocats/Delfi2007.png" }
 - { id: 127650295, login: "Ghifariezra", name: "Ezra", sub: "", commits: 13 }
 - { id: 138259519, login: "jdotc1", name: "Jeff", sub: "", commits: 11 }
 - { id: 209233348, login: "amritkang165", name: "Amrit Kang", sub: "Bengaluru", commits: 9 }
