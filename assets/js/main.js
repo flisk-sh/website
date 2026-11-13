@@ -161,7 +161,7 @@ function initCopyButtons() {
   });
 }
 
-// Sends [data-cta] clicks to the analytics tool when one is configured (plausible_script in _config.yml).
+// Sends [data-cta] clicks to an analytics tool that defines window.plausible. Flisk Analytics counts pageviews only, so this does nothing today.
 function initCtaEvents() {
   if (initCtaEvents.ready) return;
   initCtaEvents.ready = true;

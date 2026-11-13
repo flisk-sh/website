@@ -23,6 +23,7 @@ products:
       - { name: "citable", desc: "check whether ai answers can find and cite your site", href: "https://citable.flisk.si/", icon: products/citable }
       - { name: "readme score", desc: "score your readme and get a fix for each miss", href: "https://readme.flisk.si/", icon: products/readme-checker }
       - { name: "flisk tools", desc: "a free store of dev tools, agent skills and flisk apps", href: "https://tools.flisk.si/", icon: products/flisk-tools }
+      - { name: "flisk analytics", desc: "see who visits your site, no cookies and no banner", href: "https://analytics.flisk.si/", icon: products/flisk-analytics }
   - label: Compare and learn
     links:
       - { name: "devex roadmap", desc: "a map of local dev tools and what each one does", href: "https://roadmap.flisk.si/", icon: products/devex-roadmap }
