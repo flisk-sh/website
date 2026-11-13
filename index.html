@@ -42,10 +42,10 @@ image: /assets/images/flisk-social-card.png?v=2
           {%- for c in site.data.contributors limit: 10 %}
           <li>
             <a href="https://github.com/{{ c.login }}" target="_blank" rel="noopener" aria-label="{{ c.name }}, {{ c.commits }} commits">
-              <img src="https://avatars.githubusercontent.com/u/{{ c.id }}?s=96&amp;v=4" width="44" height="44" alt="" decoding="async">
+              <img src="{% if c.avatar %}{{ c.avatar }}{% else %}https://avatars.githubusercontent.com/u/{{ c.id }}?s=96&amp;v=4{% endif %}" width="44" height="44" alt="" decoding="async">
             </a>
             <span class="aw-trust-card" aria-hidden="true">
-              <img src="https://avatars.githubusercontent.com/u/{{ c.id }}?s=96&amp;v=4" width="40" height="40" alt="" loading="lazy">
+              <img src="{% if c.avatar %}{{ c.avatar }}{% else %}https://avatars.githubusercontent.com/u/{{ c.id }}?s=96&amp;v=4{% endif %}" width="40" height="40" alt="" loading="lazy">
               <span><strong>{{ c.name }}</strong><small>{% if c.sub != "" %}{{ c.sub }}, {% endif %}{{ c.commits }} commit{% if c.commits != 1 %}s{% endif %}</small></span>
             </span>
           </li>
