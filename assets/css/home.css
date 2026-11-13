@@ -2765,3 +2765,9 @@ button.aw-gen-node:focus-visible,
 .aw-limits-list a { color: #4dd0ff; text-decoration: none; white-space: nowrap; }
 .aw-limits-list a:hover { text-decoration: underline; }
 @media (max-width: 720px) { .aw-limits-list { grid-template-columns: 1fr; } }
+
+/* Sponsor strip: one sentence and one button, above the license form. */
+.aw-sponsor .aw-wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.aw-sponsor-text { margin: 0; max-width: 760px; }
+.aw-nav-sponsor-mobile { display: none; }
+@media (max-width: 900px) { .aw-nav-sponsor { display: none; } .aw-nav-sponsor-mobile { display: block; } }

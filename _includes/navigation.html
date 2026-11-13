@@ -47,6 +47,7 @@
       {%- comment %} The header's Docs link is hidden with the burger menu, so the menu has its own. {% endcomment %}
       <a class="aw-nav-link aw-nav-docs-mobile{% if page.url contains '/docs/' %} is-active{% endif %}" href="{{ '/docs/' | relative_url }}">Docs</a>
       <a class="aw-nav-link" href="{{ '/#pricing' | relative_url }}">Pricing</a>
+      <a class="aw-nav-link aw-nav-sponsor-mobile" href="https://github.com/sponsors/flisk-sh" target="_blank" rel="noopener">Sponsor</a>
 
       <div class="aw-nav-mobile-actions">
         <a class="aw-nav-cta aw-nav-cta-sales" href="{{ '/#waitlist' | relative_url }}">Contact sales</a>
@@ -65,6 +66,7 @@
         <span class="aw-nav-star-count aw-nav-discord-count" data-discord-count hidden></span>
       </a>
       <a href="{{ '/docs/' | relative_url }}" class="aw-nav-text">Docs</a>
+      <a href="https://github.com/sponsors/flisk-sh" class="aw-nav-text aw-nav-sponsor" target="_blank" rel="noopener" data-cta="nav_sponsor"><i class="bi bi-heart" aria-hidden="true"></i> Sponsor</a>
       <a href="{{ '/#waitlist' | relative_url }}" class="aw-nav-cta aw-nav-cta-sales" title="Request an Enterprise or Premium license">Contact sales</a>
       <a href="{{ '/docs/quickstart/' | relative_url }}" class="aw-nav-cta" data-cta="nav_start_free">Start free</a>
       <button class="aw-nav-burger" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="aw-nav-links">
