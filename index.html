@@ -521,6 +521,24 @@ flisk connect claude{% endcapture %}
     </div>
   </section>
 
+  <!-- ================= LIMITS: the bad news, stated where the decision is made. Every line points at the file that says it. ================= -->
+  <section class="aw-section aw-limits" id="limits">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>What Flisk does not do.</h2>
+        <p>The limits first. Each line links to the file that says it.</p>
+      </div>
+      <ul class="aw-limits-list">
+        <li><strong>Not a deploy tool.</strong> It runs your app on your machine. Production stays on Helm or whatever you use now. <a href="{{ '/docs/claims/' | relative_url }}">Claims and evidence</a></li>
+        <li><strong>Plain processes do not reload on save.</strong> A service run as a local process needs a stop and start to pick up a change. Container stacks live-update. <a href="{{ '/docs/quickstart/' | relative_url }}">Quickstart</a></li>
+        <li><strong>Container images are pinned by version tag, not digest.</strong> The golden image pull checks no signature. <a href="https://github.com/flisk-sh/flisk/blob/main/docs/security.md#images" target="_blank" rel="noopener">Security notes</a></li>
+        <li><strong>The signature covers the checksums, not each binary.</strong> There is no SBOM yet. <a href="https://github.com/flisk-sh/flisk/blob/main/docs/security.md#releases" target="_blank" rel="noopener">How to verify a release</a></li>
+        <li><strong>No outside security audit.</strong> What was checked, and what was not, is listed line by line. <a href="https://github.com/flisk-sh/flisk/blob/main/docs/assurance-case.md" target="_blank" rel="noopener">Assurance case</a></li>
+        <li><strong>Two maintainers, no paid support.</strong> Fixes go into the latest release. We aim to reply within one working day. <a href="https://github.com/flisk-sh/flisk/blob/main/.github/SUPPORT.md" target="_blank" rel="noopener">What to expect</a></li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ================= FAQ — plain list with [+] / [−] toggles (after warp.dev) ================= -->
   <section class="aw-section aw-faq" id="faq">
     <div class="aw-wrap">
