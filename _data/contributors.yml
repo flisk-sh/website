@@ -1,0 +1,29 @@
+# Real GitHub contributors to flisk-sh/flisk.
+# Source: gh api repos/flisk-sh/flisk/contributors (type User, minus the claude account) and
+# gh api users/<login> for name, company and location, fetched 2026-11-13.
+# The homepage trust band shows the first 10.
+# Order: contributors with a merged PR in the last 30 days and a photo avatar first (picked by eye), then the rest.
+- { id: 73680894, login: "sunny-kavixo", name: "Putluru Sandeep", sub: "Sunny AI Solutions", commits: 101 }
+- { id: 203570326, login: "aazminu", name: "Abdullah Azmi", sub: "Northwestern University", commits: 5 }
+- { id: 209233348, login: "amritkang165", name: "Amrit Kang", sub: "Bengaluru", commits: 9 }
+- { id: 187092821, login: "idi01-git", name: "Shivang", sub: "", commits: 5 }
+- { id: 115795399, login: "tamnguyen08", name: "TnggnT", sub: "", commits: 4 }
+- { id: 243175491, login: "vaibhavkumar955584-hub", name: "vaibhav kumar", sub: "", commits: 3 }
+- { id: 11793455, login: "rahul05ranjan", name: "Rahul", sub: "Chandigarh", commits: 2 }
+- { id: 110464539, login: "miteshanshu", name: "MITESH KUMAR ANSHU", sub: "", commits: 2 }
+- { id: 10220239, login: "WilsonSoetomo", name: "Wilson Soetomo", sub: "University of California, Irvine", commits: 1 }
+- { id: 204097607, login: "Muhtasim-Munif-Fahim", name: "Muhtasim Munif Fahim", sub: "AIML Researcher", commits: 1 }
+- { id: 322573199, login: "sinhaananya812-star", name: "Ananya sinha", sub: "", commits: 1 }
+- { id: 104905235, login: "krishna2707", name: "Krishna Malhotra", sub: "", commits: 2 }
+- { id: 211779953, login: "Ibrahim2709-raaz", name: "Ibrahim Salman", sub: "", commits: 1 }
+- { id: 24225497, login: "odykyi", name: "odykyi", sub: "Amsterdam", commits: 1231 }
+- { id: 57193032, login: "kburym", name: "kburym", sub: "Flisk team", commits: 1068 }
+- { id: 179229555, login: "AK-Lmn", name: "AK-Lmn", sub: "Flisk team", commits: 70 }
+- { id: 141821420, login: "minutechreview", name: "Rayan Abdul Cader", sub: "", commits: 35 }
+- { id: 195282707, login: "yoreva-01", name: "Yusuf Orçan", sub: "orhunlang", commits: 33 }
+- { id: 246079841, login: "dbdefault", name: "dbdefault", sub: "", commits: 19 }
+- { id: 259931436, login: "eddyflores100-lang", name: "Eddy-AliceLabs", sub: "AliceLabs LLC", commits: 1 }
+- { id: 5462781, login: "denisvmedia", name: "Denis Voytyuk", sub: "Prague", commits: 1 }
+- { id: 50778230, login: "KeuqS", name: "Aykut Güney", sub: "", commits: 1 }
+- { id: 152394158, login: "sb123sb123", name: "NekoPaw", sub: "", commits: 48 }
+- { id: 190155483, login: "Delfi2007", name: "DELFI A", sub: "", commits: 14 }
