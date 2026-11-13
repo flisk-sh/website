@@ -1,0 +1,27 @@
+# Real GitHub contributors to flisk-sh/flisk, most commits first.
+# Source: gh api repos/flisk-sh/flisk/contributors (type User, minus the claude account), fetched 2026-11-13.
+# The homepage strip shows the first 24; refresh by re-running that call.
+- { id: 24225497, login: "odykyi", commits: 1231 }
+- { id: 57193032, login: "kburym", commits: 1068 }
+- { id: 73680894, login: "sunny-kavixo", commits: 101 }
+- { id: 179229555, login: "AK-Lmn", commits: 70 }
+- { id: 152394158, login: "sb123sb123", commits: 48 }
+- { id: 141821420, login: "minutechreview", commits: 35 }
+- { id: 195282707, login: "yoreva-01", commits: 33 }
+- { id: 246079841, login: "dbdefault", commits: 19 }
+- { id: 190155483, login: "Delfi2007", commits: 14 }
+- { id: 127650295, login: "Ghifariezra", commits: 13 }
+- { id: 138259519, login: "jdotc1", commits: 11 }
+- { id: 199360118, login: "CG-5228", commits: 9 }
+- { id: 209233348, login: "amritkang165", commits: 9 }
+- { id: 129407632, login: "Huang-404-Q", commits: 8 }
+- { id: 151120944, login: "Invincible1228", commits: 7 }
+- { id: 120080287, login: "sarankumar1325", commits: 7 }
+- { id: 208021491, login: "fate-lab", commits: 6 }
+- { id: 241495633, login: "Rohith-Saran", commits: 6 }
+- { id: 203570326, login: "aazminu", commits: 5 }
+- { id: 187092821, login: "idi01-git", commits: 5 }
+- { id: 292372965, login: "nococn", commits: 5 }
+- { id: 115795399, login: "tamnguyen08", commits: 4 }
+- { id: 101915083, login: "bfs2021", commits: 4 }
+- { id: 243175491, login: "vaibhavkumar955584-hub", commits: 3 }

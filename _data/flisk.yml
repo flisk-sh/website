@@ -202,3 +202,6 @@ install_npx_version: "npx @flisk-sh/flisk --version"
 install_npx_project: "npx @flisk-sh/flisk project --yes"
 install_pnpm: "pnpm add -g @flisk-sh/flisk"
 install_bun: "bun add -g @flisk-sh/flisk"
+
+# --- Community (verified 2026-11-13) ---
+contributors_total: 80     # gh api repos/flisk-sh/flisk/contributors: 82 entries minus dependabot[bot] and the claude account

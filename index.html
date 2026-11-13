@@ -16,6 +16,19 @@ image: /assets/images/flisk-social-card.png?v=2
 
     <div class="aw-hero-inner aw-hero-grid aw-hero-top">
       <div class="aw-hero-main">
+      <div class="aw-community" aria-label="Flisk contributors">
+        <ul class="aw-community-faces">
+          {%- for c in site.data.contributors limit: 14 %}
+          <li>
+            <a href="https://github.com/{{ c.login }}" target="_blank" rel="noopener" data-name="{{ c.login }}" data-meta="{{ c.commits }} commit{% if c.commits != 1 %}s{% endif %}" aria-label="{{ c.login }}, {{ c.commits }} commits on GitHub">
+              <img src="https://avatars.githubusercontent.com/u/{{ c.id }}?s=80&amp;v=4" width="40" height="40" alt="" decoding="async">
+            </a>
+          </li>
+          {%- endfor %}
+          <li class="aw-community-more"><a href="https://github.com/flisk-sh/flisk/graphs/contributors" target="_blank" rel="noopener" aria-label="All contributors on GitHub"><span aria-hidden="true">↗</span></a></li>
+        </ul>
+        <p class="aw-community-text"><strong>{{ site.data.flisk.contributors_total }} developers</strong> have shipped code to Flisk. <a href="https://github.com/flisk-sh/flisk/graphs/contributors" target="_blank" rel="noopener">Meet them</a></p>
+      </div>
       <h1>The local runtime your <span class="aw-accent">AI agent</span> can start, check and fix.</h1>
       <p class="aw-hero-sub">Run your whole app on your machine, from a Compose file or plain commands. Your agent reads its health and logs, and fixes what breaks.</p>
       <a class="aw-btn aw-btn-solid aw-hero-phone" href="{{ '/sandbox/' | relative_url }}" data-cta="hero_sandbox_phone">Watch the tour in your browser</a>

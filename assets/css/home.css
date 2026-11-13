@@ -2688,3 +2688,38 @@ button.aw-gen-node:focus-visible,
   color: #fff;
   margin: 0 0 1.25rem;
 }
+
+/* Community strip: real GitHub contributor avatars, first thing in the hero */
+.aw-community { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.aw-community-faces { display: flex; margin: 0; padding: 0; list-style: none; }
+.aw-community-faces li { position: relative; margin-left: -0.6rem; transition: transform 0.2s ease; }
+.aw-community-faces li:first-child { margin-left: 0; }
+.aw-community-faces li:hover, .aw-community-faces li:focus-within { transform: translateY(-3px); z-index: 5; }
+.aw-community-faces a { display: block; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 2px solid #0a0a0e; background: #121218; overflow: hidden; }
+.aw-community-faces img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.aw-community-faces a:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 2px; }
+.aw-community-more a { display: grid; place-items: center; background: #121218; color: #6EE7A0; border-color: rgba(255, 255, 255, 0.14); font-size: 1rem; text-decoration: none; }
+.aw-community-text { margin: 0; color: rgba(236, 236, 241, 0.72); font-size: 0.9rem; }
+.aw-community-text strong { color: #fff; font-weight: 600; }
+.aw-community-text a { color: #6EE7A0; }
+/* Hover card: name and commits, in the manner of a speaker badge */
+.aw-community-faces a[data-name]::after {
+  content: attr(data-name) "\A" attr(data-meta);
+  white-space: pre;
+  position: absolute; left: 50%; top: calc(100% + 0.5rem); z-index: 10;
+  transform: translate(-50%, 4px); opacity: 0; pointer-events: none;
+  padding: 0.5rem 0.8rem; border-radius: var(--radius);
+  background: #fff; color: #0a0a0e; font-size: 0.85rem; font-weight: 600; line-height: 1.35; text-align: left;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.aw-community-faces li:hover a::after, .aw-community-faces a:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+.aw-community-faces a[data-name] { overflow: visible; }
+.aw-community-faces a[data-name] img { border-radius: 50%; }
+@media (max-width: 640px) {
+  .aw-community-faces li:nth-child(n+9):not(.aw-community-more) { display: none; }
+  .aw-community-faces a { width: 2.2rem; height: 2.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aw-community-faces li, .aw-community-faces a::after { transition: none; }
+}
+@media (max-width: 768px) { .aw-community { order: 0; position: relative; margin-bottom: 1rem; } }
