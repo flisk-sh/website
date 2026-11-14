@@ -7,12 +7,18 @@
   function sid() {
     try { var k = '_fa', v = sessionStorage.getItem(k); if (!v) { v = Math.random().toString(36).slice(2, 12); sessionStorage.setItem(k, v); } return v; } catch (e) { return ''; }
   }
+  // The theme the visitor sees: data-flisk-theme, else data-theme (light and dark are not themes). Read at send time.
+  function theme() {
+    var h = document.documentElement, t = h.getAttribute('data-flisk-theme');
+    if (!t) { t = h.getAttribute('data-theme') || ''; if (/^\s*(light|dark)\s*$/i.test(t)) t = ''; }
+    return String(t || '').trim().toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 32);
+  }
   function send() {
     var p = location.pathname;
     if (p === last) return; // reloads and repeat route events count once
     last = p;
     var u = new URLSearchParams(location.search).get('utm_campaign') || '';
-    var body = JSON.stringify({ d: d, p: p, r: document.referrer, s: sid(), u: u });
+    var body = JSON.stringify({ d: d, p: p, r: document.referrer, s: sid(), u: u, t: theme() });
     if (navigator.sendBeacon) navigator.sendBeacon(api, body); else fetch(api, { method: 'POST', body: body, keepalive: true });
   }
   var ps = history.pushState; // single-page apps
