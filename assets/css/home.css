@@ -2769,5 +2769,3 @@ button.aw-gen-node:focus-visible,
 /* Sponsor strip: one sentence and one button, above the license form. */
 .aw-sponsor .aw-wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
 .aw-sponsor-text { margin: 0; max-width: 760px; }
-.aw-nav-sponsor-mobile { display: none; }
-@media (max-width: 900px) { .aw-nav-sponsor { display: none; } .aw-nav-sponsor-mobile { display: block; } }

@@ -594,6 +594,10 @@ html {
 
 .aw-nav-docs-mobile { display: none; }
 
+/* One Sponsor link in the header: the text link on desktop, the menu link on mobile. Lives here, not in home.css, which only loads on the homepage. */
+.aw-nav-sponsor-mobile { display: none; }
+@media (max-width: 900px) { .aw-nav-sponsor { display: none; } .aw-nav-sponsor-mobile { display: block; } }
+
 .aw-nav-link.is-active,
 .aw-nav-more.is-active summary { color: #6EE7A0; }
 
