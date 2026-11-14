@@ -1,0 +1,76 @@
+---
+layout: default
+title: Migrations Are Not a Start Script - Flisk CLI
+---
+
+<div class="aw aw-blog">
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <div>
+        <h1>Migrations Are Not a Start Script</h1>
+      </div>
+      <div class="aw-blog-kicker">
+        <strong>Article 106 / Architecture</strong>
+        <p>Putting a migration in your API's start command feels convenient until the first time two things start at once. Give it its own job.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-article-shell">
+        <article class="aw-article-card">
+          <header>
+            <div class="aw-article-meta" aria-label="Article details">
+              <span>November 14, 2026</span>
+              <span>3 min read</span>
+              <span>Article 106</span>
+            </div>
+            <h2>Putting a migration in your API's start command feels convenient until the first time two things start at once. Give it its own job.</h2>
+            <p class="aw-article-intro">The shortest path to a working database is a line in the start script: migrate, then serve. It works on the first day and fails in ways that are hard to name.</p>
+          </header>
+
+          <div class="aw-article-body">
+            <section>
+              <h3>What the start script hides</h3>
+              <p>When migration and serving share one process, three things get tangled. A failed migration looks like a crashing API. Two replicas race to migrate the same schema. And the log of what the migration did is interleaved with request logs, so nobody reads it.</p>
+              <p>None of this hurts on a one-service laptop project. It starts to hurt the first time a second service needs the same database.</p>
+            </section>
+
+            <section>
+              <h3>A migration is a job with an exit code</h3>
+              <p>A job has a clear contract: it runs, it succeeds or fails, and it ends. That is a much better thing to depend on than a long-running process that happens to also touch the schema.</p>
+              <p>In Flisk the rule is explicit. New services, examples and fixtures run migrations in a resource of type <code>migrator</code>. The API declares <code>dependsOn</code> on it. A dependant starts only after the migrator has exited 0, and when the job fails the services after it are not started. For local processes, a one-shot job with no port counts as ready when it exits 0 and is never restarted.</p>
+            </section>
+
+            <div class="aw-article-note">
+              The API no longer needs to know a migration exists. It only needs the schema to be there when it starts.
+            </div>
+
+            <section>
+              <h3>What you get for free</h3>
+              <ul><li><strong>A readable failure.</strong> The migrator's own log says what failed, and the API is simply not started, which is a clearer signal than a restart loop.</li><li><strong>One runner per schema.</strong> Scaling the API to more replicas cannot start more migrations.</li><li><strong>Honest ordering.</strong> Everything that needs the schema waits for the job, and everything that does not is free to start.</li></ul>
+              <p>Scaffolding with <code>--feature prisma</code> on a backend creates the matching <code>-migrator</code> resource that runs <code>prisma migrate deploy</code>, with the API already depending on it, so the right shape is the default shape.</p>
+            </section>
+
+            <section>
+              <h3>The objection, and the answer</h3>
+              <p>The usual objection is that a separate resource is more ceremony than one extra line. It is, by about one small file. In exchange, the question "did the schema change apply" has a single place to look, and the answer is a process exit code rather than something you infer from whether the API came up.</p>
+            </section>
+          </div>
+        </article>
+
+        <aside class="aw-blog-side" aria-label="Article context">
+          <div class="aw-blog-side-card">
+            <h4>Filed under</h4>
+            <p><code>Architecture</code></p>
+          </div>
+          <div class="aw-blog-side-card">
+            <h4>Keep reading</h4>
+            <p><a href="{{ '/blog/#library' | relative_url }}">Back to article library</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>

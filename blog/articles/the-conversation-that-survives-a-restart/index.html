@@ -1,0 +1,77 @@
+---
+layout: default
+title: The Conversation That Survives a Restart - Flisk CLI
+---
+
+<div class="aw aw-blog">
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <div>
+        <h1>The Conversation That Survives a Restart</h1>
+      </div>
+      <div class="aw-blog-kicker">
+        <strong>Article 104 / AI</strong>
+        <p>If an AI feature loses its conversations every time you restart the stack, you will test it badly. Durable sessions fix that at the layer where it belongs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-article-shell">
+        <article class="aw-article-card">
+          <header>
+            <div class="aw-article-meta" aria-label="Article details">
+              <span>November 14, 2026</span>
+              <span>3 min read</span>
+              <span>Article 104</span>
+            </div>
+            <h2>If an AI feature loses its conversations every time you restart the stack, you will test it badly. Durable sessions fix that at the layer where it belongs.</h2>
+            <p class="aw-article-intro">Anything that talks to a model keeps state: who said what, which tool was called, what is half finished. Developers lose that state constantly, then wonder why bugs only appear in long conversations.</p>
+          </header>
+
+          <div class="aw-article-body">
+            <section>
+              <h3>The restart problem</h3>
+              <p>Edit a file, hot reload fires, the process restarts, and the conversation you spent ten minutes building is gone. So you stop building long conversations. You test one-turn happy paths, because the long ones are too expensive to recreate.</p>
+              <p>The bugs live in the long ones: the third tool call, the resumed session, the turn that was interrupted halfway. Your workflow quietly removed the tests that would have found them.</p>
+            </section>
+
+            <section>
+              <h3>A contract, not a framework</h3>
+              <p>The Flisk <code>agent</code> resource type does not pick your model library. It owns a small process contract and leaves the model call to you:</p>
+              <ul><li><code>/health</code> for liveness and <code>/ready</code> for "the checkpoint store is reachable", so callers know when to send a turn.</li><li>A <code>POST</code> turn endpoint that reads <code>x-session-id</code>, loads that session's checkpoint, calls your <code>runTurn</code>, and commits the new checkpoint atomically.</li><li><code>GET /sessions</code> to list stored sessions, and <code>flisk agent sessions &lt;resource&gt;</code> to see them as a table or read one checkpoint with <code>--session-id</code>.</li></ul>
+              <p>Inside <code>runTurn</code> you can call any provider or any orchestration library. The contract does not care.</p>
+            </section>
+
+            <section>
+              <h3>Where the state lives</h3>
+              <p>With <code>durability: files</code>, checkpoints are written to a named volume that survives <code>flisk down</code>, container restarts and live updates. On SIGTERM the process lets an in-flight turn checkpoint before it exits, so a reload in the middle of a call does not corrupt the session. Sessions nobody returns to are swept after a day by default, and you can drop one immediately with a <code>DELETE</code> on the session endpoint.</p>
+              <p>Removing the state is a deliberate act: delete the volume by name. Nothing clears it by accident.</p>
+            </section>
+
+            <div class="aw-article-note">
+              Durable sessions are not a production claim. They exist so the way you develop matches the way the feature behaves.
+            </div>
+
+            <section>
+              <h3>What changes in practice</h3>
+              <p>You can restart freely, keep one long conversation open for a week of work, and find the exact session that broke yesterday with <code>flisk agent sessions</code> and read its checkpoint. The long-conversation bugs start showing up on your laptop instead of in a user's report.</p>
+            </section>
+          </div>
+        </article>
+
+        <aside class="aw-blog-side" aria-label="Article context">
+          <div class="aw-blog-side-card">
+            <h4>Filed under</h4>
+            <p><code>AI</code></p>
+          </div>
+          <div class="aw-blog-side-card">
+            <h4>Keep reading</h4>
+            <p><a href="{{ '/blog/#library' | relative_url }}">Back to article library</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
