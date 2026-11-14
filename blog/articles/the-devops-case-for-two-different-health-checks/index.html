@@ -1,0 +1,77 @@
+---
+layout: default
+title: The DevOps Case for Two Different Health Checks - Flisk CLI
+---
+
+<div class="aw aw-blog">
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <div>
+        <h1>The DevOps Case for Two Different Health Checks</h1>
+      </div>
+      <div class="aw-blog-kicker">
+        <strong>Article 105 / Platform</strong>
+        <p>Is my machine ready, and is my project consistent, are different questions. Keeping them in different commands keeps support tickets short.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-article-shell">
+        <article class="aw-article-card">
+          <header>
+            <div class="aw-article-meta" aria-label="Article details">
+              <span>November 14, 2026</span>
+              <span>3 min read</span>
+              <span>Article 105</span>
+            </div>
+            <h2>Is my machine ready, and is my project consistent, are different questions. Keeping them in different commands keeps support tickets short.</h2>
+            <p class="aw-article-intro">A platform team's day is mostly one question asked many ways: it does not work, what is wrong. The fastest way to answer it is to refuse to let it be one question.</p>
+          </header>
+
+          <div class="aw-article-body">
+            <section>
+              <h3>Two failures that look the same</h3>
+              <p>From the developer's chair, <em>flisk up fails</em> is one symptom. Underneath it are at least two unrelated causes. Either the machine is wrong (no container engine, a port in use, a missing runtime) or the project is wrong (a <code>service.json</code> that does not validate, generated files that no longer match the manifest).</p>
+              <p>Support that cannot tell these apart asks for screenshots, then asks again. Support that can tell them apart asks for one JSON blob.</p>
+            </section>
+
+            <section>
+              <h3>One command per question</h3>
+              <ul><li><strong><code>flisk doctor</code></strong> checks the environment: the container engine (Docker, Podman or Colima), Tilt and ports. For a project where every service declares a <code>command</code>, it checks only that those programs are installed. <code>--fix</code> repairs what it can, and <code>--json</code> makes the result machine readable.</li><li><strong><code>flisk config verify</code></strong> checks the project: that generated files match <code>.flisk/project.json</code> and that every <code>service.json</code> is valid, including a circular <code>dependsOn</code> or a health check that names two probes.</li></ul>
+              <p>Keeping the boundary clean is a deliberate rule in the project, not an accident. A doctor that also lints your manifests becomes a command nobody can explain in one sentence.</p>
+            </section>
+
+            <div class="aw-article-note">
+              A diagnostic you can describe in one sentence is a diagnostic people actually run before opening a ticket.
+            </div>
+
+            <section>
+              <h3>What this saves a platform team</h3>
+              <p>A thread that starts with the output of both commands is usually over in one reply. The environment is fine and the project is not, or the other way around, and the next step is obvious. Over a quarter that is a lot of small interruptions that never happen.</p>
+              <p>It also gives the platform team a place to encode what they keep repeating. A recurring cause becomes a doctor check, so the fifth person to hit it is told by the tool instead of by a human.</p>
+            </section>
+
+            <section>
+              <h3>The scope stays local</h3>
+              <p>None of this is a deployment tool, and it is not meant to be. Flisk does not emit Kubernetes manifests and does not replace Helm or Argo. The opt-in <code>flisk export</code> commands write <code>render.yaml</code>, <code>wrangler.toml</code> or a standalone <code>docker-compose.yml</code> from the same <code>service.json</code> files, write environment variable names but never values, and never deploy anything. <code>flisk eject</code> writes a plain description of the generated Tilt setup, so leaving is documented before anyone needs it.</p>
+              <p>That is the DevOps case in one line: the local loop gets better without taking ownership of production.</p>
+            </section>
+          </div>
+        </article>
+
+        <aside class="aw-blog-side" aria-label="Article context">
+          <div class="aw-blog-side-card">
+            <h4>Filed under</h4>
+            <p><code>Platform</code></p>
+          </div>
+          <div class="aw-blog-side-card">
+            <h4>Keep reading</h4>
+            <p><a href="{{ '/blog/#library' | relative_url }}">Back to article library</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>

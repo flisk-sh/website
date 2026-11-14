@@ -1,0 +1,79 @@
+---
+layout: default
+title: Acceptance Criteria That Can Fail on Your Laptop - Flisk CLI
+---
+
+<div class="aw aw-blog">
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <div>
+        <h1>Acceptance Criteria That Can Fail on Your Laptop</h1>
+      </div>
+      <div class="aw-blog-kicker">
+        <strong>Article 103 / SDD</strong>
+        <p>A spec line is only finished when something can fail it. Most of the lines can be checked where you already work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-article-shell">
+        <article class="aw-article-card">
+          <header>
+            <div class="aw-article-meta" aria-label="Article details">
+              <span>November 14, 2026</span>
+              <span>3 min read</span>
+              <span>Article 103</span>
+            </div>
+            <h2>A spec line is only finished when something can fail it. Most of the lines can be checked where you already work.</h2>
+            <p class="aw-article-intro">Spec-driven development is good at saying what should be true. It is silent on how you will find out that it is not. That gap is where tidy specs turn into quiet lies.</p>
+          </header>
+
+          <div class="aw-article-body">
+            <section>
+              <h3>A criterion with no failing path is a wish</h3>
+              <p>Take the line <em>the service is ready to accept orders</em>. Read it as a reviewer and it sounds finished. Read it as a test and it is empty: ready according to whom, checked how, and what happens when it is false?</p>
+              <p>The fix is not a longer spec. It is attaching each line to something that can go red on the machine where the work happens.</p>
+            </section>
+
+            <section>
+              <h3>Four checks that already exist</h3>
+              <p>A Flisk stack gives you most of these without writing a test framework:</p>
+              <ul><li><strong>Liveness and readiness.</strong> A service declares <code>healthCheckPath</code>, and a check can be a path, an open TCP port, or a command that must exit 0. "Ready to accept orders" becomes a URL that returns 200 only when the dependencies it needs are reachable.</li><li><strong>Status as data.</strong> <code>flisk status --json</code> reports readiness per resource, so a script, a reviewer or an assistant can assert on it instead of reading a screenshot.</li><li><strong>Ordering that is enforced.</strong> A service that depends on a migrator starts only after the migration job exited 0, and the services after a failed job are not started. "Schema exists before the API serves traffic" stops being a sentence and becomes behavior.</li><li><strong>Generated files match intent.</strong> <code>flisk config verify --json</code> fails when the generated files drift from <code>.flisk/project.json</code> or a <code>service.json</code> is invalid.</li></ul>
+            </section>
+
+            <div class="aw-article-note">
+              If a line in the spec cannot be tied to one of these, ask whether it is a requirement or a hope.
+            </div>
+
+            <section>
+              <h3>Write the criterion and the check together</h3>
+              <p>When you add an acceptance line, add the command next to it. For example:</p>
+              <pre><code>Criterion: orders API is ready only when the database is reachable.
+Check:     flisk status --json   (orders-api: ready)
+Break it:  stop the database container, expect orders-api not ready</code></pre>
+              <p>The last line matters most. A check that has never been seen to fail proves nothing. Break the dependency on purpose once, watch the check go red, and you know the criterion is real.</p>
+            </section>
+
+            <section>
+              <h3>What this does not replace</h3>
+              <p>Local checks do not prove production behavior, and they do not replace product judgment about whether the criterion was the right one. They remove the cheapest failure: a spec that was never run against anything. Everything else the spec still has to earn.</p>
+            </section>
+          </div>
+        </article>
+
+        <aside class="aw-blog-side" aria-label="Article context">
+          <div class="aw-blog-side-card">
+            <h4>Filed under</h4>
+            <p><code>SDD</code></p>
+          </div>
+          <div class="aw-blog-side-card">
+            <h4>Keep reading</h4>
+            <p><a href="{{ '/blog/#library' | relative_url }}">Back to article library</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>

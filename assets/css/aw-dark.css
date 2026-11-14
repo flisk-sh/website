@@ -1399,6 +1399,43 @@ body:has(.aw) .page-content {
   font-weight: 600;
 }
 
+.aw-article-body ul {
+  margin: 0 0 1.25rem;
+  padding-left: 1.25rem;
+  color: rgba(236, 236, 241, 0.81);
+  font-size: 1.02rem;
+  line-height: 1.82;
+}
+
+.aw-article-body li {
+  margin-bottom: 0.6rem;
+}
+
+.aw-article-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875em;
+  background: rgba(34, 197, 94, 0.12);
+  color: #86EFAC;
+  padding: 0.15em 0.45em;
+  border-radius: var(--radius);
+}
+
+.aw-article-body pre {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.04);
+  overflow-x: auto;
+}
+
+.aw-article-body pre code {
+  padding: 0;
+  background: transparent;
+  color: rgba(236, 236, 241, 0.9);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
 .aw-article-note {
   margin: 2.25rem 0;
   border-radius: var(--radius);

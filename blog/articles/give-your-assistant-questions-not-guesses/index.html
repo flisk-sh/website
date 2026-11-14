@@ -1,0 +1,80 @@
+---
+layout: default
+title: Give Your Assistant Questions to Ask, Not Guesses to Make - Flisk CLI
+---
+
+<div class="aw aw-blog">
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <div>
+        <h1>Give Your Assistant Questions to Ask, Not Guesses to Make</h1>
+      </div>
+      <div class="aw-blog-kicker">
+        <strong>Article 101 / AI</strong>
+        <p>A coding assistant that can ask the stack what is running makes fewer confident mistakes than one that infers it from file names.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-article-shell">
+        <article class="aw-article-card">
+          <header>
+            <div class="aw-article-meta" aria-label="Article details">
+              <span>November 14, 2026</span>
+              <span>3 min read</span>
+              <span>Article 101</span>
+            </div>
+            <h2>A coding assistant that can ask the stack what is running makes fewer confident mistakes than one that infers it from file names.</h2>
+            <p class="aw-article-intro">Most wrong suggestions from an assistant are not reasoning errors. They are missing facts: which port, which service, which file is generated, whether anything is even running.</p>
+          </header>
+
+          <div class="aw-article-body">
+            <section>
+              <h3>Guessing is the default</h3>
+              <p>Open a repository with eight services and ask an assistant why the checkout API returns a 502. It will read the code, find a plausible port, and suggest a fix. Often the fix is for a system that is not the one on your laptop: the port was reassigned, the database never started, or the file it wants to edit is regenerated on the next <code>flisk up</code>.</p>
+              <p>The assistant is not careless. It was handed a pile of files and no way to ask a question. Everything it says about the running system is inference.</p>
+            </section>
+
+            <section>
+              <h3>What it can ask instead</h3>
+              <p>Flisk ships a control plane for exactly this. <code>flisk mcp</code> runs a Model Context Protocol server over stdio, and <code>flisk connect claude</code> (or <code>cursor</code>, or <code>codex</code>) writes the entry into the host's MCP config in one command. After that the assistant has tools instead of hunches.</p>
+              <ul><li><strong>status</strong> returns stacks, resources, ingress URLs, ports and readiness, so the first question is answered with data.</li><li><strong>logs</strong> returns a bounded snapshot of recent output, so it reads the failing service rather than reading the code and imagining the failure.</li><li><strong>resource_list</strong> and <strong>network_list</strong> give the real service names and the URL that actually answers.</li><li><strong>resource_run</strong> runs a one-off command with the environment that service has in the stack.</li></ul>
+              <p>None of these is clever. That is the point. A boring, structured answer to "is the orders service ready" removes a whole class of confident nonsense.</p>
+            </section>
+
+            <div class="aw-article-note">
+              Ask for the fact, then reason about it. The order matters more than the model.
+            </div>
+
+            <section>
+              <h3>It can also ask what not to touch</h3>
+              <p>The costliest assistant mistake in a generated project is a hand edit to a generated file. The <code>config_explain</code> tool takes a path and says whether the file is generated or user-owned, and what editing it would do on the next <code>up</code>. <code>config_verify</code> then checks that the generated files still match <code>.flisk/project.json</code> and that every <code>service.json</code> is valid.</p>
+              <p>That turns a rule you would otherwise paste into every prompt (never edit anything under <code>.flisk/</code>) into something the tool can answer for itself, per file.</p>
+            </section>
+
+            <section>
+              <h3>A small setup that pays back quickly</h3>
+              <pre><code>flisk connect claude
+flisk up
+# then ask: which services are not ready, and why?</code></pre>
+              <p>Try it on the last bug you debugged by hand. If the assistant reaches the cause through <code>status</code> and <code>logs</code> without you pasting anything, the control plane is doing its job. If it still guesses, the answer it needed was probably missing from the stack, and that is worth fixing in a <code>service.json</code> rather than in a prompt.</p>
+            </section>
+          </div>
+        </article>
+
+        <aside class="aw-blog-side" aria-label="Article context">
+          <div class="aw-blog-side-card">
+            <h4>Filed under</h4>
+            <p><code>AI</code></p>
+          </div>
+          <div class="aw-blog-side-card">
+            <h4>Keep reading</h4>
+            <p><a href="{{ '/blog/#library' | relative_url }}">Back to article library</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>

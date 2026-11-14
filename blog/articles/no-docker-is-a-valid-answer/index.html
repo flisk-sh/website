@@ -1,0 +1,77 @@
+---
+layout: default
+title: No Docker Is a Valid Answer - Flisk CLI
+---
+
+<div class="aw aw-blog">
+  <section class="aw-subhero">
+    <div class="aw-subhero-grid">
+      <div>
+        <h1>No Docker Is a Valid Answer</h1>
+      </div>
+      <div class="aw-blog-kicker">
+        <strong>Article 107 / Local Dev</strong>
+        <p>Not every service needs a container to be developed. Pick containers for what they are good at and let simple processes stay simple.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-article-shell">
+        <article class="aw-article-card">
+          <header>
+            <div class="aw-article-meta" aria-label="Article details">
+              <span>November 14, 2026</span>
+              <span>3 min read</span>
+              <span>Article 107</span>
+            </div>
+            <h2>Not every service needs a container to be developed. Pick containers for what they are good at and let simple processes stay simple.</h2>
+            <p class="aw-article-intro">Containers solve real problems, and they also cost startup time, disk and a daemon someone has to keep alive. The honest question is not whether to use them but where.</p>
+          </header>
+
+          <div class="aw-article-body">
+            <section>
+              <h3>The default question is wrong</h3>
+              <p>Teams usually start from <em>how do we containerize this</em>. The better start is <em>what does this service need from the machine</em>. A small website and an API written in Node, Python, Go or Bun need a runtime and a port. They do not need an image.</p>
+              <p>When you ask the first question for everything, the laptop pays for isolation nobody asked for.</p>
+            </section>
+
+            <section>
+              <h3>Local processes as a first-class mode</h3>
+              <p>A service whose <code>service.json</code> declares a <code>command</code> runs as a plain local process. When every service in the project does, <code>flisk up</code> needs only those runtimes: no Docker, no Tilt and no generated files. <code>flisk doctor</code> adjusts to match and checks only that the programs are installed.</p>
+              <p>The same idea is why the starter demo works without Docker. When Docker is not running, or on native Windows, <code>flisk demo</code> falls back to a two-service app (a menu API and a website) started as local processes, so the first thing a new person runs does not depend on a container engine.</p>
+            </section>
+
+            <section>
+              <h3>When containers earn their place</h3>
+              <ul><li><strong>Databases and queues.</strong> You want the real thing at the real version, and a container is the cheapest way to get it.</li><li><strong>Gateway routing.</strong> Traefik gives every service a stable <code>*.localhost</code> URL with ports assigned for you.</li><li><strong>Parity.</strong> If production runs the container, running the container locally catches the image that does not build.</li></ul>
+              <p>Those are real reasons. They are reasons about specific services, not about the whole project.</p>
+            </section>
+
+            <div class="aw-article-note">
+              Pick the lightest mode that tells the truth about the service. Move up when a real requirement shows up.
+            </div>
+
+            <section>
+              <h3>Mixing is allowed</h3>
+              <p>The two modes are not a fork in the road. You can scaffold a service with <code>flisk resource &lt;name&gt; --local</code> to run it on your computer, keep Postgres in a container, and let both sit in one project. The manifest says which is which, so a newcomer reads the answer instead of discovering it.</p>
+              <p>A laptop that starts what you are actually working on, the way that costs the least, is a better default than a uniform stack that makes everything equally heavy.</p>
+            </section>
+          </div>
+        </article>
+
+        <aside class="aw-blog-side" aria-label="Article context">
+          <div class="aw-blog-side-card">
+            <h4>Filed under</h4>
+            <p><code>Local Dev</code></p>
+          </div>
+          <div class="aw-blog-side-card">
+            <h4>Keep reading</h4>
+            <p><a href="{{ '/blog/#library' | relative_url }}">Back to article library</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
