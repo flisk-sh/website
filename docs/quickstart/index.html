@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Quick Start - Flisk CLI
-description: "Install Flisk CLI, check your machine with flisk doctor, clone a working stack and start it with flisk up. The shortest path to a running local stack."
+description: "Three steps: install Flisk, check your computer with flisk doctor, run a ready-made app with flisk up."
 ---
 
 <div class="aw">
@@ -11,58 +11,56 @@ description: "Install Flisk CLI, check your machine with flisk doctor, clone a w
 
       <div class="aw-docs-body">
         <h1>Quick Start</h1>
-        <p class="aw-lead">Install Flisk, let <code>flisk doctor</code> check your machine, start a working example stack, then add your own services.</p>
+        <p class="aw-lead">Three steps. At the end, a real app runs on your computer.</p>
 
         <div class="aw-quickstart-hero">
           <div>
             <span class="aw-quickstart-kicker">Start here</span>
-            <h2>Copy five commands. Get a real local stack.</h2>
-            <p>Do this first. Come back for manual binaries, licenses, and from-scratch service wiring after you have seen Flisk boot once.</p>
+            <h2>Install. Check. Run.</h2>
+            <p>Copy each line into your terminal. Skip the rest of this page until the app is running.</p>
           </div>
           <ol class="aw-quickstart-flow" aria-label="Simple setup steps">
             <li><a href="#install-options"><span>1</span> Install</a></li>
             <li><a href="#before-you-run-it"><span>2</span> Check</a></li>
-            <li><a href="#start-from-a-working-example"><span>3</span> Clone example</a></li>
-            <li><a href="#what-actually-happens-when-you-run-it"><span>4</span> Run</a></li>
+            <li><a href="#start-from-a-working-example"><span>3</span> Run</a></li>
           </ol>
         </div>
 
-        <h2 id="before-you-run-it">Before you run it</h2>
-        <p>Docker is optional: <code>npx @flisk-sh/flisk demo</code> and services that declare a <code>command</code> run as local processes with only their own runtime. A container stack needs Docker and Tilt. The standalone CLI binary needs no host Node.js or Bun; installing the CLI from npm requires Node.js {{ site.data.flisk.prereq_node }}.</p>
-        <ul class="aw-check-list">
-          <li><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a> installed and running</li>
-          <li><a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt</a> installed</li>
-          <li><a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a> {{ site.data.flisk.prereq_node }} only when installing the CLI from npm</li>
-        </ul>
-        <p><strong>Full local runtime:</strong> macOS, Linux, and Ubuntu in WSL2. The latest release also includes a Windows AMD64 CLI for inspection; native Windows does not support running a landscape.</p>
+        <h2 id="just-look">Only want a look? One line.</h2>
+        <p>Have Node.js {{ site.data.flisk.prereq_node }}? Run this. Nothing to install. No Docker needed.</p>
+        <div class="aw-codeblock aw-codeblock--primary">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>npx @flisk-sh/flisk demo</pre>
+        </div>
+        <p>It starts a small app (a website and an API) and opens it in your browser. Liked it? Do the three steps below.</p>
 
-        <h2 id="install-options">Install options</h2>
-        <p>Using an AI coding agent? Paste the line below into its chat — it'll fetch <span class="aw-mono">llms.txt</span>, install Flisk, and configure the local MCP server for your agent. Use curl if you just want the fastest CLI install yourself. Use npm, npx, pnpm, or bun if you prefer package-manager workflows.</p>
+        <h2 id="install-options">Step 1. Install</h2>
+        <p>Pick one tab. Not sure? Use <strong>curl</strong>. On Windows, see <a href="#windows-setup">Windows</a> below.</p>
         <div class="aw-install-tabs">
           <div class="aw-install-tabs-bar" role="tablist">
-            <button class="aw-install-tab aw-install-tab--active" role="tab" aria-selected="true"  data-tab="llms">AI agent</button>
-            <button class="aw-install-tab" role="tab" aria-selected="false" data-tab="curl">curl</button>
+            <button class="aw-install-tab aw-install-tab--active" role="tab" aria-selected="true"  data-tab="curl">curl</button>
+            <button class="aw-install-tab" role="tab" aria-selected="false" data-tab="llms">AI agent</button>
             <button class="aw-install-tab" role="tab" aria-selected="false" data-tab="npm">npm</button>
             <button class="aw-install-tab" role="tab" aria-selected="false" data-tab="npx">npx</button>
             <button class="aw-install-tab" role="tab" aria-selected="false" data-tab="pnpm">pnpm</button>
             <button class="aw-install-tab" role="tab" aria-selected="false" data-tab="bun">bun</button>
           </div>
           <div class="aw-codeblock" style="border-top-left-radius:0;border-top-right-radius:0;margin-top:0;">
-            <div class="aw-codeblock-head"><i></i><i></i><i></i><span class="aw-install-tab-label">chat</span></div>
-            <div class="aw-install-panel" data-panel="llms">
-              <pre>Please install Flisk and configure its local MCP server for this agent: {{ '/llms.txt' | absolute_url }}</pre>
-            </div>
-            <div class="aw-install-panel" data-panel="curl" style="display:none;">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span class="aw-install-tab-label">terminal</span></div>
+            <div class="aw-install-panel" data-panel="curl">
               <pre>curl -fsSL https://flisk.sh/install.sh | sh</pre>
+            </div>
+            <div class="aw-install-panel" data-panel="llms" style="display:none;">
+              <pre>Please install Flisk and configure its local MCP server for this agent: {{ '/llms.txt' | absolute_url }}</pre>
             </div>
             <div class="aw-install-panel" data-panel="npm" style="display:none;">
               <pre>{{ site.data.flisk.install_npm }}</pre>
             </div>
             <div class="aw-install-panel" data-panel="npx" style="display:none;">
-              <pre><span class="c"># run without installing globally</span>
+              <pre><span class="c"># run without installing</span>
 {{ site.data.flisk.install_npx_version }}
 
-<span class="c"># or scaffold a project directly</span>
+<span class="c"># or make a new project right away</span>
 {{ site.data.flisk.install_npx_project }}</pre>
             </div>
             <div class="aw-install-panel" data-panel="pnpm" style="display:none;">
@@ -73,104 +71,56 @@ description: "Install Flisk CLI, check your machine with flisk doctor, clone a w
             </div>
           </div>
         </div>
+        <p>Use an AI coding tool? Open the <strong>AI agent</strong> tab and paste that line into its chat. It installs Flisk for you. The npm, pnpm and bun tabs need Node.js {{ site.data.flisk.prereq_node }}. The curl tab does not.</p>
+        <p>Now check it worked. You should see a version number.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk --version</pre>
+        </div>
 
-
-        <p class="aw-note"><strong>Coming from the old package?</strong> The CLI used to ship as
-        <code>@tdk-landscape/tdk-cli-core</code>, and that package still owns the <code>tdk</code> command on your machine.
-        Remove it once, then install Flisk: <code>npm uninstall -g @tdk-landscape/tdk-cli-core &amp;&amp; npm install -g @flisk-sh/flisk</code>.
-        Without that, npm stops with <code>EEXIST: file already exists</code> and the <code>flisk</code> command never lands on your PATH.
-        The <code>curl</code> installer above has no such conflict: it writes <code>flisk</code> directly.</p>
-        <h2 id="windows-setup">Windows AMD64: inspect the CLI</h2>
-        <p>The latest release includes <code>flisk-windows-amd64.exe</code>. Install it from PowerShell, then check the binary and its bundled files:</p>
-        <ol>
-          <li>Install Flisk:
-            <div class="aw-codeblock">
-              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>irm https://flisk.sh/install.ps1 | iex</pre>
-            </div>
-            <p>Or download and inspect the script before running it:</p>
-            <div class="aw-codeblock">
-              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>Invoke-WebRequest https://flisk.sh/install.ps1 -OutFile install-flisk.ps1
-powershell -ExecutionPolicy Bypass -File .\install-flisk.ps1</pre>
-            </div>
-          </li>
-          <li>Close PowerShell and open a new window so the updated PATH is loaded.</li>
-          <li>Verify the CLI and packaged assets:
-            <div class="aw-codeblock">
-              <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
-              <pre>flisk --version
-flisk runtime --check-assets
-flisk doctor</pre>
-            </div>
-            <p>On native Windows, <code>flisk doctor</code> reports that landscape startup requires WSL2 Ubuntu. This is the expected support boundary.</p>
-          </li>
-        </ol>
-        <p>For the full inner loop, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>. Windows ARM64 binaries are not published.</p>
-
-        <h2 id="simple-setup">The happy path, step by step</h2>
-        <p>Once Flisk is installed — pick a method above — this is the whole happy path if you already have Docker running.</p>
+        <h2 id="before-you-run-it">Step 2. Check your computer</h2>
         <div class="aw-codeblock aw-codeblock--primary">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>flisk doctor
-flisk project example
+          <pre>flisk doctor</pre>
+        </div>
+        <p>It looks at your computer and tells you what is missing. Fix what it says. Run it again. Stop when every line is green.</p>
+        <p>For the example in step 3 you need two things:</p>
+        <ul class="aw-check-list">
+          <li><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a>, installed and running</li>
+          <li><a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt</a>, installed</li>
+        </ul>
+        <p>Works on macOS, Linux, and Ubuntu in WSL2.</p>
+
+        <h2 id="start-from-a-working-example">Step 3. Run the example</h2>
+        <span id="simple-setup"></span>
+        <div class="aw-codeblock aw-codeblock--primary">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk project example
 cd flisk-example
 flisk up</pre>
         </div>
+        <ol>
+          <li>The first line copies a ready-made app: an order tracker with an API, a Postgres database, a worker and a website.</li>
+          <li>The second line goes into its folder.</li>
+          <li>The third line starts it. Leave it running.</li>
+        </ol>
+        <p>When the app is ready, <code>flisk up</code> prints its links. Open one in your browser. Lost the links? Run <code>flisk networks</code> in a second terminal.</p>
 
-        <div class="aw-setup-grid">
-          <article class="aw-setup-step">
-            <span>01</span>
-            <h3>Install the CLI</h3>
-            <p>The installer picks the right public binary for macOS or Linux, Intel or Arm.</p>
-          </article>
-          <article class="aw-setup-step">
-            <span>02</span>
-            <h3>Run doctor</h3>
-            <p>Flisk tells you what is missing before it tries to boot Docker, Tilt, or generated config.</p>
-          </article>
-          <article class="aw-setup-step">
-            <span>03</span>
-            <h3>Use the example</h3>
-            <p>Start from a working PSR landscape instead of inventing the folder structure cold.</p>
-          </article>
-          <article class="aw-setup-step">
-            <span>04</span>
-            <h3>Boot the stack</h3>
-            <p><code>flisk up</code> generates the local files and hands orchestration to Tilt.</p>
-          </article>
+        <div class="aw-callout">
+          <h4>Done</h4>
+          <p>The app runs on your computer. A teammate who copies the repo runs the same lines and gets the same app.</p>
         </div>
 
-        <h2>Verify installation</h2>
-        <div class="aw-codeblock">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>flisk --version
-<span class="c"># prints the installed version</span></pre>
-        </div>
-
-        <h2>Add your license (if using premium features)</h2>
-        <p>Core stays free. Premium is a separate key for paid extras such as Verdaccio (a local npm registry) and Sablier (stopping idle services). Playwright, C4, and AGENTS.md are free when generated in-repo; a key is required only to download their implementations.</p>
-        <div class="aw-license-panel">
-          <div>
-            <h3>Have a Premium or Enterprise key?</h3>
-            <p>Export it before running <code>flisk up</code>. Flisk checks the key automatically on the next run.</p>
-          </div>
-          <div class="aw-codeblock">
-            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-            <pre>export FLISK_LICENSE_KEY=&lt;your-license-key&gt;</pre>
-          </div>
-        </div>
-        <p>Add that line to <code>~/.zshrc</code> or <code>~/.bashrc</code> if you want it to persist. Each key covers up to {{ site.data.flisk.premium_project_limit }} distinct projects, unlimited on Enterprise. If the key is missing, expired, or unreachable, Flisk keeps running with the free engine.</p>
-
-        <h2 id="what-actually-happens-when-you-run-it">What actually happens when you run it</h2>
-        <p>Before Tilt touches Docker, <code>flisk</code> checks your environment and tells you exactly what it's doing — no guessing what's happening behind the spinner.</p>
+        <h2 id="what-actually-happens-when-you-run-it">What you will see</h2>
+        <p>Flisk checks your computer first, then says what it is doing at each step.</p>
         <div class="aw-terminal" style="margin: 0 0 2rem;">
           <div class="aw-terminal-bar"><i></i><i></i><i></i><span>zsh: flisk doctor &amp;&amp; flisk up</span></div>
           <div class="aw-terminal-body" id="aw-qs-term" aria-label="Terminal showing flisk doctor and flisk up output"></div>
         </div>
 
-        <h3>Don't have Docker or Tilt yet?</h3>
-        <p><code>flisk up</code> won't just fail silently — it checks both before touching anything, and tells you precisely what's missing and how to fix it:</p>
+
+        <h3>Docker or Tilt missing?</h3>
+        <p><code>flisk up</code> stops before it starts anything and tells you what to install:</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>$ flisk up
@@ -194,46 +144,80 @@ flisk up</pre>
 
 Run <span class="hot">`flisk doctor`</span> for a full environment check.</pre>
         </div>
-        <p>Fix what it flags, run <code>flisk doctor</code> to confirm, and you're clear to boot.</p>
+        <p>Do what it says. Run <code>flisk doctor</code>. Then run <code>flisk up</code> again.</p>
 
-        <h2 id="start-from-a-working-example">Start from a working example</h2>
-        <p>Use one known-good example first: check the machine, copy the example, and start it.</p>
-        <div class="aw-codeblock">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>flisk doctor
-flisk project example
-cd flisk-example
-flisk up</pre>
-        </div>
-        <p><code>flisk project example</code> copies the order tracker bundled with the CLI: an API with Postgres, a worker and a web UI in the <code>shop</code> stack. Keep <code>flisk up</code> running; it prints the URLs when the stack is ready, and <code>flisk networks</code> lists them again. See <a href="{{ '/docs/examples/' | relative_url }}">Examples</a> for other templates after the first run.</p>
+        <h2 id="more">More, when you need it</h2>
+        <p>None of this is needed for the three steps above. Open what you need.</p>
 
-        <div class="aw-callout">
-          <h4>Success</h4>
-          <p>Your stack is running locally. A teammate who clones the repo runs the same commands and gets the same stack.</p>
-        </div>
-
-        <h2>Build from scratch</h2>
-        <p>After the example makes sense, create a blank project and add your first backend resource.</p>
-        <div class="aw-codeblock">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>mkdir my-service
+        <details class="aw-docs-details">
+          <summary>Make your own app from nothing</summary>
+          <p>Make an empty project, then add an API to it.</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+            <pre>mkdir my-service
 cd my-service
 flisk project --yes
 flisk resource api --type backend --stack shop   <span class="c"># asks you to confirm</span>
 flisk project --check
 flisk up shop</pre>
-        </div>
-        <p>Add a frontend the same way. It is React by default; pass <code>--framework vue</code> for Vue 3 (Flisk CLI 1.3.75 or newer):</p>
-        <div class="aw-codeblock">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>flisk resource web --type frontend --stack shop                   <span class="c"># React + Vite (default)</span>
+          </div>
+          <p>Add a website the same way. It is React unless you ask for Vue 3 with <code>--framework vue</code> (Flisk CLI 1.3.75 or newer):</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+            <pre>flisk resource web --type frontend --stack shop                   <span class="c"># React + Vite (default)</span>
 flisk resource web --type frontend --framework vue --stack shop   <span class="c"># Vue 3 + Vite</span></pre>
-        </div>
-        <p>Flisk validates <code>.flisk/project.json</code>, generates files in <code>.flisk/.flisk-out/</code>, and reads boot order from each resource's <code>dependsOn</code> list.</p>
+          </div>
+          <p>Flisk checks <code>.flisk/project.json</code> and writes its files into <code>.flisk/.flisk-out/</code>. To start one service before another, list it in <code>dependsOn</code>.</p>
+        </details>
+
+        <details class="aw-docs-details" id="windows-setup">
+          <summary>Windows</summary>
+          <p>Best way: use Ubuntu in WSL2 and follow the three steps above. Here is the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>.</p>
+          <p>Plain Windows (AMD64) can install Flisk and run <code>flisk demo</code>. It cannot start a Docker app. Install from PowerShell:</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
+            <pre>irm https://flisk.sh/install.ps1 | iex</pre>
+          </div>
+          <p>Want to read the script before you run it?</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
+            <pre>Invoke-WebRequest https://flisk.sh/install.ps1 -OutFile install-flisk.ps1
+powershell -ExecutionPolicy Bypass -File .\install-flisk.ps1</pre>
+          </div>
+          <p>Close PowerShell and open a new window. Then check:</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>PowerShell</span></div>
+            <pre>flisk --version
+flisk runtime --check-assets
+flisk doctor</pre>
+          </div>
+          <p>On plain Windows, <code>flisk doctor</code> says that starting a Docker app needs WSL2 Ubuntu. That is expected. There is no Windows ARM64 build.</p>
+        </details>
 
         <details class="aw-docs-details">
-          <summary>Manual binary download</summary>
-          <p>Download the binary, its engine files and the checksums yourself. The binary looks for the <code>flisk-cli/</code> folder next to it.</p>
+          <summary>I have a Premium or Enterprise key</summary>
+          <p>Flisk is free and needs no key. A key is only for paid extras, such as Verdaccio (a local npm registry) and Sablier (stops services nobody is using). Playwright, C4 and AGENTS.md are free when generated in your repo. A key is needed only to download their implementations.</p>
+          <p>Run this before <code>flisk up</code>:</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+            <pre>export FLISK_LICENSE_KEY=&lt;your-license-key&gt;</pre>
+          </div>
+          <p>To keep it, add that line to <code>~/.zshrc</code> or <code>~/.bashrc</code>. One key covers up to {{ site.data.flisk.premium_project_limit }} projects. Enterprise has no limit. If the key is missing, expired or cannot be checked, Flisk keeps running with the free engine.</p>
+        </details>
+
+        <details class="aw-docs-details">
+          <summary>npm says EEXIST (you had the old tdk package)</summary>
+          <p>Flisk used to be called <code>@tdk-landscape/tdk-cli-core</code>. The old package blocks the new one, so npm stops with <code>EEXIST: file already exists</code> and you get no <code>flisk</code> command. Remove the old one, then install Flisk:</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+            <pre>npm uninstall -g @tdk-landscape/tdk-cli-core &amp;&amp; npm install -g @flisk-sh/flisk</pre>
+          </div>
+          <p>The curl install does not have this problem.</p>
+        </details>
+
+        <details class="aw-docs-details">
+          <summary>Download the files by hand</summary>
+          <p>Download the program, its engine files and the checksums yourself. The program looks for a <code>flisk-cli/</code> folder next to it.</p>
           <h3>Windows AMD64</h3>
           <p>The latest release includes the Windows CLI and the PowerShell installer verifies its checksum. On native Windows, <code>flisk demo</code> and projects whose services each declare a <code>command</code> run as local processes. For a Docker stack, native Windows supports CLI inspection only (<code>flisk --version</code>, <code>flisk runtime --check-assets</code>, <code>flisk doctor</code>); to start one, follow the <a href="https://github.com/flisk-sh/flisk/blob/main/docs/wsl2.md">WSL2 Ubuntu setup</a>.</p>
           <div class="aw-codeblock">
@@ -250,12 +234,12 @@ mkdir -p ~/.local/bin/flisk-cli
 install -m 755 "flisk-$os-$arch" ~/.local/bin/flisk
 tar -xzf flisk-cli-engine.tar.gz -C ~/.local/bin/flisk-cli --strip-components=1</pre>
           </div>
-          <p>Binaries ship from <a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">flisk-sh/releases</a>.</p>
+          <p>The files come from <a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">flisk-sh/releases</a>.</p>
         </details>
 
         <details class="aw-docs-details">
-          <summary>Try Flisk with Docker Compose</summary>
-          <p>Use Docker Compose if you want to try Flisk without installing the binary on your host.</p>
+          <summary>Try Flisk inside Docker Compose</summary>
+          <p>Do this if you do not want to install Flisk on your computer.</p>
           <div class="aw-codeblock">
             <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
             <pre>git clone https://github.com/flisk-sh/flisk-docker-compose-example.git
@@ -265,15 +249,12 @@ docker compose run --rm flisk flisk project --yes</pre>
           </div>
         </details>
 
-        <h2>Next steps</h2>
+        <h2>What next</h2>
         <ul>
-          <li><a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener">⭐ Star Flisk CLI on GitHub</a> to get release updates and help other developers find it</li>
-          <li><a href="{{ '/docs/examples/' | relative_url }}">Browse starter templates you can clone with <code>flisk project &lt;template&gt;</code></a></li>
-          <li><a href="{{ '/docs/configuration/' | relative_url }}">Learn about all configuration options</a></li>
-          <li><a href="{{ '/docs/examples/' | relative_url }}">See more complex examples</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk-docker-compose-example" target="_blank" rel="noopener">Run the Docker Compose example</a></li>
-          <li><a href="https://github.com/flisk-sh/releases/releases/latest" target="_blank" rel="noopener">Download compiled binaries</a></li>
-          <li><a href="https://flisk-sh.github.io/flisk-demo-animation/" target="_blank" rel="noopener">Watch the recording demo animation</a></li>
+          <li><a href="{{ '/docs/examples/' | relative_url }}">Copy another ready-made app with <code>flisk project &lt;template&gt;</code></a></li>
+          <li><a href="{{ '/docs/configuration/' | relative_url }}">See every setting in <code>service.json</code></a></li>
+          <li><a href="https://flisk-sh.github.io/flisk-demo-animation/" target="_blank" rel="noopener">Watch a recording of Flisk running</a></li>
+          <li><a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener">⭐ Star Flisk on GitHub</a></li>
         </ul>
       </div>
     </div>
@@ -302,6 +283,20 @@ docker compose run --rm flisk flisk project --yes</pre>
     var lbl = wrap.querySelector('.aw-install-tab-label');
     if (lbl) lbl.textContent = labels[key] || key;
   });
+})();
+</script>
+
+<script>
+// A link to a folded section opens it.
+(function () {
+  function openTarget() {
+    var id = location.hash.slice(1);
+    var el = id && document.getElementById(id);
+    var box = el && el.closest('details');
+    if (box) { box.open = true; el.scrollIntoView(); }
+  }
+  window.addEventListener('hashchange', openTarget);
+  openTarget();
 })();
 </script>
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Documentation - Flisk CLI
-description: "Flisk CLI documentation: quick start, configuration, package.json scripts, examples, AI agent skills, and running Flisk next to Helm."
+description: "Flisk starts your whole app on your own computer with one command. Docs: quick start, settings, scripts, examples, AI agents, and Flisk next to Helm."
 ---
 
 <div class="aw">
@@ -11,7 +11,7 @@ description: "Flisk CLI documentation: quick start, configuration, package.json 
 
       <div class="aw-docs-body">
         <h1>Documentation</h1>
-        <p class="aw-lead">Learn how to run services locally without Kubernetes and use <code>flisk doctor</code> and <code>flisk up</code> in place of a setup wiki.</p>
+        <p class="aw-lead">Flisk starts your whole app on your own computer with one command: <code>flisk up</code>. New here? Open the <a href="{{ '/docs/quickstart/' | relative_url }}">Quick Start</a>.</p>
 
         {% comment %} Ask bar: assets/js/aw-docs-search.js answers it from the repository docs through Helpdock, with an optional AI answer from Helpdock's /answer. Without the script it opens Helpdock. {% endcomment %}
         <div class="aw-docs-ask">
@@ -33,65 +33,73 @@ description: "Flisk CLI documentation: quick start, configuration, package.json 
             </div>
           </details>
           <datalist id="aw-docs-ask-list">{% for q in site.data.docs_questions.start %}<option value="{{ q }}">{% endfor %}{% for q in site.data.docs_questions.compare %}<option value="{{ q }}">{% endfor %}</datalist>
-          <p class="aw-docs-ask-note">Answers are passages from the docs in the Flisk repository, found by <a href="https://helpdock.flisk.si/">Helpdock</a>. Search calls no AI. Under the passages you can ask for a short AI answer written from them (beta), or hand them to your own AI.</p>
+          <p class="aw-docs-ask-note">Answers are pieces of the Flisk docs, found by <a href="https://helpdock.flisk.si/">Helpdock</a>. The search uses no AI. Under the results you can ask for a short AI answer (beta), or give the results to your own AI.</p>
         </div>
 
         <div class="aw-doc-cards">
           <a class="aw-card" href="{{ '/docs/quickstart/' | relative_url }}">
             <h3>Quick Start</h3>
-            <p>Follow the quickstart to create a local stack and check its health URL.</p>
+            <p>Start here. Install Flisk and get a working app running in three steps.</p>
             <span>Get started →</span>
           </a>
           <a class="aw-card" href="{{ '/docs/configuration/' | relative_url }}">
             <h3>Configuration</h3>
-            <p>The complete service.json schema, field by field.</p>
+            <p>Every setting you can put in <code>service.json</code>, one by one.</p>
             <span>Read more →</span>
           </a>
           <a class="aw-card" href="{{ '/docs/scripts/' | relative_url }}">
             <h3>package.json Scripts</h3>
-            <p>The dev/build/start scripts each appType requires, and how flisk doctor checks them.</p>
+            <p>The dev, build and start scripts Flisk expects in each service.</p>
             <span>Read more →</span>
           </a>
           <a class="aw-card" href="{{ '/docs/examples/' | relative_url }}">
             <h3>Examples &amp; Repos</h3>
-            <p>Explore flisk-example, flisk-user-management, flisk-erp-system ({{ site.data.flisk.erp_services }} services), the restaurant operations stack, and the SaaS starter.</p>
+            <p>Ready-made apps to copy and run, from a small order tracker to one with {{ site.data.flisk.erp_services }} services.</p>
             <span>View examples →</span>
           </a>
           <a class="aw-card" href="{{ '/docs/with-helm/' | relative_url }}">
             <h3>Deploy with Helm</h3>
-            <p>Carry Flisk generated services into a Kubernetes chart you own.</p>
+            <p>Going to Kubernetes later? How to take your services there.</p>
             <span>Read the Helm guide →</span>
           </a>
           <a class="aw-card" href="{{ '/compare/' | relative_url }}">
             <h3>Compare tools</h3>
-            <p>Flisk against Garden, Skaffold, Codespaces and the rest with transparent pricing.</p>
+            <p>Flisk next to Garden, Skaffold, Codespaces and others, with prices.</p>
             <span>Compare →</span>
           </a>
         </div>
 
         <h2>What is Flisk CLI?</h2>
-        <p>Flisk CLI starts services on your machine. It is not a deploy and not a Compose file: describe each service in <code>service.json</code>, then run <code>flisk up</code>. Production deployment stays with Helm, Argo CD, or Kustomize. Start with the <a href="{{ '/docs/quickstart/' | relative_url }}">quickstart</a>, then see how <a href="{{ '/docs/with-helm/' | relative_url }}">Flisk works alongside Helm</a>.</p>
-        <p>Describe each service in <code>service.json</code>, then use Flisk to generate the local Docker and Tilt setup. See the <a href="{{ '/docs/with-helm/' | relative_url }}">Helm handoff</a> for cluster deployment.</p>
+        <p>Your app has parts: a website, an API, a database. Flisk starts all of them on your computer with one command.</p>
+        <ol>
+          <li>You write one small file per part, called <code>service.json</code>. It says what the part is.</li>
+          <li>You run <code>flisk up</code>.</li>
+          <li>Flisk writes the setup files and starts everything.</li>
+        </ol>
+        <p>Flisk works on your computer only. It does not put your app on the internet. For that, keep using Helm, Argo CD or Kustomize. See <a href="{{ '/docs/with-helm/' | relative_url }}">Flisk next to Helm</a>.</p>
+
+        <h2>Files Flisk writes for you</h2>
+        <p>You do not write these. You do not edit these. Change <code>service.json</code> and Flisk writes them again.</p>
         <ul>
-          <li>Dockerfile with optimized L1-L4 golden layering</li>
-          <li>Vite and TypeScript configuration per app type, for React (default) or Vue 3 frontends</li>
-          <li>nginx reverse proxy rules and Traefik routes</li>
-          <li>Environment files and .npmrc wired to the local registry</li>
-          <li>Tiltfile for local orchestration</li>
-          <li>An <code>AGENTS.md</code> in each <code>.autogenerated/</code> folder that tells coding assistants not to edit generated files</li>
+          <li>A Dockerfile for each service, built in four layers (L1 to L4)</li>
+          <li>Vite and TypeScript settings for React (the default) or Vue 3 frontends</li>
+          <li>nginx and Traefik rules, so each service gets its own local address</li>
+          <li>Environment files and an <code>.npmrc</code> that point at the local registry</li>
+          <li>A Tiltfile that starts everything</li>
+          <li>An <code>AGENTS.md</code> in each <code>.autogenerated/</code> folder that tells AI coding tools to leave these files alone</li>
         </ul>
 
-        <h2>Why it matters for the business</h2>
-        <p>Flisk is designed so <code>flisk doctor</code> and <code>flisk up</code> replace a setup wiki. Onboarding time has not been measured on a hiring cohort. See the <a href="{{ '/features/' | relative_url }}#story">illustrative scenario</a>.</p>
+        <h2>Why teams use it</h2>
+        <p>A new teammate runs <code>flisk doctor</code> and <code>flisk up</code>. They do not read a long setup page. We have not measured how much time this saves on a real team. See the <a href="{{ '/features/' | relative_url }}#story">example story</a>.</p>
 
-        <h2>Key capabilities</h2>
+        <h2>What you get</h2>
         <div class="aw-feature-grid">
-          <div class="aw-card"><h4>Manifest-driven</h4><p>Single source of truth with simple JSON configuration.</p></div>
-          <div class="aw-card"><h4>Docker only</h4><p>No Kubernetes required for local development.</p></div>
-          <div class="aw-card"><h4>Auto-generation</h4><p>Docker + Tilt files for the local development loop.</p></div>
-          <div class="aw-card"><h4>Golden images</h4><p>Production-ready Docker layering, L1 through L4.</p></div>
-          <div class="aw-card"><h4>Auto-discovery</h4><p>Finds services in your directory structure automatically.</p></div>
-          <div class="aw-card"><h4>Built on Tilt</h4><p>{{ site.data.flisk.tilt_stars }} GitHub stars. Battle-tested stability.</p></div>
+          <div class="aw-card"><h4>One file per service</h4><p>You describe a service once, in a short JSON file.</p></div>
+          <div class="aw-card"><h4>No Kubernetes</h4><p>Everything runs on your computer. No cluster to set up.</p></div>
+          <div class="aw-card"><h4>Files written for you</h4><p>Flisk writes the Docker and Tilt files. You do not.</p></div>
+          <div class="aw-card"><h4>Layered images</h4><p>Docker images built in four layers, L1 to L4.</p></div>
+          <div class="aw-card"><h4>Finds your services</h4><p>Flisk looks through your folders and finds each service.</p></div>
+          <div class="aw-card"><h4>Built on Tilt</h4><p>Tilt is open source and has {{ site.data.flisk.tilt_stars }} GitHub stars.</p></div>
         </div>
       </div>
     </div>
