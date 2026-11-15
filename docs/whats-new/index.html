@@ -1,0 +1,35 @@
+---
+layout: default
+title: What's new - Flisk CLI
+description: "Recent additions to the Flisk CLI, each with the command to try it and a link to the change on GitHub."
+---
+
+<div class="aw">
+  <section class="aw-section aw-docs-section">
+    <div class="aw-wrap aw-docs">
+      {% include docs-sidebar.html %}
+
+      <div class="aw-docs-body aw-docs-body--tight">
+        <h1>What's new</h1>
+        {%- assign wn_next = site.data.whats_new.items | where: "status", "next" %}
+        <p class="aw-lead">Recent additions to the Flisk CLI. Each one has a command to try it.{% if wn_next.size > 0 %} Items marked next are merged and ship in the next release.{% endif %}</p>
+
+        {%- for it in site.data.whats_new.items %}
+        <h2 id="{{ it.title | slugify }}">{{ it.title }}</h2>
+        <p>{{ it.body | escape }}</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>{{ it.try | escape }}</pre>
+        </div>
+        <p class="aw-docs-foot">
+          {%- if it.status != 'released' %}Merged, ships in the next release. {% endif -%}
+          {%- for pr in it.prs %}<a href="https://github.com/flisk-sh/flisk/pull/{{ pr }}" target="_blank" rel="noopener">Change #{{ pr }} <span aria-hidden="true">↗</span></a>{% unless forloop.last %}, {% endunless %}{% endfor %}
+          {%- if it.doc %}{% if it.prs %}, {% endif %}<a href="{{ it.doc }}" target="_blank" rel="noopener">Guide <span aria-hidden="true">↗</span></a>{% endif %}
+        </p>
+        {%- endfor %}
+
+        <p class="aw-docs-foot">Every release, with its notes, is on <a href="https://github.com/flisk-sh/flisk/releases" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>.</p>
+      </div>
+    </div>
+  </section>
+</div>

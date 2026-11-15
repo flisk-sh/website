@@ -5,3 +5,5 @@
 - { key: "/docs/cli/",             label: "new",     since: 2026-11-15 }
 - { key: "/docs/troubleshooting/", label: "new",     since: 2026-11-15 }
 - { key: "/docs/quickstart/",      label: "updated", since: 2026-11-15 }
+- { key: "/docs/whats-new/",      label: "new",     since: 2026-11-15 }
+- { key: "/docs/how-it-works/",    label: "new",     since: 2026-11-15 }
