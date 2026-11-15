@@ -441,13 +441,6 @@ pre code {
   .sf-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* Touch targets: on phones, footer and header anchors get a 44px hit area without growing the type. */
-@media (max-width: 640px) {
-  .sf-cols a { display: flex; align-items: center; min-height: 44px; padding: 0; }
-  .aw-nav-bar a,
-  .aw-nav-bar summary { min-height: 44px; }
-}
-
 /* Page content */
 .page-content {
   min-height: calc(100vh - 300px);
@@ -806,4 +799,34 @@ h1 {
   font-size: clamp(2.25rem, 4.4vw, 3.5rem) !important;
   letter-spacing: -0.06em !important;
   line-height: 1.2;
+}
+
+/* Touch targets: on phones, footer and header controls get a 44px hit area without growing the type. */
+@media (max-width: 1040px) {
+  /* The burger menu replaces the inline links below 1040px, so the header
+     targets follow that breakpoint rather than the footer's. */
+  .aw-nav-bar a,
+  .aw-nav-bar summary,
+  .aw-nav-star,
+  .aw-nav-burger { min-height: 44px; }
+  .aw-nav-star { min-width: 44px; justify-content: center; }
+  .aw-nav-burger { width: 2.75rem; height: 2.75rem; }
+  .aw-nav-burger span { left: 0.85rem; right: 0.85rem; }
+  .aw-nav-burger span:first-child { top: 1.12rem; }
+  .aw-nav-burger span:last-child { top: 1.57rem; }
+  .aw-nav.is-open .aw-nav-burger span:first-child,
+  .aw-nav.is-open .aw-nav-burger span:last-child { top: 1.34rem; }
+}
+
+@media (max-width: 640px) {
+  .sf-cols a { display: flex; align-items: center; min-height: 44px; padding: 0; }
+  .sf-brand .aw-brand,
+  .site-footer .sf-mail { display: inline-flex; align-items: center; min-height: 44px; }
+  .sf-apps a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
