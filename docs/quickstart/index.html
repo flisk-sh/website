@@ -9,21 +9,19 @@ description: "Install Flisk, check your computer with flisk doctor, and start a 
     <div class="aw-wrap aw-docs">
       {% include docs-sidebar.html %}
 
-      <div class="aw-docs-body">
+      <div class="aw-docs-body aw-docs-body--tight">
         <h1>Quick Start</h1>
         <p class="aw-lead">Install Flisk and start a ready-made app: an order tracker with an API, a Postgres database, a worker and a website.</p>
         <p>You need <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a> running and <a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt</a> installed. Works on macOS, Linux, and Ubuntu in WSL2. On Windows, see <a href="#windows-setup">Windows</a>. No Docker? Try the <a href="#just-look">one-line demo</a>.</p>
 
         <span id="install-options"></span><span id="simple-setup"></span>
         <h2 id="install">1. Install Flisk</h2>
-        <p class="aw-docs-label">Run</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>curl -fsSL https://flisk.sh/install.sh | sh
 flisk --version</pre>
         </div>
-        <p class="aw-docs-label">You should see</p>
-        <p>A version number. If you see <code>command not found</code>, go to <a href="#if-it-fails">If it fails</a>.</p>
+        <p><strong>You should see:</strong> A version number. If you see <code>command not found</code>, go to <a href="#if-it-fails">If it fails</a>.</p>
         <details class="aw-docs-details">
           <summary>Install another way (AI agent, npm, pnpm, bun)</summary>
         <div class="aw-install-tabs">
@@ -66,26 +64,21 @@ flisk --version</pre>
 
         <span id="before-you-run-it"></span>
         <h2 id="check">2. Check your computer</h2>
-        <p class="aw-docs-label">Run</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>flisk doctor</pre>
         </div>
-        <p class="aw-docs-label">You should see</p>
-        <p>A list of checks. The last line starts with <code>Doctor passed</code>. Yellow lines are tips, not errors. If a check fails, doctor says what to install or start.</p>
+        <p><strong>You should see:</strong> A list of checks. The last line starts with <code>Doctor passed</code>. Yellow lines are tips, not errors. If a check fails, doctor says what to install or start.</p>
 
         <span id="start-from-a-working-example"></span><span id="what-actually-happens-when-you-run-it"></span>
         <h2 id="run">3. Start the app</h2>
-        <p class="aw-docs-label">Run</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>git clone https://github.com/flisk-sh/flisk-example
 cd flisk-example
 flisk up</pre>
         </div>
-        <p class="aw-docs-label">You should see</p>
-        <p>Flisk says what it is doing at each step, then prints links to the website and the API. Open one. Leave <code>flisk up</code> running.</p>
-        <p>Lost the links? Run <code>flisk networks</code> in a second terminal. To stop everything, run <code>flisk down</code>.</p>
+        <p><strong>You should see:</strong> Flisk says what it is doing at each step, then prints links to the website and the API. Open one. Leave <code>flisk up</code> running. Lost the links? Run <code>flisk networks</code> in a second terminal. To stop everything, run <code>flisk down</code>.</p>
 
         <h2 id="if-it-fails">If it fails</h2>
         <div class="aw-docs-table-wrap">
@@ -102,16 +95,15 @@ flisk up</pre>
         </div>
         <p>Something else? Run <code>flisk doctor</code>, then look up the message in <a href="https://github.com/flisk-sh/flisk/blob/main/docs/troubleshooting.md" target="_blank" rel="noopener">Troubleshooting</a>.</p>
 
-        <h2 id="just-look">No Docker? One line</h2>
-        <p>Needs Node.js {{ site.data.flisk.prereq_node }}. Nothing to install.</p>
-        <div class="aw-codeblock">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>npx @flisk-sh/flisk demo</pre>
-        </div>
-        <p>It starts a small app (a website and an API) and opens it in your browser.</p>
-
         <h2 id="more">More, when you need it</h2>
-
+        <details class="aw-docs-details" id="just-look">
+          <summary>No Docker? Run the one-line demo</summary>
+          <p>Needs Node.js {{ site.data.flisk.prereq_node }}. Nothing to install. It starts a small app (a website and an API) and opens it in your browser.</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+            <pre>npx @flisk-sh/flisk demo</pre>
+          </div>
+        </details>
         <details class="aw-docs-details">
           <summary>Make your own app from nothing</summary>
           <p>Make an empty project, then add an API to it.</p>
@@ -202,12 +194,7 @@ docker compose run --rm flisk flisk project --yes</pre>
           <p>To keep it, add that line to <code>~/.zshrc</code> or <code>~/.bashrc</code>. One key covers up to {{ site.data.flisk.premium_project_limit }} projects. Enterprise has no limit. If the key is missing, expired or cannot be checked, Flisk keeps running with the free engine.</p>
         </details>
 
-        <h2 id="next">Next</h2>
-        <ul>
-          <li><a href="{{ '/docs/examples/' | relative_url }}">Copy another ready-made app with <code>flisk project &lt;template&gt;</code></a></li>
-          <li><a href="{{ '/docs/configuration/' | relative_url }}">See every setting in <code>service.json</code></a></li>
-          <li><a href="https://github.com/flisk-sh/flisk/blob/main/docs/cheat-sheet.md" target="_blank" rel="noopener">See every command on one page</a></li>
-        </ul>
+        <p id="next"><strong>Next:</strong> <a href="{{ '/docs/examples/' | relative_url }}">copy another ready-made app</a>, <a href="{{ '/docs/configuration/' | relative_url }}">see every setting in <code>service.json</code></a>, or <a href="https://github.com/flisk-sh/flisk/blob/main/docs/cheat-sheet.md" target="_blank" rel="noopener">see every command on one page</a>.</p>
         <p class="aw-docs-foot"><a href="https://github.com/flisk-sh/website/edit/master/docs/quickstart/index.html" target="_blank" rel="noopener">Edit this page on GitHub</a></p>
       </div>
     </div>
