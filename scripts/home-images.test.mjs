@@ -40,6 +40,33 @@ export function getWebPDimensions(buf) {
 }
 
 /**
+ * Reads dimensions from JPEG binary buffer by parsing SOF markers.
+ */
+export function getJpegDimensions(buf) {
+  if (buf[0] !== 0xff || buf[1] !== 0xd8) {
+    throw new Error('Not a valid JPEG file');
+  }
+  let offset = 2;
+  while (offset < buf.length) {
+    if (buf[offset] !== 0xff) {
+      offset++;
+      continue;
+    }
+    const marker = buf[offset + 1];
+    const isSOF = (marker >= 0xc0 && marker <= 0xc3) || (marker >= 0xc5 && marker <= 0xc7) ||
+                  (marker >= 0xc9 && marker <= 0xcb) || (marker >= 0xcd && marker <= 0xcf);
+    if (isSOF) {
+      const height = buf.readUInt16BE(offset + 5);
+      const width = buf.readUInt16BE(offset + 7);
+      return { width, height };
+    }
+    const len = buf.readUInt16BE(offset + 2);
+    offset += 2 + len;
+  }
+  throw new Error('No SOF marker found in JPEG file');
+}
+
+/**
  * Parses srcset descriptor string into an array of { url, descriptor, width }.
  */
 export function parseSrcset(srcsetString) {
@@ -125,15 +152,16 @@ test('Test A: Homepage image size check - modern browser candidates meet budget 
     'Demo screenshot must use <picture> so modern browsers do not download the 337 KB JPEG'
   );
 
-  const sourceTag = figureInner.match(/<source\b[^>]*>/i)?.[0];
-  assert.ok(sourceTag, 'Expected <source> inside demo screenshot <picture>');
-  const srcsetValue = getAttr(sourceTag, 'srcset');
-  assert.ok(srcsetValue, 'Expected srcset attribute on <source>');
+  // Validate WebP sources
+  const webpSourceTag = figureInner.match(/<source[^>]*type=["']image\/webp["'][^>]*>/i)?.[0];
+  assert.ok(webpSourceTag, 'Expected <source type="image/webp"> inside demo screenshot <picture>');
+  const webpSrcsetValue = getAttr(webpSourceTag, 'srcset');
+  assert.ok(webpSrcsetValue, 'Expected srcset attribute on WebP <source>');
 
-  const candidates = parseSrcset(srcsetValue);
-  assert.equal(candidates.length, 4, `Expected 4 WebP candidates, got ${candidates.length}`);
+  const webpCandidates = parseSrcset(webpSrcsetValue);
+  assert.equal(webpCandidates.length, 4, `Expected 4 WebP candidates, got ${webpCandidates.length}`);
 
-  for (const candidate of candidates) {
+  for (const candidate of webpCandidates) {
     const cleanUrl = candidate.url.replace(/^\//, '');
     const localPath = join(ROOT, cleanUrl);
     assert.ok(existsSync(localPath), `WebP candidate file does not exist: ${cleanUrl}`);
@@ -145,7 +173,28 @@ test('Test A: Homepage image size check - modern browser candidates meet budget 
     );
   }
 
-  // Verify the original JPEG fallback exists
+  // Validate JPEG fallback sources
+  const jpegSourceTag = figureInner.match(/<source[^>]*type=["']image\/jpeg["'][^>]*>/i)?.[0];
+  assert.ok(jpegSourceTag, 'Expected <source type="image/jpeg"> inside demo screenshot <picture>');
+  const jpegSrcsetValue = getAttr(jpegSourceTag, 'srcset');
+  assert.ok(jpegSrcsetValue, 'Expected srcset attribute on JPEG <source>');
+
+  const jpegCandidates = parseSrcset(jpegSrcsetValue);
+  assert.equal(jpegCandidates.length, 4, `Expected 4 JPEG candidates, got ${jpegCandidates.length}`);
+
+  for (const candidate of jpegCandidates) {
+    const cleanUrl = candidate.url.replace(/^\//, '');
+    const localPath = join(ROOT, cleanUrl);
+    assert.ok(existsSync(localPath), `JPEG candidate file does not exist: ${cleanUrl}`);
+
+    const stat = statSync(localPath);
+    assert.ok(
+      stat.size <= 120_000,
+      `JPEG variant ${cleanUrl} (${stat.size} bytes) exceeds maximum budget of 120,000 bytes`
+    );
+  }
+
+  // Verify the final fallback <img> exists
   const imgTag = figureInner.match(/<img\b[^>]*>/i)?.[0];
   assert.ok(imgTag, 'Expected fallback <img> inside <picture>');
   const srcValue = getAttr(imgTag, 'src');
@@ -166,11 +215,16 @@ test('Test B: Responsive markup check - attributes, dimensions, and lazy loading
   assert.match(figureInner, /<\/picture>/, '</picture> closing tag must be present');
 
   // WebP Source with srcset and sizes
-  const sourceTag = figureInner.match(/<source\b[^>]*>/i)?.[0];
-  assert.ok(sourceTag, '<source> tag must be present inside <picture>');
-  assert.equal(getAttr(sourceTag, 'type'), 'image/webp', 'WebP source type must be image/webp');
-  assert.ok(getAttr(sourceTag, 'srcset'), 'srcset attribute must be non-empty');
-  assert.ok(getAttr(sourceTag, 'sizes'), 'sizes attribute must be non-empty');
+  const webpSource = figureInner.match(/<source[^>]*type=["']image\/webp["'][^>]*>/i)?.[0];
+  assert.ok(webpSource, 'WebP <source> tag must be present inside <picture>');
+  assert.ok(getAttr(webpSource, 'srcset'), 'WebP srcset attribute must be non-empty');
+  assert.ok(getAttr(webpSource, 'sizes'), 'WebP sizes attribute must be non-empty');
+
+  // JPEG Source with srcset and sizes
+  const jpegSource = figureInner.match(/<source[^>]*type=["']image\/jpeg["'][^>]*>/i)?.[0];
+  assert.ok(jpegSource, 'JPEG <source> tag must be present inside <picture>');
+  assert.ok(getAttr(jpegSource, 'srcset'), 'JPEG srcset attribute must be non-empty');
+  assert.ok(getAttr(jpegSource, 'sizes'), 'JPEG sizes attribute must be non-empty');
 
   // JPEG fallback <img>
   const imgTag = figureInner.match(/<img\b[^>]*>/i)?.[0];
@@ -194,47 +248,68 @@ test('Test C: Mobile image budget - candidate selected for 390px viewport is und
   assert.ok(demoSectionMatch, 'Could not find <figure data-try-shot>');
   const figureInner = demoSectionMatch[1];
 
-  const sourceTag = figureInner.match(/<source[^>]*type=["']image\/webp["'][^>]*>/i)?.[0];
-  assert.ok(sourceTag, 'Expected WebP <source> tag');
-  const srcsetValue = getAttr(sourceTag, 'srcset');
-  const sizesValue = getAttr(sourceTag, 'sizes');
-  assert.ok(srcsetValue, 'srcset attribute must be present');
-  assert.ok(sizesValue, 'sizes attribute must be present');
+  // 1. WebP candidate checks
+  const webpSource = figureInner.match(/<source[^>]*type=["']image\/webp["'][^>]*>/i)?.[0];
+  assert.ok(webpSource, 'Expected WebP <source> tag');
+  const webpSrcset = getAttr(webpSource, 'srcset');
+  const webpSizes = getAttr(webpSource, 'sizes');
 
-  const candidates = parseSrcset(srcsetValue);
-  // Viewport 390px at 1x DPR
-  const slotWidth1x = resolveSlotWidth(sizesValue, 390);
-  const selected1x = selectCandidate(candidates, slotWidth1x, 1);
-  assert.ok(selected1x, 'A candidate must be selected for 390px viewport (1x)');
+  const webpCandidates = parseSrcset(webpSrcset);
+  const slotWidth1x = resolveSlotWidth(webpSizes, 390);
 
-  const path1x = join(ROOT, selected1x.url.replace(/^\//, ''));
-  assert.ok(existsSync(path1x), `File does not exist: ${selected1x.url}`);
-  const stat1x = statSync(path1x);
+  const selectedWebp1x = selectCandidate(webpCandidates, slotWidth1x, 1);
+  const pathWebp1x = join(ROOT, selectedWebp1x.url.replace(/^\//, ''));
+  assert.ok(existsSync(pathWebp1x), `File does not exist: ${selectedWebp1x.url}`);
+  assert.ok(statSync(pathWebp1x).size < 50_000, `Mobile 1x WebP candidate is >= 50,000 bytes`);
+
+  const selectedWebp2x = selectCandidate(webpCandidates, slotWidth1x, 2);
+  const pathWebp2x = join(ROOT, selectedWebp2x.url.replace(/^\//, ''));
+  assert.ok(existsSync(pathWebp2x), `File does not exist: ${selectedWebp2x.url}`);
+  assert.ok(statSync(pathWebp2x).size < 50_000, `Mobile 2x WebP candidate is >= 50,000 bytes`);
+
+  const selectedWebp3x = selectCandidate(webpCandidates, slotWidth1x, 3);
+  assert.equal(selectedWebp3x.width, 1200, `Expected 1200w WebP candidate for 390px @ 3x DPR`);
+  const pathWebp3x = join(ROOT, selectedWebp3x.url.replace(/^\//, ''));
+  assert.ok(existsSync(pathWebp3x), `File does not exist: ${selectedWebp3x.url}`);
+  assert.ok(statSync(pathWebp3x).size < 50_000, `Mobile 3x WebP candidate is >= 50,000 bytes`);
+
+  // 2. JPEG candidate checks
+  const jpegSource = figureInner.match(/<source[^>]*type=["']image\/jpeg["'][^>]*>/i)?.[0];
+  assert.ok(jpegSource, 'Expected JPEG <source> tag');
+  const jpegSrcset = getAttr(jpegSource, 'srcset');
+  const jpegSizes = getAttr(jpegSource, 'sizes');
+
+  const jpegCandidates = parseSrcset(jpegSrcset);
+  const jpegSlotWidth1x = resolveSlotWidth(jpegSizes, 390);
+
+  const selectedJpeg1x = selectCandidate(jpegCandidates, jpegSlotWidth1x, 1);
+  assert.equal(selectedJpeg1x.width, 640, `Expected 640w JPEG candidate for 390px @ 1x DPR`);
+  const pathJpeg1x = join(ROOT, selectedJpeg1x.url.replace(/^\//, ''));
+  assert.ok(existsSync(pathJpeg1x), `File does not exist: ${selectedJpeg1x.url}`);
+  const statJpeg1x = statSync(pathJpeg1x);
   assert.ok(
-    stat1x.size < 50_000,
-    `Mobile 1x candidate ${selected1x.url} is ${stat1x.size} bytes (must be under 50,000 bytes)`
+    statJpeg1x.size < 50_000,
+    `Mobile 1x JPEG candidate ${selectedJpeg1x.url} is ${statJpeg1x.size} bytes (must be under 50,000 bytes)`
   );
 
-  // Viewport 390px at 2x DPR (high-density mobile)
-  const selected2x = selectCandidate(candidates, slotWidth1x, 2);
-  const path2x = join(ROOT, selected2x.url.replace(/^\//, ''));
-  assert.ok(existsSync(path2x), `File does not exist: ${selected2x.url}`);
-  const stat2x = statSync(path2x);
+  const selectedJpeg2x = selectCandidate(jpegCandidates, jpegSlotWidth1x, 2);
+  assert.equal(selectedJpeg2x.width, 1000, `Expected 1000w JPEG candidate for 390px @ 2x DPR`);
+  const pathJpeg2x = join(ROOT, selectedJpeg2x.url.replace(/^\//, ''));
+  assert.ok(existsSync(pathJpeg2x), `File does not exist: ${selectedJpeg2x.url}`);
+  const statJpeg2x = statSync(pathJpeg2x);
   assert.ok(
-    stat2x.size < 50_000,
-    `Mobile 2x candidate ${selected2x.url} is ${stat2x.size} bytes (must be under 50,000 bytes)`
+    statJpeg2x.size < 50_000,
+    `Mobile 2x JPEG candidate ${selectedJpeg2x.url} is ${statJpeg2x.size} bytes (must be under 50,000 bytes)`
   );
 
-  // Viewport 390px at 3x DPR (super high-density mobile)
-  const selected3x = selectCandidate(candidates, slotWidth1x, 3);
-  assert.ok(selected3x, 'A candidate must be selected for 390px viewport (3x)');
-  assert.equal(selected3x.width, 1200, `Expected 1200w candidate for 390px @ 3x DPR, got ${selected3x.descriptor}`);
-  const path3x = join(ROOT, selected3x.url.replace(/^\//, ''));
-  assert.ok(existsSync(path3x), `File does not exist: ${selected3x.url}`);
-  const stat3x = statSync(path3x);
+  const selectedJpeg3x = selectCandidate(jpegCandidates, jpegSlotWidth1x, 3);
+  assert.equal(selectedJpeg3x.width, 1200, `Expected 1200w JPEG candidate for 390px @ 3x DPR`);
+  const pathJpeg3x = join(ROOT, selectedJpeg3x.url.replace(/^\//, ''));
+  assert.ok(existsSync(pathJpeg3x), `File does not exist: ${selectedJpeg3x.url}`);
+  const statJpeg3x = statSync(pathJpeg3x);
   assert.ok(
-    stat3x.size < 50_000,
-    `Mobile 3x candidate ${selected3x.url} is ${stat3x.size} bytes (must be under 50,000 bytes)`
+    statJpeg3x.size < 50_000,
+    `Mobile 3x JPEG candidate ${selectedJpeg3x.url} is ${statJpeg3x.size} bytes (must be under 50,000 bytes)`
   );
 });
 
@@ -244,38 +319,70 @@ test('Test D: Desktop image budget - candidate selected for 1440px viewport is u
   assert.ok(demoSectionMatch, 'Could not find <figure data-try-shot>');
   const figureInner = demoSectionMatch[1];
 
-  const sourceTag = figureInner.match(/<source[^>]*type=["']image\/webp["'][^>]*>/i)?.[0];
-  assert.ok(sourceTag, 'Expected WebP <source> tag');
-  const srcsetValue = getAttr(sourceTag, 'srcset');
-  const sizesValue = getAttr(sourceTag, 'sizes');
+  // 1. WebP Desktop candidate
+  const webpSource = figureInner.match(/<source[^>]*type=["']image\/webp["'][^>]*>/i)?.[0];
+  assert.ok(webpSource, 'Expected WebP <source> tag');
+  const webpCandidates = parseSrcset(getAttr(webpSource, 'srcset'));
+  const webpSlotWidth = resolveSlotWidth(getAttr(webpSource, 'sizes'), 1440);
+  const selectedWebp = selectCandidate(webpCandidates, webpSlotWidth, 1);
+  assert.ok(selectedWebp, 'A WebP candidate must be selected for 1440px desktop viewport');
+  const pathWebp = join(ROOT, selectedWebp.url.replace(/^\//, ''));
+  assert.ok(existsSync(pathWebp), `Desktop WebP file does not exist: ${selectedWebp.url}`);
+  assert.ok(statSync(pathWebp).size < 120_000, `Desktop WebP candidate is >= 120,000 bytes`);
 
-  const candidates = parseSrcset(srcsetValue);
-  const slotWidth = resolveSlotWidth(sizesValue, 1440);
-  const selected = selectCandidate(candidates, slotWidth, 1);
-  assert.ok(selected, 'A candidate must be selected for 1440px desktop viewport');
-
-  const filePath = join(ROOT, selected.url.replace(/^\//, ''));
-  assert.ok(existsSync(filePath), `Desktop candidate file does not exist: ${selected.url}`);
-  const stat = statSync(filePath);
+  // 2. JPEG Desktop candidate
+  const jpegSource = figureInner.match(/<source[^>]*type=["']image\/jpeg["'][^>]*>/i)?.[0];
+  assert.ok(jpegSource, 'Expected JPEG <source> tag');
+  const jpegCandidates = parseSrcset(getAttr(jpegSource, 'srcset'));
+  const jpegSlotWidth = resolveSlotWidth(getAttr(jpegSource, 'sizes'), 1440);
+  const selectedJpeg = selectCandidate(jpegCandidates, jpegSlotWidth, 1);
+  assert.ok(selectedJpeg, 'A JPEG candidate must be selected for 1440px desktop viewport');
+  assert.equal(selectedJpeg.width, 2000, `Expected 2000w JPEG candidate for 1440px desktop`);
+  const pathJpeg = join(ROOT, selectedJpeg.url.replace(/^\//, ''));
+  assert.ok(existsSync(pathJpeg), `Desktop JPEG file does not exist: ${selectedJpeg.url}`);
+  const statJpeg = statSync(pathJpeg);
   assert.ok(
-    stat.size < 120_000,
-    `Desktop candidate ${selected.url} is ${stat.size} bytes (must be under 120,000 bytes)`
+    statJpeg.size < 120_000,
+    `Desktop JPEG candidate ${selectedJpeg.url} is ${statJpeg.size} bytes (must be under 120,000 bytes)`
   );
 });
 
 test('Test E: Aspect ratio - all generated image variants retain original 16:10 aspect ratio', () => {
-  const variants = [
+  const webpVariants = [
     { name: 'demo-menu-page-640.webp', expectedW: 640, expectedH: 400 },
     { name: 'demo-menu-page-1000.webp', expectedW: 1000, expectedH: 625 },
     { name: 'demo-menu-page-1200.webp', expectedW: 1200, expectedH: 750 },
     { name: 'demo-menu-page-2000.webp', expectedW: 2000, expectedH: 1250 },
   ];
 
-  for (const { name, expectedW, expectedH } of variants) {
+  for (const { name, expectedW, expectedH } of webpVariants) {
     const file = join(ROOT, 'assets/images', name);
-    assert.ok(existsSync(file), `Expected variant asset to exist: ${file}`);
+    assert.ok(existsSync(file), `Expected WebP variant asset to exist: ${file}`);
     const buf = readFileSync(file);
     const { width, height } = getWebPDimensions(buf);
+
+    assert.equal(width, expectedW, `${name} width is ${width}, expected ${expectedW}`);
+    assert.equal(height, expectedH, `${name} height is ${height}, expected ${expectedH}`);
+
+    const ratio = width / height;
+    assert.ok(
+      Math.abs(ratio - 16 / 10) < 0.001,
+      `${name} aspect ratio (${ratio}) does not match 16:10 (1.6)`
+    );
+  }
+
+  const jpegVariants = [
+    { name: 'demo-menu-page-640.jpg', expectedW: 640, expectedH: 400 },
+    { name: 'demo-menu-page-1000.jpg', expectedW: 1000, expectedH: 625 },
+    { name: 'demo-menu-page-1200.jpg', expectedW: 1200, expectedH: 750 },
+    { name: 'demo-menu-page-2000.jpg', expectedW: 2000, expectedH: 1250 },
+  ];
+
+  for (const { name, expectedW, expectedH } of jpegVariants) {
+    const file = join(ROOT, 'assets/images', name);
+    assert.ok(existsSync(file), `Expected JPEG variant asset to exist: ${file}`);
+    const buf = readFileSync(file);
+    const { width, height } = getJpegDimensions(buf);
 
     assert.equal(width, expectedW, `${name} width is ${width}, expected ${expectedW}`);
     assert.equal(height, expectedH, `${name} height is ${height}, expected ${expectedH}`);
