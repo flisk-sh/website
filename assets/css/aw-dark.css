@@ -3911,6 +3911,10 @@ body:has(.aw) .page-content {
   .aw-docs-side nav a { border-left: 0; border-bottom: 1px solid transparent; padding: 0.5rem 0.75rem; }
   .aw-docs-side nav a.is-active { border-bottom-color: #22C55E; }
   .aw-docs-side nav a.aw-docs-side-all { margin-top: 0; padding-left: 0.75rem; }
+  /* The row scrolls sideways: fade the edge that has more links past it. */
+  .aw-docs-side nav[data-more~="right"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent); }
+  .aw-docs-side nav[data-more~="left"] { -webkit-mask-image: linear-gradient(to right, transparent, #000 3rem); mask-image: linear-gradient(to right, transparent, #000 3rem); }
+  .aw-docs-side nav[data-more="left right"] { -webkit-mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); }
 }
 
 /* Docs: pages whose text is markdown copied from the Flisk repository (scripts/sync-docs.mjs) */
