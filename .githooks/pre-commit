@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# The fast checks from scripts/check.sh, before every commit. Needs Node 22.
+#   Turn on:   git config core.hooksPath .githooks
+#   Skip once: git commit --no-verify
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+node --test --test-reporter=dot scripts/*.test.mjs
+node scripts/check-radius.mjs
+node scripts/check-claims.mjs
