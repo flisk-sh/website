@@ -1,0 +1,7 @@
+# Small "New" / "Updated" tags next to links in the docs left menu (docs-sidebar.html).
+# A tag shows for 30 days after `since`, then disappears on the next build, so
+# the menu never carries stale labels. Add a line when a docs page is added
+# (new) or rewritten (updated). `key` is the page path used in docs-sidebar.html.
+- { key: "/docs/cli/",             label: "new",     since: 2026-11-15 }
+- { key: "/docs/troubleshooting/", label: "new",     since: 2026-11-15 }
+- { key: "/docs/quickstart/",      label: "updated", since: 2026-11-15 }
