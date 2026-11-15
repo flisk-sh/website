@@ -9,6 +9,7 @@
     <span class="aw-docs-side-label">Get started</span>
     <a href="{{ '/docs/' | relative_url }}" class="{% if page.url == '/docs/' %}is-active{% endif %}">Overview</a>
     <a href="{{ '/docs/quickstart/' | relative_url }}" class="{% if page.url contains '/docs/quickstart/' %}is-active{% endif %}">Quick Start{% include docs-tag.html key="/docs/quickstart/" %}</a>
+    <a href="{{ '/docs/features/' | relative_url }}" class="{% if page.url contains '/docs/features/' %}is-active{% endif %}">Features{% include docs-tag.html key="/docs/features/" %}</a>
     <a href="{{ '/docs/examples/' | relative_url }}" class="{% if page.url contains '/docs/examples/' %}is-active{% endif %}">Examples</a>
     <a href="{{ '/docs/whats-new/' | relative_url }}" class="{% if page.url contains '/docs/whats-new/' %}is-active{% endif %}">What's new{% include docs-tag.html key="/docs/whats-new/" %}</a>
     <a href="{{ '/docs/faq/' | relative_url }}" class="{% if page.url contains '/docs/faq/' %}is-active{% endif %}">Questions{% include docs-tag.html key="/docs/faq/" %}</a>

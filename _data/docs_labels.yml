@@ -8,3 +8,4 @@
 - { key: "/docs/whats-new/",      label: "new",     since: 2026-11-15 }
 - { key: "/docs/how-it-works/",    label: "new",     since: 2026-11-15 }
 - { key: "/docs/faq/",             label: "new",     since: 2026-11-15 }
+- { key: "/docs/features/",        label: "new",     since: 2026-11-15 }
