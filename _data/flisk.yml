@@ -209,3 +209,6 @@ contributors_30d: 74       # unique human authors of merged PRs across flisk-sh,
 prs_merged_30d: "2,710"    # merged PRs across flisk-sh in the same window (search/issues total_count per window, summed)
 releases_30d: 103          # flisk-sh/flisk GitHub releases published in the same window
 npm_downloads_30d: "33,691" # api.npmjs.org/downloads/point/last-month/@flisk-sh/flisk, 2026-10-14 to 2026-11-12
+
+# Helpdock (docs search) is paused until Dec 1 2026 (website#196). While true, the docs pages hide the Ask box and the search links.
+docs_search_paused: true

@@ -16,7 +16,7 @@ Fastest binary install (macOS/Linux, picks the right binary for your arch):
 ```
 curl -fsSL https://flisk.sh/install.sh | sh
 flisk doctor
-flisk project example
+git clone https://github.com/flisk-sh/flisk-example
 cd flisk-example
 flisk up
 ```

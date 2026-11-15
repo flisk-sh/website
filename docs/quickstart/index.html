@@ -56,13 +56,14 @@ description: "Three steps: install Flisk, check your computer with flisk doctor,
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>flisk --version</pre>
         </div>
+        <p>Says <code>command not found</code>? The installer printed an <code>export PATH=…</code> line. Run it, then open a new terminal.</p>
 
         <h2 id="before-you-run-it">Step 2. Check your computer</h2>
         <div class="aw-codeblock aw-codeblock--primary">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>flisk doctor</pre>
         </div>
-        <p>It looks at your computer and tells you what is missing. Fix what it says. Run it again. Stop when every line is green.</p>
+        <p>It looks at your computer and tells you what is missing. Fix what it says. Run it again. Stop when the last line says <strong>Doctor passed</strong>. Yellow lines are tips, not errors.</p>
         <p>For the example in step 3 you need two things:</p>
         <ul class="aw-check-list">
           <li><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a>, installed and running</li>
@@ -74,12 +75,12 @@ description: "Three steps: install Flisk, check your computer with flisk doctor,
         <span id="simple-setup"></span>
         <div class="aw-codeblock aw-codeblock--primary">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>flisk project example
+          <pre>git clone https://github.com/flisk-sh/flisk-example
 cd flisk-example
 flisk up</pre>
         </div>
         <ol>
-          <li>The first line copies a ready-made app: an order tracker with an API, a Postgres database, a worker and a website.</li>
+          <li>The first line copies a ready-made app from GitHub: an order tracker with an API, a Postgres database, a worker and a website.</li>
           <li>The second line goes into its folder.</li>
           <li>The third line starts it. Leave it running.</li>
         </ol>
