@@ -4005,3 +4005,13 @@ body:has(.aw) .page-content {
 .aw-docs-figure { margin: 0 0 1.5rem; }
 .aw-docs-figure svg { display: block; width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius); padding: 1rem; background: rgba(255, 255, 255, 0.02); }
 .aw-docs-figure figcaption { margin-top: 0.625rem; font-size: 0.875rem; color: rgba(236, 236, 241, 0.6); }
+
+/* Docs scroll-in. aw-docs-reveal.js adds .aw-reveal, then .is-in. Opacity and
+   transform only; the script skips all of this under prefers-reduced-motion. */
+.aw-docs-body .aw-reveal { opacity: 0; transform: translateY(10px); transition: opacity 420ms ease, transform 420ms ease; }
+.aw-docs-body .aw-reveal.is-in { opacity: 1; transform: none; }
+.aw-docs-figure.aw-reveal .aw-step { opacity: 0; transition: opacity 360ms ease; transition-delay: calc(var(--i, 0) * 110ms + 120ms); }
+.aw-docs-figure.aw-reveal.is-in .aw-step { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .aw-docs-body .aw-reveal, .aw-docs-figure.aw-reveal .aw-step { opacity: 1; transform: none; transition: none; }
+}

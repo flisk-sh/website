@@ -1,0 +1,108 @@
+---
+layout: default
+title: Architecture - Flisk CLI
+description: "The three parts of Flisk, how a session flows from flisk project to flisk up, and which files are committed and which are generated."
+---
+
+<div class="aw">
+  <section class="aw-section aw-docs-section">
+    <div class="aw-wrap aw-docs">
+      {% include docs-sidebar.html %}
+
+      <div class="aw-docs-body aw-docs-body--tight">
+        <h1>Architecture</h1>
+        <p class="aw-lead">Flisk has three parts: a command line, a discovery step and an engine. This page shows what each one does, how a session moves through them, and which files are yours and which are generated.</p>
+        <p>It describes the Docker and Tilt path. A service that sets a <code>command</code> runs as a plain local process on your machine without Tilt; <a href="{{ '/docs/how-it-works/' | relative_url }}">How it works</a> shows both paths.</p>
+
+        <nav class="aw-docs-jump" aria-label="On this page">
+          <a href="#the-three-parts">The three parts</a>
+          <a href="#what-each-part-does">What each part does</a>
+          <a href="#a-session-step-by-step">A session, step by step</a>
+          <a href="#committed-and-generated">Committed and generated</a>
+          <a href="#go-deeper">Go deeper</a>
+        </nav>
+
+        <h2 id="the-three-parts">The three parts</h2>
+        <figure class="aw-docs-figure aw-docs-figure--steps" data-reveal-steps>
+          <svg viewBox="0 0 760 470" role="img" aria-labelledby="arch-title arch-desc" xmlns="http://www.w3.org/2000/svg">
+            <title id="arch-title">The three parts of Flisk</title>
+            <desc id="arch-desc">Four layers from top to bottom. Your committed files: project.json, service.json files and your code. The Flisk command line, which reads them and writes generated files. Tilt, which runs discovery and the engine from the generated Tiltfile. Docker, which runs Traefik, PostgreSQL and your service containers.</desc>
+            <g class="aw-step" style="--i:0">
+              <rect x="1" y="1" width="758" height="94" fill="none" stroke="rgba(255,255,255,0.28)"/>
+              <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="rgba(236,236,241,0.62)" letter-spacing="0.06em"><text x="14" y="22">YOUR PROJECT, COMMITTED</text></g>
+              <g fill="none" stroke="rgba(255,255,255,0.28)"><rect x="14" y="36" width="226" height="44"/><rect x="267" y="36" width="226" height="44"/><rect x="520" y="36" width="226" height="44"/></g>
+              <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="12.5" fill="#fff"><text x="28" y="63">.flisk/project.json</text><text x="281" y="63">services/*/*/service.json</text><text x="534" y="63">Your code and Dockerfiles</text></g>
+            </g>
+            <g class="aw-step" style="--i:1"><g stroke="#22C55E" stroke-width="1.5" fill="none"><path d="M380 95 V121"/><path d="M375 115 l5 6 l5 -6"/></g></g>
+            <g class="aw-step" style="--i:2">
+              <rect x="1" y="121" width="758" height="94" fill="none" stroke="rgba(255,255,255,0.28)"/>
+              <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="rgba(236,236,241,0.62)" letter-spacing="0.06em"><text x="14" y="142">FLISK COMMAND LINE</text></g>
+              <g fill="none" stroke="rgba(255,255,255,0.28)"><rect x="14" y="156" width="226" height="44"/><rect x="267" y="156" width="226" height="44"/><rect x="520" y="156" width="226" height="44"/></g>
+              <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="12.5" fill="#fff"><text x="28" y="183">flisk project</text><text x="281" y="183">flisk resource</text><text x="534" y="183">flisk up</text></g>
+            </g>
+            <g class="aw-step" style="--i:3"><g stroke="#22C55E" stroke-width="1.5" fill="none"><path d="M380 215 V241"/><path d="M375 235 l5 6 l5 -6"/></g>
+              <g font-family="Instrument Sans, ui-sans-serif, system-ui, sans-serif" font-size="12" fill="rgba(236,236,241,0.62)"><text x="392" y="233">writes .flisk/.flisk-out/ and starts Tilt</text></g></g>
+            <g class="aw-step" style="--i:4">
+              <rect x="1" y="241" width="758" height="94" fill="none" stroke="rgba(255,255,255,0.28)"/>
+              <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="rgba(236,236,241,0.62)" letter-spacing="0.06em"><text x="14" y="262">TILT RUNS THE GENERATED TILTFILE</text></g>
+              <g fill="none" stroke="rgba(255,255,255,0.28)"><rect x="14" y="276" width="350" height="44"/><rect x="396" y="276" width="350" height="44"/></g>
+              <g stroke="#22C55E" stroke-width="1.5" fill="none"><path d="M364 298 H396"/><path d="M390 293 l6 5 l-6 5"/></g>
+              <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="12.5" fill="#fff"><text x="28" y="303">Discovery: finds services</text><text x="410" y="303">Engine: builds and routes</text></g>
+            </g>
+            <g class="aw-step" style="--i:5"><g stroke="#22C55E" stroke-width="1.5" fill="none"><path d="M380 335 V361"/><path d="M375 355 l5 6 l5 -6"/></g></g>
+            <g class="aw-step" style="--i:6">
+              <rect x="1" y="361" width="758" height="108" fill="none" stroke="rgba(255,255,255,0.28)"/>
+              <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="rgba(236,236,241,0.62)" letter-spacing="0.06em"><text x="14" y="382">DOCKER, ON YOUR COMPUTER</text></g>
+              <g fill="none" stroke="rgba(255,255,255,0.28)"><rect x="14" y="396" width="170" height="60"/><rect x="198" y="396" width="170" height="60"/><rect x="382" y="396" width="170" height="60"/><rect x="566" y="396" width="180" height="60"/></g>
+              <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="12.5" fill="#fff"><text x="28" y="420">Traefik</text><text x="212" y="420">PostgreSQL</text><text x="396" y="420">Your services</text><text x="580" y="420">Tilt web UI</text></g>
+              <g font-family="Instrument Sans, ui-sans-serif, system-ui, sans-serif" font-size="12" fill="rgba(236,236,241,0.62)"><text x="28" y="440">One address, :80</text><text x="212" y="440">Shared database</text><text x="396" y="440">Reload on save</text><text x="580" y="440">Logs, :10350</text></g>
+            </g>
+          </svg>
+          <figcaption>Everything above the Tilt layer is written by you or by the command line. Everything below it is started from generated files.</figcaption>
+        </figure>
+
+        <h2 id="what-each-part-does">What each part does</h2>
+        <table class="aw-docs-table">
+          <thead><tr><th>Part</th><th>It does</th><th>It does not</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Command line</strong><br><code>cli/</code>, TypeScript</td><td>Reads your commands and prompts. Checks <code>project.json</code> and each <code>service.json</code> against their schemas. Picks free ports. Writes the generated files. Starts and watches Tilt. Runs <code>flisk doctor</code>.</td><td>Start containers behind Tilt's back, or decide at run time what to rebuild.</td></tr>
+            <tr><td><strong>Discovery</strong><br><code>runtime/discovery/</code>, Starlark</td><td>Scans the project for <code>service.json</code> files, by default in <code>services/*/*</code>. Fills in defaults such as ports and sync folders. Reads each <code>dependsOn</code> to build the order services start in.</td><td>Build anything, start containers or write files.</td></tr>
+            <tr><td><strong>Engine</strong><br><code>runtime/engine/</code>, Starlark</td><td>Runs inside Tilt. Turns each service into a Tilt build with live reload, a health check and Traefik routes. Starts the shared PostgreSQL database.</td><td>Read command line options, ask questions or change your committed files.</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="a-session-step-by-step">A session, step by step</h2>
+        <table class="aw-docs-table">
+          <thead><tr><th>Command</th><th>What it writes or starts</th></tr></thead>
+          <tbody>
+            <tr><td><code>flisk project</code></td><td><code>.flisk/project.json</code> with the project's name, stacks and discovery paths. The <code>.gitignore</code> lines that keep secrets and generated files out of git. The generated Tiltfile and its settings in <code>.flisk/.flisk-out/</code>, with a copy of the engine and discovery so <code>flisk up</code> works offline.</td></tr>
+            <tr><td><code>flisk resource</code></td><td>A folder under <code>services/&lt;stack&gt;/&lt;name&gt;/</code> with its <code>service.json</code>, a free port and starter code for the language or framework you chose.</td></tr>
+            <tr><td><code>flisk up</code></td><td>Checks your machine and whether generated files were edited by hand, then starts Tilt. Discovery finds the services, the engine writes each service's runtime files, and Tilt builds and starts the containers in dependency order. The command line prints the URLs when they are ready.</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="committed-and-generated">Committed and generated</h2>
+        <table class="aw-docs-table">
+          <thead><tr><th>Path</th><th>Who owns it</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td><code>.flisk/project.json</code></td><td>You. Commit it.</td><td>The team's shared description of the project.</td></tr>
+            <tr><td><code>services/*/*/service.json</code></td><td>You. Commit it.</td><td>Each service's contract, next to its code.</td></tr>
+            <tr><td>Your code and Dockerfiles</td><td>You. Commit them.</td><td>Normal project source.</td></tr>
+            <tr><td><code>.env</code></td><td>Flisk. Never commit it.</td><td>Holds generated secrets such as database passwords.</td></tr>
+            <tr><td><code>.flisk/.flisk-out/</code></td><td>Flisk. Ignored by git.</td><td>Written from <code>project.json</code> and rebuilt when needed.</td></tr>
+            <tr><td><code>services/*/*/.autogenerated/</code></td><td>Flisk. Ignored by git.</td><td>Per-service files such as nginx and Vite config. Flisk refuses to start if they were edited by hand.</td></tr>
+          </tbody>
+        </table>
+        <p class="aw-docs-foot">The full list of generated files is in <a href="https://github.com/flisk-sh/flisk/blob/main/docs/generated-files.md" target="_blank" rel="noopener">Generated files <span aria-hidden="true">↗</span></a>.</p>
+
+        <h2 id="go-deeper">Go deeper</h2>
+        <p>This page is the short version of the contributor document, which also lists where to change each part of the code.</p>
+        <p class="aw-docs-foot">
+          <a href="https://github.com/flisk-sh/flisk/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture, end to end <span aria-hidden="true">↗</span></a>,
+          <a href="https://github.com/flisk-sh/flisk/blob/main/docs/TOPOLOGY.md" target="_blank" rel="noopener">Topology <span aria-hidden="true">↗</span></a>,
+          <a href="{{ '/docs/configuration/' | relative_url }}">service.json reference</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
