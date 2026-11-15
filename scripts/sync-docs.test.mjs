@@ -62,6 +62,9 @@ test("a long page gets a jump list with the ids kramdown gives its headings", ()
   assert.ok(nav.includes(">JSON output &amp; exit codes</a>"));
   assert.ok(!nav.includes("not a heading"));
   assert.equal(headingId("100-service test"), "service-test");
+  const nested = jumpList("## Configuration\n\n### Environment variables\n\n## Stacks\n\n## Lifecycle\n\n## Environment variables\n");
+  assert.ok(nested.includes('href="#environment-variables-1"'));
+  assert.ok(!nested.includes('href="#environment-variables"'));
   assert.equal(jumpList("## One\n\n## Two\n"), "");
 });
 
