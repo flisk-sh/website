@@ -3961,3 +3961,5 @@ body:has(.aw) .page-content {
   background: rgba(255, 255, 255, 0.03);
 }
 .aw-docs-body--md blockquote p:last-child { margin-bottom: 0; }
+/* The copy button sits over the first line of a code block; on a phone that line runs under it, so hide the text. */
+.aw-docs-body--md pre .copy-code-button { background: #16181b; }
