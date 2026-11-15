@@ -1,5 +1,5 @@
-/* Auto-builds an "On this page" sub-nav in the docs sidebar from top-level
-   h2 headings, and highlights the section currently in view. No-op on
+/* Lists the top-level h2 headings of the page under its link in the docs
+   sidebar, and highlights the section currently in view. No-op on
    pages that aren't docs pages, or that only have one section. */
 (function () {
   var body = document.querySelector('.aw-docs-body');
@@ -20,10 +20,7 @@
   var toc = document.createElement('div');
   toc.className = 'aw-docs-toc';
 
-  var label = document.createElement('div');
-  label.className = 'aw-docs-toc-label';
-  label.textContent = 'On this page';
-  toc.appendChild(label);
+  toc.setAttribute('aria-label', 'On this page');
 
   var used = {};
   var entries = headings.map(function (h) {
@@ -44,7 +41,11 @@
     return { heading: h, link: a };
   });
 
-  side.appendChild(toc);
+  // The sections sit under the current page's link, as one tree. A page
+  // that is not in the menu gets them at the end.
+  var active = side.querySelector('nav a.is-active');
+  if (active) active.insertAdjacentElement('afterend', toc);
+  else side.appendChild(toc);
 
   if ('IntersectionObserver' in window) {
     var current = null;
@@ -74,7 +75,7 @@
   if (!body || !links.length) return;
 
   // Only the pages of this site; the Helpdock link opens elsewhere.
-  var pages = links.filter(function (a) { return a.host === location.host && !a.target; });
+  var pages = links.filter(function (a) { return a.host === location.host && !a.target && !a.closest('.aw-docs-toc'); });
   var here = -1;
   pages.forEach(function (a, i) { if (a.classList.contains('is-active')) here = i; });
   if (here < 0) return;
