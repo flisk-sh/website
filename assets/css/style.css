@@ -441,6 +441,13 @@ pre code {
   .sf-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+/* Touch targets: on phones, footer and header anchors get a 44px hit area without growing the type. */
+@media (max-width: 640px) {
+  .sf-cols a { display: flex; align-items: center; min-height: 44px; padding: 0; }
+  .aw-nav-bar a,
+  .aw-nav-bar summary { min-height: 44px; }
+}
+
 /* Page content */
 .page-content {
   min-height: calc(100vh - 300px);
