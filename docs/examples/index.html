@@ -10,11 +10,25 @@ description: "Example repositories you can clone and run with one Flisk CLI comm
       {% include docs-sidebar.html %}
 
       <div class="aw-docs-body">
-        <h1>Examples &amp; reference landscapes</h1>
-        <p class="aw-lead">Example repositories demonstrating the Project-Stack-Resource (PSR) model in action.</p>
+        <h1>Examples</h1>
+        <p class="aw-lead">Complete apps you can copy and start on your computer. Each one is a Flisk project: stacks of services, each described by a <code>service.json</code>.</p>
 
-        <h2 id="official-reference-repositories">Official reference repositories</h2>
-        <p>Clone and run these complete Flisk landscapes locally with a single command via the Flisk CLI:</p>
+        <nav class="aw-docs-jump" aria-label="On this page">
+          <a href="#official-reference-repositories">Example apps</a>
+          <a href="#vue-and-managed-services-examples">Vue and managed services</a>
+          <a href="#restaurant-operations-landscape">Restaurant app</a>
+          <a href="#100-service-scale-fixture-erp-style">100-service test</a>
+          <a href="#enterprise-user-management-landscape">User management app</a>
+          <a href="#saas-starter">SaaS starter</a>
+          <a href="#manifest-patterns">Manifest patterns</a>
+          <a href="#start-one-stack">Start one stack</a>
+          <a href="#project-layout">Project layout</a>
+          <a href="#brownfield-rescue">Brownfield rescue</a>
+          <a href="#guidance-for-ai-assistants">Guidance for AI assistants</a>
+        </nav>
+
+        <h2 id="official-reference-repositories">Example apps</h2>
+        <p>Each command copies one example into a new folder:</p>
 
         <div class="aw-codeblock" style="margin-bottom: 2.5rem;">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
@@ -24,7 +38,7 @@ flisk project erp              <span class="c"># 100-service scale fixture</span
 flisk project restaurant       <span class="c"># restaurant ops demo</span>
 flisk project saas             <span class="c"># SaaS dashboard + checkout starter</span></pre>
         </div>
-        <p>Each one clones straight into <code>./&lt;name&gt;</code> (use <code>--path &lt;dir&gt;</code> to pick a different folder), so you're one <code>cd</code> and <code>flisk up</code> away from a running stack. Prefer plain git? Use the links below instead:</p>
+        <p>Each one clones straight into <code>./&lt;name&gt;</code> (use <code>--path &lt;dir&gt;</code> to pick a different folder), then <code>cd</code> into it and run <code>flisk up</code>. To use git instead, clone from the links below:</p>
 
         <div class="aw-doc-cards aw-doc-cards-featured">
           <a class="aw-card" href="https://github.com/flisk-sh/flisk-example" target="_blank" rel="noopener">
@@ -68,7 +82,7 @@ flisk project saas             <span class="c"># SaaS dashboard + checkout start
           </a>
         </div>
 
-        <h2 id="vue-and-managed-services-examples">Vue and managed-services examples</h2>
+        <h2 id="vue-and-managed-services-examples">Vue and managed services</h2>
         <p>Two smaller repositories. One is the shortest path to a Vue frontend; the other runs an identity provider, a queue and email locally, the services that usually only exist in a cloud account.</p>
 
         <div class="aw-doc-cards">
@@ -120,7 +134,7 @@ flisk project saas             <span class="c"># SaaS dashboard + checkout start
         </div>
         <p>The stand-ins are not the real services: the emulator is not a security product (hard-coded users, no MFA or redirect flow), and JetStream differs from SQS in ordering and dead-letter behavior. The <a href="https://github.com/flisk-sh/flisk-auth-queue-email-example#what-this-does-not-do" target="_blank" rel="noopener">README lists what it does not do</a>.</p>
 
-        <h2 id="restaurant-operations-landscape">Restaurant operations landscape</h2>
+        <h2 id="restaurant-operations-landscape">Restaurant app</h2>
         <p>The newest reference repo splits the host stand, kitchen pass, menu state, and floor control into independently runnable resources.</p>
 
         <section class="aw-example-showcase aw-restaurant-showcase" aria-labelledby="restaurant-example-title">
@@ -191,7 +205,7 @@ flisk project saas             <span class="c"># SaaS dashboard + checkout start
 }</pre>
         </div>
 
-        <h2 id="100-service-scale-fixture-erp-style">100-service scale fixture (ERP-style)</h2>
+        <h2 id="100-service-scale-fixture-erp-style">100-service test</h2>
         <p>A stress test for the PSR model: {{ site.data.flisk.erp_services }} small generated services named after ERP domains, each answering <code>/health</code>. It shows that discovery, image builds, routing and health checks keep working at this size. The services contain no real business logic.</p>
 
         <section class="aw-example-showcase aw-erp-showcase" aria-labelledby="erp-example-title">
@@ -277,7 +291,7 @@ flisk project saas             <span class="c"># SaaS dashboard + checkout start
 }</pre>
         </div>
 
-        <h2 id="enterprise-user-management-landscape">Enterprise user management landscape</h2>
+        <h2 id="enterprise-user-management-landscape">User management app</h2>
         <p>A multi-stack, zero-trust identity system featuring SCIM 2.0 provisioning, OAuth2/OIDC PKCE, and asynchronous background audit stream workers.</p>
 
         <h3>Admin directory API (SCIM 2.0)</h3>
