@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Quick Start - Flisk CLI
-description: "Paste a few lines: install Flisk, check your computer with flisk doctor, run a ready-made app with flisk up."
+description: "Install Flisk, check your computer with flisk doctor, and start a ready-made app with flisk up. Each step shows what to run and what you should see."
 ---
 
 <div class="aw">
@@ -11,19 +11,19 @@ description: "Paste a few lines: install Flisk, check your computer with flisk d
 
       <div class="aw-docs-body">
         <h1>Quick Start</h1>
-        <p class="aw-lead">Paste these lines into a terminal. At the end, a real app runs on your computer.</p>
+        <p class="aw-lead">Install Flisk and start a ready-made app: an order tracker with an API, a Postgres database, a worker and a website.</p>
+        <p>You need <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a> running and <a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt</a> installed. Works on macOS, Linux, and Ubuntu in WSL2. On Windows, see <a href="#windows-setup">Windows</a>. No Docker? Try the <a href="#just-look">one-line demo</a>.</p>
 
-        <span id="install-options"></span><span id="before-you-run-it"></span><span id="start-from-a-working-example"></span><span id="simple-setup"></span>
-        {% include quickstart-lines.html %}
-
-        <details class="aw-docs-details">
-          <summary>Says <code>command not found</code>?</summary>
-          <p>The installer printed an <code>export PATH=…</code> line. Run it, then open a new terminal. Check with <code>flisk --version</code>.</p>
-        </details>
-        <details class="aw-docs-details">
-          <summary>Doctor shows yellow lines?</summary>
-          <p>Yellow lines are tips, not errors. You are ready when the last line says <strong>Doctor passed</strong>. Works on macOS, Linux, and Ubuntu in WSL2.</p>
-        </details>
+        <span id="install-options"></span><span id="simple-setup"></span>
+        <h2 id="install">1. Install Flisk</h2>
+        <p class="aw-docs-label">Run</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>curl -fsSL https://flisk.sh/install.sh | sh
+flisk --version</pre>
+        </div>
+        <p class="aw-docs-label">You should see</p>
+        <p>A version number. If you see <code>command not found</code>, go to <a href="#if-it-fails">If it fails</a>.</p>
         <details class="aw-docs-details">
           <summary>Install another way (AI agent, npm, pnpm, bun)</summary>
         <div class="aw-install-tabs">
@@ -63,60 +63,54 @@ description: "Paste a few lines: install Flisk, check your computer with flisk d
         </div>
           <p>The <strong>AI agent</strong> line goes into your AI coding tool's chat. It installs Flisk for you. npm, pnpm and bun need Node.js {{ site.data.flisk.prereq_node }}.</p>
         </details>
-        <details class="aw-docs-details">
-          <summary>What is the example app?</summary>
-          <p>An order tracker with an API, a Postgres database, a worker and a website. Leave <code>flisk up</code> running. Lost the links? Run <code>flisk networks</code> in a second terminal. A teammate who copies the repo runs the same lines and gets the same app.</p>
-        </details>
 
-        <h2 id="just-look">Only want a look? One line</h2>
-        <p>Have Node.js {{ site.data.flisk.prereq_node }}? Run this. Nothing to install. No Docker needed.</p>
+        <span id="before-you-run-it"></span>
+        <h2 id="check">2. Check your computer</h2>
+        <p class="aw-docs-label">Run</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk doctor</pre>
+        </div>
+        <p class="aw-docs-label">You should see</p>
+        <p>A list of checks. The last line starts with <code>Doctor passed</code>. Yellow lines are tips, not errors. If a check fails, doctor says what to install or start.</p>
+
+        <span id="start-from-a-working-example"></span><span id="what-actually-happens-when-you-run-it"></span>
+        <h2 id="run">3. Start the app</h2>
+        <p class="aw-docs-label">Run</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>git clone https://github.com/flisk-sh/flisk-example
+cd flisk-example
+flisk up</pre>
+        </div>
+        <p class="aw-docs-label">You should see</p>
+        <p>Flisk says what it is doing at each step, then prints links to the website and the API. Open one. Leave <code>flisk up</code> running.</p>
+        <p>Lost the links? Run <code>flisk networks</code> in a second terminal. To stop everything, run <code>flisk down</code>.</p>
+
+        <h2 id="if-it-fails">If it fails</h2>
+        <div class="aw-docs-table-wrap">
+          <table class="aw-docs-table">
+            <thead><tr><th scope="col">You see</th><th scope="col">Do this</th></tr></thead>
+            <tbody>
+              <tr><td><code>flisk: command not found</code></td><td>The installer printed an <code>export PATH=…</code> line. Run it, then open a new terminal.</td></tr>
+              <tr><td><code>Docker (or a compatible container runtime) is not running</code></td><td>Start Docker Desktop, or run <code>colima start</code>, or on Linux <code>sudo systemctl start docker</code>. Check with <code>docker ps</code>.</td></tr>
+              <tr><td><code>Tilt CLI is not installed</code></td><td>On macOS run <code>brew install tilt</code>. On Linux follow the <a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt install page</a>. Check with <code>tilt version</code>.</td></tr>
+              <tr><td><code>Ports Flisk needs are taken</code></td><td>Another program uses the port. See <a href="https://github.com/flisk-sh/flisk/blob/main/docs/troubleshooting.md#ports" target="_blank" rel="noopener">Ports</a>.</td></tr>
+              <tr><td>npm stops with <code>EEXIST: file already exists</code></td><td>You had the old <code>@tdk-landscape/tdk-cli-core</code> package. Run <code>npm uninstall -g @tdk-landscape/tdk-cli-core &amp;&amp; npm install -g @flisk-sh/flisk</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Something else? Run <code>flisk doctor</code>, then look up the message in <a href="https://github.com/flisk-sh/flisk/blob/main/docs/troubleshooting.md" target="_blank" rel="noopener">Troubleshooting</a>.</p>
+
+        <h2 id="just-look">No Docker? One line</h2>
+        <p>Needs Node.js {{ site.data.flisk.prereq_node }}. Nothing to install.</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
           <pre>npx @flisk-sh/flisk demo</pre>
         </div>
-        <p>It starts a small app (a website and an API) and opens it in your browser. </p>
-
-
-        <h2 id="what-actually-happens-when-you-run-it">What you will see</h2>
-        <p>Flisk checks your computer first, then says what it is doing at each step.</p>
-        <div class="aw-terminal" style="margin: 0 0 2rem;">
-          <div class="aw-terminal-bar"><i></i><i></i><i></i><span>zsh: flisk doctor &amp;&amp; flisk up</span></div>
-          <div class="aw-terminal-body" id="aw-qs-term" aria-label="Terminal showing flisk doctor and flisk up output"></div>
-        </div>
-
-
-        <details class="aw-docs-details">
-          <summary>Docker or Tilt missing? See what Flisk says</summary>
-        <p><code>flisk up</code> stops before it starts anything and tells you what to install:</p>
-        <div class="aw-codeblock">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>$ flisk up
-
-<span class="c">Flisk can't start - missing prerequisites:</span>
-
-<span class="err">❌ Docker (or a compatible container runtime) is not running</span>
-
-<span class="warn">💡 Suggestions:</span>
-   → Start Docker Desktop, then verify with: <span class="hot">`docker ps`</span>
-   → Or start Colima: <span class="hot">`colima start`</span>
-   → Or start the Docker service on Linux: <span class="hot">`sudo systemctl start docker`</span>
-   → Setup guide: <span class="hot">https://flisk.sh/docs/quickstart/</span>
-
-<span class="err">❌ Tilt CLI is not installed</span>
-
-<span class="warn">💡 Suggestions:</span>
-   → Install Tilt: <span class="hot">`brew install tilt`</span> (macOS)
-   → Or download from: <span class="hot">https://docs.tilt.dev/install.html</span>
-   → Verify with: <span class="hot">`tilt version`</span>
-
-Run <span class="hot">`flisk doctor`</span> for a full environment check.</pre>
-        </div>
-        <p>Do what it says. Run <code>flisk doctor</code>. Then run <code>flisk up</code> again.</p>
-
-        </details>
+        <p>It starts a small app (a website and an API) and opens it in your browser.</p>
 
         <h2 id="more">More, when you need it</h2>
-        <p>None of this is needed for the three steps above. Open what you need.</p>
 
         <details class="aw-docs-details">
           <summary>Make your own app from nothing</summary>
@@ -164,27 +158,6 @@ flisk doctor</pre>
         </details>
 
         <details class="aw-docs-details">
-          <summary>I have a Premium or Enterprise key</summary>
-          <p>Flisk is free and needs no key. A key is only for paid extras, such as Verdaccio (a local npm registry) and Sablier (stops services nobody is using). Playwright, C4 and AGENTS.md are free when generated in your repo. A key is needed only to download their implementations.</p>
-          <p>Run this before <code>flisk up</code>:</p>
-          <div class="aw-codeblock">
-            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-            <pre>export FLISK_LICENSE_KEY=&lt;your-license-key&gt;</pre>
-          </div>
-          <p>To keep it, add that line to <code>~/.zshrc</code> or <code>~/.bashrc</code>. One key covers up to {{ site.data.flisk.premium_project_limit }} projects. Enterprise has no limit. If the key is missing, expired or cannot be checked, Flisk keeps running with the free engine.</p>
-        </details>
-
-        <details class="aw-docs-details">
-          <summary>npm says EEXIST (you had the old tdk package)</summary>
-          <p>Flisk used to be called <code>@tdk-landscape/tdk-cli-core</code>. The old package blocks the new one, so npm stops with <code>EEXIST: file already exists</code> and you get no <code>flisk</code> command. Remove the old one, then install Flisk:</p>
-          <div class="aw-codeblock">
-            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-            <pre>npm uninstall -g @tdk-landscape/tdk-cli-core &amp;&amp; npm install -g @flisk-sh/flisk</pre>
-          </div>
-          <p>The curl install does not have this problem.</p>
-        </details>
-
-        <details class="aw-docs-details">
           <summary>Download the files by hand</summary>
           <p>Download the program, its engine files and the checksums yourself. The program looks for a <code>flisk-cli/</code> folder next to it.</p>
           <h3>Windows AMD64</h3>
@@ -218,13 +191,24 @@ docker compose run --rm flisk flisk project --yes</pre>
           </div>
         </details>
 
-        <h2>What next</h2>
+        <details class="aw-docs-details">
+          <summary>I have a Premium or Enterprise key</summary>
+          <p>Flisk is free and needs no key. A key is only for paid extras, such as Verdaccio (a local npm registry) and Sablier (stops services nobody is using). Playwright, C4 and AGENTS.md are free when generated in your repo. A key is needed only to download their implementations.</p>
+          <p>Run this before <code>flisk up</code>:</p>
+          <div class="aw-codeblock">
+            <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+            <pre>export FLISK_LICENSE_KEY=&lt;your-license-key&gt;</pre>
+          </div>
+          <p>To keep it, add that line to <code>~/.zshrc</code> or <code>~/.bashrc</code>. One key covers up to {{ site.data.flisk.premium_project_limit }} projects. Enterprise has no limit. If the key is missing, expired or cannot be checked, Flisk keeps running with the free engine.</p>
+        </details>
+
+        <h2 id="next">Next</h2>
         <ul>
           <li><a href="{{ '/docs/examples/' | relative_url }}">Copy another ready-made app with <code>flisk project &lt;template&gt;</code></a></li>
           <li><a href="{{ '/docs/configuration/' | relative_url }}">See every setting in <code>service.json</code></a></li>
-          <li><a href="https://flisk-sh.github.io/flisk-demo-animation/" target="_blank" rel="noopener">Watch a recording of Flisk running</a></li>
-          <li><a href="https://github.com/flisk-sh/flisk" target="_blank" rel="noopener">⭐ Star Flisk on GitHub</a></li>
+          <li><a href="https://github.com/flisk-sh/flisk/blob/main/docs/cheat-sheet.md" target="_blank" rel="noopener">See every command on one page</a></li>
         </ul>
+        <p class="aw-docs-foot"><a href="https://github.com/flisk-sh/website/edit/master/docs/quickstart/index.html" target="_blank" rel="noopener">Edit this page on GitHub</a></p>
       </div>
     </div>
   </section>
@@ -267,54 +251,4 @@ docker compose run --rm flisk flisk project --yes</pre>
   window.addEventListener('hashchange', openTarget);
   openTarget();
 })();
-</script>
-
-<script src="{{ site.baseurl }}/assets/js/aw-terminal.js"></script>
-<script>
-if (window.initAwTerminal) {
-  window.initAwTerminal('aw-qs-term', [
-    { t: 'cmd', text: 'flisk doctor' },
-    { t: 'gap' },
-    { t: 'out', html: '<span class="dim">🔍 Flisk Doctor</span>' },
-    { t: 'out', html: 'Checking environment...' },
-    { t: 'gap' },
-    { t: 'out', html: '<span class="ok">✓</span> Docker daemon is running' },
-    { t: 'out', html: '<span class="ok">✓</span> Tilt CLI installed' },
-    { t: 'out', html: '<span class="ok">✓</span> Docker Compose plugin available' },
-    { t: 'out', html: '<span class="ok">✓</span> TILT_RESOURCE_DEFAULTS.star and TILT_TECH_STACK.star found' },
-    { t: 'gap' },
-    { t: 'out', html: '<span class="ok">✓ Environment ready for Flisk</span>' },
-    { t: 'gap' },
-    { t: 'cmd', text: 'flisk up' },
-    { t: 'out', html: '<span class="dim">[discovery]</span> scanned 6 directories · 3 manifests found' },
-    { t: 'out', html: '<span class="dim">[generate]</span> Tiltfile · TILT_RESOURCE_DEFAULTS.star · docker-compose.app.autogenerated.yml' },
-    { t: 'out', html: '<span class="dim">[traefik]</span> routing <span class="hot">api.my-service.localhost</span> → api <span class="ok">registered</span>' },
-    { t: 'out', html: '<span class="dim">[tilt]</span> orchestrating · selective startup · hot reload armed' },
-    { t: 'out', html: '<span class="dim">[health]</span> 3/3 resources <span class="ok">healthy</span>' },
-    { t: 'gap' },
-    { t: 'out', html: '<span class="ok">ready</span> — visit <span class="hot">http://api.my-service.localhost</span>' }
-  ]);
-}
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-<script>
-// Runs after the deferred GSAP scripts have loaded.
-document.addEventListener('DOMContentLoaded', function () {
-if (window.gsap && window.ScrollTrigger && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.from('.aw-docs-body h1, .aw-docs-body .aw-lead', { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', delay: 0.1 });
-  gsap.from('.aw-terminal', {
-    y: 30, opacity: 0, duration: 0.7, ease: 'power3.out',
-    scrollTrigger: { trigger: '.aw-terminal', start: 'top 88%' }
-  });
-  gsap.utils.toArray('.aw-codeblock').forEach(function (block) {
-    gsap.from(block, {
-      y: 30, opacity: 0, duration: 0.7, ease: 'power3.out',
-      scrollTrigger: { trigger: block, start: 'top 88%' }
-    });
-  });
-}
-});
 </script>

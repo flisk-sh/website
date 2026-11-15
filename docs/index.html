@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Documentation - Flisk CLI
-description: "Flisk starts your whole app on your own computer with one command. Docs: quick start, settings, scripts, examples, AI agents, and Flisk next to Helm."
+description: "Flisk docs: run the demo, follow the quick start, or pick the guide that matches what you already have. Reference for commands, service.json and generated files."
 ---
 
 <div class="aw">
@@ -10,9 +10,15 @@ description: "Flisk starts your whole app on your own computer with one command.
       {% include docs-sidebar.html %}
 
       <div class="aw-docs-body">
+        {% assign gh = 'https://github.com/flisk-sh/flisk/blob/main/docs/' %}
         <h1>Documentation</h1>
-        <p class="aw-lead">Flisk starts your whole app on your own computer with one command: <code>flisk up</code>. New here? Paste these lines into a terminal. Stuck? See the <a href="{{ '/docs/quickstart/' | relative_url }}">Quick Start</a>.</p>
-        {% include quickstart-lines.html %}
+        <p class="aw-lead">Flisk starts every service of your app on your computer with <code>flisk up</code>. Each service is described by one <code>service.json</code> file.</p>
+
+        <div class="aw-codeblock aw-codeblock--primary">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>npx @flisk-sh/flisk demo</pre>
+        </div>
+        <p>Needs Node.js {{ site.data.flisk.prereq_node }}. Nothing to install, no Docker. It starts a website and an API and opens them in your browser. To install Flisk and run a full app, follow the <a href="{{ '/docs/quickstart/' | relative_url }}">Quick Start</a>.</p>
 
         {% comment %} Ask bar: assets/js/aw-docs-search.js answers it from the repository docs through Helpdock, with an optional AI answer from Helpdock's /answer. Without the script it opens Helpdock. {% endcomment %}
         {% unless site.data.flisk.docs_search_paused %}
@@ -39,86 +45,31 @@ description: "Flisk starts your whole app on your own computer with one command.
         </div>
         {% endunless %}
 
-        <div class="aw-doc-cards">
-          <a class="aw-card" href="{{ '/docs/quickstart/' | relative_url }}">
-            <h3>Quick Start</h3>
-            <p>Start here. Install Flisk and get a working app running in three steps.</p>
-            <span>Get started →</span>
-          </a>
-          <a class="aw-card" href="{{ '/docs/configuration/' | relative_url }}">
-            <h3>Configuration</h3>
-            <p>Every setting you can put in <code>service.json</code>, one by one.</p>
-            <span>Read more →</span>
-          </a>
-          <a class="aw-card" href="{{ '/docs/scripts/' | relative_url }}">
-            <h3>package.json Scripts</h3>
-            <p>The dev, build and start scripts Flisk expects in each service.</p>
-            <span>Read more →</span>
-          </a>
-          <a class="aw-card" href="{{ '/docs/examples/' | relative_url }}">
-            <h3>Examples &amp; Repos</h3>
-            <p>Ready-made apps to copy and run, from a small order tracker to one with {{ site.data.flisk.erp_services }} services.</p>
-            <span>View examples →</span>
-          </a>
-          <a class="aw-card" href="{{ '/docs/with-helm/' | relative_url }}">
-            <h3>Deploy with Helm</h3>
-            <p>Going to Kubernetes later? How to take your services there.</p>
-            <span>Read the Helm guide →</span>
-          </a>
-          <a class="aw-card" href="{{ '/compare/' | relative_url }}">
-            <h3>Compare tools</h3>
-            <p>Flisk next to Garden, Skaffold, Codespaces and others, with prices.</p>
-            <span>Compare →</span>
-          </a>
+        <h2 id="start">Start from what you have</h2>
+        <div class="aw-docs-rows">
+          <a class="aw-docs-row" href="{{ gh }}cheat-sheet.md" target="_blank" rel="noopener"><span>A <code>docker-compose.yml</code></span><span>Import its services</span><code>flisk import</code></a>
+          <a class="aw-docs-row" href="{{ gh }}byo.md" target="_blank" rel="noopener"><span>A Procfile or your own Dockerfile</span><span>Wrap each process as it is</span><code>flisk resource &lt;name&gt; --type bring-your-own</code></a>
+          <a class="aw-docs-row" href="{{ gh }}run-without-docker.md" target="_blank" rel="noopener"><span>An app with no containers</span><span>Run services as local processes</span><span><code>"command"</code> in <code>service.json</code></span></a>
+          <a class="aw-docs-row" href="{{ '/docs/examples/' | relative_url }}"><span>Nothing yet</span><span>Copy a ready-made app</span><code>flisk project &lt;template&gt;</code></a>
+          <a class="aw-docs-row" href="{{ gh }}agents/ai-agents.md" target="_blank" rel="noopener"><span>An AI agent to run</span><span>Add it next to its tools and database</span><code>flisk resource &lt;name&gt; --type agent</code></a>
+          <a class="aw-docs-row" href="{{ '/docs/with-helm/' | relative_url }}"><span>Helm charts for production</span><span>Keep them, use Flisk on your computer</span></a>
+          <a class="aw-docs-row" href="{{ gh }}troubleshooting.md" target="_blank" rel="noopener"><span>A stack that will not start</span><span>Look up the error message</span><code>flisk doctor</code></a>
         </div>
 
-        <h2>What is Flisk CLI?</h2>
-        <p>Your app has parts: a website, an API, a database. Flisk starts all of them on your computer with one command.</p>
-        <ol>
-          <li>You write one small file per part, called <code>service.json</code>. It says what the part is.</li>
-          <li>You run <code>flisk up</code>.</li>
-          <li>Flisk writes the setup files and starts everything.</li>
-        </ol>
-        <p>Flisk works on your computer only. It does not put your app on the internet. For that, keep using Helm, Argo CD or Kustomize. See <a href="{{ '/docs/with-helm/' | relative_url }}">Flisk next to Helm</a>.</p>
-
-        <h2>Files Flisk writes for you</h2>
-        <p>You do not write these. You do not edit these. Change <code>service.json</code> and Flisk writes them again.</p>
-        <ul>
-          <li>A Dockerfile for each service, built in four layers (L1 to L4)</li>
-          <li>Vite and TypeScript settings for React (the default) or Vue 3 frontends</li>
-          <li>nginx and Traefik rules, so each service gets its own local address</li>
-          <li>Environment files and an <code>.npmrc</code> that point at the local registry</li>
-          <li>A Tiltfile that starts everything</li>
-          <li>An <code>AGENTS.md</code> in each <code>.autogenerated/</code> folder that tells AI coding tools to leave these files alone</li>
-        </ul>
-
-        <h2>Why teams use it</h2>
-        <p>A new teammate runs <code>flisk doctor</code> and <code>flisk up</code>. They do not read a long setup page. We have not measured how much time this saves on a real team. See the <a href="{{ '/features/' | relative_url }}#story">example story</a>.</p>
-
-        <h2>What you get</h2>
-        <div class="aw-feature-grid">
-          <div class="aw-card"><h4>One file per service</h4><p>You describe a service once, in a short JSON file.</p></div>
-          <div class="aw-card"><h4>No Kubernetes</h4><p>Everything runs on your computer. No cluster to set up.</p></div>
-          <div class="aw-card"><h4>Files written for you</h4><p>Flisk writes the Docker and Tilt files. You do not.</p></div>
-          <div class="aw-card"><h4>Layered images</h4><p>Docker images built in four layers, L1 to L4.</p></div>
-          <div class="aw-card"><h4>Finds your services</h4><p>Flisk looks through your folders and finds each service.</p></div>
-          <div class="aw-card"><h4>Built on Tilt</h4><p>Tilt is open source and has {{ site.data.flisk.tilt_stars }} GitHub stars.</p></div>
+        <h2 id="reference">Reference</h2>
+        <div class="aw-docs-rows aw-docs-rows--ref">
+          <a class="aw-docs-row" href="{{ gh }}cheat-sheet.md" target="_blank" rel="noopener"><span>CLI commands</span><span>Every command and flag on one page</span></a>
+          <a class="aw-docs-row" href="{{ '/docs/configuration/' | relative_url }}"><span><code>service.json</code></span><span>Every setting, one by one</span></a>
+          <a class="aw-docs-row" href="{{ '/docs/scripts/' | relative_url }}"><span><code>package.json</code> scripts</span><span>The dev, build and start scripts Flisk expects</span></a>
+          <a class="aw-docs-row" href="{{ gh }}generated-files.md" target="_blank" rel="noopener"><span>Generated files</span><span>What Flisk writes from <code>service.json</code>, and where</span></a>
+          <a class="aw-docs-row" href="{{ gh }}resource-features.md" target="_blank" rel="noopener"><span>Resource features</span><span>What each service can switch on or off</span></a>
+          <a class="aw-docs-row" href="{{ gh }}mcp.md" target="_blank" rel="noopener"><span>MCP</span><span>MCP servers as services in your stack</span></a>
+          <a class="aw-docs-row" href="{{ '/docs/agents/' | relative_url }}"><span>AI coding tools</span><span>Use Flisk from Claude Code, Cursor or Codex</span></a>
+          <a class="aw-docs-row" href="{{ gh }}troubleshooting.md" target="_blank" rel="noopener"><span>Troubleshooting</span><span>Error messages and what to do about each</span></a>
         </div>
+
+        <p class="aw-docs-foot">Flisk runs on your computer only. It does not deploy. <a href="https://github.com/flisk-sh/website/edit/master/docs/index.html" target="_blank" rel="noopener">Edit this page on GitHub</a>. Plain text for AI tools: <a href="{{ '/llms.txt' | relative_url }}">llms.txt</a>.</p>
       </div>
     </div>
   </section>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-<script>
-// Runs after the deferred GSAP scripts have loaded.
-document.addEventListener('DOMContentLoaded', function () {
-if (window.gsap && window.ScrollTrigger && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.from('.aw-docs-body h1, .aw-docs-body .aw-lead', { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', delay: 0.1 });
-  gsap.from('.aw-docs-ask', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 });
-  gsap.from('.aw-doc-cards .aw-card', { y: 40, opacity: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out', delay: 0.3 });
-}
-});
-</script>
