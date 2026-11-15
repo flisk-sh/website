@@ -1,8 +1,10 @@
 <aside class="aw-docs-side">
-  {% comment %} A plain link to Helpdock; assets/js/aw-docs-search.js turns it into an in-page search. {% endcomment %}
+  {% comment %} A plain link to Helpdock; assets/js/aw-docs-search.js turns it into an in-page search. Hidden while Helpdock is paused. {% endcomment %}
+  {% unless site.data.flisk.docs_search_paused %}
   <a class="aw-docs-search-open" data-docs-search href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">
     <span>Search the docs</span><kbd>/</kbd>
   </a>
+  {% endunless %}
   <nav aria-label="Documentation navigation">
     <a href="{{ '/docs/' | relative_url }}" class="{% if page.url == '/docs/' %}is-active{% endif %}">Overview</a>
     <a href="{{ '/docs/quickstart/' | relative_url }}" class="{% if page.url contains '/docs/quickstart/' %}is-active{% endif %}">Quick Start</a>
@@ -12,6 +14,6 @@
     <a href="{{ '/docs/agents/' | relative_url }}" class="{% if page.url contains '/docs/agents/' %}is-active{% endif %}">AI Agents &amp; Skills</a>
     <a href="{{ '/docs/with-helm/' | relative_url }}" class="{% if page.url contains '/docs/with-helm/' %}is-active{% endif %}">With Helm</a>
     <a href="{{ '/docs/claims/' | relative_url }}" class="{% if page.url contains '/docs/claims/' %}is-active{% endif %}">Claims</a>
-    <a href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">All docs in Helpdock ↗</a>
+    {% if site.data.flisk.docs_search_paused %}<a href="https://github.com/flisk-sh/flisk/tree/main/docs" target="_blank" rel="noopener">All docs on GitHub ↗</a>{% else %}<a href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">All docs in Helpdock ↗</a>{% endif %}
   </nav>
 </aside>
