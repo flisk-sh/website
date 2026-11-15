@@ -1,0 +1,9 @@
+{%- comment -%}Prints a New/Updated tag for the page key passed as `include.key`, for 30 days after its `since` date in _data/docs_labels.yml.{%- endcomment -%}
+{%- assign now_s = site.time | date: "%s" | plus: 0 -%}
+{%- for item in site.data.docs_labels -%}
+  {%- if item.key == include.key -%}
+    {%- assign since_s = item.since | date: "%s" | plus: 0 -%}
+    {%- assign age_days = now_s | minus: since_s | divided_by: 86400 -%}
+    {%- if age_days >= 0 and age_days < 30 -%}<span class="aw-docs-tag aw-docs-tag--{{ item.label }}">{{ item.label }}</span>{%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
