@@ -5,34 +5,13 @@ description: "Three steps: install Flisk, check your computer with flisk doctor,
 ---
 
 <div class="aw">
-  <section class="aw-section" style="padding-top: 10rem;">
+  <section class="aw-section aw-docs-section">
     <div class="aw-wrap aw-docs">
       {% include docs-sidebar.html %}
 
       <div class="aw-docs-body">
         <h1>Quick Start</h1>
-        <p class="aw-lead">Three steps. At the end, a real app runs on your computer.</p>
-
-        <div class="aw-quickstart-hero">
-          <div>
-            <span class="aw-quickstart-kicker">Start here</span>
-            <h2>Install. Check. Run.</h2>
-            <p>Copy each line into your terminal. Skip the rest of this page until the app is running.</p>
-          </div>
-          <ol class="aw-quickstart-flow" aria-label="Simple setup steps">
-            <li><a href="#install-options"><span>1</span> Install</a></li>
-            <li><a href="#before-you-run-it"><span>2</span> Check</a></li>
-            <li><a href="#start-from-a-working-example"><span>3</span> Run</a></li>
-          </ol>
-        </div>
-
-        <h2 id="just-look">Only want a look? One line.</h2>
-        <p>Have Node.js {{ site.data.flisk.prereq_node }}? Run this. Nothing to install. No Docker needed.</p>
-        <div class="aw-codeblock aw-codeblock--primary">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>npx @flisk-sh/flisk demo</pre>
-        </div>
-        <p>It starts a small app (a website and an API) and opens it in your browser. Liked it? Do the three steps below.</p>
+        <p class="aw-lead">Three steps: <a href="#install-options">install</a>, <a href="#before-you-run-it">check</a>, <a href="#start-from-a-working-example">run</a>. At the end, a real app runs on your computer.</p>
 
         <h2 id="install-options">Step 1. Install</h2>
         <p>Pick one tab. Not sure? Use <strong>curl</strong>. On Windows, see <a href="#windows-setup">Windows</a> below.</p>
@@ -111,6 +90,15 @@ flisk up</pre>
           <p>The app runs on your computer. A teammate who copies the repo runs the same lines and gets the same app.</p>
         </div>
 
+        <h2 id="just-look">Only want a look? One line</h2>
+        <p>Have Node.js {{ site.data.flisk.prereq_node }}? Run this. Nothing to install. No Docker needed.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>npx @flisk-sh/flisk demo</pre>
+        </div>
+        <p>It starts a small app (a website and an API) and opens it in your browser. </p>
+
+
         <h2 id="what-actually-happens-when-you-run-it">What you will see</h2>
         <p>Flisk checks your computer first, then says what it is doing at each step.</p>
         <div class="aw-terminal" style="margin: 0 0 2rem;">
@@ -119,7 +107,8 @@ flisk up</pre>
         </div>
 
 
-        <h3>Docker or Tilt missing?</h3>
+        <details class="aw-docs-details">
+          <summary>Docker or Tilt missing? See what Flisk says</summary>
         <p><code>flisk up</code> stops before it starts anything and tells you what to install:</p>
         <div class="aw-codeblock">
           <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
@@ -145,6 +134,8 @@ flisk up</pre>
 Run <span class="hot">`flisk doctor`</span> for a full environment check.</pre>
         </div>
         <p>Do what it says. Run <code>flisk doctor</code>. Then run <code>flisk up</code> again.</p>
+
+        </details>
 
         <h2 id="more">More, when you need it</h2>
         <p>None of this is needed for the three steps above. Open what you need.</p>

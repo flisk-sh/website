@@ -964,6 +964,10 @@ body:has(.aw) .page-content {
 }
 
 /* ---------------- Docs layout ---------------- */
+.aw-docs-section {
+  padding-top: 8rem;
+}
+
 .aw-docs {
   display: grid;
   grid-template-columns: 14rem 1fr;
@@ -1087,6 +1091,11 @@ body:has(.aw) .page-content {
 
   .aw-docs-details .aw-codeblock {
     margin-inline: 0.75rem;
+  }
+
+  /* Three starter questions are enough on a phone; the rest stay one tap away in the Ask box. */
+  .aw-docs-ask > .aw-docs-ask-chips > a:nth-child(n+4) {
+    display: none;
   }
 }
 
@@ -2530,9 +2539,50 @@ body:has(.aw) .page-content {
     top: 0;
   }
 
+  /* Docs on small screens: the page nav is one row you swipe sideways,
+     so the page itself starts near the top. */
+  .aw-docs-section {
+    padding-top: 7rem;
+  }
+
+  .aw-docs {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .aw-docs-side {
+    min-width: 0;
+  }
+
   .aw-docs-side nav {
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
+  }
+
+  .aw-docs-side nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .aw-docs-side nav a {
+    flex: none;
+    white-space: nowrap;
+    padding: 0.5rem 0.875rem;
+  }
+
+  .aw-docs-side a.aw-docs-search-open {
+    margin-bottom: 0.5rem;
+  }
+
+  .aw-docs-body>.aw-lead {
+    margin-bottom: 1.75rem;
+  }
+
+  .aw-docs-body h2 {
+    margin-top: 2.5rem;
   }
 
   .aw-article-shell {

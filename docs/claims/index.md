@@ -5,7 +5,7 @@ layout: default
 ---
 
 <div class="aw">
-  <section class="aw-section" style="padding-top: 10rem;">
+  <section class="aw-section aw-docs-section">
     <div class="aw-wrap aw-docs">
       {% include docs-sidebar.html %}
 
