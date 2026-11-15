@@ -9,7 +9,12 @@
     <span class="aw-docs-side-label">Get started</span>
     <a href="{{ '/docs/' | relative_url }}" class="{% if page.url == '/docs/' %}is-active{% endif %}">Overview</a>
     <a href="{{ '/docs/quickstart/' | relative_url }}" class="{% if page.url contains '/docs/quickstart/' %}is-active{% endif %}">Quick Start{% include docs-tag.html key="/docs/quickstart/" %}</a>
+    <a href="{{ '/docs/features/' | relative_url }}" class="{% if page.url contains '/docs/features/' %}is-active{% endif %}">Features{% include docs-tag.html key="/docs/features/" %}</a>
     <a href="{{ '/docs/examples/' | relative_url }}" class="{% if page.url contains '/docs/examples/' %}is-active{% endif %}">Examples</a>
+    <a href="{{ '/docs/whats-new/' | relative_url }}" class="{% if page.url contains '/docs/whats-new/' %}is-active{% endif %}">What's new{% include docs-tag.html key="/docs/whats-new/" %}</a>
+    <a href="{{ '/docs/faq/' | relative_url }}" class="{% if page.url contains '/docs/faq/' %}is-active{% endif %}">Questions{% include docs-tag.html key="/docs/faq/" %}</a>
+    <span class="aw-docs-side-label">Concepts</span>
+    <a href="{{ '/docs/how-it-works/' | relative_url }}" class="{% if page.url contains '/docs/how-it-works/' %}is-active{% endif %}">How it works{% include docs-tag.html key="/docs/how-it-works/" %}</a>
     <span class="aw-docs-side-label">Guides</span>
     <a href="https://github.com/flisk-sh/flisk/blob/main/docs/byo.md" target="_blank" rel="noopener">Bring your own Dockerfile <span aria-hidden="true">↗</span></a>
     <a href="https://github.com/flisk-sh/flisk/blob/main/docs/run-without-docker.md" target="_blank" rel="noopener">Run without Docker <span aria-hidden="true">↗</span></a>
@@ -21,6 +26,10 @@
     <a href="{{ '/docs/cli/' | relative_url }}" class="{% if page.url contains '/docs/cli/' %}is-active{% endif %}">CLI commands{% include docs-tag.html key="/docs/cli/" %}</a>
     <a href="https://github.com/flisk-sh/flisk/blob/main/docs/mcp.md" target="_blank" rel="noopener">MCP tools <span aria-hidden="true">↗</span></a>
     <a href="{{ '/docs/troubleshooting/' | relative_url }}" class="{% if page.url contains '/docs/troubleshooting/' %}is-active{% endif %}">Troubleshooting{% include docs-tag.html key="/docs/troubleshooting/" %}</a>
+    <span class="aw-docs-side-label">Compare</span>
+    <a href="{{ '/compare/' | relative_url }}">Choose a workflow</a>
+    <a href="{{ '/no-lock-in/' | relative_url }}">No lock-in</a>
+    <a href="{{ '/migrate/' | relative_url }}">Migrate to Flisk</a>
     {% if site.data.flisk.docs_search_paused %}<a class="aw-docs-side-all" href="https://github.com/flisk-sh/flisk/tree/main/docs" target="_blank" rel="noopener">All docs on GitHub ↗</a>{% else %}<a class="aw-docs-side-all" href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">All docs in Helpdock ↗</a>{% endif %}
   </nav>
 </aside>

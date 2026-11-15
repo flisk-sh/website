@@ -4000,3 +4000,8 @@ body:has(.aw) .page-content {
 
 /* 404 page: the way back, as buttons that wrap on a phone. */
 .aw-404-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+
+/* Docs: figure with a diagram (How it works) */
+.aw-docs-figure { margin: 0 0 1.5rem; }
+.aw-docs-figure svg { display: block; width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius); padding: 1rem; background: rgba(255, 255, 255, 0.02); }
+.aw-docs-figure figcaption { margin-top: 0.625rem; font-size: 0.875rem; color: rgba(236, 236, 241, 0.6); }

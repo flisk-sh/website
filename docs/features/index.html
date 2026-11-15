@@ -1,0 +1,106 @@
+---
+layout: default
+title: Features - Flisk CLI
+description: "What the Flisk CLI does, in plain words: one service.json per service, one command to start, checks on the generated files, AI agent support, and a free MIT core."
+---
+
+<div class="aw">
+  <section class="aw-section aw-docs-section">
+    <div class="aw-wrap aw-docs">
+      {% include docs-sidebar.html %}
+
+      <div class="aw-docs-body aw-docs-body--tight">
+        <h1>Features</h1>
+        <p class="aw-lead">What Flisk does, in plain words. Each feature has the command that shows it and a link to the page with the detail.</p>
+
+        <nav class="aw-docs-jump" aria-label="On this page">
+          <a href="#write-less">Write less</a>
+          <a href="#run-it">Run it</a>
+          <a href="#check-it">Check it</a>
+          <a href="#work-with-ai">Work with AI</a>
+          <a href="#stay-in-control">Stay in control</a>
+        </nav>
+
+        <h2 id="write-less">Write less</h2>
+        <h3 id="one-service-json-per-service">One service.json per service</h3>
+        <p>Describe each service in one small file. Flisk generates the Dockerfile, the Compose entry, the Traefik routes, the health check and the Tiltfile from it, so you never hand-write a <code>docker-compose.yml</code> or an <code>nginx.conf</code>.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk resource orders-api --type backend --stack shop --yes</pre>
+        </div>
+        <p class="aw-docs-foot"><a href="{{ '/docs/configuration/' | relative_url }}">service.json reference</a></p>
+        <h3 id="wired-for-you">Wired for you</h3>
+        <p><code>DATABASE_URL</code>, the API address your frontend calls, and missing secrets such as <code>JWT_SECRET</code> are generated and passed to each service. You do not copy them between files.</p>
+        <p class="aw-docs-foot"><a href="{{ '/docs/how-it-works/' | relative_url }}">How it works</a></p>
+        <h3 id="start-from-what-you-have">Start from what you have</h3>
+        <p>Have a <code>docker-compose.yml</code>? <code>flisk import</code> reads it and writes a <code>service.json</code> for each service. Add <code>--dry-run</code> to preview first.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk import . --dry-run</pre>
+        </div>
+        <p class="aw-docs-foot"><a href="{{ '/migrate/' | relative_url }}">Migrate to Flisk</a></p>
+
+        <h2 id="run-it">Run it</h2>
+        <h3 id="one-command-one-address">One command, one address</h3>
+        <p><code>flisk up</code> starts your database, your services and a local gateway. Services start in health-checked <code>dependsOn</code> order, and each one gets a <code>*.localhost</code> address that Flisk prints.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk up shop</pre>
+        </div>
+        <p class="aw-docs-foot"><a href="{{ '/docs/quickstart/' | relative_url }}">Quick Start</a></p>
+        <h3 id="hot-reload-while-you-code">Hot reload while you code</h3>
+        <p>Tilt updates a running container when you save a file. There is no rebuild step between your edit and the result.</p>
+        <p class="aw-docs-foot"><a href="{{ '/docs/how-it-works/' | relative_url }}">How it works</a></p>
+        <h3 id="no-kubernetes-and-docker-only-when-you-need-it">No Kubernetes, and Docker only when you need it</h3>
+        <p>Docker and Tilt run the stack without a local cluster. A small app whose services each set a <code>command</code> runs as plain local processes with no Docker.</p>
+        <p class="aw-docs-foot"><a href="https://github.com/flisk-sh/flisk/blob/main/docs/run-without-docker.md" target="_blank" rel="noopener">Run without Docker <span aria-hidden="true">↗</span></a></p>
+
+        <h2 id="check-it">Check it</h2>
+        <h3 id="generated-files-you-can-check">Generated files you can check</h3>
+        <p>Flisk records what it wrote and refuses to start when a generated file was edited by hand. <code>flisk config verify</code> reports any drift between your <code>service.json</code> files and the generated ones.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk config verify</pre>
+        </div>
+        <p class="aw-docs-foot"><a href="https://github.com/flisk-sh/flisk/blob/main/docs/generated-files.md" target="_blank" rel="noopener">Generated files and drift checks <span aria-hidden="true">↗</span></a></p>
+        <h3 id="plain-words-setup-check">Plain-words setup check</h3>
+        <p><code>flisk doctor</code> checks only what your project uses and says what is missing, with a fix for each problem.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk doctor</pre>
+        </div>
+        <p class="aw-docs-foot"><a href="{{ '/docs/troubleshooting/' | relative_url }}">Troubleshooting</a></p>
+
+        <h2 id="work-with-ai">Work with AI</h2>
+        <h3 id="built-for-ai-helpers">Built for AI helpers</h3>
+        <p><code>flisk mcp</code> gives Claude Code, Codex, Cursor and other agents tools to create resources, start the stack and read status and logs. <code>flisk project</code> adds the Flisk skills and an <code>AGENTS.md</code> to your project.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk connect claude --dry-run</pre>
+        </div>
+        <p class="aw-docs-foot"><a href="{{ '/docs/agents/' | relative_url }}">AI agents and skills</a></p>
+        <h3 id="runs-ai-agents-too">Runs AI agents too</h3>
+        <p>An <code>agent</code> resource gets durable checkpoints that survive restarts, session routing by the <code>x-session-id</code> header, and <code>/health</code> and <code>/ready</code> checks, next to its tools and database.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk resource bot --type agent --stack shop --yes</pre>
+        </div>
+        <p class="aw-docs-foot"><a href="{{ '/docs/agents/' | relative_url }}">AI agents and skills</a></p>
+
+        <h2 id="stay-in-control">Stay in control</h2>
+        <h3 id="leave-any-time">Leave any time</h3>
+        <p>Your own Dockerfiles, <code>service.json</code> files and code are never touched. <code>flisk eject</code> writes <code>EJECTED.md</code>, which explains how to run the stack with plain <code>tilt up</code>.</p>
+        <div class="aw-codeblock">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>flisk eject</pre>
+        </div>
+        <p class="aw-docs-foot"><a href="{{ '/no-lock-in/' | relative_url }}">No lock-in</a></p>
+        <h3 id="free-core">Free core</h3>
+        <p>The CLI is MIT licensed and needs no key to run <code>flisk up</code>. Premium extras are optional, at ${{ site.data.flisk.team_price }} per developer per month.</p>
+        <p class="aw-docs-foot"><a href="{{ '/#pricing' | relative_url }}">Pricing</a></p>
+
+        <p class="aw-docs-foot">Looking for the product overview? See the <a href="{{ '/features/' | relative_url }}">features page</a> on the main site, or read the <a href="{{ '/docs/faq/' | relative_url }}">questions and answers</a>.</p>
+      </div>
+    </div>
+  </section>
+</div>
