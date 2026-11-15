@@ -1,0 +1,46 @@
+# The CLI commands and Troubleshooting pages are copies of docs/cheat-sheet.md and docs/troubleshooting.md in
+# flisk-sh/flisk. Weekly, or on demand, copy them in and open a pull request when they changed.
+# Needs "Allow GitHub Actions to create and approve pull requests" under Settings > Actions > General.
+name: sync docs
+
+on:
+  schedule:
+    - cron: "41 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+      - run: node scripts/sync-docs.mjs
+      - name: Open a pull request when the text changed
+        # Context values go through env, never into the script text (template injection).
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          if git diff --quiet; then echo "up to date"; exit 0; fi
+          branch=chore/sync-docs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # The checkout keeps no credentials (persist-credentials: false), so push with the job token.
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          git checkout -B "$branch"
+          git commit -s -am "docs: sync CLI commands and Troubleshooting from flisk-sh/flisk"
+          git push --force origin "$branch"
+          gh pr create --base "$DEFAULT_BRANCH" --head "$branch" \
+            --title "docs: sync CLI commands and Troubleshooting from flisk-sh/flisk" \
+            --body "docs/cheat-sheet.md or docs/troubleshooting.md changed in flisk-sh/flisk. Do not edit the pages here: change the source." \
+            || gh pr edit "$branch" --body "Refreshed from flisk-sh/flisk docs."
