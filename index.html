@@ -170,7 +170,19 @@ image: /assets/images/flisk-social-card.png?v=2
               <span class="aw-tline" data-scene="3" data-step="6">  <span class="ok">✓</span> api  ready</span>
             </div>
             <figure class="aw-try-shot" data-try-shot>
-              <img src="{{ '/assets/images/demo-menu-page.jpg' | relative_url }}" alt="The page the demo opens: a restaurant menu served by two services Flisk started as local processes" width="2000" height="1250" loading="lazy" decoding="async">
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="
+                    {{ '/assets/images/demo-menu-page-640.webp' | relative_url }} 640w,
+                    {{ '/assets/images/demo-menu-page-1000.webp' | relative_url }} 1000w,
+                    {{ '/assets/images/demo-menu-page-1200.webp' | relative_url }} 1200w,
+                    {{ '/assets/images/demo-menu-page-2000.webp' | relative_url }} 2000w
+                  "
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                >
+                <img src="{{ '/assets/images/demo-menu-page.jpg' | relative_url }}" alt="The page the demo opens: a restaurant menu served by two services Flisk started as local processes" width="2000" height="1250" loading="lazy" decoding="async">
+              </picture>
             </figure>
           </div>
           <div class="aw-try-controls" data-try-controls hidden>
