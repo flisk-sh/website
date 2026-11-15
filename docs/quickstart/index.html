@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Quick Start - Flisk CLI
-description: "Three steps: install Flisk, check your computer with flisk doctor, run a ready-made app with flisk up."
+description: "Paste a few lines: install Flisk, check your computer with flisk doctor, run a ready-made app with flisk up."
 ---
 
 <div class="aw">
@@ -11,10 +11,21 @@ description: "Three steps: install Flisk, check your computer with flisk doctor,
 
       <div class="aw-docs-body">
         <h1>Quick Start</h1>
-        <p class="aw-lead">Three steps: <a href="#install-options">install</a>, <a href="#before-you-run-it">check</a>, <a href="#start-from-a-working-example">run</a>. At the end, a real app runs on your computer.</p>
+        <p class="aw-lead">Paste these lines into a terminal. At the end, a real app runs on your computer.</p>
 
-        <h2 id="install-options">Step 1. Install</h2>
-        <p>Pick one tab. Not sure? Use <strong>curl</strong>. On Windows, see <a href="#windows-setup">Windows</a> below.</p>
+        <span id="install-options"></span><span id="before-you-run-it"></span><span id="start-from-a-working-example"></span><span id="simple-setup"></span>
+        {% include quickstart-lines.html %}
+
+        <details class="aw-docs-details">
+          <summary>Says <code>command not found</code>?</summary>
+          <p>The installer printed an <code>export PATH=…</code> line. Run it, then open a new terminal. Check with <code>flisk --version</code>.</p>
+        </details>
+        <details class="aw-docs-details">
+          <summary>Doctor shows yellow lines?</summary>
+          <p>Yellow lines are tips, not errors. You are ready when the last line says <strong>Doctor passed</strong>. Works on macOS, Linux, and Ubuntu in WSL2.</p>
+        </details>
+        <details class="aw-docs-details">
+          <summary>Install another way (AI agent, npm, pnpm, bun)</summary>
         <div class="aw-install-tabs">
           <div class="aw-install-tabs-bar" role="tablist">
             <button class="aw-install-tab aw-install-tab--active" role="tab" aria-selected="true"  data-tab="curl">curl</button>
@@ -50,46 +61,12 @@ description: "Three steps: install Flisk, check your computer with flisk doctor,
             </div>
           </div>
         </div>
-        <p>Use an AI coding tool? Open the <strong>AI agent</strong> tab and paste that line into its chat. It installs Flisk for you. The npm, pnpm and bun tabs need Node.js {{ site.data.flisk.prereq_node }}. The curl tab does not.</p>
-        <p>Now check it worked. You should see a version number.</p>
-        <div class="aw-codeblock">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>flisk --version</pre>
-        </div>
-        <p>Says <code>command not found</code>? The installer printed an <code>export PATH=…</code> line. Run it, then open a new terminal.</p>
-
-        <h2 id="before-you-run-it">Step 2. Check your computer</h2>
-        <div class="aw-codeblock aw-codeblock--primary">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>flisk doctor</pre>
-        </div>
-        <p>It looks at your computer and tells you what is missing. Fix what it says. Run it again. Stop when the last line says <strong>Doctor passed</strong>. Yellow lines are tips, not errors.</p>
-        <p>For the example in step 3 you need two things:</p>
-        <ul class="aw-check-list">
-          <li><a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a>, installed and running</li>
-          <li><a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt</a>, installed</li>
-        </ul>
-        <p>Works on macOS, Linux, and Ubuntu in WSL2.</p>
-
-        <h2 id="start-from-a-working-example">Step 3. Run the example</h2>
-        <span id="simple-setup"></span>
-        <div class="aw-codeblock aw-codeblock--primary">
-          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
-          <pre>git clone https://github.com/flisk-sh/flisk-example
-cd flisk-example
-flisk up</pre>
-        </div>
-        <ol>
-          <li>The first line copies a ready-made app from GitHub: an order tracker with an API, a Postgres database, a worker and a website.</li>
-          <li>The second line goes into its folder.</li>
-          <li>The third line starts it. Leave it running.</li>
-        </ol>
-        <p>When the app is ready, <code>flisk up</code> prints its links. Open one in your browser. Lost the links? Run <code>flisk networks</code> in a second terminal.</p>
-
-        <div class="aw-callout">
-          <h4>Done</h4>
-          <p>The app runs on your computer. A teammate who copies the repo runs the same lines and gets the same app.</p>
-        </div>
+          <p>The <strong>AI agent</strong> line goes into your AI coding tool's chat. It installs Flisk for you. npm, pnpm and bun need Node.js {{ site.data.flisk.prereq_node }}.</p>
+        </details>
+        <details class="aw-docs-details">
+          <summary>What is the example app?</summary>
+          <p>An order tracker with an API, a Postgres database, a worker and a website. Leave <code>flisk up</code> running. Lost the links? Run <code>flisk networks</code> in a second terminal. A teammate who copies the repo runs the same lines and gets the same app.</p>
+        </details>
 
         <h2 id="just-look">Only want a look? One line</h2>
         <p>Have Node.js {{ site.data.flisk.prereq_node }}? Run this. Nothing to install. No Docker needed.</p>
