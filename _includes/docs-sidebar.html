@@ -18,9 +18,9 @@
     <span class="aw-docs-side-label">Reference</span>
     <a href="{{ '/docs/configuration/' | relative_url }}" class="{% if page.url contains '/docs/configuration/' %}is-active{% endif %}">service.json</a>
     <a href="{{ '/docs/scripts/' | relative_url }}" class="{% if page.url contains '/docs/scripts/' %}is-active{% endif %}">package.json scripts</a>
-    <a href="https://github.com/flisk-sh/flisk/blob/main/docs/cheat-sheet.md" target="_blank" rel="noopener">CLI commands <span aria-hidden="true">↗</span></a>
+    <a href="{{ '/docs/cli/' | relative_url }}" class="{% if page.url contains '/docs/cli/' %}is-active{% endif %}">CLI commands</a>
     <a href="https://github.com/flisk-sh/flisk/blob/main/docs/mcp.md" target="_blank" rel="noopener">MCP tools <span aria-hidden="true">↗</span></a>
-    <a href="https://github.com/flisk-sh/flisk/blob/main/docs/troubleshooting.md" target="_blank" rel="noopener">Troubleshooting <span aria-hidden="true">↗</span></a>
+    <a href="{{ '/docs/troubleshooting/' | relative_url }}" class="{% if page.url contains '/docs/troubleshooting/' %}is-active{% endif %}">Troubleshooting</a>
     {% if site.data.flisk.docs_search_paused %}<a class="aw-docs-side-all" href="https://github.com/flisk-sh/flisk/tree/main/docs" target="_blank" rel="noopener">All docs on GitHub ↗</a>{% else %}<a class="aw-docs-side-all" href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">All docs in Helpdock ↗</a>{% endif %}
   </nav>
 </aside>

@@ -88,12 +88,12 @@ flisk up</pre>
               <tr><td><code>flisk: command not found</code></td><td>The installer printed an <code>export PATH=…</code> line. Run it, then open a new terminal.</td></tr>
               <tr><td><code>Docker (or a compatible container runtime) is not running</code></td><td>Start Docker Desktop, or run <code>colima start</code>, or on Linux <code>sudo systemctl start docker</code>. Check with <code>docker ps</code>.</td></tr>
               <tr><td><code>Tilt CLI is not installed</code></td><td>On macOS run <code>brew install tilt</code>. On Linux follow the <a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt install page</a>. Check with <code>tilt version</code>.</td></tr>
-              <tr><td><code>Ports Flisk needs are taken</code></td><td>Another program uses the port. See <a href="https://github.com/flisk-sh/flisk/blob/main/docs/troubleshooting.md#ports" target="_blank" rel="noopener">Ports</a>.</td></tr>
+              <tr><td><code>Ports Flisk needs are taken</code></td><td>Another program uses the port. See <a href="{{ '/docs/troubleshooting/' | relative_url }}#ports">Ports</a>.</td></tr>
               <tr><td>npm stops with <code>EEXIST: file already exists</code></td><td>You had the old <code>@tdk-landscape/tdk-cli-core</code> package. Run <code>npm uninstall -g @tdk-landscape/tdk-cli-core &amp;&amp; npm install -g @flisk-sh/flisk</code>.</td></tr>
             </tbody>
           </table>
         </div>
-        <p>Something else? Run <code>flisk doctor</code>, then look up the message in <a href="https://github.com/flisk-sh/flisk/blob/main/docs/troubleshooting.md" target="_blank" rel="noopener">Troubleshooting</a>.</p>
+        <p>Something else? Run <code>flisk doctor</code>, then look up the message in <a href="{{ '/docs/troubleshooting/' | relative_url }}">Troubleshooting</a>.</p>
 
         <h2 id="more">More, when you need it</h2>
         <details class="aw-docs-details" id="just-look">
@@ -194,7 +194,7 @@ docker compose run --rm flisk flisk project --yes</pre>
           <p>To keep it, add that line to <code>~/.zshrc</code> or <code>~/.bashrc</code>. One key covers up to {{ site.data.flisk.premium_project_limit }} projects. Enterprise has no limit. If the key is missing, expired or cannot be checked, Flisk keeps running with the free engine.</p>
         </details>
 
-        <p id="next"><strong>Next:</strong> <a href="{{ '/docs/examples/' | relative_url }}">copy another ready-made app</a>, <a href="{{ '/docs/configuration/' | relative_url }}">see every setting in <code>service.json</code></a>, or <a href="https://github.com/flisk-sh/flisk/blob/main/docs/cheat-sheet.md" target="_blank" rel="noopener">see every command on one page</a>.</p>
+        <p id="next"><strong>Next:</strong> <a href="{{ '/docs/examples/' | relative_url }}">copy another ready-made app</a>, <a href="{{ '/docs/configuration/' | relative_url }}">see every setting in <code>service.json</code></a>, or <a href="{{ '/docs/cli/' | relative_url }}">see every command on one page</a>.</p>
         <p class="aw-docs-foot"><a href="https://github.com/flisk-sh/website/edit/master/docs/quickstart/index.html" target="_blank" rel="noopener">Edit this page on GitHub</a></p>
       </div>
     </div>

@@ -3912,3 +3912,52 @@ body:has(.aw) .page-content {
   .aw-docs-side nav a.is-active { border-bottom-color: #22C55E; }
   .aw-docs-side nav a.aw-docs-side-all { margin-top: 0; padding-left: 0.75rem; }
 }
+
+/* Docs: pages whose text is markdown copied from the Flisk repository (scripts/sync-docs.mjs) */
+.aw-docs-body--md h3 { font-size: 1.0625rem; margin: 1.5rem 0 0.5rem; }
+.aw-docs-body--md h4 { font-size: 0.9375rem; font-weight: 700; color: #fff; margin: 1.25rem 0 0.375rem; }
+.aw-docs-body--md ol { margin: 0 0 1rem 1.25rem; padding: 0; }
+.aw-docs-body--md :is(h2, h3, h4) { scroll-margin-top: 5rem; }
+.aw-docs-body--md div.highlighter-rouge,
+.aw-docs-body--md > pre {
+  margin: 0 0 0.875rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+  overflow-x: auto;
+}
+.aw-docs-body--md pre { margin: 0; padding: 0.75rem 3rem 0.75rem 1rem; font-size: 0.8125rem; line-height: 1.6; }
+.aw-docs-body--md pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #d7dde5;
+  font-size: inherit;
+  white-space: pre;
+}
+.aw-docs-body--md pre .c, .aw-docs-body--md pre .c1 { color: #7d8793; }
+.aw-docs-body--md table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+}
+.aw-docs-body--md th,
+.aw-docs-body--md td {
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #b8c0cc;
+}
+.aw-docs-body--md th { color: #fff; font-weight: 600; white-space: nowrap; }
+.aw-docs-body--md td code { white-space: nowrap; }
+.aw-docs-body--md blockquote {
+  margin: 0 0 1rem;
+  padding: 0.625rem 1rem;
+  border-left: 2px solid #6EE7A0;
+  background: rgba(255, 255, 255, 0.03);
+}
+.aw-docs-body--md blockquote p:last-child { margin-bottom: 0; }
