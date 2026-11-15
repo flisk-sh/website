@@ -11,7 +11,8 @@ description: "Flisk starts your whole app on your own computer with one command.
 
       <div class="aw-docs-body">
         <h1>Documentation</h1>
-        <p class="aw-lead">Flisk starts your whole app on your own computer with one command: <code>flisk up</code>. New here? Open the <a href="{{ '/docs/quickstart/' | relative_url }}">Quick Start</a>.</p>
+        <p class="aw-lead">Flisk starts your whole app on your own computer with one command: <code>flisk up</code>. New here? Paste these lines into a terminal. Stuck? See the <a href="{{ '/docs/quickstart/' | relative_url }}">Quick Start</a>.</p>
+        {% include quickstart-lines.html %}
 
         {% comment %} Ask bar: assets/js/aw-docs-search.js answers it from the repository docs through Helpdock, with an optional AI answer from Helpdock's /answer. Without the script it opens Helpdock. {% endcomment %}
         {% unless site.data.flisk.docs_search_paused %}

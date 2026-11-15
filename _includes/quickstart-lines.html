@@ -1,0 +1,10 @@
+{% comment %} The whole onboarding in one block. Used on /docs/ and /docs/quickstart/. {% endcomment %}
+        <div class="aw-codeblock aw-codeblock--primary">
+          <div class="aw-codeblock-head"><i></i><i></i><i></i><span>terminal</span></div>
+          <pre>curl -fsSL https://flisk.sh/install.sh | sh
+flisk doctor
+git clone https://github.com/flisk-sh/flisk-example
+cd flisk-example
+flisk up</pre>
+        </div>
+        <p>Line 1 installs Flisk. Line 2 checks your computer: fix what it says. The rest copy a ready-made app and start it. You need <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Docker</a> running and <a href="https://docs.tilt.dev/install.html" target="_blank" rel="noopener">Tilt</a> installed. <code>flisk up</code> prints links when the app is ready. Open one. <strong>Done.</strong></p>
