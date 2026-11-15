@@ -6,7 +6,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
-import { PAGES, renderPage, resolveLink, sourceProblems, sync, toSiteMarkdown } from "./sync-docs.mjs";
+import { PAGES, headingId, jumpList, renderPage, resolveLink, sourceProblems, sync, toSiteMarkdown } from "./sync-docs.mjs";
 
 const filler = "Example text that makes the page long enough to look like the real one. ".repeat(40);
 const SOURCE = `# ⚡ Flisk mega cheat sheet
@@ -51,6 +51,18 @@ test("the site copy has no title, jump list, version label, emoji, mermaid or Gi
   for (const gone of ["# ⚡", "v1.3.125", "Jump to", "short version", "mermaid", "[!NOTE]", "🚀", "·"]) {
     assert.ok(!out.includes(gone), gone);
   }
+});
+
+test("a long page gets a jump list with the ids kramdown gives its headings", () => {
+  const md = "## First five minutes\n\n## Top 10\n\n```bash\n## not a heading\n```\n\n## `flisk up` <flags>\n\n## JSON output & exit codes\n\n## Top 10\n";
+  const nav = jumpList(md);
+  assert.ok(nav.includes('aria-label="On this page"'));
+  assert.deepEqual([...nav.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]), ["first-five-minutes", "top-10", "flisk-up-flags", "json-output--exit-codes", "top-10-1"]);
+  assert.ok(nav.includes(">flisk up &lt;flags></a>"));
+  assert.ok(nav.includes(">JSON output &amp; exit codes</a>"));
+  assert.ok(!nav.includes("not a heading"));
+  assert.equal(headingId("100-service test"), "service-test");
+  assert.equal(jumpList("## One\n\n## Two\n"), "");
 });
 
 test("a broken source is refused", () => {
