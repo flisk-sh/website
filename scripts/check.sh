@@ -30,6 +30,9 @@ fi
 step "Build site"
 bundle exec jekyll build
 
+step "Check canonical and Open Graph metadata for every sitemap page"
+node scripts/check-seo.mjs
+
 step "Check every built page for forbidden claims"
 node scripts/check-claims.mjs --built
 
