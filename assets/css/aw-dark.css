@@ -3947,6 +3947,14 @@ body:has(.aw) .page-content {
   border-collapse: collapse;
   margin: 0 0 1rem;
   font-size: 0.875rem;
+  /* A wide table scrolls sideways, but a phone hides the scrollbar, so a cut-off column looks clipped. A green glow
+     shows on each edge that has more columns past it: the page-colour layers move with the content and cover the
+     glow once that edge is reached, and a table that fits never shows one. */
+  background:
+    linear-gradient(to right, #0a0a0e 40%, rgba(10, 10, 14, 0)) left center / 2.5rem 100% no-repeat local,
+    linear-gradient(to left, #0a0a0e 40%, rgba(10, 10, 14, 0)) right center / 2.5rem 100% no-repeat local,
+    linear-gradient(to right, rgba(110, 231, 160, 0.35), rgba(110, 231, 160, 0)) left center / 1.25rem 100% no-repeat scroll,
+    linear-gradient(to left, rgba(110, 231, 160, 0.35), rgba(110, 231, 160, 0)) right center / 1.25rem 100% no-repeat scroll;
 }
 .aw-docs-body--md th,
 .aw-docs-body--md td {
