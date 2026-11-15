@@ -65,15 +65,19 @@ export function headingId(text) {
 // list at the top of the page; the CSS shows it only on narrow screens. Short pages get none.
 export function jumpList(markdown) {
   const prose = markdown.replace(/^```[\s\S]*?^```/gm, "");
+  // kramdown numbers repeated ids across every heading level, so a ### "Environment variables" earlier on makes the
+  // ## one "environment-variables-1". Count them all; list only the ## ones.
   const used = {};
-  const links = [...prose.matchAll(/^## (.+)$/gm)].map(([, raw]) => {
+  const links = [];
+  for (const [, hashes, raw] of prose.matchAll(/^(#{1,6}) (.+)$/gm)) {
     const text = raw.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[`*_]/g, "").trim();
     let id = headingId(text);
     if (used[id] !== undefined) id = `${id}-${++used[id]}`;
     else used[id] = 0;
+    if (hashes !== "##") continue;
     const label = text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-    return `          <a href="#${id}">${label}</a>`;
-  });
+    links.push(`          <a href="#${id}">${label}</a>`);
+  }
   if (links.length < 4) return "";
   return `        <nav class="aw-docs-jump" aria-label="On this page">\n${links.join("\n")}\n        </nav>\n`;
 }
