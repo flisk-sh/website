@@ -102,3 +102,27 @@
   add(pages[here + 1], 'Next', 'aw-docs-pager-next');
   if (nav.children.length) body.appendChild(nav);
 })();
+
+/* On a phone the menu is one row that scrolls sideways. Start it at the
+   current page's link, and mark which edges have more links past them so
+   the CSS can fade those edges. */
+(function () {
+  var nav = document.querySelector('.aw-docs-side nav');
+  if (!nav) return;
+
+  function mark() {
+    var more = [];
+    if (nav.scrollLeft > 4) more.push('left');
+    if (nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 4) more.push('right');
+    if (more.length) nav.setAttribute('data-more', more.join(' '));
+    else nav.removeAttribute('data-more');
+  }
+
+  var active = nav.querySelector('a.is-active');
+  if (active && nav.scrollWidth > nav.clientWidth) {
+    nav.scrollLeft = Math.max(0, active.offsetLeft - nav.offsetLeft - 24);
+  }
+  mark();
+  nav.addEventListener('scroll', mark, { passive: true });
+  window.addEventListener('resize', mark);
+})();
