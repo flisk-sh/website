@@ -81,6 +81,16 @@ scripts/check.sh
 
 It runs, in order: every `scripts/*.test.mjs` (including the docs Ask AI tests), the corner radius and claims checks, the Ruby tests, the check that the synced llms text matches its source, the Jekyll build, the claims check on the built pages, and the Ruby test that reads `_site/`. Set `SKIP_SYNC_CHECK=1` to skip the one step that needs the network. The steps below explain each part, and you can run them one at a time.
 
+### Optional: run the checks from git
+
+To have git run part of `scripts/check.sh` for you, turn on the hooks in `.githooks/` once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Before each commit, git then runs the Node tests and the corner radius and claims checks, which take a few seconds. Before each push, it builds the site and checks the built pages, which needs Ruby 3.3 with `bundle install` done. A failing check stops the commit or push. To skip the hooks once, add `--no-verify` to `git commit` or `git push`. To turn them off, run `git config --unset core.hooksPath`.
+
 ### Step 1 – Public claims check
 
 This script (`scripts/check-claims.mjs`) ensures that any numeric performance claim on the site is backed by a link to the claims registry and that no forbidden wording has crept in.
