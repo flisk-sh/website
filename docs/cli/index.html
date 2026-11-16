@@ -81,7 +81,7 @@ flisk version                 # aliases: flisk v, flisk -v, flisk --version
 | `flisk status` | | Show stack and service state |
 | `flisk logs` | | Print recent logs from the running stack |
 | `flisk run <service> -- <command>` | | Run a one-off command with the service environment (native runs use project `.env`, not `up --env-file`) |
-| `flisk restart <resource>` | | Restart a running Tilt resource; for native services use `flisk down` then `flisk up` |
+| `flisk restart <resource>` | | Restart one Flisk-generated Compose container without rebuilding its image, or fall back to `tilt trigger` for local-process resources and imported Tiltfiles; `--rebuild` rebuilds; native services use `flisk down` then `flisk up` |
 | `flisk networks` | `urls`, `traefik` | Show Traefik-routed URLs |
 | `flisk open` | | Open the first frontend of the project in your browser |
 | `flisk open --print` | | Print the first ready frontend URL without launching a browser |
@@ -137,7 +137,7 @@ flisk project next-postgres --path myapp  # Next.js + Express + Postgres with a 
 | Flag | Effect |
 | --- | --- |
 | `[template]` | Clone a starter instead of a blank project: `restaurant`, `saas`, `erp`, `user-management`, `ecommerce`, `example` |
-| `--path <dir>` | Directory to clone the template into (default: the template's repo name) |
+| `--path <dir>` | Directory to clone the template into (default: the starter name, or its repository name) |
 | `--check` | Check that master configs exist and are in sync |
 | `--force` | Overwrite existing configuration ⚠️ destructive |
 | `--yes` | Non-interactive, use defaults |
@@ -409,16 +409,18 @@ flisk run orders-api --json -- bun run migrate:status
 
 ### `flisk restart <resource>`
 
-Requires Tilt; it cannot restart native services. For those, use `flisk down` then `flisk up`.
+Requires Tilt. A Flisk-generated Compose container resource keeps its image: the existing container is stopped and started again, with no rebuild. Local-process resources, projects using an imported Tiltfile, and `--rebuild` keep the `tilt trigger` path; `--rebuild` rebuilds the image and recreates the container (also re-reading the project `.env`). Native command services use `flisk down` then `flisk up`.
 
 ```bash
 flisk restart orders-api
 flisk restart orders-api --json
+flisk restart orders-api --rebuild
 ```
 
 | Flag | Effect |
 | --- | --- |
 | `--port <n>` | Tilt UI port (default: TILT_PORT or 10350) |
+| `--rebuild` | Rebuild the image and recreate the container through Tilt, instead of restarting the existing container |
 | `--json` | Output one JSON object and exit |
 
 ### `flisk networks` (aliases `urls`, `traefik`)
@@ -687,6 +689,7 @@ stdout holds one JSON document; diagnostics go to stderr. See [machine-readable 
 | `FLISK_UP_READY_TIMEOUT_MS` | How long `flisk up --json` waits for readiness (default 15 minutes) |
 | `FLISK_UP_FAILURE_GRACE_MS` | How long `flisk up` keeps waiting on a container that is running but failing its health check, such as a database on its first start, before reporting it failed (default 2 minutes) |
 | `FLISK_ALLOW_NATIVE_WINDOWS` | Set to `1` to allow `flisk up` on native Windows |
+| `FLISK_DEMO_ON_KIRI` | Set to `1` to run the full `flisk demo` on Kiri. Without it the demo runs as local processes there, because Kiri 0.2.1 cannot build its images |
 | `FLISK_LICENSE_KEY` | Unlocks premium features such as `--ddd` |
 | `FLISK_DEBUG` | Set to `1` with `flisk up --verbose` to include Starlark debug logs |
 | `FLISK_BUILD_COMMIT` | Overrides the commit sha that `flisk version --verbose` prints |
