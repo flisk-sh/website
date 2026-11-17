@@ -2774,3 +2774,13 @@ button.aw-gen-node:focus-visible,
 /* Sponsor strip: one sentence and one button, above the license form. */
 .aw-sponsor .aw-wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
 .aw-sponsor-text { margin: 0; max-width: 760px; }
+
+/* The whole product as one loop, in plain words: no infrastructure terms. */
+.aw-loop { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.4rem; margin: 1.1rem 0 0; padding: 0; font-size: 0.88rem; color: rgba(236, 236, 241, 0.85); }
+.aw-loop li { padding: 0.4rem 0.7rem; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 999px; background: rgba(18, 18, 24, 0.8); }
+.aw-loop li + li::before { content: "\2192"; margin-right: 0.55rem; margin-left: -0.2rem; color: #6EE7A0; }
+.aw-loop li + li { position: relative; }
+.aw-loop .aw-loop-back { border-color: rgba(110, 231, 160, 0.45); }
+.aw-loop .aw-loop-back::after { content: " \21BA"; color: #6EE7A0; }
+@media (max-width: 768px) { .aw-loop { order: 2; } .aw-hero-phone { order: 2; } }
+@media (min-width: 769px) { .aw-loop { margin-bottom: 1.25rem; } }
