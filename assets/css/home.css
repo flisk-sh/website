@@ -2362,17 +2362,20 @@ button.aw-gen-node:focus-visible,
 /* On a phone the window comes right after the headline, inside the first screen. The hero's blocks become direct
    children of the hero so the browser-tour button and the command box can sit below the window. */
 @media (max-width: 768px) {
-  .aw-hero { padding-top: 5.5rem; }
+  .aw-hero { padding-top: 4rem; }
+  /* The first screen says what it is and gives one button; the pill and the people wall come after. */
+  .aw-hero .aw-agents-pill { display: none; }
+  .aw-hero > .aw-trust { order: 5; }
   .aw-hero-top,
   .aw-hero-main { display: contents; }
   .aw-hero h1,
   .aw-hero-top .aw-hero-sub,
   .aw-hero-phone,
   .aw-hero-side { position: relative; }
-  .aw-hero h1 { order: 1; margin-bottom: 0.75rem; font-size: clamp(2rem, 9vw, 2.6rem); }
+  .aw-hero h1 { order: 1; margin-bottom: 0.75rem; font-size: clamp(2.1rem, 9.5vw, 2.7rem); line-height: 1.08; }
   .aw-hero-top .aw-hero-sub { order: 1; font-size: 1rem; line-height: 1.5; }
-  .aw-hero .aw-stage { order: 2; margin-top: 1.25rem; }
-  .aw-hero-phone { order: 3; margin: 1.5rem 0 0; }
+  .aw-hero .aw-stage { order: 3; margin-top: 1.5rem; }
+  .aw-hero-phone { order: 2; margin: 1.25rem 0 0; }
   .aw-hero-side { order: 4; margin-top: 1rem; }
   /* The guide is one row that scrolls sideways, so the console itself starts higher. */
   .aw-stage .aw-stage-guide { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
@@ -2771,3 +2774,13 @@ button.aw-gen-node:focus-visible,
 /* Sponsor strip: one sentence and one button, above the license form. */
 .aw-sponsor .aw-wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
 .aw-sponsor-text { margin: 0; max-width: 760px; }
+
+/* The whole product as one loop, in plain words: no infrastructure terms. */
+.aw-loop { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.4rem; margin: 1.1rem 0 0; padding: 0; font-size: 0.88rem; color: rgba(236, 236, 241, 0.85); }
+.aw-loop li { padding: 0.4rem 0.7rem; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 999px; background: rgba(18, 18, 24, 0.8); }
+.aw-loop li + li::before { content: "\2192"; margin-right: 0.55rem; margin-left: -0.2rem; color: #6EE7A0; }
+.aw-loop li + li { position: relative; }
+.aw-loop .aw-loop-back { border-color: rgba(110, 231, 160, 0.45); }
+.aw-loop .aw-loop-back::after { content: " \21BA"; color: #6EE7A0; }
+@media (max-width: 768px) { .aw-loop { order: 2; } .aw-hero-phone { order: 2; } }
+@media (min-width: 769px) { .aw-loop { margin-bottom: 1.25rem; } }
