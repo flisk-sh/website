@@ -1,5 +1,5 @@
 // North star: how far a phone visitor scrolls before the first button.
-// Usage: node bench/north-star.mjs [url]   (needs playwright-core; set PLAYWRIGHT_CORE to its path if not installed)
+// Usage: node docs/north-star/north-star.mjs [url]   (needs playwright-core; set PLAYWRIGHT_CORE to its path if not installed)
 import { writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
@@ -16,6 +16,6 @@ const m = await page.evaluate(() => {
 });
 await browser.close();
 const out = { value: m.button, baseline: 1935, unit: "px", measuredAt: new Date().toISOString(), run: url, h1: m.h1, scrollWidth: m.scrollWidth };
-writeFileSync(new URL("./north-star.json", import.meta.url), JSON.stringify(out, null, 2) + "\n");
+writeFileSync(new URL("./result.json", import.meta.url), JSON.stringify(out, null, 2) + "\n");
 console.log(JSON.stringify(out));
 if (m.scrollWidth > 375 || m.button > 812) process.exit(1);
