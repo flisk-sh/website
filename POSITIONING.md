@@ -5,7 +5,7 @@
 
 ## In one sentence
 
-**Flisk is the local runtime your AI coding agent can start, check and fix, for any stack.**
+**Flisk runs your whole app on your laptop with one command, and your AI coding agent can start it, check it and fix it, for any stack.**
 
 ## Who it is for
 
@@ -54,11 +54,11 @@ If we cannot show it in one 60-second recording, we do not put it in a headline.
 
 | Where | Text |
 |---|---|
-| GitHub description | The local runtime your AI coding agent can start, check and fix. One command runs your multi-service app from a Compose file or plain commands, and an MCP server gives Claude Code, Cursor and Codex its health, logs and controls. MIT, no account. |
-| Homepage title | Flisk: the local runtime your AI agent can start, check and fix |
-| Homepage headline | The local runtime your AI agent can start, check and fix. |
+| GitHub description | Run your whole app on your laptop with one command, and let your AI coding agent start, check and fix it. One command runs your multi-service app from a Compose file or plain commands, and an MCP server gives Claude Code, Cursor and Codex its health, logs and controls. MIT, no account. |
+| Homepage title | Flisk: run your whole app locally with one command |
+| Homepage headline | Run your whole app on your laptop with one command. |
 | Homepage subline | Run your whole app on your machine, from a Compose file or plain commands. Your agent reads its health and logs, and fixes what breaks. |
-| Footer | the local runtime your AI agent can start, check and fix. |
+| Footer | run your whole app on your laptop with one command. |
 | Agents page headline | Your coding agent can start, check and fix the whole stack. |
 
 ## Places to keep in step
