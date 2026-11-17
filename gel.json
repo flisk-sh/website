@@ -6,5 +6,18 @@
     "workflow-permissions": "report",
     "dead-links": "report",
     "done-without-green": "report"
-  }
+  },
+  "north_star": {
+    "metric": "pixels scrolled on a phone before the first button",
+    "baseline": "flisk.sh before 2026-11-17, first button at 1935px",
+    "target": {
+      "ratio": 3,
+      "better": "lower"
+    },
+    "result": "bench/north-star.json",
+    "evidence": "bench/README.md",
+    "measure": "node bench/north-star.mjs",
+    "max_age_days": 30
+  },
+  "five_second": {}
 }
