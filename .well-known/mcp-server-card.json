@@ -1,0 +1,17 @@
+{
+  "name": "sh.flisk/app-builder",
+  "title": "Build Me an App MCP",
+  "description": "Flisk's main remote MCP server. Describe an app in plain words and get the parts it needs and the commands to run it on your own computer. Flisk itself (flisk mcp) is a local stdio server and is documented at https://flisk.sh/docs/agents/.",
+  "version": "1.0.0",
+  "websiteUrl": "https://flisk.sh/",
+  "repository": { "url": "https://github.com/flisk-sh/flisk", "source": "github" },
+  "remotes": [
+    { "type": "streamable-http", "url": "https://mcp.flisk.sh/mcp" }
+  ],
+  "related": [
+    { "name": "citable", "title": "Citable MCP", "description": "Check whether AI search can find, read and cite a website.", "type": "streamable-http", "url": "https://citable.flisk.si/mcp" },
+    { "name": "flisk-pages", "title": "Pages MCP", "description": "Put a page online at a public link.", "type": "streamable-http", "url": "https://pages.flisk.si/mcp" },
+    { "name": "readme-score", "title": "README Score MCP", "description": "Score a GitHub README out of 100 with a fix for each miss.", "type": "streamable-http", "url": "https://readme.flisk.si/mcp" },
+    { "name": "flisk-demo", "title": "Flisk Demo MCP", "description": "Get a link to a personalised Flisk demo.", "type": "streamable-http", "url": "https://demo.flisk.si/mcp" }
+  ]
+}
