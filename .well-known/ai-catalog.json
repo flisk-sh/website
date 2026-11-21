@@ -1,0 +1,82 @@
+{
+  "specVersion": "1.0",
+  "entries": [
+    {
+      "identifier": "urn:air:flisk.sh:mcp:app-builder",
+      "type": "application/mcp-server-card+json",
+      "url": "https://flisk.sh/.well-known/mcp-server-card.json"
+    },
+    {
+      "identifier": "urn:air:flisk.sh:mcp:citable",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+        "name": "si.flisk/citable",
+        "title": "Citable MCP",
+        "description": "Check whether AI search and chatbots can find, read and cite a website.",
+        "version": "1.0.0",
+        "websiteUrl": "https://flisk.sh/",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://citable.flisk.si/mcp"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "urn:air:flisk.sh:mcp:pages",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+        "name": "si.flisk/pages",
+        "title": "Pages MCP",
+        "description": "Put a page or folder online at a public link.",
+        "version": "1.0.0",
+        "websiteUrl": "https://flisk.sh/",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://pages.flisk.si/mcp"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "urn:air:flisk.sh:mcp:readme-score",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+        "name": "si.flisk/readme-score",
+        "title": "README Score MCP",
+        "description": "Score a GitHub README out of 100, with the sections found, the sections missing and a fix for each miss.",
+        "version": "1.0.0",
+        "websiteUrl": "https://flisk.sh/",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://readme.flisk.si/mcp"
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "urn:air:flisk.sh:mcp:demo",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+        "name": "si.flisk/demo",
+        "title": "Flisk Demo MCP",
+        "description": "Get a link to a personalised Flisk demo, and see who left an X account in a time window.",
+        "version": "1.0.0",
+        "websiteUrl": "https://flisk.sh/",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://demo.flisk.si/mcp"
+          }
+        ]
+      }
+    }
+  ]
+}

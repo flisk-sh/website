@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+  "name": "sh.flisk/app-builder",
+  "title": "Build Me an App MCP",
+  "description": "Describe an app in plain words and get the parts it needs and the commands to run it on your own computer. Local Flisk (flisk mcp) is a stdio server, documented at https://flisk.sh/docs/agents/.",
+  "version": "1.0.0",
+  "websiteUrl": "https://flisk.sh/",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.flisk.sh/mcp"
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/flisk-sh/flisk",
+    "source": "github"
+  }
+}
