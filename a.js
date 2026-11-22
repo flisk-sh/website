@@ -3,6 +3,8 @@
 (function () {
   var s = document.currentScript, d = s && s.getAttribute('data-domain');
   if (!d || navigator.webdriver || /Headless/i.test(navigator.userAgent)) return;
+  // The analytics click heatmap shows the page in a preview frame marked #flisk-preview: not a visit.
+  if (/(^|[#&])flisk-preview\b/.test(location.hash)) return;
   var api = (s.getAttribute('data-api') || 'https://analytics.flisk.si') + '/e', last = '';
   function sid() {
     try { var k = '_fa', v = sessionStorage.getItem(k); if (!v) { v = Math.random().toString(36).slice(2, 12); sessionStorage.setItem(k, v); } return v; } catch (e) { return ''; }
