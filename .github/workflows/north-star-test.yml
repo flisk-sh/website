@@ -21,6 +21,6 @@ jobs:
         with:
           node-version: 22
       - name: Install Chromium
-        run: npm install --no-save --no-package-lock playwright-core@1 && npx playwright-core install --with-deps chromium
+        run: npm install --no-save --no-package-lock --ignore-scripts playwright-core@1.65.0 && node node_modules/playwright-core/cli.js install --with-deps chromium
       - name: Test the measure
-        run: node --test docs/north-star/
+        run: node --test docs/north-star/north-star.test.mjs

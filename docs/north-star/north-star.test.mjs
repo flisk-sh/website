@@ -1,5 +1,5 @@
 // Runs the real north star measure (headless Chromium, phone size) over pages a person would rank, plus pages built to
-// fool it. Each must come out as a person would see it. Run: node --test docs/north-star/   (needs playwright-core)
+// fool it. Each must come out as a person would see it. Run: node --test docs/north-star/north-star.test.mjs   (needs playwright-core)
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -13,7 +13,7 @@ const dir = mkdtempSync(join(tmpdir(), "north-star-"));
 after(() => rmSync(dir, { recursive: true, force: true }));
 
 const css = `body{margin:0;font:16px/1.5 system-ui}main{padding:20px}h1{font-size:32px;line-height:1.15;margin:0 0 12px}
-.aw-btn,.btn{display:inline-block;background:#111;color:#fff;padding:14px 20px;border-radius:8px;text-decoration:none}.img{background:#ccd}`;
+.aw-btn,.btn{display:inline-block;background:#111;color:#fff;padding:14px 20px;text-decoration:none}.img{background:#ccd}`;
 const page = (body) => `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style></head><body>${body}</body></html>`;
 const words = (n) => "teams ship faster with one command ".repeat(n);
 const BAD = `<nav style="height:120px">Menu</nav><h1>The orchestration control plane for serverless pods</h1><p>${words(15)}</p><div class="img" style="height:1300px"></div><p>${words(10)}</p><a class="aw-btn" href="#s">Request a demo</a>`;
