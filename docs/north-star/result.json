@@ -2,10 +2,10 @@
  "value": 453,
  "baseline": 1935,
  "unit": "px",
- "measuredAt": "2026-11-22T01:55:38.328Z",
- "run": "https://github.com/flisk-sh/website/actions/runs/44973662478",
+ "measuredAt": "2026-11-22T02:13:41.141Z",
+ "run": "https://github.com/flisk-sh/website/actions/runs/44974996276",
  "button": "See it run, no install",
  "h1": 193,
  "scrollWidth": 375,
- "commit": "d20474ffc46a569867ef6cc62fe09d0639263fdc"
+ "commit": "9c0103bb1b508add1587cfcecb44f8314e040583"
 }
