@@ -72,3 +72,34 @@ test("a nav link styled as a button is not the hero button", { timeout: 120000 }
   const r = measure("nav", `<nav><a class="btn" href="#login">Log in</a></nav><main><h1>Run your app</h1><p>One command.</p><a class="aw-btn" href="#s">Get started</a></main>`);
   assert.equal(r.button, "Get started");
 });
+
+const HERO = `<h1>Run your app on your laptop</h1><p>One command. Free.</p>`;
+
+test("a tiny button, or one with invisible text, does not count", { timeout: 120000 }, () => {
+  const tiny = measure("tiny", `<main>${HERO}<a class="aw-btn" href="#s" style="padding:0;width:12px;height:12px;overflow:hidden">Go</a>${BAD}</main>`);
+  assert.ok(tiny.value > 812, `tiny button scored ${tiny.value}`);
+  assert.equal(tiny.button, "Request a demo");
+  const ghost = measure("ghost", `<main>${HERO}<a class="aw-btn" href="#s" style="background:#fff;color:#fefefe">Start</a>${BAD}</main>`);
+  assert.ok(ghost.value > 812, `invisible-text button scored ${ghost.value}`);
+});
+
+test("a fixed button bar on the first screen counts, one pinned off the first screen does not", { timeout: 120000 }, () => {
+  const bar = measure("bar", `<main>${HERO}<div class="img" style="height:1500px"></div></main><div style="position:fixed;left:0;right:0;bottom:0;padding:10px;background:#eee"><a class="btn" href="#s">Get started</a></div>`);
+  assert.equal(bar.exit, 0);
+  assert.ok(bar.value < 812);
+});
+
+test("a button a script draws a second after load counts; one drawn much later does not", { timeout: 120000 }, () => {
+  const late = measure("late", `<main>${HERO}<div id="slot"></div>${BAD}</main><script>setTimeout(()=>{document.getElementById('slot').innerHTML='<a class="aw-btn" href="#s">Get started</a>'},1000)</script>`);
+  assert.equal(late.button, "Get started");
+  assert.equal(late.exit, 0);
+  const slow = measure("slow", `<main>${HERO}<div id="slot"></div>${BAD}</main><script>setTimeout(()=>{document.getElementById('slot').innerHTML='<a class="aw-btn" href="#s">Get started</a>'},7000)</script>`);
+  assert.equal(slow.button, "Request a demo");
+  assert.equal(slow.exit, 1);
+});
+
+test("a gate over the headline fails even when the gate's own button can be pressed", { timeout: 120000 }, () => {
+  const r = measure("gate", `<div style="position:fixed;inset:0;background:#000;color:#fff;z-index:9;padding:40px"><p>Are you 18?</p><button style="padding:14px">Yes</button></div><main>${HERO}<a class="aw-btn" href="#s">Get started</a></main>`);
+  assert.equal(r.exit, 1);
+  assert.match(r.problem, /headline is covered/);
+});
