@@ -1,0 +1,25 @@
+# Measures this repo's north star (north_star.measure in docs/gel.json) every Monday and publishes the number, with this
+# run's link, to the north-star branch. The GEL north-star guard and Cilytics read it there. A missed target turns the run red.
+name: North star
+
+on:
+  schedule:
+    - cron: "23 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: north-star
+  cancel-in-progress: false
+
+jobs:
+  measure:
+    permissions:
+      contents: write
+    uses: flisk-sh/gel/.github/workflows/north-star.yml@d34e7006b3e0742f5c8a42f5559f9d003d8449b2 # main, north-star (gel#67)
+    with:
+      gel_ref: d34e7006b3e0742f5c8a42f5559f9d003d8449b2
+      timeout: 20
+      setup: npm install --no-save --no-package-lock playwright-core@1 && npx playwright-core install --with-deps chromium
