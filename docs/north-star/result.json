@@ -1,0 +1,10 @@
+{
+ "value": 453,
+ "baseline": 1935,
+ "unit": "px",
+ "measuredAt": "2026-11-22T01:36:16.388Z",
+ "run": "https://github.com/flisk-sh/website/actions/runs/44972091363",
+ "h1": 193,
+ "scrollWidth": 375,
+ "commit": "70ed0727cdff389b1f48a7336c2795682d731e8c"
+}
