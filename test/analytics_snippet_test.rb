@@ -22,6 +22,12 @@ class AnalyticsSnippetTest < Minitest::Test
     assert_includes source, "navigator.doNotTrack !== '1' && !navigator.globalPrivacyControl"
   end
 
+  def test_sends_nothing_inside_the_analytics_heatmap_preview
+    # The heatmap opens a page as #flisk-preview; that is not a visit.
+    assert_includes source, "flisk-preview"
+    assert_operator source.index("flisk-preview"), :<, source.index("sendBeacon")
+  end
+
   def test_never_reads_what_is_typed_or_sets_a_cookie
     refute_match(/\.value\b/, source)
     refute_match(/document\.cookie/, source)
