@@ -203,12 +203,12 @@ install_npx_project: "npx @flisk-sh/flisk project --yes"
 install_pnpm: "pnpm add -g @flisk-sh/flisk"
 install_bun: "bun add -g @flisk-sh/flisk"
 
-# --- Community (verified 2026-11-13) ---
-contributors_total: 90     # unique GitHub users with commits across the 75 non-fork flisk-sh repos (gh api repos/flisk-sh/<repo>/contributors), minus claude, actions-user, OpenCode and ShahadatTest; flisk-sh/flisk alone has 80
-contributors_30d: 74       # unique human authors of merged PRs across flisk-sh, 2026-10-14 to 2026-11-13 (gh search prs --owner flisk-sh --merged, bots and test accounts removed)
-prs_merged_30d: "2,710"    # merged PRs across flisk-sh in the same window (search/issues total_count per window, summed)
-releases_30d: 103          # flisk-sh/flisk GitHub releases published in the same window
-npm_downloads_30d: "33,691" # api.npmjs.org/downloads/point/last-month/@flisk-sh/flisk, 2026-10-14 to 2026-11-12
+# --- Community (verified 2026-11-22) ---
+contributors_total: 142    # unique GitHub users with commits across the non-fork flisk-sh repos, archived tdk-* included (gh api repos/flisk-sh/<repo>/contributors), minus bots, claude, actions-user, OpenCode and ShahadatTest
+contributors_30d: 119      # unique human authors of merged PRs across flisk-sh, 2026-10-23 to 2026-11-22 (gh search prs --owner flisk-sh --merged, queried one day at a time because search caps at 1,000 results; bots and test accounts removed)
+prs_merged_30d: "4,441"    # merged PRs across flisk-sh in the same window (search/issues total_count)
+releases_30d: 182          # GitHub releases published in the same window across every flisk-sh repo (flisk 72, run-my-agents 47, flisk-import 19, fliskos 8, gel 9, pages 8 and others). The binaries repo flisk-sh/releases mirrors flisk's tags, so it is left out to avoid counting twice
+npm_downloads_30d: "48,274" # api.npmjs.org/downloads/point/2026-10-23:2026-11-21/@flisk-sh/flisk
 
 # Helpdock (docs search) is paused until Dec 1 2026 (website#196). While true, the docs pages hide the Ask box and the search links.
 docs_search_paused: true
