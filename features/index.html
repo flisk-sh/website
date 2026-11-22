@@ -225,7 +225,7 @@ description: "What Flisk CLI generates from one service.json: Dockerfiles, Traef
               <div class="aw-gen-code" data-lang="{{ t.lang }}">
                 {%- for l in t.lines %}
                 {%- assign n = forloop.index %}
-                {%- for note in t.notes %}{% if note.from == n %}<div class="aw-gen-block" tabindex="0" aria-describedby="aw-gen-{{ t.id }}-note-{{ forloop.index }}">{% endif %}{% endfor -%}
+                {%- for note in t.notes %}{% if note.from == n %}<div class="aw-gen-block" aria-describedby="aw-gen-{{ t.id }}-note-{{ forloop.index }}">{% endif %}{% endfor -%}
                 <span class="aw-gen-line"><code>{{ l | escape }}</code></span>
                 {%- for note in t.notes %}{% if note.to == n %}<span class="aw-gen-tip" role="note" id="aw-gen-{{ t.id }}-note-{{ forloop.index }}">{{ note.text }}</span></div>{% endif %}{% endfor %}
                 {%- endfor %}

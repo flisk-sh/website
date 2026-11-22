@@ -2895,7 +2895,6 @@ button.aw-gen-node:focus-visible,
   .aw-loop-wrap .aw-loop-row {
     display: flex;
     flex-direction: column;
-    padding-block: 0;
     border-top: 0;
     gap: 0.75rem;
     background: #121218;
