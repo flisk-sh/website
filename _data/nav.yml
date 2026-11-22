@@ -30,7 +30,7 @@ products:
       - { name: "command comparer", desc: "the same task in flisk, compose and tilt", href: "https://cmd.flisk.si/", icon: products/command-comparer }
       - { name: "personal demos", desc: "a running demo stack made from your post on x", href: "https://demo.flisk.si/", icon: products/personal-demos }
       - { name: "golden layers", desc: "shared base images that make rebuilds fast", href: /layers/, icon: products/golden-layers }
-      - { name: "recently shipped", desc: "the newest features and releases", href: "/#new", icon: kinds/doc }
+      - { name: "recently shipped", desc: "the newest features and releases", href: "/features/#new", icon: kinds/doc }
       - { name: "all flisk products", desc: "every flisk app on one page", href: "/#products", icon: kinds/emoji }
 
 enterprise:
