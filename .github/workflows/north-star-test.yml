@@ -1,0 +1,26 @@
+# Runs the north star measure over test pages (bad to best, plus pages built to fool it) whenever the measure changes,
+# so a change that lets a hidden or covered button count is caught before it reaches the weekly measurement.
+name: North star measure test
+
+on:
+  pull_request:
+    paths:
+      - "docs/north-star/**"
+      - ".github/workflows/north-star-test.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+      - name: Install Chromium
+        run: npm install --no-save --no-package-lock playwright-core@1 && npx playwright-core install --with-deps chromium
+      - name: Test the measure
+        run: node --test docs/north-star/
