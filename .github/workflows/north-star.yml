@@ -18,8 +18,8 @@ jobs:
   measure:
     permissions:
       contents: write
-    uses: flisk-sh/gel/.github/workflows/north-star.yml@d34e7006b3e0742f5c8a42f5559f9d003d8449b2 # main, north-star (gel#67)
+    uses: flisk-sh/gel/.github/workflows/north-star.yml@382f39a61785c15f0f3cab97ee4afdb83a2cc08f # main, north-star keeps a measure's failure (gel#68)
     with:
-      gel_ref: d34e7006b3e0742f5c8a42f5559f9d003d8449b2
+      gel_ref: 382f39a61785c15f0f3cab97ee4afdb83a2cc08f
       timeout: 20
       setup: npm install --no-save --no-package-lock --ignore-scripts playwright-core@1.65.0 && node node_modules/playwright-core/cli.js install --with-deps chromium
