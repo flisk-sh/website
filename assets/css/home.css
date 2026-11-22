@@ -30,7 +30,7 @@ body { background: #0a0a0e; overflow-x: hidden; }
   min-height: 100dvh;
   display: flex;
   align-items: flex-start;
-  padding: 6.5rem 1.5rem 4rem;
+  padding: 4.75rem 1.5rem 2rem;
   overflow: hidden;
 }
 
@@ -239,13 +239,13 @@ body { background: #0a0a0e; overflow-x: hidden; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.75rem;
   padding: 0;
   list-style: none;
 }
 
 .aw-bench-stats li {
-  padding: 0.55rem 0.65rem;
+  padding: 0.35rem 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.03);
@@ -844,7 +844,7 @@ button.aw-gen-node:focus-visible,
 
 .aw-bench-rows {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.45rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -854,7 +854,7 @@ button.aw-gen-node:focus-visible,
   display: grid;
   grid-template-columns: 4.75rem minmax(0, 1fr) 4.75rem;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .aw-bench-name {
@@ -1445,7 +1445,7 @@ button.aw-gen-node:focus-visible,
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
-  max-width: 760px;
+  max-width: min(62rem, 100%);
   margin: 0 auto;
 }
 
@@ -1454,21 +1454,21 @@ button.aw-gen-node:focus-visible,
   border-radius: var(--radius);
   background: #121218;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  padding: 2.5rem 2.25rem;
+  padding: 1.25rem 1.4rem;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.5s ease;
 }
 
-.aw-price-card:hover { transform: translateY(-6px); border-color: rgba(110, 231, 160, 0.4); }
+.aw-price-card:hover { transform: translateY(-4px); border-color: rgba(110, 231, 160, 0.4); }
 
 .aw-price-card.aw-price-featured {
   background: linear-gradient(160deg, rgba(34, 197, 94, 0.16) 0%, #121218 55%);
   border-color: rgba(34, 197, 94, 0.5);
 }
 
-.aw-price-name { font-size: 0.9375rem; font-weight: 600; color: #6EE7A0; margin-bottom: 1rem; }
+.aw-price-name { font-size: 0.875rem; font-weight: 600; color: #6EE7A0; margin-bottom: 0.75rem; }
 
 .aw-price-value {
-  font-size: 3.25rem;
+  font-size: 2.75rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   color: #fff;
@@ -1476,24 +1476,24 @@ button.aw-gen-node:focus-visible,
 }
 
 .aw-price-value small {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 400;
   color: rgba(236, 236, 241, 0.5);
   letter-spacing: 0;
 }
 
 .aw-price-desc {
-  margin: 1.25rem 0 1.75rem;
-  font-size: 0.9375rem;
+  margin: 0.5rem 0 0.85rem;
+  font-size: 0.875rem;
   color: rgba(236, 236, 241, 0.55);
-  line-height: 1.6;
+  line-height: 1.4;
 }
 
 .aw-price-list { list-style: none; padding: 0; margin: 0; }
 
 .aw-price-list li {
-  padding: 0.625rem 0;
-  font-size: 0.9375rem;
+  padding: 0.3rem 0;
+  font-size: 0.82rem;
   color: rgba(236, 236, 241, 0.75);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -1501,7 +1501,7 @@ button.aw-gen-node:focus-visible,
 .aw-price-list li::before {
   content: "-";
   color: #22C55E;
-  margin-right: 0.625rem;
+  margin-right: 0.5rem;
 }
 
 .aw-price-list li:last-child { border-bottom: none; }
@@ -1510,10 +1510,10 @@ button.aw-gen-node:focus-visible,
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  margin-top: 1.75rem;
-  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1.1rem;
   border-radius: var(--radius);
-  font-size: 0.875rem;
+  font-size: 0.84rem;
   font-weight: 600;
   text-decoration: none;
   color: #fff;
@@ -1530,27 +1530,27 @@ button.aw-gen-node:focus-visible,
 }
 
 .aw-price-footnote {
-  margin: 1rem 0 0;
-  font-size: 0.8125rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.78rem;
   color: rgba(236, 236, 241, 0.45);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 .aw-why {
-  margin-top: 4rem;
+  margin-top: 1.25rem;
   border-radius: var(--radius);
   background: #121218;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  padding: clamp(2rem, 4vw, 3.5rem);
+  padding: clamp(1rem, 2vw, 1.4rem);
 }
 
 .aw-why h3 {
   text-align: center;
   color: #fff;
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-size: clamp(1.15rem, 1.75vw, 1.35rem);
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin: 0 0 3rem;
+  margin: 0 0 0.6rem;
 }
 
 .aw-why-grid {
@@ -1720,7 +1720,7 @@ button.aw-gen-node:focus-visible,
 }
 
 /* ---------------- Section headers ---------------- */
-.aw-head { margin-bottom: clamp(3.5rem, 6vw, 5.5rem); scroll-margin-top: 7rem; }
+.aw-head { margin-bottom: clamp(1.25rem, 2vw, 1.75rem); scroll-margin-top: 7rem; }
 
 .aw-head h2 {
   font-size: clamp(2.25rem, 4vw, 3.75rem);
@@ -1871,9 +1871,10 @@ button.aw-gen-node:focus-visible,
 }
 
 .aw-price-list li {
-  margin-bottom: 0.35rem;
-  padding: 0.7rem 0.85rem;
+  margin-bottom: 0.25rem;
+  padding: 0.35rem 0.65rem;
   border-bottom: 0;
+  font-size: 0.82rem;
 }
 
 .aw-price-list li::before {
@@ -2180,13 +2181,13 @@ button.aw-gen-node:focus-visible,
 .aw-paths-tab:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 2px; }
 
 .aw-paths-panel {
-  padding: 1.5rem;
+  padding: 1.15rem;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: var(--radius);
   background: #121218;
 }
 
-.aw-paths-panel > p { margin: 0 0 1.25rem; color: rgba(236, 236, 241, 0.75); line-height: 1.6; }
+.aw-paths-panel > p { margin: 0 0 0.85rem; color: rgba(236, 236, 241, 0.75); line-height: 1.5; font-size: 0.92rem; }
 .aw-paths-panel:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 2px; }
 
 .aw-command-block {
@@ -2194,7 +2195,7 @@ button.aw-gen-node:focus-visible,
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: var(--radius);
   background: #0d0d13;
@@ -2278,7 +2279,7 @@ button.aw-gen-node:focus-visible,
 
 /* Page frame: two rails down the sides, one rule between sections, a small cross where they meet. */
 .aw > .aw-section {
-  padding-block: clamp(6rem, 8vw, 8rem);
+  padding-block: clamp(3.25rem, 5vw, 4.5rem);
   border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
@@ -2344,14 +2345,14 @@ button.aw-gen-node:focus-visible,
 }
 
 /* Hero stage: the product in the first screen, in a window frame */
-.aw-hero { flex-direction: column; align-items: stretch; min-height: 0; padding-bottom: clamp(3rem, 6vw, 6rem); }
+.aw-hero { flex-direction: column; align-items: stretch; min-height: 0; padding-bottom: clamp(1.5rem, 3vw, 2.5rem); }
 .aw-hero-top { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); align-items: end; }
 .aw-hero-top .aw-hero-sub { margin-bottom: 0; }
 .aw-hero-side .aw-install { width: 100%; margin-bottom: 0.9rem; }
 .aw-hero-side .aw-hero-status { margin: 0; }
 
 .aw-stage {
-  margin-top: clamp(1.75rem, 3vw, 2.75rem);
+  margin-top: clamp(1rem, 2vw, 1.5rem);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius);
   background: #0d0d13;
@@ -2519,7 +2520,7 @@ button.aw-gen-node:focus-visible,
 .aw-stage-frame {
   display: block;
   width: 100%;
-  height: clamp(30rem, 70vh, 44rem);
+  height: clamp(16rem, 34vh, 22rem);
   border: 0;
   background: #1b1a19;
 }
@@ -2533,7 +2534,7 @@ button.aw-gen-node:focus-visible,
 .aw-stage-terminal .aw-terminal-bar { display: none; }
 .aw-stage-terminal .aw-try-tabs { padding: 0.75rem 1rem; }
 .aw-stage-terminal .aw-try.is-live .aw-try-body {
-  height: calc(clamp(30rem, 70vh, 44rem) - 6.5rem);
+  height: calc(clamp(16rem, 34vh, 22rem) - 6.5rem);
   padding: 1.5rem 2rem;
   font-size: 0.95rem;
   line-height: 1.8;
@@ -2602,9 +2603,9 @@ button.aw-gen-node:focus-visible,
 .aw-loop-row {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(2rem, 5vw, 5rem);
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
   align-items: start;
-  padding-block: clamp(3rem, 5vw, 5rem);
+  padding-block: clamp(1.25rem, 2vw, 1.75rem);
   border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
@@ -2648,25 +2649,25 @@ button.aw-gen-node:focus-visible,
 .aw-loop-tab:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 2px; }
 
 .aw-loop-panel {
-  min-height: 17rem;
-  padding: clamp(1.5rem, 3vw, 2.25rem);
+  min-height: 0;
+  padding: 1.25rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius);
   background: #121218;
 }
 
-.aw-loop-panel > p { margin: 0 0 1.5rem; color: rgba(236, 236, 241, 0.8); font-size: 1.125rem; line-height: 1.55; }
+.aw-loop-panel > p { margin: 0 0 1rem; color: rgba(236, 236, 241, 0.8); font-size: 1rem; line-height: 1.5; }
 .aw-loop-panel:focus-visible { outline: 2px solid #4dd0ff; outline-offset: 2px; }
 
 .aw-loop-panel pre {
   margin: 0;
-  padding: 1.25rem;
+  padding: 0.9rem 1.1rem;
   overflow-x: auto;
   border-radius: var(--radius);
   background: #0d0d13;
   color: #ececf1;
-  font-size: 0.875rem;
-  line-height: 1.7;
+  font-size: 0.84rem;
+  line-height: 1.55;
 }
 
 @media (max-width: 768px) {
@@ -2686,12 +2687,12 @@ button.aw-gen-node:focus-visible,
 .aw-cta h2,
 .aw-final h2 {
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  font-size: clamp(2rem, 3.2vw, 2.85rem);
   font-weight: 800;
   letter-spacing: -0.03em;
-  line-height: 1.05;
+  line-height: 1.1;
   color: #fff;
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.85rem;
 }
 
 
@@ -2702,8 +2703,8 @@ button.aw-gen-node:focus-visible,
 .aw-agents-pill-icons svg { width: 1.1rem; height: 1.1rem; }
 
 /* Trust band: real contributors (left) and adopter logos (right), in the first screen */
-.aw-trust { position: relative; z-index: 3; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); margin-top: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius); background: #121218; padding: 0; }
-.aw-trust > div { padding: 1.1rem 1.4rem; }
+.aw-trust { position: relative; z-index: 3; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); margin-top: clamp(1rem, 2vw, 1.5rem); margin-bottom: 1rem; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius); background: #121218; padding: 0; }
+.aw-trust > div { padding: 0.8rem 1.2rem; }
 .aw-trust-people { display: flex; align-items: center; gap: 1.1rem; border-right: 1px solid rgba(255, 255, 255, 0.08); }
 .aw-trust-people p, .aw-trust-teams p { margin: 0; color: rgba(236, 236, 241, 0.62); font-size: 0.9rem; line-height: 1.4; }
 .aw-trust-people p { min-width: 12rem; }
@@ -2730,7 +2731,7 @@ button.aw-gen-node:focus-visible,
 .aw-trust-teams li a.aw-trust-named { display: flex; width: auto; align-items: center; gap: 0.5rem; padding: 0 0.7rem; color: #fff; font-weight: 700; text-decoration: none; }
 .aw-trust-teams li a.aw-trust-named img { width: 2rem; height: 2rem; padding: 0; }
 .aw-trust-all { margin-left: 0.5rem; color: #6EE7A0; font-size: 0.85rem; text-decoration: none; white-space: nowrap; }
-.aw-trust-stats { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, auto) 1fr; gap: 0 clamp(1.5rem, 4vw, 3.5rem); align-items: center; margin: 0; padding: 0.9rem 1.4rem; border-top: 1px solid rgba(255, 255, 255, 0.08); list-style: none; }
+.aw-trust-stats { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, auto) 1fr; gap: 0 clamp(1.5rem, 4vw, 3.5rem); align-items: center; margin: 0; padding: 0.65rem 1.2rem; border-top: 1px solid rgba(255, 255, 255, 0.08); list-style: none; }
 .aw-trust-stats li { display: flex; align-items: baseline; gap: 0.55rem; }
 .aw-trust-stats strong { color: #6EE7A0; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
 .aw-trust-stats span { color: rgba(236, 236, 241, 0.62); font-size: 0.9rem; }
@@ -2784,3 +2785,174 @@ button.aw-gen-node:focus-visible,
 .aw-loop .aw-loop-back::after { content: " \21BA"; color: #6EE7A0; }
 @media (max-width: 768px) { .aw-loop { order: 2; } .aw-hero-phone { order: 2; } }
 @media (min-width: 769px) { .aw-loop { margin-bottom: 1.25rem; } }
+
+/* Teasers for moved sections: generated files and recently shipped */
+.aw-anchor-target {
+  position: relative;
+  top: -5rem;
+  visibility: hidden;
+  pointer-events: none;
+}
+.aw-gen-teaser .aw-head,
+.aw-new-teaser .aw-head {
+  margin-bottom: 0;
+}
+.aw-head-center {
+  text-align: center;
+}
+.aw-head-center p {
+  margin-inline: auto;
+  max-width: 42rem;
+}
+.aw-teaser-action {
+  margin-top: 0.85rem;
+  display: flex;
+  justify-content: center;
+}
+.aw-teaser-action .aw-btn {
+  border-radius: var(--radius);
+}
+.aw-adopter-row {
+  padding: clamp(0.75rem, 1.2vw, 1rem) 0.5rem;
+}
+
+.aw > .aw-section.aw-gen-teaser,
+.aw > .aw-section.aw-new-teaser {
+  padding-block: clamp(1rem, 2vw, 1.5rem);
+}
+.aw-gen-teaser .aw-head h2,
+.aw-new-teaser .aw-head h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+  margin-bottom: 0.5rem;
+}
+.aw > .aw-section.aw-products,
+.aw > .aw-section.aw-limits {
+  padding-block: clamp(1.25rem, 2vw, 1.75rem);
+}
+.aw > .aw-section.aw-adopters {
+  padding-block: clamp(1.25rem, 2vw, 1.75rem);
+}
+.aw > .aw-section.aw-faq {
+  padding-block: clamp(1.25rem, 2vw, 1.75rem);
+}
+.aw > .aw-section.aw-paths {
+  padding-block: clamp(1.5rem, 2.5vw, 2rem);
+}
+.aw > .aw-section.aw-proof {
+  padding-block: clamp(1.5rem, 2.5vw, 2rem);
+}
+.aw > .aw-section.aw-loop {
+  padding-block: clamp(1.5rem, 2.5vw, 2rem);
+}
+.aw > .aw-section#pricing {
+  padding-block: clamp(1.5rem, 2.5vw, 2rem);
+}
+.aw > .aw-section.aw-cta,
+.aw > .aw-section.aw-final {
+  padding-block: clamp(1.25rem, 2vw, 1.75rem);
+}
+.aw > .aw-section.aw-sponsor {
+  padding-block: clamp(1rem, 1.5vw, 1.35rem);
+}
+.aw-products-groups {
+  gap: 1rem clamp(1.5rem, 3vw, 2.5rem);
+}
+.aw-products-group a {
+  padding: 0.25rem 0;
+}
+.aw-products-group a span {
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+.aw-limits-list li {
+  padding: 0.55rem 0.75rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+@media (min-width: 900px) {
+  .aw-limits-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem 1.25rem;
+  }
+  .aw-adopters-grid {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  }
+  .aw-adopter-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .aw-loop-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+  .aw-loop-wrap .aw-loop-row {
+    display: flex;
+    flex-direction: column;
+    padding-block: 0;
+    border-top: 0;
+    gap: 0.75rem;
+    background: #121218;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius);
+    padding: 1.15rem;
+  }
+  .aw-loop-wrap .aw-loop-row.is-flipped .aw-loop-copy {
+    order: 0;
+  }
+  .aw-loop-wrap .aw-loop-copy h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.35rem;
+  }
+  .aw-loop-wrap .aw-loop-proof {
+    font-size: 0.8rem;
+    margin-bottom: 0.65rem;
+    min-height: 3.25rem;
+    line-height: 1.4;
+  }
+  .aw-loop-wrap .aw-loop-tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .aw-loop-wrap .aw-loop-tab {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius);
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+  .aw-loop-wrap .aw-loop-tab.is-active {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.5);
+    color: #fff;
+  }
+  .aw-loop-wrap .aw-loop-panels {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .aw-loop-wrap .aw-loop-panel {
+    flex: 1;
+    background: #0d0d13;
+    padding: 0.75rem;
+    min-height: 11.5rem;
+  }
+  .aw-loop-wrap .aw-loop-panel > p {
+    font-size: 0.8rem;
+    margin-bottom: 0.45rem;
+    line-height: 1.35;
+  }
+  .aw-loop-wrap .aw-loop-panel pre {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.74rem;
+    line-height: 1.45;
+  }
+}
