@@ -1,11 +1,12 @@
 {
- "value": 453,
+ "value": 477,
  "baseline": 1935,
  "unit": "px",
- "measuredAt": "2026-11-22T02:13:41.141Z",
- "run": "https://github.com/flisk-sh/website/actions/runs/44974996276",
+ "measuredAt": "2026-11-23T16:11:19.516Z",
+ "run": "https://github.com/flisk-sh/website/actions/runs/45213509809",
  "button": "See it run, no install",
- "h1": 193,
- "scrollWidth": 375,
- "commit": "9c0103bb1b508add1587cfcecb44f8314e040583"
+ "h1": 217,
+ "scrollWidth": 431,
+ "problem": "the page is 431px wide on a 375px phone: it scrolls sideways",
+ "commit": "b611d4f7f53cfafd9cae5aa49bdc72690b24c812"
 }
