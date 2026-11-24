@@ -211,5 +211,3 @@ prs_merged_30d: "4,441"    # merged PRs across flisk-sh in the same window (sear
 releases_30d: 182          # GitHub releases published in the same window across every flisk-sh repo (flisk 72, run-my-agents 47, flisk-import 19, fliskos 8, gel 9, pages 8 and others). The binaries repo flisk-sh/releases mirrors flisk's tags, so it is left out to avoid counting twice
 npm_downloads_30d: "48,274" # api.npmjs.org/downloads/point/2026-10-23:2026-11-21/@flisk-sh/flisk
 
-# Helpdock (docs search) is paused until Dec 1 2026 (website#196). While true, the docs pages hide the Ask box and the search links.
-docs_search_paused: true
