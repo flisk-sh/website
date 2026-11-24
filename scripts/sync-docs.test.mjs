@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: MIT
 //   node --test scripts/sync-docs.test.mjs
 import assert from "node:assert/strict";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { PAGES, headingId, jumpList, renderPage, resolveLink, sourceProblems, sync, toSiteMarkdown } from "./sync-docs.mjs";
 
@@ -85,4 +85,23 @@ test("sync writes one page per source and keeps Liquid in the text from running"
   assert.ok(page.indexOf("{% raw %}") < page.indexOf("{{ value }}") && page.indexOf("{{ value }}") < page.indexOf("{% endraw %}"));
   assert.equal(page, renderPage(PAGES[0], `${SOURCE}\nUse {{ value }} here.\n`));
   await assert.rejects(sync({ root, fetchText: async () => "<html>404</html>" }), /looks like an HTML page/);
+});
+
+test("sync leaves the existing pages unchanged when a later source is invalid", async (t) => {
+  const root = mkdtempSync(join(tmpdir(), "sync-docs-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  for (const page of PAGES) {
+    const file = join(root, page.out);
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, `previous ${page.source}`);
+  }
+
+  await assert.rejects(sync({
+    root,
+    fetchText: async (url) => url.endsWith(PAGES[0].source) ? SOURCE : "<html>404</html>",
+  }), /troubleshooting\.md looks like an HTML page/);
+
+  for (const page of PAGES) {
+    assert.equal(readFileSync(join(root, page.out), "utf8"), `previous ${page.source}`);
+  }
 });
