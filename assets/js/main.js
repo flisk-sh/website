@@ -474,41 +474,6 @@ if (document.readyState === 'loading') {
   initializeSite();
 }
 
-// Live GitHub star count for the CLI repo on every [data-gh-stars] badge.
-(function showGitHubStars() {
-  const badges = document.querySelectorAll('[data-gh-stars]');
-  if (!badges.length) return;
-
-  const cacheKey = 'flisk-gh-stars';
-  const render = (count) => {
-    if (typeof count !== 'number') return;
-    const label = count >= 1000 ? (count / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(count);
-    badges.forEach((el) => {
-      el.textContent = label;
-      el.hidden = false;
-    });
-  };
-
-  try {
-    const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
-    if (cached && Date.now() - cached.at < 3600000) {
-      render(cached.count);
-      return;
-    }
-  } catch (e) { /* storage unavailable */ }
-
-  fetch('https://api.github.com/repos/flisk-sh/flisk')
-    .then((res) => (res.ok ? res.json() : null))
-    .then((repo) => {
-      if (!repo) return;
-      render(repo.stargazers_count);
-      try {
-        sessionStorage.setItem(cacheKey, JSON.stringify({ count: repo.stargazers_count, at: Date.now() }));
-      } catch (e) { /* storage unavailable */ }
-    })
-    .catch(() => {});
-})();
-
 // Live Discord numbers (people online, total members) from the public invite on every [data-discord] link.
 (function showDiscordOnline() {
   const links = document.querySelectorAll('[data-discord]');
