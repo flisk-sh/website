@@ -1,10 +1,4 @@
 <aside class="aw-docs-side">
-  {% comment %} A plain link to Helpdock; assets/js/aw-docs-search.js turns it into an in-page search. Hidden while Helpdock is paused. {% endcomment %}
-  {% unless site.data.flisk.docs_search_paused %}
-  <a class="aw-docs-search-open" data-docs-search href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">
-    <span>Search the docs</span><kbd>/</kbd>
-  </a>
-  {% endunless %}
   <nav aria-label="Documentation navigation">
   <details class="aw-docs-group" open>
     <summary class="aw-docs-side-label">Get started</summary>
@@ -51,6 +45,6 @@
     <a href="{{ '/migrate/' | relative_url }}">Migrate to Flisk</a>
     </div>
   </details>
-    {% if site.data.flisk.docs_search_paused %}<a class="aw-docs-side-all" href="https://github.com/flisk-sh/flisk/tree/main/docs" target="_blank" rel="noopener">All docs on GitHub ↗</a>{% else %}<a class="aw-docs-side-all" href="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" target="_blank" rel="noopener">All docs in Helpdock ↗</a>{% endif %}
+    <a class="aw-docs-side-all" href="https://github.com/flisk-sh/flisk/tree/main/docs" target="_blank" rel="noopener">All docs on GitHub ↗</a>
   </nav>
 </aside>

@@ -20,31 +20,6 @@ description: "Flisk docs: run the demo, follow the quick start, or pick the guid
         </div>
         <p>Needs Node.js {{ site.data.flisk.prereq_node }}. Nothing to install, no Docker. It starts a website and an API and opens them in your browser. To install Flisk and run a full app, follow the <a href="{{ '/docs/quickstart/' | relative_url }}">Quick Start</a>.</p>
 
-        {% comment %} Ask bar: assets/js/aw-docs-search.js answers it from the repository docs through Helpdock, with an optional AI answer from Helpdock's /answer. Without the script it opens Helpdock. {% endcomment %}
-        {% unless site.data.flisk.docs_search_paused %}
-        <div class="aw-docs-ask">
-          <form class="aw-docs-ask-form" data-docs-ask action="https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/" method="get" target="_blank" role="search">
-            <span class="aw-docs-ask-mark" aria-hidden="true">✦</span>
-            <input type="search" name="q" placeholder="Ask the Flisk docs" aria-label="Ask the Flisk docs" autocomplete="off" maxlength="200" list="aw-docs-ask-list">
-            <button type="submit">Ask</button>
-          </form>
-          {% assign hd = 'https://helpdock.flisk.si/flisk-sh/flisk/tree/main/docs/' %}
-          <div class="aw-docs-ask-chips" aria-label="Questions to start with">
-            {% for q in site.data.docs_questions.start %}<a class="aw-docs-ask-chip" data-docs-ask-q href="{{ hd }}" target="_blank" rel="noopener">{{ q }}</a>
-            {% endfor %}
-          </div>
-          <details class="aw-docs-ask-more">
-            <summary>Which command when? {{ site.data.docs_questions.compare | size }} look-alike commands compared</summary>
-            <div class="aw-docs-ask-chips">
-              {% for q in site.data.docs_questions.compare %}<a class="aw-docs-ask-chip" data-docs-ask-q href="{{ hd }}" target="_blank" rel="noopener">{{ q }}</a>
-              {% endfor %}
-            </div>
-          </details>
-          <datalist id="aw-docs-ask-list">{% for q in site.data.docs_questions.start %}<option value="{{ q }}">{% endfor %}{% for q in site.data.docs_questions.compare %}<option value="{{ q }}">{% endfor %}</datalist>
-          <p class="aw-docs-ask-note">Answers are pieces of the Flisk docs, found by <a href="https://helpdock.flisk.si/">Helpdock</a>. The search uses no AI. Under the results you can ask for a short AI answer (beta), or give the results to your own AI.</p>
-        </div>
-        {% endunless %}
-
         <h2 id="start">Start from what you have</h2>
         <div class="aw-docs-rows">
           <a class="aw-docs-row" href="{{ '/docs/cli/' | relative_url }}"><span>A <code>docker-compose.yml</code></span><span>Import its services</span><code>flisk import</code></a>
