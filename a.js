@@ -24,7 +24,8 @@
     var p = location.pathname;
     if (p === last) return; // reloads and repeat route events count once
     last = p;
-    post({ p: p, r: document.referrer, u: new URLSearchParams(location.search).get('utm_campaign') || '' });
+    var q = new URLSearchParams(location.search), g = function (k) { return String(q.get(k) || '').slice(0, 80); };
+    post({ p: p, r: document.referrer, u: g('utm_campaign'), us: g('utm_source'), um: g('utm_medium') });
   }
   // Link clicks: links that leave the site and file downloads. Host and path only, never the query.
   addEventListener('click', function (e) {
