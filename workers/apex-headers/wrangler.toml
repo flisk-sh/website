@@ -1,0 +1,9 @@
+# Source of the live Worker "flisk-apex-headers" (zone flisk.sh). It is deployed by hand; `wrangler deploy` replaces the live version.
+name = "flisk-apex-headers"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+workers_dev = false
+routes = [
+  { pattern = "flisk.sh/*", zone_name = "flisk.sh" },
+  { pattern = "www.flisk.sh/*", zone_name = "flisk.sh" },
+]
