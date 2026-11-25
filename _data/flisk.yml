@@ -54,6 +54,12 @@ onboard_days: "1–3 days"   # illustrative scenario; not a measured hiring coho
 
 # --- Third-party facts (researched, Sept 2026 — re-verify before campaigns) ---
 tilt_stars: "9.4k"         # Tilt GitHub stars, "built on" claim
+compose_stars: "38.7k"     # Docker Compose stars (POSITIONING.md, verified 2026-11-09)
+overmind_stars: "3.8k"     # Overmind stars (POSITIONING.md, verified 2026-11-09)
+pm2_stars: "43.3k"         # PM2 stars (POSITIONING.md, verified 2026-11-09)
+encore_stars: "12.7k"      # Encore stars (POSITIONING.md, verified 2026-11-09)
+supabase_cli_stars: "2.5k" # Supabase CLI stars (POSITIONING.md, verified 2026-11-09)
+aspire_stars: "6.4k"       # .NET Aspire stars (POSITIONING.md, verified 2026-11-09)
 prereq_node: "22.12+"      # CLI npm package engine requirement
 gitpod_entry: "$20"        # Gitpod/Ona Core entry, per month + compute credits
 gitpod_annual_10: "$2,400 + compute" # 10 devs × gitpod_entry × 12

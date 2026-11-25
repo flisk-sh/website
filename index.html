@@ -577,6 +577,10 @@ flisk connect claude{% endcapture %}
 
       <div class="aw-faq-list">
         <details class="aw-faq-item">
+          <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>Why not Docker Compose Watch?</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
+          <div class="aw-faq-a">Docker Compose Watch handles file synchronization and container updates well: on file save, it syncs files into running containers, triggers rebuilds, or restarts containers without manual intervention (<a href="https://docs.docker.com/compose/how-tos/file-watch/" target="_blank" rel="noopener">Docker docs</a>, verified November 2026). Flisk is not a Compose replacement; it imports your existing Compose file and adds an AI agent surface. With <code>flisk connect</code> (MCP tools, skills, and <code>AGENTS.md</code>), AI coding agents such as Claude Code, Cursor, and Codex can inspect machine health, start the stack, query logs, diagnose runtime failures, and fix broken services autonomously.</div>
+        </details>
+        <details class="aw-faq-item">
           <summary><span class="aw-faq-q"><span class="aw-faq-caret" aria-hidden="true">&gt;</span>We need Kubernetes for production</span><span class="aw-faq-sign" aria-hidden="true"></span></summary>
           <div class="aw-faq-a">Local dev doesn't need to match production. The 14 tiny services were healthy in 4.6s on a 16 GB M1 after images existed. Not a cold boot. Production stays on Helm. <a href="{{ '/docs/claims/' | relative_url }}">Claim details</a>.</div>
         </details>
