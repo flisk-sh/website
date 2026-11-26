@@ -11,7 +11,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
     <div class="aw-subhero-grid">
       <h1>Choose the local workflow that fits.</h1>
       <p class="aw-subhero-sub">Flisk CLI turns <code>service.json</code> per service into a local Docker stack. Tilt watches services and live-updates containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.</p>
-      <p><a class="aw-textlink" href="https://github.com/flisk-sh/flisk/blob/main/docs/compare-honest.md" target="_blank" rel="noopener">Full comparison and known limits <span aria-hidden="true">↗</span></a> · <a class="aw-textlink" href="{{ '/docs/claims/' | relative_url }}">Claims and evidence</a></p>
+      <p><a class="aw-textlink" href="https://github.com/flisk-sh/flisk/blob/main/docs/compare-honest.md" target="_blank" rel="noopener">Full comparison and known limits <span aria-hidden="true">↗</span></a>, and <a class="aw-textlink" href="{{ '/docs/claims/' | relative_url }}">claims and evidence</a>.</p>
     </div>
   </section>
 
@@ -482,7 +482,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
       <div class="aw-feature-grid" style="margin-top: 2rem;">
         <div class="aw-card">
           <h4>Overmind</h4>
-          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Process manager · tmux · Procfile</p>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Process manager (tmux, Procfile)</p>
           <p><strong>What it is:</strong> A process manager for Procfile-based applications powered by tmux and written in Go (<a href="https://github.com/DarthSim/overmind" target="_blank" rel="noopener">v2.5.1</a>, last commit April 2025, verified November 2026).</p>
           <p><strong>Primary purpose:</strong> Run and control multiple local processes defined in a Procfile with separate terminal controls.</p>
           <p><strong>Capabilities:</strong> Spawns each process in its own tmux pseudo-terminal, allowing developers to connect to individual process PTYs, send signals, view independent outputs, manage dependency ordering, and restart single processes without restarting the entire stack.</p>
@@ -493,7 +493,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
 
         <div class="aw-card">
           <h4>PM2</h4>
-          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Process manager · Node.js runtime</p>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Process manager (Node.js runtime)</p>
           <p><strong>What it is:</strong> A production and development process manager with a built-in load balancer for Node.js applications (<a href="https://pm2.keymetrics.io/docs/usage/quick-start/" target="_blank" rel="noopener">v5.x docs</a>, verified November 2026).</p>
           <p><strong>Primary purpose:</strong> Keep Node.js host applications and background workers running continuously with process management and clustering.</p>
           <p><strong>Capabilities:</strong> Process daemonization, multi-core clustering, real-time log streaming, memory threshold restarts, file watch mode, and configuration via <code>ecosystem.config.js</code>.</p>
@@ -504,7 +504,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
 
         <div class="aw-card">
           <h4>Encore</h4>
-          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Backend development platform · TypeScript &amp; Go</p>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Backend development platform (TypeScript and Go)</p>
           <p><strong>What it is:</strong> A backend development platform and framework for TypeScript and Go that provides infrastructure-as-code primitives (<a href="https://encore.dev/docs" target="_blank" rel="noopener">Encore docs</a>, verified November 2026).</p>
           <p><strong>Primary purpose:</strong> Build distributed backend services with declarative infrastructure and automatic local service provisioning.</p>
           <p><strong>Capabilities:</strong> Parses architecture directly from code annotations, automatically provisions local databases, pub/sub queues, and scheduled tasks, and provides a local developer dashboard with built-in distributed tracing.</p>
@@ -517,7 +517,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
       <div class="aw-feature-grid aw-feature-grid-2" style="margin-top: 1rem;">
         <div class="aw-card">
           <h4>Supabase CLI</h4>
-          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Local backend stack · Postgres ecosystem</p>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Local backend stack (Postgres ecosystem)</p>
           <p><strong>What it is:</strong> The official CLI tool for developing and testing the full Supabase backend stack locally using Docker (<a href="https://supabase.com/docs/guides/local-development/cli/getting-started" target="_blank" rel="noopener">Supabase docs</a>, verified November 2026).</p>
           <p><strong>Primary purpose:</strong> Run local instances of PostgreSQL, authentication, storage, edge functions, and database migrations matching the Supabase cloud platform.</p>
           <p><strong>Capabilities:</strong> Starts the complete local Supabase suite with <code>supabase start</code>, manages database migrations, provides local Supabase Studio UI, tests Edge Functions, and manages seed data. <em>Note: per-worktree isolation and native host mode are in public alpha.</em></p>
@@ -528,7 +528,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
 
         <div class="aw-card">
           <h4>.NET Aspire</h4>
-          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Distributed application orchestrator · .NET</p>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Distributed application orchestrator (.NET)</p>
           <p><strong>What it is:</strong> An opinionated, cloud-ready stack and orchestrator for building observable distributed applications in .NET (<a href="https://learn.microsoft.com/en-us/dotnet/aspire/" target="_blank" rel="noopener">Aspire docs</a>, verified November 2026).</p>
           <p><strong>Primary purpose:</strong> Orchestrate multi-project distributed .NET solutions with service discovery and integrated telemetry.</p>
           <p><strong>Capabilities:</strong> Uses a C# <code>AppHost</code> project to declare dependencies, configures containerized resources (Redis, Postgres, RabbitMQ), injects configuration, and provides a real-time developer dashboard for OpenTelemetry traces, metrics, and structured logs.</p>

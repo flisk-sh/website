@@ -53,7 +53,7 @@ test("index.html FAQ answers 'Why not Docker Compose Watch?' with factual contra
   );
 });
 
-test("compare/index.html and FAQ avoid banned hype verbs", () => {
+test("compare/index.html and FAQ avoid banned hype verbs and middle-dot separators", () => {
   const compare = readFileSync(new URL("../compare/index.html", import.meta.url), "utf8");
   const home = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 
@@ -62,4 +62,8 @@ test("compare/index.html and FAQ avoid banned hype verbs", () => {
     assert.ok(!regex.test(compare), `compare/index.html contains hype verb matching ${regex}`);
     assert.ok(!regex.test(home), `index.html contains hype verb matching ${regex}`);
   }
+
+  // DESIGN.md Section 8 bans middle-dot separators. Ensure new section does not use them.
+  const newSection = compare.slice(compare.indexOf("Process managers and application frameworks"));
+  assert.ok(!newSection.includes("·"), "Added compare section must not contain banned middle-dot separators");
 });
