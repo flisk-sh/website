@@ -23,7 +23,7 @@ test('navigation header displays the CLI version next to GitHub icon', () => {
   const version = fliskYaml.match(/^cli_version:\s*["']?([^"'\s\n#]+)["']?/m)[1];
 
   // GitHub repository link intact
-  assert.match(navHtml, /href="https:\/\/github\.com\/flisk-sh\/flisk"/, 'must link to the flisk repo');
+  assert.match(navHtml, /href="https:\/\/github\.com\/flisk-sh\/flisk-cli"/, 'must link to the flisk-cli repo');
   assert.match(navHtml, /class="[^"]*\baw-nav-star\b[^"]*"/, 'must keep .aw-nav-star button class');
   assert.match(navHtml, /target="_blank"/, 'must open in a new tab');
   assert.match(navHtml, /rel="noopener"/, 'must have rel="noopener"');

@@ -521,7 +521,7 @@ window.FLISK_SAMPLE = {
  },
  "cli": {
   "minVersion": null,
-  "installUrl": "https://github.com/flisk-sh/flisk#install",
+  "installUrl": "https://github.com/flisk-sh/flisk-cli#install",
   "version": "1.4.45",
   "program": "flisk",
   "label": "Flisk CLI",

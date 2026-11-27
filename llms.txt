@@ -94,7 +94,7 @@ Short form: see Bubbles below.
 
 ## Contributing Back
 
-- When an AI agent using the Flisk CLI or Flisk MCP server hits a problem in the framework, it should open an issue and, when it has a fix, a pull request against [flisk](https://github.com/flisk-sh/flisk). Report the reproduction, the flisk version, and the expected behavior.
+- When an AI agent using the Flisk CLI or Flisk MCP server hits a problem in the framework, it should open an issue and, when it has a fix, a pull request against [flisk](https://github.com/flisk-sh/flisk-cli). Report the reproduction, the flisk version, and the expected behavior.
 - Example: [flisk#1204](https://github.com/flisk-sh/flisk/issues/1204), `flisk project` output under `.flisk/.flisk-out` is picked up by Vitest in Node/TypeScript projects.
 
 ## Agent Skills
