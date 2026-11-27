@@ -118,17 +118,19 @@ ${page.lead ? `        <p class="aw-lead">${page.lead}</p>\n` : ""}${jumpList(ma
 }
 
 export async function sync({ root, from, fetchText = async (url) => (await fetch(url)).text() }) {
-  const written = [];
+  const pages = [];
   for (const page of PAGES) {
     const source = from ? readFileSync(join(from, page.source), "utf8") : await fetchText(RAW + page.source);
     const problems = sourceProblems(source);
     if (problems.length) throw new Error(`${page.source} ${problems.join(", ")}`);
-    const file = join(root, page.out);
-    mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, renderPage(page, source));
-    written.push(page.out);
+    pages.push({ out: page.out, html: renderPage(page, source) });
   }
-  return written;
+  for (const { out, html } of pages) {
+    const file = join(root, out);
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, html);
+  }
+  return pages.map(({ out }) => out);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
