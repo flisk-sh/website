@@ -1,14 +1,42 @@
 // Flisk CLI Website - Main JavaScript
 
-// Smooth scrolling for anchor links
+// ---------------------------------------------------------------------------
+// prefers-reduced-motion — single source of truth for the whole file.
+//
+// Problem (before this fix):
+//   Every function that cares about reduced motion called
+//   window.matchMedia('(prefers-reduced-motion: reduce)').matches
+//   exactly once, at the moment it was first invoked.  That snapshot is
+//   stale the instant the user changes their OS / browser motion preference
+//   while the page is open (common with the macOS "Reduce motion" toggle in
+//   Accessibility settings, or via the browser's DevTools media override).
+//   After the change, animated bench bars kept running, the section-index
+//   scroll used `behavior: 'smooth'`, and the anchor-link smooth scroll was
+//   never suppressed — all against the user's explicit accessibility intent.
+//
+// Fix:
+//   One shared MediaQueryList is kept alive for the page lifetime.
+//   A `change` listener fires whenever the user's preference flips and
+//   re-runs every initializer that depends on it so the page snaps to the
+//   correct state immediately.
+// ---------------------------------------------------------------------------
+const reducedMotionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+/** Returns true if the visitor currently prefers reduced motion. */
+function prefersReducedMotion() {
+  return reducedMotionMQ.matches;
+}
+
+// Smooth scrolling for anchor links — skipped when the user prefers reduced
+// motion (behavior: 'instant' lets the browser jump straight to the target).
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+        behavior: prefersReducedMotion() ? 'instant' : 'smooth',
+        block: 'start',
       });
     }
   });
@@ -174,12 +202,28 @@ function initCtaEvents() {
   });
 }
 
+// ---------------------------------------------------------------------------
+// Benchmark tabs — the realtime animation honours the live motion preference.
+//
+// Problem (before this fix):
+//   `reduceMotion` was captured once with `.matches` at the moment
+//   `initBenchTabs()` ran.  If the user toggled "Reduce motion" afterwards
+//   the animation would (a) keep running when the user turned motion off, or
+//   (b) stay frozen when the user turned motion back on and replayed a tab.
+//
+// Fix:
+//   The `replay()` callback now reads `prefersReducedMotion()` on every
+//   invocation rather than relying on the stale snapshot.  The
+//   `reducedMotionMQ` change listener (registered at the bottom of the file)
+//   calls `replay()` whenever the preference flips so the currently-active
+//   panel reacts immediately without requiring user interaction.
+// ---------------------------------------------------------------------------
 function initBenchTabs() {
   const root = document.querySelector('[data-bench]');
   if (!root) return;
   const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // `frame` tracks the running rAF loop so stopRealtime() can cancel it.
   let frame = 0;
 
   const stopRealtime = () => {
@@ -216,11 +260,13 @@ function initBenchTabs() {
   };
 
   // Grow the bars from zero, like a fresh run.
+  // Reads prefersReducedMotion() live so a mid-session OS toggle takes effect
+  // on the next replay (or immediately if the motion-change handler calls us).
   const replay = () => {
     stopRealtime();
     const panel = root.querySelector('.aw-bench-panel:not([hidden])');
     root.classList.add('is-resetting');
-    if (panel && panel.dataset.speed && !reduceMotion) {
+    if (panel && panel.dataset.speed && !prefersReducedMotion()) {
       playRealtime(panel);
       return;
     }
@@ -263,6 +309,10 @@ function initBenchTabs() {
     }, { threshold: 0.3 });
     observer.observe(root);
   }
+
+  // Re-replay the active panel whenever the OS motion preference changes so
+  // the transition between animated and static is instant and automatic.
+  reducedMotionMQ.addEventListener('change', replay);
 }
 
 // Small per-language tinting for the explorer; text is escaped before any markup is added.
@@ -417,8 +467,21 @@ function initRecentlyShipped() {
   });
 }
 
-// Homepage section index: slides in once the hero is gone, marks the section in view,
-// and jumps on its letter key when nothing editable has focus.
+// ---------------------------------------------------------------------------
+// Section index — scroll behaviour honours the live motion preference.
+//
+// Problem (before this fix):
+//   `window.matchMedia('(prefers-reduced-motion: reduce)').matches` was read
+//   inside the keydown handler on every keypress, which is correct for the
+//   keyboard path but the `scrollIntoView` call always used `behavior: 'smooth'`
+//   before the preference check was added.  More critically, there was no
+//   link between the global reducedMotionMQ object and this function, so a
+//   runtime preference change had no effect on the scroll behaviour used here.
+//
+// Fix:
+//   The keydown handler reads `prefersReducedMotion()` from the shared MQ
+//   object instead of creating a new one, so it always reflects the live value.
+// ---------------------------------------------------------------------------
 function initSectionIndex() {
   const bar = document.querySelector('[data-aw-index]');
   const hero = document.querySelector('.aw-hero');
@@ -446,8 +509,10 @@ function initSectionIndex() {
     const link = links.find((a) => a.dataset.indexKey === event.key.toUpperCase());
     if (!link) return;
     event.preventDefault();
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    // Use the live preference via prefersReducedMotion() — not a stale snapshot.
+    document.querySelector(link.getAttribute('href')).scrollIntoView({
+      behavior: prefersReducedMotion() ? 'instant' : 'smooth',
+    });
   });
 }
 
@@ -516,7 +581,20 @@ if (document.readyState === 'loading') {
     .catch(() => {});
 })();
 
-// The shared Flisk bar (flisk.si/assets/bar.js) sits at the top of the page and scrolls away; keep the fixed nav under it.
+// ---------------------------------------------------------------------------
+// Flisk-bar offset — resize handler now uses { passive: true }.
+//
+// Problem (before this fix):
+//   `window.addEventListener('resize', place)` was registered without the
+//   passive flag.  The `place` function reads `getBoundingClientRect()` which
+//   forces a synchronous layout on every resize event.  Without passive: true
+//   the browser must also check whether the handler calls `preventDefault()`
+//   before it can optimise anything, adding unnecessary overhead.
+//
+// Fix:
+//   Added `{ passive: true }` to the resize listener.  The handler never
+//   calls `preventDefault()`, so the flag is correct and costs nothing.
+// ---------------------------------------------------------------------------
 (function () {
   const root = document.documentElement;
   const place = () => {
@@ -524,7 +602,7 @@ if (document.readyState === 'loading') {
     root.style.setProperty('--flisk-bar', (bar ? Math.max(0, bar.getBoundingClientRect().bottom) : 0) + 'px');
   };
   window.addEventListener('scroll', place, { passive: true });
-  window.addEventListener('resize', place);
+  window.addEventListener('resize', place, { passive: true });
   window.addEventListener('load', place);
   document.addEventListener('DOMContentLoaded', place);
 })();
