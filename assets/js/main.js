@@ -24,7 +24,7 @@ function updateActiveNav() {
   sections.forEach(section => {
     const sectionTop = section.offsetTop;
     const sectionHeight = section.clientHeight;
-    if (window.pageYOffset >= (sectionTop - 200)) {
+    if (window.scrollY >= (sectionTop - 200)) {
       current = section.getAttribute('id');
     }
   });
@@ -37,7 +37,7 @@ function updateActiveNav() {
   });
 }
 
-window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('scroll', updateActiveNav, { passive: true });
 window.addEventListener('load', updateActiveNav);
 
 // Shared navigation behavior
@@ -116,6 +116,8 @@ function addCopyButtons() {
         setTimeout(() => {
           button.innerHTML = '<i class="bi bi-clipboard"></i>';
         }, 2000);
+      }).catch(() => {
+        button.innerHTML = '<i class="bi bi-clipboard"></i>';
       });
     });
 
