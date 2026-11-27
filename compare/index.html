@@ -11,7 +11,7 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
     <div class="aw-subhero-grid">
       <h1>Choose the local workflow that fits.</h1>
       <p class="aw-subhero-sub">Flisk CLI turns <code>service.json</code> per service into a local Docker stack. Tilt watches services and live-updates containers as you code. It is not a deploy tool and not a Compose replacement. Production stays on Helm.</p>
-      <p><a class="aw-textlink" href="https://github.com/flisk-sh/flisk/blob/main/docs/compare-honest.md" target="_blank" rel="noopener">Full comparison and known limits <span aria-hidden="true">↗</span></a></p>
+      <p><a class="aw-textlink" href="https://github.com/flisk-sh/flisk/blob/main/docs/compare-honest.md" target="_blank" rel="noopener">Full comparison and known limits <span aria-hidden="true">↗</span></a>, and <a class="aw-textlink" href="{{ '/docs/claims/' | relative_url }}">claims and evidence</a>.</p>
     </div>
   </section>
 
@@ -398,6 +398,148 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
     </div>
   </section>
 
+  <!-- Process managers and application frameworks -->
+  <section class="aw-section" style="padding-top: 0;">
+    <div class="aw-wrap">
+      <div class="aw-head">
+        <h2>Process managers and application frameworks</h2>
+        <p>Local stacks go beyond container runners and Nix shells. Process managers and framework-level local platforms run multi-service applications today. Each tool has clear strengths for specific architectures.</p>
+      </div>
+
+      <div class="aw-matrix">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th class="aw-flisk-col">Flisk CLI</th>
+              <th>Overmind</th>
+              <th>PM2</th>
+              <th>Encore</th>
+              <th>Supabase CLI</th>
+              <th>.NET Aspire</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Primary focus</td>
+              <td class="aw-flisk-col"><span class="aw-yes">Multi-service app stacks</span></td>
+              <td>Procfile processes</td>
+              <td>Node.js processes</td>
+              <td>Type-safe cloud backend</td>
+              <td>Supabase Postgres stack</td>
+              <td>.NET distributed apps</td>
+            </tr>
+            <tr>
+              <td>Runtime model</td>
+              <td class="aw-flisk-col"><span class="aw-yes">Containers or plain host commands</span></td>
+              <td>Host processes (tmux)</td>
+              <td>Host Node.js processes</td>
+              <td>Host binaries + local infra</td>
+              <td>Docker services + functions</td>
+              <td>Host .NET + containers</td>
+            </tr>
+            <tr>
+              <td>Stack &amp; language scope</td>
+              <td class="aw-flisk-col"><span class="aw-yes">Any stack (Compose or binaries)</span></td>
+              <td>Any command in Procfile</td>
+              <td>Primarily Node.js / JS</td>
+              <td>TypeScript and Go SDK</td>
+              <td>Supabase / Postgres ecosystem</td>
+              <td>C# / .NET ecosystem</td>
+            </tr>
+            <tr>
+              <td>Hot reload &amp; live updates</td>
+              <td class="aw-flisk-col"><span class="aw-yes">Built-in (Tilt container sync)</span></td>
+              <td>Manual restart per process</td>
+              <td>File watch restart</td>
+              <td>Built-in daemon reload</td>
+              <td>Function reload / DB migrations</td>
+              <td>dotnet watch integration</td>
+            </tr>
+            <tr>
+              <td>AI agent surface</td>
+              <td class="aw-flisk-col"><span class="aw-yes">MCP server, skills, AGENTS.md</span></td>
+              <td><span class="aw-no">None</span></td>
+              <td><span class="aw-no">None</span></td>
+              <td>Agent integrations in progress</td>
+              <td>Agent integrations in progress</td>
+              <td>Telemetry dashboard</td>
+            </tr>
+            <tr>
+              <td>Verified source &amp; date</td>
+              <td class="aw-flisk-col"><a href="{{ '/docs/claims/' | relative_url }}">Claims (Nov 2026)</a></td>
+              <td><a href="https://github.com/DarthSim/overmind" target="_blank" rel="noopener">v2.5.1 (Apr 2025)</a></td>
+              <td><a href="https://pm2.keymetrics.io/docs/usage/quick-start/" target="_blank" rel="noopener">v5.x (Nov 2026)</a></td>
+              <td><a href="https://encore.dev/docs" target="_blank" rel="noopener">Docs (Nov 2026)</a></td>
+              <td><a href="https://supabase.com/docs/guides/local-development/cli/getting-started" target="_blank" rel="noopener">Docs (Nov 2026)</a></td>
+              <td><a href="https://learn.microsoft.com/en-us/dotnet/aspire/" target="_blank" rel="noopener">v8/9 (Nov 2026)</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Detailed comparisons for each alternative -->
+      <div class="aw-feature-grid" style="margin-top: 2rem;">
+        <div class="aw-card">
+          <h4>Overmind</h4>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Process manager (tmux, Procfile)</p>
+          <p><strong>What it is:</strong> A process manager for Procfile-based applications powered by tmux and written in Go (<a href="https://github.com/DarthSim/overmind" target="_blank" rel="noopener">v2.5.1</a>, last commit April 2025, verified November 2026).</p>
+          <p><strong>Primary purpose:</strong> Run and control multiple local processes defined in a Procfile with separate terminal controls.</p>
+          <p><strong>Capabilities:</strong> Spawns each process in its own tmux pseudo-terminal, allowing developers to connect to individual process PTYs, send signals, view independent outputs, manage dependency ordering, and restart single processes without restarting the entire stack.</p>
+          <p><strong>Overlap with Flisk:</strong> Both run multi-component applications locally from a single terminal command without deploying to an external cluster.</p>
+          <p><strong>Differences from Flisk:</strong> Overmind focuses strictly on host processes and Procfiles. It does not manage containerized services, configure reverse proxy routing (Traefik), manage health checks, generate golden image layers, or expose an MCP tool surface to AI coding agents.</p>
+          <p><strong>Who benefits:</strong> Teams with monolithic or multi-process Rails, Django, or Node apps with standard Procfiles who want direct tmux terminal attachment for local debugging.</p>
+        </div>
+
+        <div class="aw-card">
+          <h4>PM2</h4>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Process manager (Node.js runtime)</p>
+          <p><strong>What it is:</strong> A production and development process manager with a built-in load balancer for Node.js applications (<a href="https://pm2.keymetrics.io/docs/usage/quick-start/" target="_blank" rel="noopener">v5.x docs</a>, verified November 2026).</p>
+          <p><strong>Primary purpose:</strong> Keep Node.js host applications and background workers running continuously with process management and clustering.</p>
+          <p><strong>Capabilities:</strong> Process daemonization, multi-core clustering, real-time log streaming, memory threshold restarts, file watch mode, and configuration via <code>ecosystem.config.js</code>.</p>
+          <p><strong>Overlap with Flisk:</strong> Both manage background services locally and support automatic restarts and log streaming during development.</p>
+          <p><strong>Differences from Flisk:</strong> PM2 is centered around the Node.js runtime and host process monitoring. Flisk is language-agnostic (Docker containers, Node, Python, Go, Bun), configures local routing (Traefik, Postgres), and provides an AI agent interface (<code>flisk connect</code>, MCP tools) for autonomous stack inspection and repairs.</p>
+          <p><strong>Who benefits:</strong> Node.js and TypeScript developers requiring background process daemonization, clustering, and memory monitoring in development or single-node production.</p>
+        </div>
+
+        <div class="aw-card">
+          <h4>Encore</h4>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Backend development platform (TypeScript and Go)</p>
+          <p><strong>What it is:</strong> A backend development platform and framework for TypeScript and Go that provides infrastructure-as-code primitives (<a href="https://encore.dev/docs" target="_blank" rel="noopener">Encore docs</a>, verified November 2026).</p>
+          <p><strong>Primary purpose:</strong> Build distributed backend services with declarative infrastructure and automatic local service provisioning.</p>
+          <p><strong>Capabilities:</strong> Parses architecture directly from code annotations, automatically provisions local databases, pub/sub queues, and scheduled tasks, and provides a local developer dashboard with built-in distributed tracing.</p>
+          <p><strong>Overlap with Flisk:</strong> Both run an entire multi-service backend on a local machine with a single command and eliminate manual infrastructure wiring.</p>
+          <p><strong>Differences from Flisk:</strong> Encore requires adopting its specific framework SDK and structure for services in TypeScript or Go. Flisk requires no framework adoption or code refactoring: it imports existing Compose files or plain shell commands and exposes an MCP agent interface.</p>
+          <p><strong>Who benefits:</strong> Developers starting greenfield distributed backend applications in TypeScript or Go who want type-safe RPC, automated local infrastructure, and built-in tracing.</p>
+        </div>
+      </div>
+
+      <div class="aw-feature-grid aw-feature-grid-2" style="margin-top: 1rem;">
+        <div class="aw-card">
+          <h4>Supabase CLI</h4>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Local backend stack (Postgres ecosystem)</p>
+          <p><strong>What it is:</strong> The official CLI tool for developing and testing the full Supabase backend stack locally using Docker (<a href="https://supabase.com/docs/guides/local-development/cli/getting-started" target="_blank" rel="noopener">Supabase docs</a>, verified November 2026).</p>
+          <p><strong>Primary purpose:</strong> Run local instances of PostgreSQL, authentication, storage, edge functions, and database migrations matching the Supabase cloud platform.</p>
+          <p><strong>Capabilities:</strong> Starts the complete local Supabase suite with <code>supabase start</code>, manages database migrations, provides local Supabase Studio UI, tests Edge Functions, and manages seed data. <em>Note: per-worktree isolation and native host mode are in public alpha.</em></p>
+          <p><strong>Overlap with Flisk:</strong> Both run complete local backend environments on a developer's machine using local container engines and provide local database and API services.</p>
+          <p><strong>Differences from Flisk:</strong> Supabase CLI is scoped to developing and testing the Supabase PostgreSQL platform. Flisk runs arbitrary multi-tier application architectures (any frontend, third-party backend, microservice mesh, or worker setup) and provides an agent control plane via MCP.</p>
+          <p><strong>Who benefits:</strong> Developers building applications on the Supabase platform who need accurate local database migrations, local auth testing, and Edge Function debugging.</p>
+        </div>
+
+        <div class="aw-card">
+          <h4>.NET Aspire</h4>
+          <p class="aw-mono" style="font-size: 0.8125rem; color: #6EE7A0; margin-bottom: 0.75rem;">Distributed application orchestrator (.NET)</p>
+          <p><strong>What it is:</strong> An opinionated, cloud-ready stack and orchestrator for building observable distributed applications in .NET (<a href="https://learn.microsoft.com/en-us/dotnet/aspire/" target="_blank" rel="noopener">Aspire docs</a>, verified November 2026).</p>
+          <p><strong>Primary purpose:</strong> Orchestrate multi-project distributed .NET solutions with service discovery and integrated telemetry.</p>
+          <p><strong>Capabilities:</strong> Uses a C# <code>AppHost</code> project to declare dependencies, configures containerized resources (Redis, Postgres, RabbitMQ), injects configuration, and provides a real-time developer dashboard for OpenTelemetry traces, metrics, and structured logs.</p>
+          <p><strong>Overlap with Flisk:</strong> Both orchestrate multi-service applications locally with one command and provide unified health inspection and observability.</p>
+          <p><strong>Differences from Flisk:</strong> Aspire is integrated into the .NET ecosystem and C# project model. Flisk works across any programming language and repository structure without language-specific hosts, and provides an open MCP interface for external coding agents.</p>
+          <p><strong>Who benefits:</strong> .NET engineering teams building modern distributed solutions who want first-class Visual Studio / dotnet CLI integration, C# dependency orchestration, and built-in OpenTelemetry.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Which tool -->
   <section class="aw-section" style="padding-top: 0;">
     <div class="aw-wrap">
@@ -419,10 +561,36 @@ description: Compare Flisk CLI with Docker Compose, Tilt, Skaffold, and kind for
         </div>
       </div>
       
-      <div class="aw-feature-grid aw-feature-grid-2" style="margin-top: 2rem;">
+      <div class="aw-feature-grid" style="margin-top: 1rem;">
+        <div class="aw-card">
+          <h4>Choose Overmind or PM2 if you…</h4>
+          <p>Need host-level process management without containers. Overmind provides tmux terminal control for Procfile apps. PM2 gives clustering, memory monitoring, and process daemonization for Node.js workloads.</p>
+        </div>
+        <div class="aw-card">
+          <h4>Choose Encore if you…</h4>
+          <p>Are building a new backend in TypeScript or Go and want declarative infrastructure primitives, type-safe RPC, automated local database provisioning, and built-in distributed tracing without writing configuration files.</p>
+        </div>
+        <div class="aw-card">
+          <h4>Choose Supabase CLI if you…</h4>
+          <p>Build on the Supabase platform and need local PostgreSQL, Auth, Storage, and Edge Functions matching production. Ideal for managing local database schema migrations and seed scripts before deployment.</p>
+        </div>
+      </div>
+
+      <div class="aw-feature-grid aw-feature-grid-2" style="margin-top: 1rem;">
+        <div class="aw-card">
+          <h4>Choose .NET Aspire if you…</h4>
+          <p>Develop distributed services in C# / .NET. Aspire provides an AppHost orchestrator in C#, automated service discovery, container dependency management, and a rich OpenTelemetry dashboard tailored for .NET solutions.</p>
+        </div>
         <div class="aw-card">
           <h4>Choose Garden if you…</h4>
           <p>Have Kubernetes expertise in-house. Need production-like environments for integration testing. Employ a dedicated platform team with time to maintain YAML pipelines. Flisk complements this setup nicely for the fast local loop, by the way.</p>
+        </div>
+      </div>
+
+      <div class="aw-feature-grid aw-feature-grid-2" style="margin-top: 1rem;">
+        <div class="aw-card">
+          <h4>Choose Docker Compose Watch if you…</h4>
+          <p>Already have a containerized stack in Docker Compose and want source code changes synchronized directly into containers on save without adding full machine orchestration or agent-driven health checks.</p>
         </div>
         <div class="aw-card">
           <h4>Choose Cloud CDEs if you…</h4>
