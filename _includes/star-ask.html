@@ -1,0 +1,50 @@
+<!-- One-time GitHub star card: shown about two seconds after load, once per browser (localStorage). -->
+<style>
+.star-ask{position:fixed;right:16px;bottom:16px;z-index:9000;width:min(440px,calc(100vw - 32px));background:#383838;color:#f1f1f1;border:1px solid #4d4d4d;border-radius:var(--radius);box-shadow:0 16px 40px rgba(0,0,0,.35);padding:22px 24px 24px;font:400 16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;animation:star-ask-in .35s ease-out}
+.star-ask[hidden]{display:none}
+.star-ask-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.star-ask-head strong{flex:1;font-size:17px;font-weight:700}
+.star-ask-check{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#3e4f3e;color:#86efac;border:1px solid #4f6b4f;flex:none}
+.star-ask p{margin:0 0 22px;color:#b8b8b8}
+.star-ask-row{display:flex;gap:12px}
+.star-ask-row a,.star-ask-row button{display:flex;align-items:center;justify-content:center;gap:10px;flex:1;font:600 16px/1 system-ui,-apple-system,"Segoe UI",sans-serif;padding:16px 14px;border-radius:var(--radius);border:0;cursor:pointer;text-decoration:none;color:inherit}
+.star-ask-go{background:#52492e;color:#fde68a!important}
+.star-ask-go:hover{background:#5e5535}
+.star-ask-later{flex:0 0 36%;background:#4a4a4a;color:#f1f1f1}
+.star-ask-later:hover{background:#555}
+.star-ask-x{background:none;border:0;color:#a3a3a3;cursor:pointer;padding:4px;display:inline-flex;border-radius:var(--radius)}
+.star-ask-x:hover{color:#f1f1f1}
+.star-ask-x svg,.star-ask-go svg,.star-ask-check svg{width:20px;height:20px}
+.star-ask-go svg{width:18px;height:18px}
+@keyframes star-ask-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.star-ask{animation:none}}
+@media (max-width:560px){.star-ask{right:12px;bottom:12px}}
+</style>
+<div class="star-ask" role="dialog" aria-label="Star Flisk CLI on GitHub" hidden data-star-ask>
+  <div class="star-ask-head">
+    <span class="star-ask-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span>
+    <strong>Thanks for trying Flisk!</strong>
+    <button class="star-ask-x" type="button" aria-label="Close" data-star-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg></button>
+  </div>
+  <p>If Flisk is helping you, a GitHub star helps other developers find the CLI.</p>
+  <div class="star-ask-row">
+    <a class="star-ask-go" href="https://github.com/flisk-sh/flisk-cli" target="_blank" rel="noopener" data-star-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5a.56.56 0 0 1 1.04 0l2.13 4.31a.56.56 0 0 0 .42.31l4.76.69a.56.56 0 0 1 .31.96l-3.44 3.36a.56.56 0 0 0-.16.49l.81 4.74a.56.56 0 0 1-.81.59l-4.26-2.24a.56.56 0 0 0-.52 0L7.18 18.5a.56.56 0 0 1-.81-.59l.81-4.74a.56.56 0 0 0-.16-.49L4.58 9.28a.56.56 0 0 1 .31-.96l4.76-.69a.56.56 0 0 0 .42-.31l2.41-4.82Z"/></svg>Star on GitHub</a>
+    <button class="star-ask-later" type="button" data-star-close>Later</button>
+  </div>
+</div>
+<script>
+(function () {
+  var KEY = 'flisk-star-asked';
+  var card = document.querySelector('[data-star-ask]');
+  if (!card) return;
+  try { if (localStorage.getItem(KEY)) return; } catch (e) { return; }
+  function close() {
+    try { localStorage.setItem(KEY, '1'); } catch (e) {}
+    card.hidden = true;
+  }
+  card.addEventListener('click', function (ev) {
+    if (ev.target.closest('[data-star-close]')) close();
+  });
+  setTimeout(function () { card.hidden = false; }, 2000);
+})();
+</script>
