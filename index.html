@@ -846,11 +846,8 @@ if (!REDUCED_MOTION && window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 
   /* Hero entrance */
-  gsap.from('.aw-hero-pill', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' });
   /* The h1 is the LCP element: keep it visible from the first paint instead of fading it in. */
   gsap.from('.aw-hero-sub', { y: 40, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.35 });
-  gsap.from('.aw-hero .aw-install', { y: 30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.45 });
-  gsap.from('.aw-hero-ctas', { y: 30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.55 });
   gsap.from('.aw-try', { x: 40, opacity: 0, duration: 1.1, ease: 'power3.out', delay: 0.4 });
   gsap.to('.aw-hero-bg', {
     scale: 1, ease: 'none',
